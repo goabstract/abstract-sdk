@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "yarn eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "eslint-plugin-mocha": "^5.2.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
     "prettier": "^1.14.2"
   }
 }
