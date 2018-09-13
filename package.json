@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "yarn eslint .",
     "test": "jest",
-    "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand"
+    "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
+    "ci": "yarn lint && yarn test"
   },
   "repository": {
     "type": "git",
@@ -20,12 +21,12 @@
   "homepage": "https://github.com/goabstract/abstract-js#readme",
   "devDependencies": {
     "@elasticprojects/eslint-config-abstract": "^4.1.0",
-    "babel-eslint": "^9.0.0",
+    "babel-eslint": "^7.2.3",
     "eslint": "^4.8.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-mocha": "^5.2.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
