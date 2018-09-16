@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    "@babel/preset-flow",
+    ["@babel/preset-env", {
+      "useBuiltIns": "usage"
+    }]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
+  ]
+}

@@ -1,3 +1,6 @@
 {
-  "extends": ["@elasticprojects/eslint-config-abstract"]
+  "extends": "@elasticprojects/eslint-config-abstract",
+  "env": {
+    "jest": true
+  }
 }
