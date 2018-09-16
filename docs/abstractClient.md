@@ -3,12 +3,12 @@ id: abstractClient
 title: Docs
 ---
 
-# Setup
+## Setup
 
 1. Create a [Abstract authentication token](https://app.goabstract.com)
 1. `npm install abstract-js`
 
-# Usage
+## Usage
 
 ```js
 import { abstractClient, AUTO } from "abstract-js";
@@ -18,11 +18,11 @@ const abstract = abstractClient({
 });
 ```
 
-Everything below is optional, see [API](#api) to see what's possible. ✨
+Everything below is optional, [see API](#api) for what's possible. ✨
 
 ---
 
-# Change transport
+## Change transport
 
 ```js
 import { AUTO, API, CLI } from "abstract-js";
@@ -34,7 +34,7 @@ const abstract = abstractClient({
 });
 ```
 
-# Change abstract-cli path
+## Change abstract-cli path
 
 Relative paths are relative to `process.cwd()`
 
