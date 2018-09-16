@@ -26,5 +26,5 @@ export default function abstractClient({
     throw new Error("options.transport required");
   }
 
-  // return new Transport({ abstractToken, abstractCliPath });
+  return new Transport({ abstractToken, abstractCliPath });
 }
