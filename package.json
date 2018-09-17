@@ -44,9 +44,11 @@
     "prettier": "^1.14.2"
   },
   "dependencies": {
+    "@elasticprojects/abstract-cli": "^0.32.0",
     "debug": "^4.0.1",
     "locate-path": "^3.0.0",
     "lodash": "^4.17.11",
+    "promisify-child-process": "^2.0.0",
     "proxy-deep": "^2.1.1"
   },
   "peerDependencies": {

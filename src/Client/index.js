@@ -1,19 +1,14 @@
 // @flow
-import type { AbstractInterface, AbstractTransport } from "../";
-import AbstractCLI from "./AbstractCLI";
-// import AbstractAPI from "./AbstractAPI";
+import type { AbstractInterface } from "../";
+import { AUTO } from "../transports";
 
 type Options = {
   abstractToken?: string,
   abstractCliPath?: string[],
-  transport?: AbstractTransport
+  transport?: *
 };
 
-export const AUTO = AbstractCLI;
-export const CLI = AbstractCLI;
-// export const API = AbstractAPI;
-
-export default function abstractClient({
+export default function Client({
   abstractToken = process.env.ABSTRACT_TOKEN || "",
   abstractCliPath,
   transport: Transport = AUTO

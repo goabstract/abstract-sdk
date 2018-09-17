@@ -1,0 +1,2 @@
+#!/bin/bash
+echo $@ # Echo arguments for Jest snapshot test

@@ -1,18 +1,34 @@
 // @flow
+import child_process from "child_process";
 import path from "path";
 import get from "lodash/get";
 import AbstractCLI from "./";
 
-const EXAMPLE_OPTIONS = { abstractToken: "1" };
+jest.mock("child_process");
+
+function buildOptions(options: *) {
+  return {
+    abstractToken: "1",
+    ...options
+  };
+}
+
+const BRANCH_DESCRIPTOR = {
+  projectId: "project-id",
+  brancId: "branch-id",
+  sha: "sha",
+  fileId: "file-id"
+};
 
 describe(AbstractCLI, () => {
   test("throws when abstract-cli cannot be located", () => {
     expect(
       () =>
-        new AbstractCLI({
-          ...EXAMPLE_OPTIONS,
-          abstractCliPath: ["./fixtures/missing/abstract-cli"]
-        }).abstractCliPath
+        new AbstractCLI(
+          buildOptions({
+            abstractCliPath: ["./fixtures/missing/abstract-cli"]
+          })
+        ).abstractCliPath
     ).toThrow('Cannot find abstract-cli in "./fixtures/missing/abstract-cli"');
   });
 
@@ -42,7 +58,7 @@ describe(AbstractCLI, () => {
       (abstractCliPath, expected) => {
         process.env.ABSTRACT_CLI_PATH = abstractCliPath;
         const { default: AbstractCLI } = require("./");
-        expect(new AbstractCLI(EXAMPLE_OPTIONS).abstractCliPath).toBe(expected);
+        expect(new AbstractCLI(buildOptions()).abstractCliPath).toBe(expected);
       }
     );
 
@@ -50,22 +66,26 @@ describe(AbstractCLI, () => {
       process.env.ABSTRACT_CLI_PATH = "./fixtures/other/abstract-cli";
       const { default: AbstractCLI } = require("./");
       expect(
-        new AbstractCLI({
-          ...EXAMPLE_OPTIONS,
-          abstractCliPath: ["./fixtures/abstract-cli"]
-        }).abstractCliPath
+        new AbstractCLI(
+          buildOptions({
+            abstractCliPath: ["./fixtures/abstract-cli"]
+          })
+        ).abstractCliPath
       ).toBe(path.join(process.cwd(), "./fixtures/abstract-cli"));
     });
   });
 
-  test.each([
-    ["layers.data", {}, 1],
-    ["layers.data", {}, 1],
-    ["layers.data", {}, 1],
-    ["layers.data", {}, 1]
-  ])("%s(%p): Promise<%p>", async (property, descriptor, expected) => {
-    const transport = new AbstractCLI(EXAMPLE_OPTIONS);
-    const transportMethod = get(transport, property).bind(transport);
-    await expect(transportMethod(descriptor)).resolves.toBe(expected);
-  });
+  test.each([["files.list", BRANCH_DESCRIPTOR]])(
+    "%s(%p)",
+    async (property, descriptor) => {
+      const transport = new AbstractCLI(
+        buildOptions({
+          abstractCliPath: ["./fixtures/abstract-cli"]
+        })
+      );
+      const transportMethod = get(transport, property).bind(transport);
+      await expect(transportMethod(descriptor)).resolves;
+      expect(child_process.spawn.mock.calls).toMatchSnapshot();
+    }
+  );
 });

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AbstractCLI files.list({"brancId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
+Array [
+  Array [
+    "/Users/amccloud/Labs/goabstract/abstract-js/fixtures/abstract-cli",
+    Array [
+      "files",
+      "project-id",
+      "sha",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+    undefined,
+  ],
+]
+`;

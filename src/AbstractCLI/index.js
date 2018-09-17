@@ -2,11 +2,8 @@
 import path from "path";
 import debug from "debug";
 import locatePath from "locate-path";
-import type {
-  AbstractTransport,
-  AbstractInterface,
-  ProjectDescriptor
-} from "../../";
+import { spawn } from "promisify-child-process";
+import type { AbstractInterface, BranchDescriptor } from "../";
 
 function parsePath(input: ?string): ?Array<string> {
   if (!input) return;
@@ -19,8 +16,7 @@ type Options = {
   cwd?: string
 };
 
-export default class AbstractCLI
-  implements AbstractTransport, AbstractInterface {
+export default class AbstractCLI implements AbstractInterface {
   abstractToken: string;
   abstractCliPath: string;
 
@@ -47,14 +43,23 @@ export default class AbstractCLI
     }
   }
 
-  layers = {
-    async data(projectDescriptor: ProjectDescriptor) {
-      return await this.send(1);
+  files = {
+    async list(branchDescriptor: BranchDescriptor) {
+      return await this.send([
+        "files",
+        branchDescriptor.projectId,
+        branchDescriptor.sha
+      ]);
     }
   };
 
-  async send(action: Object) {
-    debug("abstract:transport:AbstractCLI")(action);
-    return action;
+  async send(args: string[]) {
+    debug("abstract:transport:AbstractCLI")(args);
+    await spawn(this.abstractCliPath, [
+      ...args,
+      `--user-token=${this.abstractToken}`,
+      `--api-url=${process.env.ABSTRACT_API_URL ||
+        "https://api.goabstract.com"}`
+    ]);
   }
 }

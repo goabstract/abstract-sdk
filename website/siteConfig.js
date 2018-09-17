@@ -26,8 +26,9 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: "abstractClient", label: "Docs" },
-    { doc: "api", label: "API" }
+    { doc: "Client", label: "Docs" },
+    { doc: "api", label: "API" },
+    { href: "https://spectrum.chat/abstract", label: "Help" }
   ],
 
   // List of projects/orgs using your project for the users page.
@@ -49,8 +50,8 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: "#191a1b",
-    secondaryColor: "#333"
+    primaryColor: "#ff5c50",
+    secondaryColor: "#b9453d"
   },
 
   /* Custom fonts for website */
