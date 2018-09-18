@@ -1,5 +1,5 @@
 ---
-id: Client
+id: index
 title: Docs
 ---
 
@@ -13,7 +13,7 @@ title: Docs
 ```js
 import * as Abstract from "abstract-js";
 
-const abstract = Client({
+const abstract = Abstract.Client({
   abstractToken: "ABSTRACT_TOKEN"
 });
 ```
@@ -27,8 +27,8 @@ Everything below is optional, [see API for what's possible](api.md)✨
 ```js
 const abstract = Abstract.Client({
   transport: Abstract.AUTO // default
-  // transport: Abstract.API, // api only
-  // transport: Abstract.CLI, // cli only
+  // transport: Abstract.API // api only
+  // transport: Abstract.CLI // cli only
 });
 ```
 
@@ -39,7 +39,7 @@ Paths are relative to `process.cwd()`
 ```js
 Abstract.Client({
   abstractCliPath: [ // default
-    "./abstract-token",
+    "./abstract-cli",
     "./node_modules/@elasticprojects/abstract-cli"
   ]
 });
