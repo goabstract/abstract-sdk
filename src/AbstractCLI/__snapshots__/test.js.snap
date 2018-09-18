@@ -1,17 +1,160 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AbstractCLI files.list({"brancId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
 Array [
   Array [
-    "/Users/amccloud/Labs/goabstract/abstract-js/fixtures/abstract-cli",
+    "fixtures/abstract-cli",
     Array [
-      "files",
+      "collection",
       "project-id",
-      "sha",
+      "collection-id",
       "--user-token=1",
       "--api-url=https://api.goabstract.com",
     ],
-    undefined,
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn collections.list({"branchId": "branch-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "collections",
+      "project-id",
+      "--branch",
+      "branch-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn collections.list({"projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "collections",
+      "project-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "file",
+      "project-id",
+      "branch-sha",
+      "file-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "branch-sha"}) 2`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "file",
+      "project-id",
+      "branch-sha",
+      "file-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "files",
+      "project-id",
+      "branch-sha",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "files",
+      "project-id",
+      "commit-sha",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn layers.data({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "layer",
+      "data",
+      "project-id",
+      "branch-sha",
+      "file-id",
+      "layer-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn layers.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "layer",
+      "meta",
+      "project-id",
+      "branch-sha",
+      "file-id",
+      "layer-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn layers.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "layers",
+      "project-id",
+      "branch-sha",
+      "file-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
   ],
 ]
 `;

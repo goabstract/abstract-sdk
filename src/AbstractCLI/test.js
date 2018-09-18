@@ -1,6 +1,6 @@
 // @flow
 import child_process from "child_process";
-import path from "path";
+import { Readable } from "readable-stream";
 import get from "lodash/get";
 import AbstractCLI from "./";
 
@@ -13,11 +13,53 @@ function buildOptions(options: *) {
   };
 }
 
-const BRANCH_DESCRIPTOR = {
+function buildTextStream(text?: string): ReadableStream {
+  const stream = new Readable();
+  stream._read = () => {}; // required
+
+  if (text !== undefined) {
+    stream.push(text);
+    stream.push(null); // end of stream
+  }
+
+  return stream;
+}
+
+const MOCK_PROJECT_DESCRIPTOR = {
+  projectId: "project-id"
+};
+
+const MOCK_COMMIT_DESCRIPTOR = {
   projectId: "project-id",
-  brancId: "branch-id",
-  sha: "sha",
+  branchId: "branch-id",
+  sha: "commit-sha"
+};
+
+const MOCK_BRANCH_DESCRIPTOR = {
+  projectId: "project-id",
+  branchId: "branch-id",
+  sha: "branch-sha"
+};
+
+const MOCK_FILE_DESCRIPTOR = {
+  projectId: "project-id",
+  branchId: "branch-id",
+  sha: "branch-sha",
   fileId: "file-id"
+};
+
+const MOCK_LAYER_DESCRIPTOR = {
+  projectId: "project-id",
+  branchId: "branch-id",
+  sha: "branch-sha",
+  fileId: "file-id",
+  layerId: "layer-id"
+};
+
+const MOCK_COLLECTION_DESCRIPTOR = {
+  projectId: "project-id",
+  branchId: "branch-id",
+  collectionId: "collection-id"
 };
 
 describe(AbstractCLI, () => {
@@ -41,17 +83,17 @@ describe(AbstractCLI, () => {
       [
         // Relative path
         "./fixtures/abstract-cli",
-        path.join(process.cwd(), "./fixtures/abstract-cli")
+        "fixtures/abstract-cli"
       ],
       [
         // Ignores misssing abstract-cli path
         "/missing/abstract-cli:./fixtures/abstract-cli",
-        path.join(process.cwd(), "./fixtures/abstract-cli")
+        "fixtures/abstract-cli"
       ],
       [
         // Prefers first matched abstract-cli path
         "./fixtures/other/abstract-cli/:fixtures/abstract-cli",
-        path.join(process.cwd(), "./fixtures/other/abstract-cli")
+        "fixtures/other/abstract-cli"
       ]
     ])(
       "configures options.abstractCliPath from process.env.ABSTRACT_CLI_PATH=%p",
@@ -71,21 +113,43 @@ describe(AbstractCLI, () => {
             abstractCliPath: ["./fixtures/abstract-cli"]
           })
         ).abstractCliPath
-      ).toBe(path.join(process.cwd(), "./fixtures/abstract-cli"));
+      ).toBe("fixtures/abstract-cli");
     });
   });
 
-  test.each([["files.list", BRANCH_DESCRIPTOR]])(
-    "%s(%p)",
-    async (property, descriptor) => {
+  describe("with mocked child_process.spawn", () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
+    });
+
+    test.each([
+      ["files.list", MOCK_BRANCH_DESCRIPTOR],
+      ["files.list", MOCK_COMMIT_DESCRIPTOR],
+      ["files.info", MOCK_FILE_DESCRIPTOR],
+      ["layers.list", MOCK_FILE_DESCRIPTOR],
+      ["layers.data", MOCK_LAYER_DESCRIPTOR],
+      ["layers.info", MOCK_LAYER_DESCRIPTOR],
+      ["files.info", MOCK_FILE_DESCRIPTOR],
+      ["collections.list", MOCK_PROJECT_DESCRIPTOR],
+      ["collections.list", MOCK_BRANCH_DESCRIPTOR],
+      ["collections.info", MOCK_COLLECTION_DESCRIPTOR]
+    ])("%s(%p)", async (property, descriptor, options = {}) => {
       const transport = new AbstractCLI(
         buildOptions({
           abstractCliPath: ["./fixtures/abstract-cli"]
         })
       );
+
       const transportMethod = get(transport, property).bind(transport);
+
+      child_process.spawn.mockReturnValueOnce({
+        stdout: buildTextStream(options.stdout),
+        stderr: buildTextStream(options.stderr),
+        on: jest.fn().mockReturnThis()
+      });
+
       await expect(transportMethod(descriptor)).resolves;
       expect(child_process.spawn.mock.calls).toMatchSnapshot();
-    }
-  );
+    });
+  });
 });

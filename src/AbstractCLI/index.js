@@ -1,9 +1,18 @@
 // @flow
 import path from "path";
+import { spawn } from "child_process";
+import { Buffer } from "buffer";
 import debug from "debug";
 import locatePath from "locate-path";
-import { spawn } from "promisify-child-process";
-import type { AbstractInterface, BranchDescriptor } from "../";
+import JSONStream from "JSONStream";
+import type {
+  AbstractInterface,
+  ProjectDescriptor,
+  BranchDescriptor,
+  FileDescriptor,
+  LayerDescriptor,
+  CollectionDescriptor
+} from "../";
 
 function parsePath(input: ?string): ?Array<string> {
   if (!input) return;
@@ -32,9 +41,9 @@ export default class AbstractCLI implements AbstractInterface {
     this.abstractToken = abstractToken;
 
     try {
-      this.abstractCliPath = path.resolve(
+      this.abstractCliPath = path.relative(
         cwd,
-        locatePath.sync(abstractCliPath)
+        path.resolve(cwd, locatePath.sync(abstractCliPath))
       );
     } catch (error) {
       throw new Error(
@@ -45,21 +54,107 @@ export default class AbstractCLI implements AbstractInterface {
 
   files = {
     async list(branchDescriptor: BranchDescriptor) {
-      return await this.send([
+      return await this.spawn([
         "files",
         branchDescriptor.projectId,
         branchDescriptor.sha
       ]);
+    },
+    async info(fileDescriptor: FileDescriptor) {
+      return await this.spawn([
+        "file",
+        fileDescriptor.projectId,
+        fileDescriptor.sha,
+        fileDescriptor.fileId
+      ]);
     }
   };
 
-  async send(args: string[]) {
+  layers = {
+    async list(fileDescriptor: FileDescriptor) {
+      return await this.spawn([
+        "layers",
+        fileDescriptor.projectId,
+        fileDescriptor.sha,
+        fileDescriptor.fileId
+      ]);
+    },
+    async info(layerDescriptor: LayerDescriptor) {
+      return await this.spawn([
+        "layer",
+        "meta",
+        layerDescriptor.projectId,
+        layerDescriptor.sha,
+        layerDescriptor.fileId,
+        layerDescriptor.layerId
+      ]);
+    },
+    async data(layerDescriptor: LayerDescriptor) {
+      return await this.spawn([
+        "layer",
+        "data",
+        layerDescriptor.projectId,
+        layerDescriptor.sha,
+        layerDescriptor.fileId,
+        layerDescriptor.layerId
+      ]);
+    }
+  };
+
+  collections = {
+    async list(
+      projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor
+    ) {
+      if (projectOrBranchDescriptor.branchId) {
+        return await this.spawn([
+          "collections",
+          projectOrBranchDescriptor.projectId,
+          "--branch",
+          projectOrBranchDescriptor.branchId
+        ]);
+      } else {
+        return await this.spawn([
+          "collections",
+          projectOrBranchDescriptor.projectId
+        ]);
+      }
+    },
+    async info(collectionDescriptor: CollectionDescriptor) {
+      return await this.spawn([
+        "collection",
+        collectionDescriptor.projectId,
+        collectionDescriptor.collectionId
+      ]);
+    }
+  };
+
+  async spawn(args: string[]) {
     debug("abstract:transport:AbstractCLI")(args);
-    await spawn(this.abstractCliPath, [
-      ...args,
-      `--user-token=${this.abstractToken}`,
-      `--api-url=${process.env.ABSTRACT_API_URL ||
-        "https://api.goabstract.com"}`
-    ]);
+
+    return new Promise((resolve, reject) => {
+      const abstractCli = spawn(this.abstractCliPath, [
+        ...args,
+        `--user-token=${this.abstractToken}`,
+        `--api-url=${process.env.ABSTRACT_API_URL ||
+          "https://api.goabstract.com"}`
+      ]);
+
+      let stderrBuffer = new Buffer.from("");
+      abstractCli.stderr.on("data", chunk => {
+        stderrBuffer.concat(chunk);
+      });
+
+      abstractCli.stdout
+        .pipe(JSONStream.parse())
+        .on("data", resolve)
+        .on("error", reject);
+
+      abstractCli.on("error", reject);
+      abstractCli.on("close", errorCode => {
+        if (errorCode !== 0) {
+          reject(stderrBuffer); // Reject stderr for non-zero error codes
+        }
+      });
+    });
   }
 }
