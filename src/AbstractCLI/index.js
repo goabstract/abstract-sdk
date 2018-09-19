@@ -185,8 +185,11 @@ export default class AbstractCLI implements AbstractInterface {
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
-    },
-    data: async (layerDescriptor: LayerDescriptor) => {
+    }
+  };
+
+  data = {
+    layer: async (layerDescriptor: LayerDescriptor) => {
       return await this.spawn([
         "layer",
         "data",

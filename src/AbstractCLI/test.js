@@ -95,6 +95,10 @@ describe(AbstractCLI, () => {
     });
 
     test.each([
+      // collections
+      ["collections.list", buildProjectDescriptor()],
+      ["collections.list", buildBranchDescriptor()],
+      ["collections.info", buildCollectionDescriptor()],
       // commits
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
@@ -166,15 +170,12 @@ describe(AbstractCLI, () => {
       ],
       // layers
       ["layers.list", buildFileDescriptor()],
-      ["layers.data", buildLayerDescriptor()],
       ["layers.info", buildLayerDescriptor()],
       ["layers.list", buildFileDescriptor({ sha: "sha" })],
-      ["layers.data", buildLayerDescriptor({ sha: "sha" })],
       ["layers.info", buildLayerDescriptor({ sha: "sha" })],
-      // collections
-      ["collections.list", buildProjectDescriptor()],
-      ["collections.list", buildBranchDescriptor()],
-      ["collections.info", buildCollectionDescriptor()]
+      // data
+      ["data.layer", buildLayerDescriptor()],
+      ["data.layer", buildLayerDescriptor({ sha: "sha" })]
     ])("%s(%p)", async (property, descriptor, options = {}) => {
       const transport = new AbstractCLI(
         buildOptions({ abstractCliPath: ["./fixtures/abstract-cli"] })
