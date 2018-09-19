@@ -37,21 +37,18 @@ const MOCK_COMMIT_DESCRIPTOR = {
 
 const MOCK_BRANCH_DESCRIPTOR = {
   projectId: "project-id",
-  branchId: "branch-id",
-  sha: "branch-sha"
+  branchId: "branch-id"
 };
 
 const MOCK_FILE_DESCRIPTOR = {
   projectId: "project-id",
   branchId: "branch-id",
-  sha: "branch-sha",
   fileId: "file-id"
 };
 
 const MOCK_LAYER_DESCRIPTOR = {
   projectId: "project-id",
   branchId: "branch-id",
-  sha: "branch-sha",
   fileId: "file-id",
   layerId: "layer-id"
 };
@@ -123,6 +120,18 @@ describe(AbstractCLI, () => {
     });
 
     test.each([
+      ["commits.list", MOCK_BRANCH_DESCRIPTOR],
+      ["commits.list", MOCK_FILE_DESCRIPTOR],
+      ["commits.list", MOCK_LAYER_DESCRIPTOR],
+      ["commits.info", MOCK_BRANCH_DESCRIPTOR],
+      ["commits.info", MOCK_FILE_DESCRIPTOR],
+      ["commits.info", MOCK_LAYER_DESCRIPTOR],
+      ["commits.list", { ...MOCK_BRANCH_DESCRIPTOR, sha: "commit-sha" }],
+      ["commits.list", { ...MOCK_FILE_DESCRIPTOR, sha: "commit-sha" }],
+      ["commits.list", { ...MOCK_LAYER_DESCRIPTOR, sha: "commit-sha" }],
+      ["commits.info", { ...MOCK_BRANCH_DESCRIPTOR, sha: "commit-sha" }],
+      ["commits.info", { ...MOCK_FILE_DESCRIPTOR, sha: "commit-sha" }],
+      ["commits.info", { ...MOCK_LAYER_DESCRIPTOR, sha: "commit-sha" }],
       ["files.list", MOCK_BRANCH_DESCRIPTOR],
       ["files.list", MOCK_COMMIT_DESCRIPTOR],
       ["files.info", MOCK_FILE_DESCRIPTOR],

@@ -52,6 +52,49 @@ export default class AbstractCLI implements AbstractInterface {
     }
   }
 
+  commits = {
+    async list(
+      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+    ) {
+      if (objectDescriptor.layerId) {
+        return await this.spawn([
+          "commits",
+          objectDescriptor.projectId,
+          objectDescriptor.branchId,
+          "--layer-id",
+          objectDescriptor.layerId
+        ]);
+      } else if (objectDescriptor.fileId) {
+        return await this.spawn([
+          "commits",
+          objectDescriptor.projectId,
+          objectDescriptor.branchId,
+          "--file-id",
+          objectDescriptor.fileId
+        ]);
+      } else if (objectDescriptor.branchId) {
+        return await this.spawn([
+          "commits",
+          objectDescriptor.projectId,
+          objectDescriptor.branchId
+        ]);
+      }
+    },
+    async info(
+      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+    ) {
+      const sha = objectDescriptor.sha || objectDescriptor.branchId;
+
+      if (objectDescriptor.layerId) {
+        return await this.spawn(["commit", objectDescriptor.projectId, sha]);
+      } else if (objectDescriptor.fileId) {
+        return await this.spawn(["commit", objectDescriptor.projectId, sha]);
+      } else if (objectDescriptor.branchId) {
+        return await this.spawn(["commit", objectDescriptor.projectId, sha]);
+      }
+    }
+  };
+
   files = {
     async list(branchDescriptor: BranchDescriptor) {
       return await this.spawn([

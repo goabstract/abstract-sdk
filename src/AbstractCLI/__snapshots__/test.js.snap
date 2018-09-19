@@ -15,7 +15,7 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn collections.list({"branchId": "branch-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn collections.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
@@ -45,14 +45,139 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
     Array [
-      "file",
+      "commit",
       "project-id",
-      "branch-sha",
+      "commit-sha",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commit",
+      "project-id",
+      "branch-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commit",
+      "project-id",
+      "commit-sha",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commit",
+      "project-id",
+      "branch-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commit",
+      "project-id",
+      "commit-sha",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commit",
+      "project-id",
+      "branch-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commits",
+      "project-id",
+      "branch-id",
+      "--layer-id",
+      "layer-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commits",
+      "project-id",
+      "branch-id",
+      "--layer-id",
+      "layer-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commits",
+      "project-id",
+      "branch-id",
+      "--file-id",
       "file-id",
       "--user-token=1",
       "--api-url=https://api.goabstract.com",
@@ -61,14 +186,15 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "branch-sha"}) 2`] = `
+exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
     Array [
-      "file",
+      "commits",
       "project-id",
-      "branch-sha",
+      "branch-id",
+      "--file-id",
       "file-id",
       "--user-token=1",
       "--api-url=https://api.goabstract.com",
@@ -77,14 +203,61 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
     Array [
-      "files",
+      "commits",
       "project-id",
-      "branch-sha",
+      "branch-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "commits",
+      "project-id",
+      "branch-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "file",
+      "project-id",
+      undefined,
+      "file-id",
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 2`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "file",
+      "project-id",
+      undefined,
+      "file-id",
       "--user-token=1",
       "--api-url=https://api.goabstract.com",
     ],
@@ -107,7 +280,22 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn layers.data({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
+Array [
+  Array [
+    "fixtures/abstract-cli",
+    Array [
+      "files",
+      "project-id",
+      undefined,
+      "--user-token=1",
+      "--api-url=https://api.goabstract.com",
+    ],
+  ],
+]
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn layers.data({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
@@ -115,7 +303,7 @@ Array [
       "layer",
       "data",
       "project-id",
-      "branch-sha",
+      undefined,
       "file-id",
       "layer-id",
       "--user-token=1",
@@ -125,7 +313,7 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn layers.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn layers.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "projectId": "project-id"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
@@ -133,7 +321,7 @@ Array [
       "layer",
       "meta",
       "project-id",
-      "branch-sha",
+      undefined,
       "file-id",
       "layer-id",
       "--user-token=1",
@@ -143,14 +331,14 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn layers.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn layers.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
   Array [
     "fixtures/abstract-cli",
     Array [
       "layers",
       "project-id",
-      "branch-sha",
+      undefined,
       "file-id",
       "--user-token=1",
       "--api-url=https://api.goabstract.com",
