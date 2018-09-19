@@ -2,6 +2,7 @@
   "name": "abstract-js",
   "version": "0.1.0",
   "description": "",
+  "files": ["/lib", "/docs"],
   "main": "lib/index.js",
   "scripts": {
     "lint": "yarn eslint .",

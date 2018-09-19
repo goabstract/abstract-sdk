@@ -32,6 +32,15 @@ function ref(
   return objectDescriptor.sha || objectDescriptor.branchId;
 }
 
+function fileDescriptorForPage(pageDescriptor: PageDescriptor) {
+  return {
+    projectId: pageDescriptor.projectId,
+    branchId: pageDescriptor.branchId,
+    sha: pageDescriptor.sha,
+    fileId: pageDescriptor.fileId
+  };
+}
+
 type Options = {
   abstractToken: string,
   abstractCliPath?: string[],
@@ -150,12 +159,9 @@ export default class AbstractCLI implements AbstractInterface {
       return flatMap(files, file => file.pages);
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const { pages } = await this.files.info({
-        projectId: pageDescriptor.projectId,
-        branchId: pageDescriptor.branchId,
-        sha: pageDescriptor.sha,
-        fileId: pageDescriptor.fileId
-      });
+      const { pages } = await this.files.info(
+        fileDescriptorForPage(pageDescriptor)
+      );
 
       return find(pages, { id: pageDescriptor.pageId });
     }
