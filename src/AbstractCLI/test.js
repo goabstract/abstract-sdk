@@ -120,6 +120,7 @@ describe(AbstractCLI, () => {
     });
 
     test.each([
+      // commits
       ["commits.list", MOCK_BRANCH_DESCRIPTOR],
       ["commits.list", MOCK_FILE_DESCRIPTOR],
       ["commits.list", MOCK_LAYER_DESCRIPTOR],
@@ -132,19 +133,21 @@ describe(AbstractCLI, () => {
       ["commits.info", { ...MOCK_BRANCH_DESCRIPTOR, sha: "sha" }],
       ["commits.info", { ...MOCK_FILE_DESCRIPTOR, sha: "sha" }],
       ["commits.info", { ...MOCK_LAYER_DESCRIPTOR, sha: "sha" }],
+      // files
       ["files.list", MOCK_BRANCH_DESCRIPTOR],
       ["files.list", MOCK_COMMIT_DESCRIPTOR],
       ["files.info", MOCK_FILE_DESCRIPTOR],
       ["files.list", { ...MOCK_BRANCH_DESCRIPTOR, sha: "sha" }],
       ["files.list", { ...MOCK_COMMIT_DESCRIPTOR, sha: "sha" }],
       ["files.info", { ...MOCK_FILE_DESCRIPTOR, sha: "sha" }],
+      // layers
       ["layers.list", MOCK_FILE_DESCRIPTOR],
       ["layers.data", MOCK_LAYER_DESCRIPTOR],
       ["layers.info", MOCK_LAYER_DESCRIPTOR],
       ["layers.list", { ...MOCK_FILE_DESCRIPTOR, sha: "sha" }],
       ["layers.data", { ...MOCK_LAYER_DESCRIPTOR, sha: "sha" }],
       ["layers.info", { ...MOCK_LAYER_DESCRIPTOR, sha: "sha" }],
-      ["files.info", MOCK_FILE_DESCRIPTOR],
+      // collections
       ["collections.list", MOCK_PROJECT_DESCRIPTOR],
       ["collections.list", MOCK_BRANCH_DESCRIPTOR],
       ["collections.info", MOCK_COLLECTION_DESCRIPTOR]

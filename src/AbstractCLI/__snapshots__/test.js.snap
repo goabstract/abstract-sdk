@@ -265,22 +265,6 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 2`] = `
-Array [
-  Array [
-    "fixtures/abstract-cli",
-    Array [
-      "file",
-      "project-id",
-      "branch-id",
-      "file-id",
-      "--user-token=1",
-      "--api-url=https://api.goabstract.com",
-    ],
-  ],
-]
-`;
-
 exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
   Array [
