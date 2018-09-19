@@ -46,7 +46,4 @@ export type Cursor<T> = Promise<{
 
 export interface AbstractInterface {
   abstractToken: string;
-  files: {
-    list: (branchDescriptor: BranchDescriptor) => Promise<*>
-  };
 }

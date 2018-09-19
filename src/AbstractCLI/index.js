@@ -3,12 +3,15 @@ import path from "path";
 import { spawn } from "child_process";
 import { Buffer } from "buffer";
 import debug from "debug";
+import find from "lodash/find";
+import flatMap from "lodash/flatMap";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
 import type {
   AbstractInterface,
   ProjectDescriptor,
   BranchDescriptor,
+  PageDescriptor,
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor
@@ -20,7 +23,11 @@ function parsePath(input: ?string): ?Array<string> {
 }
 
 function ref(
-  objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+  objectDescriptor:
+    | BranchDescriptor
+    | FileDescriptor
+    | PageDescriptor
+    | LayerDescriptor
 ) {
   return objectDescriptor.sha || objectDescriptor.branchId;
 }
@@ -59,9 +66,9 @@ export default class AbstractCLI implements AbstractInterface {
   }
 
   commits = {
-    async list(
+    list: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
-    ) {
+    ) => {
       if (objectDescriptor.layerId) {
         return await this.spawn([
           "commits",
@@ -78,7 +85,7 @@ export default class AbstractCLI implements AbstractInterface {
           "--file-id",
           objectDescriptor.fileId
         ]);
-      } else if (objectDescriptor.branchId) {
+      } else {
         return await this.spawn([
           "commits",
           objectDescriptor.projectId,
@@ -86,9 +93,9 @@ export default class AbstractCLI implements AbstractInterface {
         ]);
       }
     },
-    async info(
+    info: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
-    ) {
+    ) => {
       if (objectDescriptor.layerId) {
         return await this.spawn([
           "commit",
@@ -101,7 +108,7 @@ export default class AbstractCLI implements AbstractInterface {
           objectDescriptor.projectId,
           ref(objectDescriptor)
         ]);
-      } else if (objectDescriptor.branchId) {
+      } else {
         return await this.spawn([
           "commit",
           objectDescriptor.projectId,
@@ -112,14 +119,14 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   files = {
-    async list(branchDescriptor: BranchDescriptor) {
+    list: async (branchDescriptor: BranchDescriptor) => {
       return await this.spawn([
         "files",
         branchDescriptor.projectId,
         ref(branchDescriptor)
       ]);
     },
-    async info(fileDescriptor: FileDescriptor) {
+    info: async (fileDescriptor: FileDescriptor) => {
       return await this.spawn([
         "file",
         fileDescriptor.projectId,
@@ -129,8 +136,33 @@ export default class AbstractCLI implements AbstractInterface {
     }
   };
 
+  pages = {
+    list: async (fileOrBranchDescriptor: BranchDescriptor | FileDescriptor) => {
+      let files;
+
+      if (fileOrBranchDescriptor.fileId) {
+        files = [await this.files.info(fileOrBranchDescriptor)];
+      } else {
+        // $FlowFixMe: with no fileId fileOrBranchDescriptor is a BranchDescriptor
+        files = await this.files.list(fileOrBranchDescriptor);
+      }
+
+      return flatMap(files, file => file.pages);
+    },
+    info: async (pageDescriptor: PageDescriptor) => {
+      const { pages } = await this.files.info({
+        projectId: pageDescriptor.projectId,
+        branchId: pageDescriptor.branchId,
+        sha: pageDescriptor.sha,
+        fileId: pageDescriptor.fileId
+      });
+
+      return find(pages, { id: pageDescriptor.pageId });
+    }
+  };
+
   layers = {
-    async list(fileDescriptor: FileDescriptor) {
+    list: async (fileDescriptor: FileDescriptor) => {
       return await this.spawn([
         "layers",
         fileDescriptor.projectId,
@@ -138,7 +170,7 @@ export default class AbstractCLI implements AbstractInterface {
         fileDescriptor.fileId
       ]);
     },
-    async info(layerDescriptor: LayerDescriptor) {
+    info: async (layerDescriptor: LayerDescriptor) => {
       return await this.spawn([
         "layer",
         "meta",
@@ -148,7 +180,7 @@ export default class AbstractCLI implements AbstractInterface {
         layerDescriptor.layerId
       ]);
     },
-    async data(layerDescriptor: LayerDescriptor) {
+    data: async (layerDescriptor: LayerDescriptor) => {
       return await this.spawn([
         "layer",
         "data",
@@ -161,9 +193,9 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   collections = {
-    async list(
+    list: async (
       projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor
-    ) {
+    ) => {
       if (projectOrBranchDescriptor.branchId) {
         return await this.spawn([
           "collections",
@@ -178,7 +210,7 @@ export default class AbstractCLI implements AbstractInterface {
         ]);
       }
     },
-    async info(collectionDescriptor: CollectionDescriptor) {
+    info: async (collectionDescriptor: CollectionDescriptor) => {
       return await this.spawn([
         "collection",
         collectionDescriptor.projectId,

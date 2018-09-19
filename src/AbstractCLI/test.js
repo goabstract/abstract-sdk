@@ -46,6 +46,13 @@ const MOCK_FILE_DESCRIPTOR = {
   fileId: "file-id"
 };
 
+const MOCK_PAGE_DESCRIPTOR = {
+  projectId: "project-id",
+  branchId: "branch-id",
+  fileId: "file-id",
+  pageId: "page-id"
+};
+
 const MOCK_LAYER_DESCRIPTOR = {
   projectId: "project-id",
   branchId: "branch-id",
@@ -140,6 +147,55 @@ describe(AbstractCLI, () => {
       ["files.list", { ...MOCK_BRANCH_DESCRIPTOR, sha: "sha" }],
       ["files.list", { ...MOCK_COMMIT_DESCRIPTOR, sha: "sha" }],
       ["files.info", { ...MOCK_FILE_DESCRIPTOR, sha: "sha" }],
+      // files
+      [
+        "pages.list",
+        MOCK_FILE_DESCRIPTOR,
+        {
+          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
+          result: [{ id: "1" }, { id: "2" }]
+        }
+      ],
+      [
+        "pages.list",
+        { ...MOCK_FILE_DESCRIPTOR, sha: "sha" },
+        {
+          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
+          result: [{ id: "1" }, { id: "2" }]
+        }
+      ],
+      [
+        "pages.list",
+        MOCK_BRANCH_DESCRIPTOR,
+        {
+          stdout: '[{"pages":[{"id":"1"}]},{"pages":[{"id":"2"}]}]',
+          result: [{ id: "1" }, { id: "2" }]
+        }
+      ],
+      [
+        "pages.list",
+        { ...MOCK_BRANCH_DESCRIPTOR, sha: "sha" },
+        {
+          stdout: '[{"pages":[{"id":"1"}]},{"pages":[{"id":"2"}]}]',
+          result: [{ id: "1" }, { id: "2" }]
+        }
+      ],
+      [
+        "pages.info",
+        MOCK_PAGE_DESCRIPTOR,
+        {
+          stdout: '{"pages":[{"id":"not-page-id"},{"id":"page-id"}]}',
+          result: { id: "page-id" }
+        }
+      ],
+      [
+        "pages.info",
+        { ...MOCK_PAGE_DESCRIPTOR, sha: "sha" },
+        {
+          stdout: '{"pages":[{"id":"not-page-id"},{"id":"page-id"}]}',
+          result: { id: "page-id" }
+        }
+      ],
       // layers
       ["layers.list", MOCK_FILE_DESCRIPTOR],
       ["layers.data", MOCK_LAYER_DESCRIPTOR],
@@ -153,9 +209,7 @@ describe(AbstractCLI, () => {
       ["collections.info", MOCK_COLLECTION_DESCRIPTOR]
     ])("%s(%p)", async (property, descriptor, options = {}) => {
       const transport = new AbstractCLI(
-        buildOptions({
-          abstractCliPath: ["./fixtures/abstract-cli"]
-        })
+        buildOptions({ abstractCliPath: ["./fixtures/abstract-cli"] })
       );
 
       const transportMethod = get(transport, property).bind(transport);
@@ -166,8 +220,16 @@ describe(AbstractCLI, () => {
         on: jest.fn().mockReturnThis()
       });
 
-      await expect(transportMethod(descriptor)).resolves;
-      expect(child_process.spawn.mock.calls).toMatchSnapshot();
+      const result = transportMethod(descriptor);
+
+      await expect(result).resolves;
+
+      if (options.result) {
+        expect(await result).toEqual(options.result);
+      }
+
+      expect(child_process.spawn.mock.calls.length).toEqual(1);
+      expect(child_process.spawn.mock.calls[0]).toMatchSnapshot();
     });
   });
 });
