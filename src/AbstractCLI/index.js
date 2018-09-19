@@ -19,6 +19,12 @@ function parsePath(input: ?string): ?Array<string> {
   return input.split(path.delimiter || ":");
 }
 
+function ref(
+  objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+) {
+  return objectDescriptor.sha || objectDescriptor.branchId;
+}
+
 type Options = {
   abstractToken: string,
   abstractCliPath?: string[],
@@ -83,14 +89,24 @@ export default class AbstractCLI implements AbstractInterface {
     async info(
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) {
-      const sha = objectDescriptor.sha || objectDescriptor.branchId;
-
       if (objectDescriptor.layerId) {
-        return await this.spawn(["commit", objectDescriptor.projectId, sha]);
+        return await this.spawn([
+          "commit",
+          objectDescriptor.projectId,
+          ref(objectDescriptor)
+        ]);
       } else if (objectDescriptor.fileId) {
-        return await this.spawn(["commit", objectDescriptor.projectId, sha]);
+        return await this.spawn([
+          "commit",
+          objectDescriptor.projectId,
+          ref(objectDescriptor)
+        ]);
       } else if (objectDescriptor.branchId) {
-        return await this.spawn(["commit", objectDescriptor.projectId, sha]);
+        return await this.spawn([
+          "commit",
+          objectDescriptor.projectId,
+          ref(objectDescriptor)
+        ]);
       }
     }
   };
@@ -100,14 +116,14 @@ export default class AbstractCLI implements AbstractInterface {
       return await this.spawn([
         "files",
         branchDescriptor.projectId,
-        branchDescriptor.sha
+        ref(branchDescriptor)
       ]);
     },
     async info(fileDescriptor: FileDescriptor) {
       return await this.spawn([
         "file",
         fileDescriptor.projectId,
-        fileDescriptor.sha,
+        ref(fileDescriptor),
         fileDescriptor.fileId
       ]);
     }
@@ -118,7 +134,7 @@ export default class AbstractCLI implements AbstractInterface {
       return await this.spawn([
         "layers",
         fileDescriptor.projectId,
-        fileDescriptor.sha,
+        ref(fileDescriptor),
         fileDescriptor.fileId
       ]);
     },
@@ -127,7 +143,7 @@ export default class AbstractCLI implements AbstractInterface {
         "layer",
         "meta",
         layerDescriptor.projectId,
-        layerDescriptor.sha,
+        ref(layerDescriptor),
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
@@ -137,7 +153,7 @@ export default class AbstractCLI implements AbstractInterface {
         "layer",
         "data",
         layerDescriptor.projectId,
-        layerDescriptor.sha,
+        ref(layerDescriptor),
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
