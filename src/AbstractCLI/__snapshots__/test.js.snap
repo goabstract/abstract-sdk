@@ -11,7 +11,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -28,7 +28,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -43,7 +43,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -59,7 +59,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -75,7 +75,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -91,7 +91,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -107,7 +107,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -123,7 +123,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -139,7 +139,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -157,7 +157,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -175,7 +175,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -193,7 +193,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -211,7 +211,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -227,7 +227,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -243,7 +243,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -262,7 +262,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -281,7 +281,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -298,7 +298,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -315,7 +315,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -331,7 +331,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -347,7 +347,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -363,7 +363,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -379,7 +379,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -398,7 +398,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -417,7 +417,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -434,7 +434,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -451,7 +451,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -468,7 +468,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -485,7 +485,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -502,7 +502,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -519,7 +519,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -535,7 +535,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;
@@ -551,7 +551,7 @@ Array [
     "--api-url=https://api.goabstract.com",
   ],
   Object {
-    "cwd": "/Users/amccloud/Labs/goabstract/abstract-js",
+    "cwd": "<PROJECT_ROOT>",
   },
 ]
 `;

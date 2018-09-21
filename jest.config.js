@@ -1,3 +1,4 @@
 module.exports = {
-  testPathIgnorePatterns: ["<rootDir>/lib"]
+  testPathIgnorePatterns: ["<rootDir>/lib"],
+  snapshotSerializers: ["jest-serializer-path"]
 };

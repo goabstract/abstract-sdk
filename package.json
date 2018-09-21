@@ -47,6 +47,7 @@
     "flow-bin": "^0.80.0",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0",
+    "jest-serializer-path": "^0.1.15",
     "prettier": "^1.14.2",
     "readable-stream": "^3.0.3"
   },

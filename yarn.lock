@@ -2981,6 +2981,14 @@ jest-runtime@^23.6.0:
     write-file-atomic "^2.1.0"
     yargs "^11.0.0"
 
+jest-serializer-path@^0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/jest-serializer-path/-/jest-serializer-path-0.1.15.tgz#68528c98e3f8be652484f1c3876228f6864bd662"
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+    lodash.iserror "^3.1.1"
+    slash "^2.0.0"
+
 jest-serializer@^23.0.1:
   version "23.0.1"
   resolved "https://registry.yarnpkg.com/jest-serializer/-/jest-serializer-23.0.1.tgz#a3776aeb311e90fe83fab9e533e85102bd164165"
@@ -3248,9 +3256,17 @@ lodash.assign@^4.0.3, lodash.assign@^4.0.6:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
+lodash.iserror@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.iserror/-/lodash.iserror-3.1.1.tgz#297b9a05fab6714bc2444d7cc19d1d7c44b5ecec"
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
