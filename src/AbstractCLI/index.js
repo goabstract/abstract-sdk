@@ -2,11 +2,11 @@
 import path from "path";
 import { spawn } from "child_process";
 import { Buffer } from "buffer";
-import debug from "debug";
 import find from "lodash/find";
 import flatMap from "lodash/flatMap";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
+import debug, { debugArgs } from "../debug";
 import type {
   AbstractInterface,
   ProjectDescriptor,
@@ -50,16 +50,24 @@ type Options = {
 export default class AbstractCLI implements AbstractInterface {
   abstractToken: string;
   abstractCliPath: string;
+  cwd: string;
 
   constructor({
     cwd = process.cwd(),
     abstractToken,
     abstractCliPath = parsePath(process.env.ABSTRACT_CLI_PATH) || [
-      path.join(cwd, "abstract-cli"), // Relative to cwd
-      path.join(cwd, "node_modules/@elasticprojects/abstract-cli"), // Relative to node_modules in cwd (also makes test easier)
-      "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli" // macOS App
+      // Relative to cwd
+      path.join(cwd, "abstract-cli"),
+      // Relative to node_modules in cwd (also makes test easier)
+      path.join(
+        cwd,
+        "node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
+      ),
+      // macOS App
+      "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli"
     ]
   }: Options) {
+    this.cwd = cwd;
     this.abstractToken = abstractToken;
 
     try {
@@ -229,15 +237,21 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   async spawn(args: string[]) {
-    debug("abstract:transport:AbstractCLI")(args);
-
     return new Promise((resolve, reject) => {
-      const abstractCli = spawn(this.abstractCliPath, [
-        ...args,
-        `--user-token=${this.abstractToken}`,
-        `--api-url=${process.env.ABSTRACT_API_URL ||
-          "https://api.goabstract.com"}`
-      ]);
+      const abstractCli = spawn(
+        ...debugArgs("AbstractCLI:spawn")(
+          `./${path.relative(this.cwd, this.abstractCliPath)}`,
+          [
+            ...args,
+            `--user-token=${this.abstractToken}`,
+            `--api-url=${process.env.ABSTRACT_API_URL ||
+              "https://api.goabstract.com"}`
+          ],
+          {
+            cwd: this.cwd
+          }
+        )
+      );
 
       let stderrBuffer = new Buffer.from("");
       abstractCli.stderr.on("data", chunk => {
@@ -246,12 +260,21 @@ export default class AbstractCLI implements AbstractInterface {
 
       abstractCli.stdout
         .pipe(JSONStream.parse())
-        .on("data", resolve)
-        .on("error", reject);
+        .on("data", data => {
+          debug("AbstractCLI:stdout:data")(data);
+          resolve(data);
+        })
+        .on("error", error => {
+          debug("AbstractCLI:stdout:error")(error.toString());
+          reject(error);
+        });
 
       abstractCli.on("error", reject);
       abstractCli.on("close", errorCode => {
+        debug("AbstractCLI:close")(errorCode);
+
         if (errorCode !== 0) {
+          debug("AbstractCLI:error")(stderrBuffer.toString());
           reject(stderrBuffer); // Reject stderr for non-zero error codes
         }
       });
