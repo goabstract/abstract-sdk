@@ -2,10 +2,14 @@
   "name": "abstract-js",
   "version": "0.1.0",
   "description": "",
-  "files": ["/lib", "/docs"],
+  "files": [
+    "/lib",
+    "/docs"
+  ],
   "main": "lib/index.js",
   "scripts": {
-    "lint": "yarn eslint .",
+    "build": "babel ./src -d ./lib",
+    "lint": "eslint .",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "ci": "yarn lint && yarn flow && yarn test"
@@ -21,6 +25,7 @@
   },
   "homepage": "https://github.com/goabstract/abstract-js#readme",
   "devDependencies": {
+    "@babel/cli": "7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
