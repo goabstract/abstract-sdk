@@ -60,7 +60,7 @@ export interface AbstractInterface {
   };
 
   files: {
-    list: (BranchDescriptor | ObjectDescriptor) => Promise<Array<*>>,
+    list: BranchDescriptor => Promise<Array<*>>,
     info: FileDescriptor => Promise<*>
   };
 

@@ -155,16 +155,12 @@ export default class AbstractCLI implements AbstractInterface {
 
   pages = {
     list: async (fileOrBranchDescriptor: BranchDescriptor | FileDescriptor) => {
-      let files;
+      const { pages } = fileOrBranchDescriptor.fileId
+        ? await this.files.info(fileOrBranchDescriptor)
+        : // $FlowFixMe: fileOrBranchDescriptor with no fileId is a BranchDescriptor
+          await this.files.list(fileOrBranchDescriptor);
 
-      if (fileOrBranchDescriptor.fileId) {
-        files = [await this.files.info(fileOrBranchDescriptor)];
-      } else {
-        // $FlowFixMe: with no fileId fileOrBranchDescriptor is a BranchDescriptor
-        files = await this.files.list(fileOrBranchDescriptor);
-      }
-
-      return flatMap(files, file => file.pages);
+      return pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
       const { pages } = await this.files.info(

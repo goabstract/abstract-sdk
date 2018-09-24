@@ -140,7 +140,7 @@ describe(AbstractCLI, () => {
         "pages.list",
         buildBranchDescriptor(),
         {
-          stdout: '[{"pages":[{"id":"1"}]},{"pages":[{"id":"2"}]}]',
+          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
           result: [{ id: "1" }, { id: "2" }]
         }
       ],
@@ -148,7 +148,7 @@ describe(AbstractCLI, () => {
         "pages.list",
         buildBranchDescriptor({ sha: "sha" }),
         {
-          stdout: '[{"pages":[{"id":"1"}]},{"pages":[{"id":"2"}]}]',
+          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
           result: [{ id: "1" }, { id: "2" }]
         }
       ],
