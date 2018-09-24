@@ -83,11 +83,11 @@ export default class AbstractCLI implements AbstractInterface {
   }
 
   commits = {
-    list: async (
+    list: (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => {
       if (objectDescriptor.layerId) {
-        return await this.spawn([
+        return this.spawn([
           "commits",
           objectDescriptor.projectId,
           objectDescriptor.branchId,
@@ -95,7 +95,7 @@ export default class AbstractCLI implements AbstractInterface {
           objectDescriptor.layerId
         ]);
       } else if (objectDescriptor.fileId) {
-        return await this.spawn([
+        return this.spawn([
           "commits",
           objectDescriptor.projectId,
           objectDescriptor.branchId,
@@ -103,30 +103,30 @@ export default class AbstractCLI implements AbstractInterface {
           objectDescriptor.fileId
         ]);
       } else {
-        return await this.spawn([
+        return this.spawn([
           "commits",
           objectDescriptor.projectId,
           objectDescriptor.branchId
         ]);
       }
     },
-    info: async (
+    info: (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => {
       if (objectDescriptor.layerId) {
-        return await this.spawn([
+        return this.spawn([
           "commit",
           objectDescriptor.projectId,
           ref(objectDescriptor)
         ]);
       } else if (objectDescriptor.fileId) {
-        return await this.spawn([
+        return this.spawn([
           "commit",
           objectDescriptor.projectId,
           ref(objectDescriptor)
         ]);
       } else {
-        return await this.spawn([
+        return this.spawn([
           "commit",
           objectDescriptor.projectId,
           ref(objectDescriptor)
@@ -136,15 +136,15 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   files = {
-    list: async (branchDescriptor: BranchDescriptor) => {
-      return await this.spawn([
+    list: (branchDescriptor: BranchDescriptor) => {
+      return this.spawn([
         "files",
         branchDescriptor.projectId,
         ref(branchDescriptor)
       ]);
     },
-    info: async (fileDescriptor: FileDescriptor) => {
-      return await this.spawn([
+    info: (fileDescriptor: FileDescriptor) => {
+      return this.spawn([
         "file",
         fileDescriptor.projectId,
         ref(fileDescriptor),
@@ -176,16 +176,16 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   layers = {
-    list: async (fileDescriptor: FileDescriptor) => {
-      return await this.spawn([
+    list: (fileDescriptor: FileDescriptor) => {
+      return this.spawn([
         "layers",
         fileDescriptor.projectId,
         ref(fileDescriptor),
         fileDescriptor.fileId
       ]);
     },
-    info: async (layerDescriptor: LayerDescriptor) => {
-      return await this.spawn([
+    info: (layerDescriptor: LayerDescriptor) => {
+      return this.spawn([
         "layer",
         "meta",
         layerDescriptor.projectId,
@@ -197,8 +197,8 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   data = {
-    layer: async (layerDescriptor: LayerDescriptor) => {
-      return await this.spawn([
+    layer: (layerDescriptor: LayerDescriptor) => {
+      return this.spawn([
         "layer",
         "data",
         layerDescriptor.projectId,
@@ -210,25 +210,20 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   collections = {
-    list: async (
-      projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor
-    ) => {
+    list: (projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor) => {
       if (projectOrBranchDescriptor.branchId) {
-        return await this.spawn([
+        return this.spawn([
           "collections",
           projectOrBranchDescriptor.projectId,
           "--branch",
           projectOrBranchDescriptor.branchId
         ]);
       } else {
-        return await this.spawn([
-          "collections",
-          projectOrBranchDescriptor.projectId
-        ]);
+        return this.spawn(["collections", projectOrBranchDescriptor.projectId]);
       }
     },
-    info: async (collectionDescriptor: CollectionDescriptor) => {
-      return await this.spawn([
+    info: (collectionDescriptor: CollectionDescriptor) => {
+      return this.spawn([
         "collection",
         collectionDescriptor.projectId,
         collectionDescriptor.collectionId
