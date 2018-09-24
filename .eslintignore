@@ -1,2 +1,4 @@
 node_modules
+flow-typed
+__snapshots__
 /lib

@@ -1,0 +1,80 @@
+// @flow
+
+export type ProjectDescriptor = {|
+  projectId: string
+|};
+
+export type ObjectDescriptor = {|
+  projectId: string,
+  branchId: string | "master",
+  sha?: string | "latest" // undefined is "latest"
+|};
+
+export type BranchDescriptor = ObjectDescriptor;
+
+export type CollectionDescriptor = {|
+  ...ObjectDescriptor,
+  collectionId: string
+|};
+
+export type FileDescriptor = {|
+  ...ObjectDescriptor,
+  fileId: string
+|};
+
+export type PageDescriptor = {|
+  ...ObjectDescriptor,
+  fileId: string,
+  pageId: string
+|};
+
+export type LayerDescriptor = {|
+  ...ObjectDescriptor,
+  fileId: string,
+  pageId: string,
+  layerId: string
+|};
+
+export type Cursor<T> = Promise<{
+  value: T,
+  done: boolean
+}> & {
+  currentPage: number // possibly under pageInfo?
+  // next(): <T>Cursor,
+  // [Symbol.asyncIterator](): string
+};
+
+export interface AbstractInterface {
+  abstractToken: string;
+
+  collections: {
+    list: (ProjectDescriptor | BranchDescriptor) => Promise<Array<*>>,
+    info: CollectionDescriptor => Promise<*>
+  };
+
+  commits: {
+    list: (
+      BranchDescriptor | FileDescriptor | LayerDescriptor
+    ) => Promise<Array<*>>,
+    info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>
+  };
+
+  files: {
+    list: BranchDescriptor => Promise<Array<*>>,
+    info: FileDescriptor => Promise<*>
+  };
+
+  pages: {
+    list: (BranchDescriptor | FileDescriptor) => Promise<Array<*>>,
+    info: PageDescriptor => Promise<*>
+  };
+
+  layers: {
+    list: FileDescriptor => Promise<Array<*>>,
+    info: LayerDescriptor => Promise<*>
+  };
+
+  data: {
+    layer: LayerDescriptor => Promise<*>
+  };
+}

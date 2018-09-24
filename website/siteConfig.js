@@ -10,7 +10,7 @@
 
 const siteConfig = {
   title: "abstract-js", // Title for your website.
-  tagline: "A website for testing",
+  tagline: "Universal javascript binding for Abstract's API",
   url: "https://abstract-js.github.io", // Your website URL
   baseUrl: "/", // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
@@ -26,19 +26,19 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: "doc1", label: "Docs" },
-    { doc: "doc4", label: "API" },
-    { page: "help", label: "Help" }
+    { doc: "index", label: "Docs" },
+    { doc: "api", label: "API" },
+    { href: "https://spectrum.chat/abstract", label: "Help" }
   ],
 
   // List of projects/orgs using your project for the users page.
   users: [
     {
-      caption: "User1",
+      caption: "Abstract",
       // You will need to prepend the image path with your baseUrl
       // if it is not '/', like: '/test-site/img/docusaurus.svg'.
-      image: "/img/docusaurus.svg",
-      infoLink: "https://www.facebook.com",
+      image: "img/docusaurus.svg",
+      infoLink: "https://goabstract.com",
       pinned: true
     }
   ],
@@ -50,8 +50,8 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: "#2E8555",
-    secondaryColor: "#205C3B"
+    primaryColor: "#ff5c50",
+    secondaryColor: "#b9453d"
   },
 
   /* Custom fonts for website */
@@ -73,7 +73,7 @@ const siteConfig = {
 
   highlight: {
     // Highlight.js theme to use for syntax highlighting in code blocks.
-    theme: "default"
+    theme: "atom-one-dark"
   },
 
   // Add custom scripts here that would be placed in <script> tags.
