@@ -3,7 +3,6 @@ import path from "path";
 import { spawn } from "child_process";
 import { Buffer } from "buffer";
 import find from "lodash/find";
-import flatMap from "lodash/flatMap";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
 import debug, { debugArgs } from "../debug";
