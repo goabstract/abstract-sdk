@@ -54,7 +54,7 @@ export interface AbstractInterface {
 
   commits: {
     list: (
-      BranchDescriptor | ObjectDescriptor | FileDescriptor | LayerDescriptor
+      BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => Promise<Array<*>>,
     info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>
   };
@@ -65,9 +65,7 @@ export interface AbstractInterface {
   };
 
   pages: {
-    list: (
-      BranchDescriptor | ObjectDescriptor | FileDescriptor
-    ) => Promise<Array<*>>,
+    list: (BranchDescriptor | FileDescriptor) => Promise<Array<*>>,
     info: PageDescriptor => Promise<*>
   };
 
