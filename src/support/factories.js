@@ -1,7 +1,7 @@
 // @flow
 import type {
   ProjectDescriptor,
-  ObjectDescriptor,
+  CommitDescriptor,
   BranchDescriptor,
   FileDescriptor,
   PageDescriptor,
@@ -18,7 +18,7 @@ export function buildProjectDescriptor(
   };
 }
 
-export function buildCommitDescriptor(objectDescriptor: *): ObjectDescriptor {
+export function buildCommitDescriptor(objectDescriptor: *): CommitDescriptor {
   return {
     projectId: "project-id",
     branchId: "branch-id",

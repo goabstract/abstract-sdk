@@ -4,32 +4,32 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
-export type ObjectDescriptor = {|
+export type CommitDescriptor = {|
   projectId: string,
   branchId: string | "master",
   sha?: string | "latest" // undefined is "latest"
 |};
 
-export type BranchDescriptor = ObjectDescriptor;
+export type BranchDescriptor = CommitDescriptor;
 
 export type CollectionDescriptor = {|
-  ...ObjectDescriptor,
+  ...CommitDescriptor,
   collectionId: string
 |};
 
 export type FileDescriptor = {|
-  ...ObjectDescriptor,
+  ...CommitDescriptor,
   fileId: string
 |};
 
 export type PageDescriptor = {|
-  ...ObjectDescriptor,
+  ...CommitDescriptor,
   fileId: string,
   pageId: string
 |};
 
 export type LayerDescriptor = {|
-  ...ObjectDescriptor,
+  ...CommitDescriptor,
   fileId: string,
   pageId: string,
   layerId: string

@@ -80,7 +80,7 @@ abstract.files.info({
 }
 ```
 
-#### ObjectDescriptor
+#### CommitDescriptor
 
 ```js
 {
