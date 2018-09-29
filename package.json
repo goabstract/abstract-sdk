@@ -32,6 +32,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@elasticprojects/eslint-config-abstract": "^4.1.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.6.0",
@@ -58,7 +59,6 @@
     "proxy-deep": "^2.1.1"
   },
   "peerDependencies": {
-    "@elasticprojects/abstract-cli": "^0.31.0",
-    "@elasticprojects/eslint-config-abstract": "^4.1.0"
+    "@elasticprojects/abstract-cli": "^0.31.0"
   }
 }
