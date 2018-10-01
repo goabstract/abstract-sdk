@@ -3,6 +3,7 @@ import child_process from "child_process";
 import { Readable } from "readable-stream";
 import get from "lodash/get";
 import {
+  buildOptions,
   buildProjectDescriptor,
   buildBranchDescriptor,
   buildCommitDescriptor,
@@ -15,16 +16,9 @@ import AbstractCLI from "./";
 
 jest.mock("child_process");
 
-function buildOptions(options: *) {
-  return {
-    abstractToken: "1",
-    ...options
-  };
-}
-
 function buildTextStream(text?: string): ReadableStream {
   const stream = new Readable();
-  stream._read = () => {}; // required
+  stream._read = () => {}; // required interface
 
   if (text !== undefined) {
     stream.push(text);
@@ -119,39 +113,9 @@ describe(AbstractCLI, () => {
       ["files.list", buildBranchDescriptor({ sha: "sha" })],
       ["files.list", buildCommitDescriptor({ sha: "sha" })],
       ["files.info", buildFileDescriptor({ sha: "sha" })],
-      // files
-      [
-        "pages.list",
-        buildFileDescriptor(),
-        {
-          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
-          result: [{ id: "1" }, { id: "2" }]
-        }
-      ],
-      [
-        "pages.list",
-        buildFileDescriptor({ sha: "sha" }),
-        {
-          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
-          result: [{ id: "1" }, { id: "2" }]
-        }
-      ],
-      [
-        "pages.list",
-        buildBranchDescriptor(),
-        {
-          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
-          result: [{ id: "1" }, { id: "2" }]
-        }
-      ],
-      [
-        "pages.list",
-        buildBranchDescriptor({ sha: "sha" }),
-        {
-          stdout: '{"pages":[{"id":"1"},{"id":"2"}]}',
-          result: [{ id: "1" }, { id: "2" }]
-        }
-      ],
+      // pages
+      ["pages.list", buildFileDescriptor()],
+      ["pages.list", buildFileDescriptor({ sha: "sha" })],
       [
         "pages.info",
         buildPageDescriptor(),
@@ -190,7 +154,6 @@ describe(AbstractCLI, () => {
       });
 
       const result = transportMethod(descriptor);
-
       await expect(result).resolves;
 
       if (options.result) {
