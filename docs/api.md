@@ -3,13 +3,21 @@ id: api
 title: API
 ---
 
-[auto-blue]: https://img.shields.io/badge/AUTO-blue.svg
-[cli-default]: https://img.shields.io/badge/CLI-lightgrey.svg
-[api-default]: https://img.shields.io/badge/API-lightgrey.svg
+[auto-icon]: https://img.shields.io/badge/AUTO-blue.svg
+[cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
+[api-icon]: https://img.shields.io/badge/API-lightgrey.svg
 
 ## Authentication
 
+### Abstract Token
+
 Create a [Abstract authentication token](https://app.goabstract.com)
+
+## Transports
+
+### AUTO
+### API
+### CLI
 
 ## Methods
 
@@ -27,9 +35,9 @@ Create a [Abstract authentication token](https://app.goabstract.com)
 
 ### Files
 
-#### files.list([BranchDescriptor](#branchdescriptor)): Promise<[File](#file)[]> ![CLI][cli-default]
+#### files.list([BranchDescriptor](#branchdescriptor)): Promise<[File](#file)[]> ![CLI][cli-icon] ![API][api-icon]
 
-List files for a branch at head or sha
+List files for a branch at head
 
 ```js
 abstract.files.list({
@@ -38,9 +46,9 @@ abstract.files.list({
 });
 ```
 
-#### files.info([FileDescriptor](#filedescriptor)): Promise<[File](#file)> ![CLI][cli-default]
+#### files.info([FileDescriptor](#filedescriptor)): Promise<[File](#file)> ![CLI][cli-icon] ![API][api-icon]
 
-Get file at head or sha
+Get file at head
 
 ```js
 abstract.files.info({

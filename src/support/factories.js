@@ -9,6 +9,13 @@ import type {
   CollectionDescriptor
 } from "../";
 
+export function buildOptions(options: *) {
+  return {
+    abstractToken: "abstract-token",
+    ...options
+  };
+}
+
 export function buildProjectDescriptor(
   projectDescriptor: *
 ): ProjectDescriptor {
@@ -58,6 +65,7 @@ export function buildLayerDescriptor(layerDescriptor: *): LayerDescriptor {
   return {
     projectId: "project-id",
     branchId: "branch-id",
+    sha: "layer-sha",
     fileId: "file-id",
     pageId: "page-id",
     layerId: "layer-id",
