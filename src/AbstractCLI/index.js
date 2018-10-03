@@ -77,10 +77,6 @@ export default class AbstractCLI implements AbstractInterface {
         [
           "--user-token",
           this.abstractToken,
-          "--user-id",
-          "38f13175-7093-4978-801a-c0e475b623aa",
-          "--user-name",
-          "amccloud",
           "--api-url",
           process.env.ABSTRACT_API_URL || "https://api.goabstract.com",
           ...args // First args win for https://github.com/spf13/cobra
