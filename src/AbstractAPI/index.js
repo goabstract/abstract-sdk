@@ -3,6 +3,7 @@
 import "isomorphic-fetch";
 import queryString from "query-string";
 import find from "lodash/find";
+import { version } from "../../package.json";
 import { fileCommitDescriptor, pageFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
@@ -16,6 +17,7 @@ import type {
 } from "../";
 import randomTraceId from "./randomTraceId";
 
+const minorVersion = version.split(".", 2).join(".");
 const logStatusError = log.extend("AbstractAPI:status:error");
 const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
@@ -44,6 +46,7 @@ export default class AbstractAPI implements AbstractInterface {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "User-Agent": `Abstract SDK ${minorVersion}`,
       Authorization: `Bearer ${this.abstractToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
       ...(init.headers || {})
@@ -63,7 +66,7 @@ export default class AbstractAPI implements AbstractInterface {
     const request = fetch(...fetchArgs);
     const response = await request;
 
-    if (response.status < 200 || response.status >= 300) {
+    if (!response.ok) {
       if (logStatusError.enabled) {
         logStatusError(
           await response.clone().json() // Clone the response as response.body can only be used once
