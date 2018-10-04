@@ -5,7 +5,8 @@ import { Buffer } from "buffer";
 import find from "lodash/find";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
-import debug, { debugArgs } from "../debug";
+import { ref, pageFileDescriptor } from "../utils";
+import { log } from "../debug";
 import type {
   AbstractInterface,
   ProjectDescriptor,
@@ -16,28 +17,16 @@ import type {
   CollectionDescriptor
 } from "../";
 
+const logSpawn = log.extend("AbstractCLI:spawn");
+const logError = log.extend("AbstractCLI:error");
+const logStdoutError = log.extend("AbstractCLI:stdout:error");
+const logStdoutData = log.extend("AbstractCLI:stdout:data");
+const logStderrData = log.extend("AbstractCLI:stderr");
+const logClose = log.extend("AbstractCLI:close");
+
 function parsePath(input: ?string): ?Array<string> {
   if (!input) return;
   return input.split(path.delimiter || ":");
-}
-
-function ref(
-  objectDescriptor:
-    | BranchDescriptor
-    | FileDescriptor
-    | PageDescriptor
-    | LayerDescriptor
-) {
-  return objectDescriptor.sha || objectDescriptor.branchId;
-}
-
-function fileDescriptorForPage(pageDescriptor: PageDescriptor) {
-  return {
-    projectId: pageDescriptor.projectId,
-    branchId: pageDescriptor.branchId,
-    sha: pageDescriptor.sha,
-    fileId: pageDescriptor.fileId
-  };
 }
 
 type Options = {
@@ -81,56 +70,81 @@ export default class AbstractCLI implements AbstractInterface {
     }
   }
 
+  async spawn(args: string[]) {
+    return new Promise((resolve, reject) => {
+      const spawnArgs = [
+        `./${path.relative(this.cwd, this.abstractCliPath)}`,
+        [
+          "--user-token",
+          this.abstractToken,
+          "--api-url",
+          process.env.ABSTRACT_API_URL || "https://api.goabstract.com",
+          ...args // First args win for https://github.com/spf13/cobra
+        ],
+        { cwd: this.cwd }
+      ];
+
+      logSpawn(spawnArgs);
+      const abstractCli = spawn(...spawnArgs);
+
+      let stderrBuffer = new Buffer.from("");
+      abstractCli.stderr.on("data", chunk => {
+        logStderrData(chunk.toString());
+        stderrBuffer.concat(chunk);
+      });
+
+      abstractCli.stdout
+        .pipe(JSONStream.parse())
+        .on("data", data => {
+          logStdoutData(data);
+          resolve(data);
+        })
+        .on("error", error => {
+          logStdoutError(error.toString());
+          reject(error);
+        });
+
+      abstractCli.on("error", reject);
+      abstractCli.on("close", errorCode => {
+        logClose(errorCode);
+
+        if (errorCode !== 0) {
+          logError(stderrBuffer.toString());
+          reject(stderrBuffer); // Reject stderr for non-zero error codes
+        }
+      });
+    });
+  }
+
   commits = {
     list: (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => {
-      if (objectDescriptor.layerId) {
-        return this.spawn([
-          "commits",
-          objectDescriptor.projectId,
-          objectDescriptor.branchId,
-          "--layer-id",
-          objectDescriptor.layerId
-        ]);
-      } else if (objectDescriptor.fileId) {
-        return this.spawn([
-          "commits",
-          objectDescriptor.projectId,
-          objectDescriptor.branchId,
-          "--file-id",
-          objectDescriptor.fileId
-        ]);
-      } else {
-        return this.spawn([
-          "commits",
-          objectDescriptor.projectId,
-          objectDescriptor.branchId
-        ]);
-      }
+      const fileIdArgs =
+        objectDescriptor.fileId && !objectDescriptor.layerId
+          ? ["--file-id", objectDescriptor.fileId]
+          : [];
+
+      const layerIdArgs = objectDescriptor.layerId
+        ? ["--layer-id", objectDescriptor.layerId]
+        : [];
+
+      return this.spawn([
+        "commits",
+        objectDescriptor.projectId,
+        objectDescriptor.branchId,
+        ...fileIdArgs,
+        ...layerIdArgs
+      ]);
     },
     info: (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => {
-      if (objectDescriptor.layerId) {
-        return this.spawn([
-          "commit",
-          objectDescriptor.projectId,
-          ref(objectDescriptor)
-        ]);
-      } else if (objectDescriptor.fileId) {
-        return this.spawn([
-          "commit",
-          objectDescriptor.projectId,
-          ref(objectDescriptor)
-        ]);
-      } else {
-        return this.spawn([
-          "commit",
-          objectDescriptor.projectId,
-          ref(objectDescriptor)
-        ]);
-      }
+      return this.spawn([
+        "commit",
+        objectDescriptor.projectId,
+        ref(objectDescriptor)
+      ]);
     }
   };
 
@@ -153,17 +167,12 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   pages = {
-    list: async (fileOrBranchDescriptor: BranchDescriptor | FileDescriptor) => {
-      const { pages } = fileOrBranchDescriptor.fileId
-        ? await this.files.info(fileOrBranchDescriptor)
-        : // $FlowFixMe: fileOrBranchDescriptor with no fileId is a BranchDescriptor
-          await this.files.list(fileOrBranchDescriptor);
-
-      return pages;
+    list: async (fileDescriptor: FileDescriptor) => {
+      return await this.files.info(fileDescriptor);
     },
     info: async (pageDescriptor: PageDescriptor) => {
       const { pages } = await this.files.info(
-        fileDescriptorForPage(pageDescriptor)
+        pageFileDescriptor(pageDescriptor)
       );
 
       return find(pages, { id: pageDescriptor.pageId });
@@ -206,16 +215,15 @@ export default class AbstractCLI implements AbstractInterface {
 
   collections = {
     list: (projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor) => {
-      if (projectOrBranchDescriptor.branchId) {
-        return this.spawn([
-          "collections",
-          projectOrBranchDescriptor.projectId,
-          "--branch",
-          projectOrBranchDescriptor.branchId
-        ]);
-      } else {
-        return this.spawn(["collections", projectOrBranchDescriptor.projectId]);
-      }
+      const branchArgs = projectOrBranchDescriptor.branchId
+        ? ["--branch", projectOrBranchDescriptor.branchId]
+        : [];
+
+      return this.spawn([
+        "collections",
+        projectOrBranchDescriptor.projectId,
+        ...branchArgs
+      ]);
     },
     info: (collectionDescriptor: CollectionDescriptor) => {
       return this.spawn([
@@ -225,49 +233,4 @@ export default class AbstractCLI implements AbstractInterface {
       ]);
     }
   };
-
-  async spawn(args: string[]) {
-    return new Promise((resolve, reject) => {
-      const abstractCli = spawn(
-        ...debugArgs("AbstractCLI:spawn")(
-          `./${path.relative(this.cwd, this.abstractCliPath)}`,
-          [
-            ...args,
-            `--user-token=${this.abstractToken}`,
-            `--api-url=${process.env.ABSTRACT_API_URL ||
-              "https://api.goabstract.com"}`
-          ],
-          {
-            cwd: this.cwd
-          }
-        )
-      );
-
-      let stderrBuffer = new Buffer.from("");
-      abstractCli.stderr.on("data", chunk => {
-        stderrBuffer.concat(chunk);
-      });
-
-      abstractCli.stdout
-        .pipe(JSONStream.parse())
-        .on("data", data => {
-          debug("AbstractCLI:stdout:data")(data);
-          resolve(data);
-        })
-        .on("error", error => {
-          debug("AbstractCLI:stdout:error")(error.toString());
-          reject(error);
-        });
-
-      abstractCli.on("error", reject);
-      abstractCli.on("close", errorCode => {
-        debug("AbstractCLI:close")(errorCode);
-
-        if (errorCode !== 0) {
-          debug("AbstractCLI:error")(stderrBuffer.toString());
-          reject(stderrBuffer); // Reject stderr for non-zero error codes
-        }
-      });
-    });
-  }
 }

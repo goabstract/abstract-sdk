@@ -30,6 +30,7 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   ...CommitDescriptor,
+  sha: string | "latest",
   fileId: string,
   pageId: string,
   layerId: string
@@ -48,29 +49,30 @@ export interface AbstractInterface {
   abstractToken: string;
 
   collections: {
-    list: (ProjectDescriptor | BranchDescriptor) => Promise<Array<*>>,
-    info: CollectionDescriptor => Promise<*>
+    list: (
+      ProjectDescriptor | BranchDescriptor,
+      options?: Object
+    ) => Promise<*>,
+    info: (CollectionDescriptor, options?: Object) => Promise<*>
   };
 
   commits: {
-    list: (
-      BranchDescriptor | FileDescriptor | LayerDescriptor
-    ) => Promise<Array<*>>,
+    list: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>,
     info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>
   };
 
   files: {
-    list: BranchDescriptor => Promise<Array<*>>,
+    list: BranchDescriptor => Promise<*>,
     info: FileDescriptor => Promise<*>
   };
 
   pages: {
-    list: (BranchDescriptor | FileDescriptor) => Promise<Array<*>>,
+    list: FileDescriptor => Promise<*>,
     info: PageDescriptor => Promise<*>
   };
 
   layers: {
-    list: FileDescriptor => Promise<Array<*>>,
+    list: FileDescriptor => Promise<*>,
     info: LayerDescriptor => Promise<*>
   };
 
