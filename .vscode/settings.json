@@ -1,0 +1,7 @@
+{
+    "flow.useNPMPackagedFlow": true,
+    "flow.runOnAllFiles": true,
+    "typescript.format.enable": false,
+    "javascript.validate.enable": false,
+    "javascript.format.enable": false
+}
