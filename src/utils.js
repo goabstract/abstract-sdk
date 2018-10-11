@@ -5,7 +5,7 @@ import type {
   PageDescriptor,
   FileDescriptor,
   LayerDescriptor
-} from "../";
+} from "./";
 
 export function ref(
   objectDescriptor:
