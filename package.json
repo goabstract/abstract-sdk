@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
-    "ci": "yarn lint && yarn flow && yarn test"
+    "ci": "yarn lint && yarn flow && ABSTRACT_CLI_PATH=./fixtures/abstract-cli yarn test"
   },
   "repository": {
     "type": "git",
