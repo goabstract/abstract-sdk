@@ -21,6 +21,8 @@ describe("AbstractAPI", () => {
     });
 
     test.each([
+      // organizations
+      ["organizations.list", undefined],
       // collections
       ["collections.list", buildProjectDescriptor()],
       ["collections.list", buildBranchDescriptor()],

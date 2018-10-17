@@ -236,6 +236,21 @@ Array [
 ]
 `;
 
+exports[`AbstractAPI with mocked global.fetch organizations.list(undefined) 1`] = `
+Array [
+  "https://api.goabstract.com/organizations",
+  Object {
+    "headers": Object {
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.1",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
 exports[`AbstractAPI with mocked global.fetch pages.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
   "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/pages",

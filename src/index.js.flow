@@ -48,6 +48,10 @@ export type Cursor<T> = Promise<{
 export interface AbstractInterface {
   abstractToken: string;
 
+  organizations: {
+    list?: () => Promise<*>
+  };
+
   collections: {
     list: (
       ProjectDescriptor | BranchDescriptor,
