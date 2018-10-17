@@ -4,32 +4,42 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
-export type CommitDescriptor = {|
+export type ObjectDescriptor = {|
   projectId: string,
-  branchId: string | "master",
-  sha?: string | "latest" // undefined is "latest"
+  sha?: string, // undefined is "latest"
+
+  // Require branchId across all objects
+  branchId: $PropertyType<BranchDescriptor, "branchId"> // eslint-disable-line no-use-before-define
 |};
 
-export type BranchDescriptor = CommitDescriptor;
+export type CommitDescriptor = {|
+  ...ObjectDescriptor,
+  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">> // Commit is the only object read by it's sha
+|};
+
+export type BranchDescriptor = {|
+  ...ObjectDescriptor,
+  branchId: string | "master"
+|};
 
 export type CollectionDescriptor = {|
-  ...CommitDescriptor,
+  ...ObjectDescriptor,
   collectionId: string
 |};
 
 export type FileDescriptor = {|
-  ...CommitDescriptor,
+  ...ObjectDescriptor,
   fileId: string
 |};
 
 export type PageDescriptor = {|
-  ...CommitDescriptor,
+  ...ObjectDescriptor,
   fileId: string,
   pageId: string
 |};
 
 export type LayerDescriptor = {|
-  ...CommitDescriptor,
+  ...ObjectDescriptor,
   sha: string | "latest",
   fileId: string,
   pageId: string,
@@ -48,8 +58,8 @@ export type Cursor<T> = Promise<{
 export interface AbstractInterface {
   abstractToken: string;
 
-  organizations: {
-    list?: () => Promise<*>
+  organizations?: {
+    list: () => Promise<*>
   };
 
   collections: {
@@ -63,6 +73,10 @@ export interface AbstractInterface {
   commits: {
     list: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>,
     info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>
+  };
+
+  changesets: {
+    info: CommitDescriptor => Promise<*>
   };
 
   files: {

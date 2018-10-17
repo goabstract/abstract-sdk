@@ -1,7 +1,6 @@
 // @flow
 import type {
   BranchDescriptor,
-  CommitDescriptor,
   PageDescriptor,
   FileDescriptor,
   LayerDescriptor
@@ -17,13 +16,13 @@ export function ref(
   return objectDescriptor.sha || objectDescriptor.branchId;
 }
 
-export function fileCommitDescriptor(
+export function fileBranchDescriptor(
   fileDescriptor: FileDescriptor
-): CommitDescriptor {
+): BranchDescriptor {
   return {
     projectId: fileDescriptor.projectId,
     branchId: fileDescriptor.branchId,
-    sha: fileDescriptor.sha
+    sha: fileDescriptor.sha || "latest"
   };
 }
 

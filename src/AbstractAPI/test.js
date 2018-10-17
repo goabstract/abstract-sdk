@@ -4,6 +4,7 @@ import get from "lodash/get";
 import {
   buildOptions,
   buildProjectDescriptor,
+  buildCommitDescriptor,
   buildBranchDescriptor,
   buildFileDescriptor,
   buildLayerDescriptor,
@@ -87,6 +88,8 @@ describe("AbstractAPI", () => {
           result: { id: "file-id" }
         }
       ],
+      // changesets
+      ["changesets.info", buildCommitDescriptor()],
       // pages
       ["pages.list", buildFileDescriptor()],
       // layers
