@@ -10,6 +10,7 @@ import { log } from "../debug";
 import type {
   AbstractInterface,
   ProjectDescriptor,
+  CommitDescriptor,
   BranchDescriptor,
   PageDescriptor,
   FileDescriptor,
@@ -144,6 +145,19 @@ export default class AbstractCLI implements AbstractInterface {
         "commit",
         objectDescriptor.projectId,
         ref(objectDescriptor)
+      ]);
+    }
+  };
+
+  changesets = {
+    info: async (commitDescriptor: CommitDescriptor) => {
+      return this.spawn([
+        "changeset",
+        commitDescriptor.projectId,
+        "--commit",
+        commitDescriptor.sha,
+        "--branch",
+        commitDescriptor.branchId
       ]);
     }
   };

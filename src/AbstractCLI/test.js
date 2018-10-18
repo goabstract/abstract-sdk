@@ -5,8 +5,8 @@ import get from "lodash/get";
 import {
   buildOptions,
   buildProjectDescriptor,
-  buildBranchDescriptor,
   buildCommitDescriptor,
+  buildBranchDescriptor,
   buildFileDescriptor,
   buildPageDescriptor,
   buildLayerDescriptor,
@@ -106,6 +106,8 @@ describe(AbstractCLI, () => {
       ["commits.info", buildBranchDescriptor({ sha: "sha" })],
       ["commits.info", buildFileDescriptor({ sha: "sha" })],
       ["commits.info", buildLayerDescriptor({ sha: "sha" })],
+      // changesets
+      ["changesets.info", buildCommitDescriptor()],
       // files
       ["files.list", buildBranchDescriptor()],
       ["files.list", buildCommitDescriptor()],
