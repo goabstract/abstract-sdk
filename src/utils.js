@@ -26,6 +26,15 @@ export function fileBranchDescriptor(
   };
 }
 
+export function layerBranchDescriptor(
+  layerDescriptor: LayerDescriptor
+): BranchDescriptor {
+  return {
+    projectId: layerDescriptor.projectId,
+    branchId: layerDescriptor.branchId
+  };
+}
+
 export function pageFileDescriptor(
   pageDescriptor: PageDescriptor
 ): FileDescriptor {
@@ -34,14 +43,5 @@ export function pageFileDescriptor(
     branchId: pageDescriptor.branchId,
     sha: pageDescriptor.sha,
     fileId: pageDescriptor.fileId
-  };
-}
-
-export function layerBranchDescriptor(
-  layerDescriptor: LayerDescriptor
-): BranchDescriptor {
-  return {
-    projectId: layerDescriptor.projectId,
-    branchId: layerDescriptor.branchId
   };
 }

@@ -4,7 +4,11 @@ import "isomorphic-fetch";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
-import { fileBranchDescriptor, pageFileDescriptor } from "../utils";
+import {
+  fileBranchDescriptor,
+  layerBranchDescriptor,
+  pageFileDescriptor
+} from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -25,6 +29,17 @@ const logFetch = log.extend("AbstractAPI:fetch");
 
 type Options = {
   abstractToken: string
+};
+
+type BranchName = {
+  branchName: string
+};
+
+type LayerName = {
+  branchName: string,
+  fileName: string,
+  pageName: string,
+  layerName: string
 };
 
 async function unwrapEnvelope<T>(
@@ -84,10 +99,78 @@ export default class AbstractAPI implements AbstractInterface {
     return request;
   }
 
+  async namesForDescriptor(
+    objectDescriptor: BranchDescriptor | LayerDescriptor
+  ): Promise<BranchName | LayerName> {
+    const branch = await this.branches.info(
+      objectDescriptor.layerId !== undefined
+        ? // $FlowFixMe: objectDescriptor with a defined layerId shouldn't be considered a BranchDescriptor?
+          layerBranchDescriptor(objectDescriptor)
+        : objectDescriptor
+    );
+
+    if (objectDescriptor.layerId) {
+      const { layer, page, file } = await this.layers.info(objectDescriptor);
+
+      return {
+        branchName: branch.name,
+        fileName: file.name,
+        pageName: page.name,
+        layerName: layer.name
+      };
+    } else {
+      return { branchName: branch.name };
+    }
+  }
+
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
       return unwrapEnvelope(response.json());
+    }
+  };
+
+  comments = {
+    create: async (
+      objectDescriptor: BranchDescriptor | LayerDescriptor,
+      comment: { body: string }
+    ) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `comments`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ...(await this.namesForDescriptor(objectDescriptor)),
+            projectId: objectDescriptor.projectId,
+            branchId: objectDescriptor.branchId,
+            commitSha: objectDescriptor.sha,
+            fileId: objectDescriptor.layerId
+              ? objectDescriptor.fileId
+              : undefined,
+            pageId: objectDescriptor.layerId
+              ? objectDescriptor.pageId
+              : undefined,
+            layerId: objectDescriptor.layerId
+              ? objectDescriptor.layerId
+              : undefined,
+            body: comment.body
+          })
+        }
+      );
+
+      return response.json();
+    }
+  };
+
+  branches = {
+    info: async (branchDescriptor: BranchDescriptor) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}`
+      );
+
+      return response.json();
     }
   };
 
