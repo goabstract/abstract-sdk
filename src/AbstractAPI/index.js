@@ -87,7 +87,7 @@ export default class AbstractAPI implements AbstractInterface {
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
-      return unwrapEnvelope(response.json());
+      return response.json();
     }
   };
 
@@ -123,7 +123,7 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${commitDescriptor.projectId}/branches/${commitDescriptor.branchId}/commits/${commitDescriptor.sha}/changeset`
       );
 
-      return unwrapEnvelope(response.json());
+      return response.json();
     }
   };
 
