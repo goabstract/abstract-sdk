@@ -4,11 +4,12 @@ import "isomorphic-fetch";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
-import { fileCommitDescriptor, pageFileDescriptor } from "../utils";
+import { fileBranchDescriptor, pageFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
   ProjectDescriptor,
+  CommitDescriptor,
   BranchDescriptor,
   PageDescriptor,
   FileDescriptor,
@@ -83,6 +84,13 @@ export default class AbstractAPI implements AbstractInterface {
     return request;
   }
 
+  organizations = {
+    list: async () => {
+      const response = await this.fetch("organizations");
+      return response.json();
+    }
+  };
+
   commits = {
     list: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
@@ -108,6 +116,17 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
+  changesets = {
+    info: async (commitDescriptor: CommitDescriptor) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${commitDescriptor.projectId}/branches/${commitDescriptor.branchId}/commits/${commitDescriptor.sha}/changeset`
+      );
+
+      return response.json();
+    }
+  };
+
   files = {
     list: async (branchDescriptor: BranchDescriptor) => {
       const response = await this.fetch(
@@ -119,7 +138,7 @@ export default class AbstractAPI implements AbstractInterface {
     },
     info: async (fileDescriptor: FileDescriptor) => {
       const { files } = await this.files.list(
-        fileCommitDescriptor(fileDescriptor)
+        fileBranchDescriptor(fileDescriptor)
       );
 
       return find(files, { id: fileDescriptor.fileId });

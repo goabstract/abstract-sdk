@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AbstractAPI with mocked global.fetch changesets.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
+Array [
+  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/commit-sha/changeset",
+  Object {
+    "headers": Object {
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.1",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
 exports[`AbstractAPI with mocked global.fetch collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
 Array [
   "https://api.goabstract.com/projects/project-id/collections/collection-id?",
@@ -226,6 +241,21 @@ Array [
   Object {
     "headers": Object {
       "Abstract-Api-Version": "2",
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.1",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
+exports[`AbstractAPI with mocked global.fetch organizations.list(undefined) 1`] = `
+Array [
+  "https://api.goabstract.com/organizations",
+  Object {
+    "headers": Object {
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
