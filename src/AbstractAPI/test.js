@@ -15,6 +15,32 @@ import AbstractAPI from "./";
 jest.mock("./randomTraceId");
 global.fetch = fetch;
 
+const responses = {
+  branches: {
+    info: () => [JSON.stringify({ name: "branch-name" }), { status: 200 }]
+  },
+  files: {
+    list: () => [
+      JSON.stringify({
+        data: {
+          files: [{ id: "file-id" }, { id: "not-file-id" }]
+        }
+      }),
+      { status: 200 }
+    ]
+  },
+  layers: {
+    info: () => [
+      JSON.stringify({
+        layer: { name: "layer-name" },
+        page: { name: "page-name" },
+        file: { name: "file-name" }
+      }),
+      { status: 200 }
+    ]
+  }
+};
+
 describe("AbstractAPI", () => {
   describe("with mocked global.fetch", () => {
     beforeEach(() => {
@@ -80,11 +106,7 @@ describe("AbstractAPI", () => {
         "files.info",
         buildFileDescriptor({ fileId: "file-id" }),
         {
-          body: {
-            data: {
-              files: [{ id: "file-id" }, { id: "not-file-id" }]
-            }
-          },
+          responses: [responses.files.list()],
           result: { id: "file-id" }
         }
       ],
@@ -98,23 +120,26 @@ describe("AbstractAPI", () => {
       // data
       ["data.layer", buildLayerDescriptor()],
       ["data.layer", buildLayerDescriptor({ sha: "sha" })]
-    ])("%s(%p)", async (property, descriptor, options = {}) => {
+    ])("%s(%j)", async (property, args, options = {}) => {
+      args = Array.isArray(args) ? args : [args];
+
       const transport = new AbstractAPI(buildOptions());
       const transportMethod = get(transport, property).bind(transport);
-      fetch.mockResponseOnce(
-        JSON.stringify(options.body || "{}"),
-        options.init
-      );
 
-      const result = transportMethod(descriptor);
+      if (options.responses) {
+        fetch.mockResponses(...options.responses);
+      }
+
+      fetch.mockResponseOnce(JSON.stringify(options.body || {}), options.init);
+
+      const result = transportMethod(...args);
       await expect(await result).resolves;
 
       if (options.result) {
         expect(await result).toEqual(options.result);
       }
 
-      expect(fetch.mock.calls.length).toEqual(1);
-      expect(fetch.mock.calls[0]).toMatchSnapshot();
+      expect({ fetch: fetch.mock.calls }).toMatchSnapshot();
     });
   });
 });

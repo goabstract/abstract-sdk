@@ -142,7 +142,9 @@ describe(AbstractCLI, () => {
       // data
       ["data.layer", buildLayerDescriptor()],
       ["data.layer", buildLayerDescriptor({ sha: "sha" })]
-    ])("%s(%p)", async (property, descriptor, options = {}) => {
+    ])("%s(%j)", async (property, args, options = {}) => {
+      args = Array.isArray(args) ? args : [args];
+
       const transport = new AbstractCLI(
         buildOptions({ abstractCliPath: ["./fixtures/abstract-cli"] })
       );
@@ -155,7 +157,7 @@ describe(AbstractCLI, () => {
         on: jest.fn().mockReturnThis()
       });
 
-      const result = transportMethod(descriptor);
+      const result = transportMethod(...args);
       await expect(result).resolves;
 
       if (options.result) {

@@ -70,6 +70,13 @@ export interface AbstractInterface {
     info: (CollectionDescriptor, options?: Object) => Promise<*>
   };
 
+  comments?: {
+    create: (
+      BranchDescriptor | LayerDescriptor,
+      comment: { body: string }
+    ) => Promise<*>
+  };
+
   commits: {
     list: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>,
     info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>

@@ -26,11 +26,22 @@ export function fileBranchDescriptor(
   };
 }
 
-export function pageFileDescriptor(pageDescriptor: PageDescriptor) {
+export function pageFileDescriptor(
+  pageDescriptor: PageDescriptor
+): FileDescriptor {
   return {
     projectId: pageDescriptor.projectId,
     branchId: pageDescriptor.branchId,
     sha: pageDescriptor.sha,
     fileId: pageDescriptor.fileId
+  };
+}
+
+export function layerBranchDescriptor(
+  layerDescriptor: LayerDescriptor
+): BranchDescriptor {
+  return {
+    projectId: layerDescriptor.projectId,
+    branchId: layerDescriptor.branchId
   };
 }
