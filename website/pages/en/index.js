@@ -51,12 +51,6 @@ const SplashContainer = props => (
   </div>
 );
 
-const Logo = props => (
-  <div className="projectLogo">
-    <img src={props.img_src} alt="Project Logo" />
-  </div>
-);
-
 const ProjectTitle = () => (
   <h2 className="projectTitle">
     {siteConfig.title}
@@ -77,7 +71,6 @@ class HomeSplash extends React.Component {
     const language = this.props.language || "";
     return (
       <SplashContainer>
-        <Logo img_src={imgUrl("docusaurus.svg")} />
         <div className="inner">
           <ProjectTitle />
           <PromoSection>
