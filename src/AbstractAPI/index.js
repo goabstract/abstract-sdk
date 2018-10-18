@@ -18,7 +18,8 @@ import type {
   PageDescriptor,
   FileDescriptor,
   LayerDescriptor,
-  CollectionDescriptor
+  CollectionDescriptor,
+  Comment
 } from "../";
 import randomTraceId from "./randomTraceId";
 
@@ -133,7 +134,7 @@ export default class AbstractAPI implements AbstractInterface {
   comments = {
     create: async (
       objectDescriptor: BranchDescriptor | LayerDescriptor,
-      comment: { body: string }
+      comment: Comment
     ) => {
       const response = await this.fetch(
         // prettier-ignore
@@ -154,7 +155,15 @@ export default class AbstractAPI implements AbstractInterface {
             layerId: objectDescriptor.layerId
               ? objectDescriptor.layerId
               : undefined,
-            body: comment.body
+            body: comment.body,
+            annotation: comment.annotation
+              ? {
+                  x: comment.annotation.x,
+                  y: comment.annotation.y,
+                  width: comment.annotation.width,
+                  height: comment.annotation.height
+                }
+              : undefined
           })
         }
       );

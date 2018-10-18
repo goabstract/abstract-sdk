@@ -55,6 +55,16 @@ export type Cursor<T> = Promise<{
   // [Symbol.asyncIterator](): string
 };
 
+export type Comment = {
+  body: string,
+  annotation?: {
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  }
+};
+
 export interface AbstractInterface {
   abstractToken: string;
 
@@ -71,10 +81,7 @@ export interface AbstractInterface {
   };
 
   comments?: {
-    create: (
-      BranchDescriptor | LayerDescriptor,
-      comment: { body: string }
-    ) => Promise<*>
+    create: (BranchDescriptor | LayerDescriptor, comment: Comment) => Promise<*>
   };
 
   commits: {

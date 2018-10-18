@@ -62,6 +62,17 @@ describe("AbstractAPI", () => {
       ],
       [
         "comments.create",
+        [
+          buildLayerDescriptor(),
+          {
+            body: "Comment on layer with annotation",
+            annotation: { x: 1, y: 1, width: 1, height: 1 }
+          }
+        ],
+        { responses: [responses.branches.info(), responses.layers.info()] }
+      ],
+      [
+        "comments.create",
         [buildBranchDescriptor(), { body: "Comment on branch HEAD" }],
         { responses: [responses.branches.info()] }
       ],
