@@ -11,7 +11,7 @@
 const siteConfig = {
   title: "Abstract SDK", // Title for your website.
   tagline: "A universal javascript binding for the Abstract API and CLI",
-  url: "https://abstract-sdk.github.io", // Your website URL
+  url: "https://sdk.goabstract.com", // Your website URL
   baseUrl: "/", // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
@@ -26,8 +26,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: "index", label: "Docs" },
-    { doc: "api", label: "API" },
+    { doc: "getting-started", label: "Getting Started" },
+    { doc: "authentication", label: "API" },
     { href: "https://spectrum.chat/abstract", label: "Help" }
   ],
 
