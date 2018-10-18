@@ -32,11 +32,11 @@ type Options = {
   abstractToken: string
 };
 
-type BranchName = {
+type BranchNames = {
   branchName: string
 };
 
-type LayerName = {
+type LayerNames = {
   branchName: string,
   fileName: string,
   pageName: string,
@@ -102,7 +102,7 @@ export default class AbstractAPI implements AbstractInterface {
 
   async namesForDescriptor(
     objectDescriptor: BranchDescriptor | LayerDescriptor
-  ): Promise<BranchName | LayerName> {
+  ): Promise<BranchNames | LayerNames> {
     const branch = await this.branches.info(
       objectDescriptor.layerId !== undefined
         ? // $FlowFixMe: objectDescriptor with a defined layerId shouldn't be considered a BranchDescriptor?
