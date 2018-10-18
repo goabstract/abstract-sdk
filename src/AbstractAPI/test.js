@@ -19,6 +19,16 @@ const responses = {
   branches: {
     info: () => [JSON.stringify({ name: "branch-name" }), { status: 200 }]
   },
+  commits: {
+    list: () => [
+      JSON.stringify({
+        data: {
+          commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
+        }
+      }),
+      { status: 200 }
+    ]
+  },
   files: {
     list: () => [
       JSON.stringify({
@@ -92,11 +102,7 @@ describe("AbstractAPI", () => {
         "commits.info",
         buildBranchDescriptor(),
         {
-          body: {
-            data: {
-              commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
-            }
-          },
+          responses: [responses.commits.list()],
           result: {
             sha: "commit-sha"
           }
@@ -106,11 +112,7 @@ describe("AbstractAPI", () => {
         "commits.info",
         buildFileDescriptor(),
         {
-          body: {
-            data: {
-              commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
-            }
-          },
+          responses: [responses.commits.list()],
           result: {
             sha: "commit-sha"
           }
@@ -120,11 +122,7 @@ describe("AbstractAPI", () => {
         "commits.info",
         buildLayerDescriptor(),
         {
-          body: {
-            data: {
-              commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
-            }
-          },
+          responses: [responses.commits.list()],
           result: {
             sha: "commit-sha"
           }
@@ -160,7 +158,7 @@ describe("AbstractAPI", () => {
         fetch.mockResponses(...options.responses);
       }
 
-      fetch.mockResponseOnce(JSON.stringify(options.body || {}), options.init);
+      fetch.mockResponseOnce("{}");
 
       const result = transportMethod(...args);
       await expect(await result).resolves;
