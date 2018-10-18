@@ -1,0 +1,13 @@
+#!/bin/bash
+
+BUCKET=propeller-abstract-sdk
+
+# make sure aws cli is installed
+sudo apt-get update
+sudo apt-get install -y awscli
+
+# generate the static HTML
+cd website && yarn run build
+
+# Upload all assets first, then upload html
+aws s3 cp ./build/ s3://$BUCKET/ --recursive --exclude "*" --include "*.html" --acl public-read

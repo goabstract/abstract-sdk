@@ -6,24 +6,44 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10-browsers
 
-    working_directory: ~/abstract-js
+    working_directory: ~/abstract-sdk
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies- # fallback to latest cache if no exact match is found
-
+            - v2-dependencies-{{ checksum "yarn.lock" }}
+            - v2-dependencies- # fallback to latest cache if no exact match is found
       - run: yarn install
-
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - .yarn-cache
-
       - run: yarn ci
+
+  deploy:
+    docker:
+      - image: circleci/node:10-browsers
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "yarn.lock" }}
+            - v2-dependencies- # fallback to latest cache if no exact match is found
+      - run: sh .circleci/deploy
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - checkout
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
