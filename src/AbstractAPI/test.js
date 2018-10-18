@@ -54,6 +54,25 @@ describe("AbstractAPI", () => {
       ["collections.list", buildProjectDescriptor()],
       ["collections.list", buildBranchDescriptor()],
       ["collections.info", buildCollectionDescriptor()],
+      // comments
+      [
+        "comments.create",
+        [buildLayerDescriptor(), { body: "Comment on layer" }],
+        { responses: [responses.branches.info(), responses.layers.info()] }
+      ],
+      [
+        "comments.create",
+        [buildBranchDescriptor(), { body: "Comment on branch HEAD" }],
+        { responses: [responses.branches.info()] }
+      ],
+      [
+        "comments.create",
+        [
+          buildBranchDescriptor({ sha: "my-sha" }),
+          { body: "Comment on branch at my-sha" }
+        ],
+        { responses: [responses.branches.info()] }
+      ],
       // commits
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],

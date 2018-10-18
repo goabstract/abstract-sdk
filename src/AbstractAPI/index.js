@@ -258,7 +258,7 @@ export default class AbstractAPI implements AbstractInterface {
         { headers: { "Abstract-Api-Version": "2" } }
       );
 
-      return unwrapEnvelope(response.json());
+      return response.json();
     },
     info: async (layerDescriptor: LayerDescriptor) => {
       const response = await this.fetch(
@@ -267,7 +267,7 @@ export default class AbstractAPI implements AbstractInterface {
         { headers: { "Abstract-Api-Version": "2" } }
       );
 
-      return unwrapEnvelope(response.json());
+      return response.json();
     }
   };
 
