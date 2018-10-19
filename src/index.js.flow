@@ -1,5 +1,9 @@
 // @flow
 
+export type OrganizationDescriptor = {|
+  organizationId: string
+|};
+
 export type ProjectDescriptor = {|
   projectId: string
 |};

@@ -8,6 +8,7 @@ import { fileBranchDescriptor, pageFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
+  OrganizationDescriptor,
   ProjectDescriptor,
   CommitDescriptor,
   BranchDescriptor,
@@ -87,6 +88,20 @@ export default class AbstractAPI implements AbstractInterface {
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
+      return unwrapEnvelope(response.json());
+    }
+  };
+
+  projects = {
+    list: async (organizationDescriptor: OrganizationDescriptor) => {
+      const query = queryString.stringify({
+        organizationId: organizationDescriptor.organizationId
+          ? organizationDescriptor.organizationId
+          : undefined
+      });
+
+      const response = await this.fetch(`projects?${query}`);
+
       return unwrapEnvelope(response.json());
     }
   };
