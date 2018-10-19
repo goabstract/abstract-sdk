@@ -8,7 +8,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "build",
+    "prepublish": "yarn run build",
     "build": "babel ./src -d ./lib",
     "lint": "eslint .",
     "test": "jest",
