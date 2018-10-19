@@ -6,11 +6,11 @@ title: Methods
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-blue.svg
 
-## Projects
+# Projects
 
-## Organizations
+# Organizations
 
-### organizations.list `(): Promise<Organization[]>`
+## organizations.list `(): Promise<Organization[]>`
 
 ![API][api-icon]
 
@@ -20,19 +20,64 @@ Load the organizations accessible by the current access token
 abstract.organizations.list();
 ```
 
-## Collections
+# Collections
 
-## Branches
+# Branches
 
-## Comments
+# Comments
 
 ## Commits
 
-### commits.list `(BranchDescriptor | LayerDescriptor): Promise<Commit[]>`
-
 ![CLI][cli-icon] ![API][api-icon]
 
-List the commits for a branch
+A commit represents a point in time – contributors can create commits in the desktop app to save their work at different stages.
+
+### The commit object
+
+| Property                | Type       | Description                                                                             |
+|-------------------------|------------|-----------------------------------------------------------------------------------------|
+| `description`           | `string`   | The body of the commit comment                                                          |
+| `destinationBranchId`   | `string`   | For merge commits this points to the merged into branch                                 |
+| `destinationBranchName` | `string`   | For merge commits this is the name of the branch that was merged into                   |
+| `fileIds`               | `string[]` | For system commits like file upgrades this represents the file UUID's that were changed |
+| `parents`               | `string[]` | SHA(s) of the parent commits                                                            |
+| `projectId`             | `string`   | UUID of the project this commit belongs to                                              |
+| `sha`                   | `string`   | SHA that represents this commit                                                         |
+| `sourceBranchId`        | `string`   | For merge commits this points to the merged from branch                                 |
+| `sourceBranchName`      | `string`   | For merge commits this is the name of the branch that was merged from                   |
+| `time`                  | `string`   | Timestamp of the commit                                                                 |
+| `title`                 | `string`   | The title of the commit                                                                 |
+| `type`                  | `string`   | The type of the commit, usually "NORMAL"                                                |
+| `userId`                | `string`   | UUID of the user this commit was created by                                             |
+| `userName`              | `string`   | Display name of the user this commit was created by                                     |
+
+
+#### Example response 
+
+```js
+{
+  description: "Just eyeballed it."
+  destinationBranchId: ""
+  destinationBranchName: ""
+  fileIds: []
+  parents: ["b56da8ffdc66b3c526f7289c175cfbb7cbf20663"]
+  projectId: "ab8d54b0-502f-11e6-9379-dd323631859b"
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+  sourceBranchId: ""
+  sourceBranchName: ""
+  time: "2018-10-19T01:19:08+02:00"
+  title: "Tweaked the coloring"
+  type: "NORMAL"
+  userId: "c95ecfd4-6ed7-4722-9145-d2f02a34f3d7"
+  userName: "Tim Van Damme"
+}
+```
+
+### List all commits
+
+`commits.list(BranchDescriptor | LayerDescriptor): Promise<Commit[]>`
+
+List the commits for a specific branch
 
 ```js
 abstract.commits.list({
@@ -41,7 +86,7 @@ abstract.commits.list({
 });
 ```
 
-or, get the commit history for a specific layer…
+or, get a list of commits for a layer – this query will only return commits where the referenced layer was changed…
 
 ```js
 abstract.commits.list({
@@ -54,11 +99,11 @@ abstract.commits.list({
 ```
 
 
-### commits.info `(CommitDescriptor): Promise<Commit>`
+### Retrieve a commit 
 
-![CLI][cli-icon] ![API][api-icon]
+`commits.info (CommitDescriptor): Promise<Commit>`
 
-Load the commit info for a specific commit on a branch
+Load the commit info for a specific commit SHA on a branch
 
 ```js
 abstract.commits.info({
@@ -69,9 +114,9 @@ abstract.commits.info({
 ```
 
 
-## Files
+# Files
 
-### files.list `(BranchDescriptor): Promise<File[]>`
+## files.list `(BranchDescriptor): Promise<File[]>`
 
 ![CLI][cli-icon] ![API][api-icon]
 
@@ -85,7 +130,7 @@ abstract.files.list({
 ```
 
 
-### files.info `(FileDescriptor): Promise<File>`
+## files.info `(FileDescriptor): Promise<File>`
 
 ![CLI][cli-icon] ![API][api-icon]
 
@@ -111,19 +156,19 @@ abstract.files.info({
 ```
 
 
-## Pages
+# Pages
 
-## Layers
+# Layers
 
-## Previews
+# Previews
 
-## Data
+# Data
 
-## Types
+# Types
 
-## Descriptors
+# Descriptors
 
-### ProjectDescriptor
+## ProjectDescriptor
 
 ```js
 {
@@ -131,7 +176,7 @@ abstract.files.info({
 }
 ```
 
-### BranchDescriptor
+## BranchDescriptor
 
 ```js
 {
@@ -140,7 +185,7 @@ abstract.files.info({
 }
 ```
 
-### CommitDescriptor
+## CommitDescriptor
 
 ```js
 {
@@ -150,7 +195,7 @@ abstract.files.info({
 }
 ```
 
-### FileDescriptor
+## FileDescriptor
 
 ```js
 {
@@ -161,7 +206,7 @@ abstract.files.info({
 }
 ```
 
-### PageDescriptor
+## PageDescriptor
 
 ```js
 {
@@ -173,7 +218,7 @@ abstract.files.info({
 }
 ```
 
-### LayerDescriptor
+## LayerDescriptor
 
 ```js
 {
@@ -186,10 +231,10 @@ abstract.files.info({
 }
 ```
 
-## Responses
+# Responses
 
-### Project
-### File
+## Project
+## File
 
 ```js
 {
@@ -208,18 +253,18 @@ abstract.files.info({
 }
 ```
 
-## Cursor
+# Cursor
 
-## Utility
+# Utility
 
-## mapLayerChilden()
+# mapLayerChilden()
 
-## paginate()
+# paginate()
 
-### ES6 Async Iteration
+## ES6 Async Iteration
 
-## abstractToken
+# abstractToken
 
-## version
+# version
 
 TODO
