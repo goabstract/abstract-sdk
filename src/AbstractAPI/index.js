@@ -53,6 +53,12 @@ async function unwrapEnvelope<T>(
   return (await response).data;
 }
 
+const ABSTRACT_API_URL =
+  process.env.ABSTRACT_API_URL || "https://api.goabstract.com";
+
+const ABSTRACT_PREVIEWS_URL =
+  process.env.ABSTRACT_PREVIEWS_URL || "https://previews.goabstract.com";
+
 export default class AbstractAPI implements AbstractInterface {
   abstractToken: string;
 
@@ -63,8 +69,7 @@ export default class AbstractAPI implements AbstractInterface {
   async fetch(
     input: string | URL,
     init: Object = {},
-    hostname: string = process.env.ABSTRACT_API_URL ||
-      "https://api.goabstract.com"
+    hostname: string = ABSTRACT_API_URL
   ) {
     init.headers = {
       Accept: "application/json",
@@ -115,7 +120,7 @@ export default class AbstractAPI implements AbstractInterface {
           ...init.headers
         }
       },
-      process.env.ABSTRACT_PREVIEWS_URL || "https://previews.goabstract.com"
+      ABSTRACT_PREVIEWS_URL
     );
   }
 
@@ -292,6 +297,10 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   previews = {
+    url: (layerDescriptor: LayerDescriptor) => {
+      // prettier-ignore
+      return `${ABSTRACT_PREVIEWS_URL}/projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`;
+    },
     blob: async (layerDescriptor: LayerDescriptor, options: *) => {
       const response = await this.fetchPreview(
         // prettier-ignore

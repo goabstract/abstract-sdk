@@ -546,6 +546,12 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch previews.url({"projectId":"project-id","branchId":"branch-id","sha":"layer-sha","fileId":"file-id","pageId":"page-id","layerId":"layer-id"}) 1`] = `
+Object {
+  "fetch": Array [],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch projects.list([null,{"filter":"active"}]) 1`] = `
 Object {
   "fetch": Array [
