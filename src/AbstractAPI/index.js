@@ -94,11 +94,16 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   projects = {
-    list: async (organizationDescriptor: OrganizationDescriptor) => {
+    list: async (
+      organizationDescriptor?: OrganizationDescriptor,
+      options: { filter?: "active" | "archived" } = {}
+    ) => {
       const query = queryString.stringify({
-        organizationId: organizationDescriptor.organizationId
-          ? organizationDescriptor.organizationId
-          : undefined
+        organizationId:
+          organizationDescriptor && organizationDescriptor.organizationId
+            ? organizationDescriptor.organizationId
+            : undefined,
+        filter: options.filter
       });
 
       const response = await this.fetch(`projects?${query}`);

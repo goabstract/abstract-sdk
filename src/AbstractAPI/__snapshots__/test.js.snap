@@ -288,6 +288,22 @@ Array [
 ]
 `;
 
+exports[`AbstractAPI with mocked global.fetch projects.list([undefined, [Object]]) 1`] = `
+Array [
+  "https://api.goabstract.com/projects?",
+  Object {
+    "headers": Object {
+      "Abstract-Api-Version": "7",
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.1",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
 exports[`AbstractAPI with mocked global.fetch projects.list({"organizationId": "organization-id"}) 1`] = `
 Array [
   "https://api.goabstract.com/projects?organizationId=organization-id",
