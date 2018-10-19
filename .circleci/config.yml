@@ -21,6 +21,8 @@ jobs:
       - image: circleci/node:10-browsers
     working_directory: ~/abstract-sdk
     steps:
+      - attach_workspace:
+          at: ~/abstract-sdk
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "yarn.lock" }}
@@ -37,6 +39,8 @@ jobs:
       - image: circleci/node:10-browsers
     working_directory: ~/abstract-sdk
     steps:
+      - attach_workspace:
+          at: ~/abstract-sdk
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "yarn.lock" }}
@@ -46,8 +50,10 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:10-browsers
-
+    working_directory: ~/abstract-sdk
     steps:
+      - attach_workspace:
+          at: ~/abstract-sdk
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "yarn.lock" }}
