@@ -7,21 +7,21 @@ title: Methods
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-lightgrey.svg
 
-### Projects
+## Projects
 
-### Organizations
+## Organizations
 
-### Collections
+## Collections
 
-### Branches
+## Branches
 
-### Comments
+## Comments
 
-### Commits
+## Commits
 
-### Files
+## Files
 
-#### files.list([BranchDescriptor](#branchdescriptor)): Promise<[File](#file)[]> ![CLI][cli-icon] ![API][api-icon]
+### files.list([BranchDescriptor](#branchdescriptor)): Promise<[File](#file)[]> ![CLI][cli-icon] ![API][api-icon]
 
 List files for a branch at head
 
@@ -32,7 +32,7 @@ abstract.files.list({
 });
 ```
 
-#### files.info([FileDescriptor](#filedescriptor)): Promise<[File](#file)> ![CLI][cli-icon] ![API][api-icon]
+### files.info([FileDescriptor](#filedescriptor)): Promise<[File](#file)> ![CLI][cli-icon] ![API][api-icon]
 
 Get file at head
 
@@ -45,19 +45,19 @@ abstract.files.info({
 ```
 ---
 
-### Pages
+## Pages
 
-### Layers
+## Layers
 
-### Previews
+## Previews
 
-### Data
+## Data
 
 ## Types
 
-### Descriptors
+## Descriptors
 
-#### ProjectDescriptor
+### ProjectDescriptor
 
 ```js
 {
@@ -65,7 +65,7 @@ abstract.files.info({
 }
 ```
 
-#### BranchDescriptor
+### BranchDescriptor
 
 ```js
 {
@@ -74,7 +74,7 @@ abstract.files.info({
 }
 ```
 
-#### CommitDescriptor
+### CommitDescriptor
 
 ```js
 {
@@ -84,7 +84,7 @@ abstract.files.info({
 }
 ```
 
-#### FileDescriptor
+### FileDescriptor
 
 ```js
 {
@@ -95,7 +95,7 @@ abstract.files.info({
 }
 ```
 
-#### PageDescriptor
+### PageDescriptor
 
 ```js
 {
@@ -107,7 +107,7 @@ abstract.files.info({
 }
 ```
 
-#### LayerDescriptor
+### LayerDescriptor
 
 ```js
 {
@@ -120,10 +120,10 @@ abstract.files.info({
 }
 ```
 
-### Responses
+## Responses
 
-#### Project
-#### File
+### Project
+### File
 
 ```js
 {
@@ -142,18 +142,18 @@ abstract.files.info({
 }
 ```
 
-### Cursor
+## Cursor
 
 ## Utility
 
-### mapLayerChilden()
+## mapLayerChilden()
 
-### paginate()
+## paginate()
 
-#### ES6 Async Iteration
+### ES6 Async Iteration
 
-### abstractToken
+## abstractToken
 
-### version
+## version
 
 TODO

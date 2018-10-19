@@ -1,6 +1,6 @@
 ---
-id: utility
-title: Utility
+id: utilities
+title: Utilities
 ---
 
 ### mapLayerChilden()

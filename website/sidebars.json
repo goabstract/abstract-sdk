@@ -6,7 +6,7 @@
     "API": [
       "authentication",
       "methods",
-      "utility"
+      "utilities"
     ]
   }
 }

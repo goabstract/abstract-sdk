@@ -23,7 +23,7 @@ const logStatusError = log.extend("AbstractAPI:status:error");
 const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
-type Options = {
+export type Options = {
   abstractToken: string
 };
 
@@ -87,7 +87,14 @@ export default class AbstractAPI implements AbstractInterface {
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
-      return response.json();
+      return unwrapEnvelope(response.json());
+    }
+  };
+
+  projects = {
+    list: async () => {
+      const response = await this.fetch("projects");
+      return unwrapEnvelope(response.json());
     }
   };
 

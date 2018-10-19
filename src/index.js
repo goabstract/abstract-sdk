@@ -1,5 +1,5 @@
 // @flow
 import Client from "./Client";
+import * as Transports from "./transports";
 
-export { AUTO, API, CLI } from "./transports";
-export { Client };
+export { Client, Transports };
