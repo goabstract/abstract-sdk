@@ -3,6 +3,7 @@ import fetch from "jest-fetch-mock";
 import get from "lodash/get";
 import {
   buildOptions,
+  buildOrganizationDescriptor,
   buildProjectDescriptor,
   buildCommitDescriptor,
   buildBranchDescriptor,
@@ -60,6 +61,9 @@ describe("AbstractAPI", () => {
     test.each([
       // organizations
       ["organizations.list", undefined],
+      // projects
+      ["projects.list", buildOrganizationDescriptor()],
+      ["projects.list", [undefined, { filter: "active" }]],
       // collections
       ["collections.list", buildProjectDescriptor()],
       ["collections.list", buildBranchDescriptor()],

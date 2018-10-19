@@ -7,6 +7,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/commit-sha/changeset",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -86,6 +87,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -98,7 +100,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -112,6 +114,7 @@ Object {
       Object {
         "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer with annotation/\\",/\\"annotation/\\":{/\\"x/\\":1,/\\"y/\\":1,/\\"width/\\":1,/\\"height/\\":1},/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\"}\\"",
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -132,6 +135,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -144,7 +148,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -158,6 +162,7 @@ Object {
       Object {
         "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer/\\",/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\"}\\"",
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -178,6 +183,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -191,6 +197,7 @@ Object {
       Object {
         "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"my-sha/\\",/\\"body/\\":/\\"Comment on branch at my-sha/\\",/\\"branchName/\\":/\\"branch-name/\\"}\\"",
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -211,6 +218,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -224,6 +232,7 @@ Object {
       Object {
         "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"body/\\":/\\"Comment on branch HEAD/\\",/\\"branchName/\\":/\\"branch-name/\\"}\\"",
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -244,7 +253,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -264,7 +273,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -284,7 +293,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -304,7 +313,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -324,7 +333,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -344,7 +353,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -364,6 +373,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id/data",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -383,6 +393,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-id/data",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -402,6 +413,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -421,6 +433,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -440,7 +453,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -460,7 +473,7 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/layers?",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": "2",
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -480,6 +493,7 @@ Object {
       "https://api.goabstract.com/organizations",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
@@ -499,6 +513,47 @@ Object {
       "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/pages",
       Object {
         "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.1",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch projects.list([null,{"filter":"active"}]) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects?filter=active",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.1",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch projects.list({"organizationId":"organization-id"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects?organizationId=organization-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
           "Content-Type": "application/json",
