@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BUCKET=propeller-abstract-sdk
+BUCKET=abstract-sdk-website
 
 # make sure aws cli is installed
 sudo apt-get update
