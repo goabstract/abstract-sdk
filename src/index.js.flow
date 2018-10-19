@@ -119,6 +119,10 @@ export interface AbstractInterface {
     info: LayerDescriptor => Promise<*>
   };
 
+  previews?: {
+    blob: LayerDescriptor => Promise<Blob>
+  };
+
   data: {
     layer: LayerDescriptor => Promise<*>
   };
