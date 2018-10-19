@@ -51,20 +51,47 @@ abstract.projects.list({
 });
 ```
 
+### Retrive a project
+
+  > Note yet implemented
+
 
 ## Organizations
 
 ![API][api-icon]
 
+Organizations contain users and projects.
 
-## organizations.list `(): Promise<Organization[]>`
+### The organization object
 
+| Property                   | Type       | Description                                                                              |
+|----------------------------|------------|------------------------------------------------------------------------------------------|
+| `createdAt`                | `string`   | Timestamp that the organization was created                                              |
+| `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
+| `id`                       | `string`   | UUID                                                                                     |
+| `isUsernameOrganization`   | `boolean`  | A username organization is a free organization included with every user account          |
+| `isWithinSubscriptionTerm` | `boolean`  | Whether the organizations subscription is in good standing                               |
+| `logoUrl`                  | `string`   | A url for the organization logo                                                          |
+| `name`                     | `string`   | The name of the organization                                                             |
+| `restrictedToDomains`      | `string[]` | An optional list of domain names that invitations to this organization are restricted to |
+| `trialEndsAt`              | `string`   | Timestamp of when the trial ends, if within trial period                                 |
+| `updatedAt`                | `string`   | Timestamp that the organization was last updated                                         |
+| `userId`                   | `string`   | UUID of the user that created the organization                                           |
+
+
+### List all organizations
+
+`organizations.list(): Promise<Organization[]>`
 
 Load the organizations accessible by the current access token
 
 ```js
 abstract.organizations.list();
 ```
+
+### Retrive an organization
+
+  > Note yet implemented
 
 
 # Collections
