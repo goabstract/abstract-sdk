@@ -3,13 +3,22 @@ id: methods
 title: Methods
 ---
 
-[auto-icon]: https://img.shields.io/badge/AUTO-blue.svg
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
-[api-icon]: https://img.shields.io/badge/API-lightgrey.svg
+[api-icon]: https://img.shields.io/badge/API-blue.svg
 
 ## Projects
 
 ## Organizations
+
+### organizations.list `(): Promise<Organization[]>`
+
+![API][api-icon]
+
+Load the organizations accessible by the current access token
+
+```js
+abstract.organizations.list();
+```
 
 ## Collections
 
@@ -19,11 +28,54 @@ title: Methods
 
 ## Commits
 
+### commits.list `(BranchDescriptor | LayerDescriptor): Promise<Commit[]>`
+
+![CLI][cli-icon] ![API][api-icon]
+
+List the commits for a branch
+
+```js
+abstract.commits.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+});
+```
+
+or, get the commit history for a specific layer…
+
+```js
+abstract.commits.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
+});
+```
+
+
+### commits.info `(CommitDescriptor): Promise<Commit>`
+
+![CLI][cli-icon] ![API][api-icon]
+
+Load the commit info for a specific commit on a branch
+
+```js
+abstract.commits.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
+
 ## Files
 
-### files.list([BranchDescriptor](#branchdescriptor)): Promise<[File](#file)[]> ![CLI][cli-icon] ![API][api-icon]
+### files.list `(BranchDescriptor): Promise<File[]>`
 
-List files for a branch at head
+![CLI][cli-icon] ![API][api-icon]
+
+List the files for a branch at the latest commit
 
 ```js
 abstract.files.list({
@@ -32,9 +84,12 @@ abstract.files.list({
 });
 ```
 
-### files.info([FileDescriptor](#filedescriptor)): Promise<[File](#file)> ![CLI][cli-icon] ![API][api-icon]
 
-Get file at head
+### files.info `(FileDescriptor): Promise<File>`
+
+![CLI][cli-icon] ![API][api-icon]
+
+Load the file info for the latest commit on a branch
 
 ```js
 abstract.files.info({
@@ -43,7 +98,18 @@ abstract.files.info({
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
 });
 ```
----
+
+You can also load the file info at any commit on the branch…
+
+```js
+abstract.files.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
 
 ## Pages
 

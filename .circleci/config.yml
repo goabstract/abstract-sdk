@@ -41,6 +41,9 @@ workflows:
   build:
     jobs:
       - checkout
+      - build:
+          requires:
+            - checkout
       - deploy:
           requires:
             - build

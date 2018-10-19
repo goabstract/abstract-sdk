@@ -52,7 +52,7 @@ const abstract = Abstract.Client({
 
 ## Making a Request
 
-Lets get started by loading a list of accessible projects from the API. All of the methods in the SDK return a promise, you may use traditional promise syntax or async / await if your JS runtime supports it.
+Lets get started by loading a list of accessible projects from the API. All of the methods in the SDK return a promise – you may use traditional promise syntax or async / await if your JS runtime supports ES6.
 
 ```js
 const projects = await abstract.projects.list();

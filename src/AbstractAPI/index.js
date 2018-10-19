@@ -91,13 +91,6 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
-  projects = {
-    list: async () => {
-      const response = await this.fetch("projects");
-      return unwrapEnvelope(response.json());
-    }
-  };
-
   commits = {
     list: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
