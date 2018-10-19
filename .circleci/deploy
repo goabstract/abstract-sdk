@@ -12,4 +12,4 @@ yarn install --frozen-lockfile
 yarn run build
 
 # Upload all assets first, then upload html
-aws s3 cp ./build/abstract-sdk/ s3://$BUCKET/ --recursive --exclude "*" --include "*.html" --acl public-read
+aws s3 cp ./build/abstract-sdk/ s3://$BUCKET/ --recursive --include "*" --acl public-read
