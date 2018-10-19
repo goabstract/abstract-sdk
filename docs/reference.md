@@ -1,6 +1,6 @@
 ---
-id: methods
-title: Methods
+id: reference
+title: Reference
 ---
 
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
@@ -53,7 +53,7 @@ abstract.projects.list({
 
 ### Retrive a project
 
-  > Note yet implemented
+  > Not yet implemented
 
 
 ## Organizations
@@ -91,14 +91,69 @@ abstract.organizations.list();
 
 ### Retrive an organization
 
-  > Note yet implemented
+  > Not yet implemented
 
 
-# Collections
+## Collections
 
-# Branches
+![CLI][cli-icon] ![API][api-icon]
 
-# Comments
+A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used
+ to group work together to communicate a flow, ask for review, or other usecases.
+
+### The collection object
+
+  > TODO
+
+### List all collections
+
+  > TODO
+
+### Retrieve a collection
+
+  > TODO
+
+## Branches
+
+![CLI][cli-icon] ![API][api-icon]
+
+A branch is where design work and commits happen. A branch acts as a personal workspace for contributors, we encourage branches
+to be created for logic chunks of work – for example designing a new feature.
+
+### The branch object
+
+  > TODO
+
+### List all branches
+
+  > Not yet implemented
+
+### Retrieve a branch
+
+  > Not yet implemented
+
+## Comments
+
+![API][api-icon]
+
+A comment in Abstract can be left on a branch, commit or layer. Comments on layers can also include an optional annotation that
+represents a box drawn ontop of the layer, this can be used to leave comments about specific areas of a layer.
+
+### The comment object
+
+  > TODO
+
+### List all comments
+
+  > Not yet implemented
+
+### Retrieve a comment
+
+  > Not yet implemented
+
+### Create a comment
+
+  > TODO
 
 ## Commits
 
@@ -188,11 +243,17 @@ abstract.commits.info({
 ```
 
 
-# Files
-
-## files.list `(BranchDescriptor): Promise<File[]>`
+## Files
 
 ![CLI][cli-icon] ![API][api-icon]
+
+### The file object
+
+  > TODO
+
+### List all files
+
+`files.list(BranchDescriptor): Promise<File[]>`
 
 List the files for a branch at the latest commit
 
@@ -203,10 +264,9 @@ abstract.files.list({
 });
 ```
 
+### Retrieve a file 
 
-## files.info `(FileDescriptor): Promise<File>`
-
-![CLI][cli-icon] ![API][api-icon]
+`files.info(FileDescriptor): Promise<File>`
 
 Load the file info for the latest commit on a branch
 
@@ -229,20 +289,89 @@ abstract.files.info({
 });
 ```
 
+## Pages
 
-# Pages
+![CLI][cli-icon] ![API][api-icon]
 
-# Layers
+### The page object
 
-# Previews
+  > TODO
 
-# Data
+### List all pages
 
-# Types
+`pages.list(FileDescriptor): Promise<Page[]>`
 
-# Descriptors
+List the pages for a file at a commit
 
-## ProjectDescriptor
+```js
+abstract.pages.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
+### Retrieve a page
+
+`pages.info(PageDescriptor): Promise<Page>`
+
+Load the info for a page in a file at the latest commit on a branch
+
+```js
+abstract.pages.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A"
+});
+```
+
+## Layers
+
+![CLI][cli-icon] ![API][api-icon]
+
+### The layer object
+
+  > TODO
+
+### List all layers
+
+  > TODO
+
+### Retrieve a layer
+
+  > TODO
+
+## Previews
+
+![API][api-icon]
+
+### Retrieve a preview
+
+  > TODO
+
+### Retrieve a preview URL
+
+  > TODO
+
+## Data
+
+![CLI][cli-icon] ![API][api-icon]
+
+### The data object
+
+  > TODO
+
+### Retrieve a layer
+
+  > TODO
+
+## Descriptors
+
+Reference for the parameters required to load resources with Abstract SDK.
+
+### ProjectDescriptor
 
 ```js
 {
@@ -250,7 +379,7 @@ abstract.files.info({
 }
 ```
 
-## BranchDescriptor
+### BranchDescriptor
 
 ```js
 {
@@ -259,7 +388,7 @@ abstract.files.info({
 }
 ```
 
-## CommitDescriptor
+### CommitDescriptor
 
 ```js
 {
@@ -269,7 +398,7 @@ abstract.files.info({
 }
 ```
 
-## FileDescriptor
+### FileDescriptor
 
 ```js
 {
@@ -280,7 +409,7 @@ abstract.files.info({
 }
 ```
 
-## PageDescriptor
+### PageDescriptor
 
 ```js
 {
@@ -292,7 +421,7 @@ abstract.files.info({
 }
 ```
 
-## LayerDescriptor
+### LayerDescriptor
 
 ```js
 {
@@ -304,41 +433,3 @@ abstract.files.info({
   sha?: string
 }
 ```
-
-# Responses
-
-## Project
-## File
-
-```js
-{
-  pages: Page[],
-  file: {
-    id: string,
-    name: string,
-    type: string,
-    applicationVersion: string,
-    applicationDocumentVersion: string,
-    isLibrary: boolean,
-    sha: string,
-    lastChangedAtSha: string,
-    updatedAt: string
-  }
-}
-```
-
-# Cursor
-
-# Utility
-
-# mapLayerChilden()
-
-# paginate()
-
-## ES6 Async Iteration
-
-# abstractToken
-
-# version
-
-TODO

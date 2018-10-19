@@ -27,7 +27,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: "getting-started", label: "Getting Started" },
-    { doc: "methods", label: "API" },
+    { doc: "reference", label: "API" },
     { href: "https://spectrum.chat/abstract", label: "Help" }
   ],
 

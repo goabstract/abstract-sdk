@@ -5,7 +5,7 @@
     ],
     "API": [
       "authentication",
-      "methods",
+      "reference",
       "utilities"
     ]
   }
