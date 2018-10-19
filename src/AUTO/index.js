@@ -7,9 +7,9 @@ type Options = OptionsCLI & OptionsAPI;
 
 // $FlowFixMe
 class AbstractAUTO extends Proxy<*> implements AbstractInterface {
-  constructor(props: Options) {
-    const cli = new AbstractCLI(props);
-    const api = new AbstractAPI(props);
+  constructor(options: Options) {
+    const cli = new AbstractCLI(options);
+    const api = new AbstractAPI(options);
 
     super(
       {},
