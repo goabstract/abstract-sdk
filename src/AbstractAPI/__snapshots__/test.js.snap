@@ -530,7 +530,7 @@ exports[`AbstractAPI with mocked global.fetch previews.blob({"projectId":"projec
 Object {
   "fetch": Array [
     Array [
-      "https://previews.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
+      "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id",
       Object {
         "headers": Object {
           "Abstract-Api-Version": undefined,
