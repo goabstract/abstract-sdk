@@ -299,8 +299,6 @@ export default class AbstractAPI implements AbstractInterface {
         options
       );
 
-      console.log(response);
-
       return response.blob();
     }
   };
