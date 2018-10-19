@@ -526,6 +526,26 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch previews.blob({"projectId":"project-id","branchId":"branch-id","sha":"layer-sha","fileId":"file-id","pageId":"page-id","layerId":"layer-id"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://previews.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": undefined,
+          "Accept": undefined,
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": undefined,
+          "User-Agent": "Abstract SDK 0.1",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch projects.list([null,{"filter":"active"}]) 1`] = `
 Object {
   "fetch": Array [

@@ -1,6 +1,6 @@
 // @flow
 /* global fetch */
-import "isomorphic-fetch";
+import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
@@ -60,7 +60,12 @@ export default class AbstractAPI implements AbstractInterface {
     this.abstractToken = abstractToken;
   }
 
-  async fetch(input: string | URL, init?: Object = {}) {
+  async fetch(
+    input: string | URL,
+    init: Object = {},
+    hostname: string = process.env.ABSTRACT_API_URL ||
+      "https://api.goabstract.com"
+  ) {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -75,11 +80,7 @@ export default class AbstractAPI implements AbstractInterface {
       init.body = JSON.stringify(init.body);
     }
 
-    const fetchArgs = [
-      `${process.env.ABSTRACT_API_URL ||
-        "https://api.goabstract.com"}/${input.toString()}`,
-      init
-    ];
+    const fetchArgs = [`${hostname}/${input.toString()}`, init];
 
     logFetch(fetchArgs);
     const request = fetch(...fetchArgs);
@@ -100,6 +101,22 @@ export default class AbstractAPI implements AbstractInterface {
     }
 
     return request;
+  }
+
+  async fetchPreview(input: string | URL, init?: Object = {}) {
+    return this.fetch(
+      input,
+      {
+        ...init,
+        headers: {
+          Accept: undefined,
+          "Content-Type": undefined,
+          "Abstract-Api-Version": undefined,
+          ...init.headers
+        }
+      },
+      process.env.ABSTRACT_PREVIEWS_URL || "https://previews.goabstract.com"
+    );
   }
 
   organizations = {
@@ -271,6 +288,20 @@ export default class AbstractAPI implements AbstractInterface {
       );
 
       return response.json();
+    }
+  };
+
+  previews = {
+    blob: async (layerDescriptor: LayerDescriptor, options: *) => {
+      const response = await this.fetchPreview(
+        // prettier-ignore
+        `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
+        options
+      );
+
+      console.log(response);
+
+      return response.blob();
     }
   };
 
