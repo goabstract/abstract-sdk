@@ -6,19 +6,66 @@ title: Methods
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-blue.svg
 
-# Projects
+## Projects
 
-# Organizations
+![API][api-icon]
+
+A project is a bucket for work.
+
+### The project object
+
+| Property         | Type     | Description                                                                   |
+|------------------|----------|-------------------------------------------------------------------------------|
+| `about`          | `string` | A longer description of the project (May optionally include markdown tags)    |
+| `archivedAt`     | `string` | Timestamp that the project was archived                                       |
+| `color`          | `string` | A hex value that represents a custom project color                            |
+| `createdAt`      | `string` | Timestamp that the project was created                                        |
+| `createdByUser`  | `User`   | The user that created the project                                             |
+| `description`    | `string` | A longer summary of the project                                               |
+| `firstPushedAt`  | `string` | Timestamp that the project first received data                                |
+| `id`             | `string` | UUID                                                                          |
+| `name`           | `string` | The name of the project                                                       |
+| `organizationId` | `string` | UUID of the organization this project belongs to                              |
+| `pushedAt`       | `string` | Timestamp that data was last received                                         |
+| `repoCreatedAt`  | `string` | Timestamp that the backend storage was created                                |
+| `sizeInBytes`    | `number` | The size of the project on disk in bytes                                      |
+| `updatedAt`      | `string` | Timestamp that the project was last updated                                   |
+| `visibility`     | `string` | Either "organization" for a team project, or "specific" for a private project |
+
+
+### List all projects
+
+`projects.list(OrganizationDescriptor?): Promise<Project[]>`
+
+List all projects accessible through the current authentication
+
+```js
+abstract.projects.list();
+```
+
+or, get a list of projects for a specific organization…
+
+```js
+abstract.projects.list({
+  organizationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+
+## Organizations
+
+![API][api-icon]
+
 
 ## organizations.list `(): Promise<Organization[]>`
 
-![API][api-icon]
 
 Load the organizations accessible by the current access token
 
 ```js
 abstract.organizations.list();
 ```
+
 
 # Collections
 
