@@ -100,7 +100,9 @@ export default class AbstractAPI implements AbstractInterface {
           : undefined
       });
 
-      const response = await this.fetch(`projects?${query}`);
+      const response = await this.fetch(`projects?${query}`, {
+        headers: { "Abstract-Api-Version": "2" }
+      });
 
       return unwrapEnvelope(response.json());
     }
