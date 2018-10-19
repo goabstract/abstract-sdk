@@ -102,7 +102,13 @@ export default class AbstractAPI implements AbstractInterface {
     }
 
     if (logStatusSuccess.enabled) {
-      logStatusSuccess(await response.clone().json());
+      if (
+        (response.headers.get("content-type") || "").includes(
+          "application/json"
+        )
+      ) {
+        logStatusSuccess(await response.clone().json());
+      }
     }
 
     return request;
