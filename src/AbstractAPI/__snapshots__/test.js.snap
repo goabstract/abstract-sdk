@@ -110,7 +110,7 @@ Object {
     Array [
       "https://api.goabstract.com/comments",
       Object {
-        "body": "\\"{/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\",/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer with annotation/\\",/\\"annotation/\\":{/\\"x/\\":1,/\\"y/\\":1,/\\"width/\\":1,/\\"height/\\":1}}\\"",
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer with annotation/\\",/\\"annotation/\\":{/\\"x/\\":1,/\\"y/\\":1,/\\"width/\\":1,/\\"height/\\":1},/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\"}\\"",
         "headers": Object {
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
@@ -156,7 +156,7 @@ Object {
     Array [
       "https://api.goabstract.com/comments",
       Object {
-        "body": "\\"{/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\",/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer/\\"}\\"",
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer/\\",/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\"}\\"",
         "headers": Object {
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
@@ -189,7 +189,7 @@ Object {
     Array [
       "https://api.goabstract.com/comments",
       Object {
-        "body": "\\"{/\\"branchName/\\":/\\"branch-name/\\",/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"my-sha/\\",/\\"body/\\":/\\"Comment on branch at my-sha/\\"}\\"",
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"my-sha/\\",/\\"body/\\":/\\"Comment on branch at my-sha/\\",/\\"branchName/\\":/\\"branch-name/\\"}\\"",
         "headers": Object {
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",
@@ -222,7 +222,7 @@ Object {
     Array [
       "https://api.goabstract.com/comments",
       Object {
-        "body": "\\"{/\\"branchName/\\":/\\"branch-name/\\",/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"body/\\":/\\"Comment on branch HEAD/\\"}\\"",
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"body/\\":/\\"Comment on branch HEAD/\\",/\\"branchName/\\":/\\"branch-name/\\"}\\"",
         "headers": Object {
           "Accept": "application/json",
           "Authorization": "Bearer abstract-token",

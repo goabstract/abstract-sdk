@@ -43,7 +43,7 @@ const responses = {
     info: () => [
       JSON.stringify({
         layer: { name: "layer-name" },
-        page: { name: "page-name" },
+        page: { name: "page-name", id: "page-id" },
         file: { name: "file-name" }
       }),
       { status: 200 }

@@ -100,30 +100,6 @@ export default class AbstractAPI implements AbstractInterface {
     return request;
   }
 
-  async namesForDescriptor(
-    objectDescriptor: BranchDescriptor | LayerDescriptor
-  ): Promise<BranchNames | LayerNames> {
-    const branch = await this.branches.info(
-      objectDescriptor.layerId !== undefined
-        ? // $FlowFixMe: objectDescriptor with a defined layerId shouldn't be considered a BranchDescriptor?
-          layerBranchDescriptor(objectDescriptor)
-        : objectDescriptor
-    );
-
-    if (objectDescriptor.layerId) {
-      const { layer, page, file } = await this.layers.info(objectDescriptor);
-
-      return {
-        branchName: branch.name,
-        fileName: file.name,
-        pageName: page.name,
-        layerName: layer.name
-      };
-    } else {
-      return { branchName: branch.name };
-    }
-  }
-
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
@@ -142,7 +118,6 @@ export default class AbstractAPI implements AbstractInterface {
         {
           method: "POST",
           body: JSON.stringify({
-            ...(await this.namesForDescriptor(objectDescriptor)),
             projectId: objectDescriptor.projectId,
             branchId: objectDescriptor.branchId,
             commitSha: objectDescriptor.sha,
@@ -163,7 +138,8 @@ export default class AbstractAPI implements AbstractInterface {
                   width: comment.annotation.width,
                   height: comment.annotation.height
                 }
-              : undefined
+              : undefined,
+            ...(await this._denormalizeDescriptorForComment(objectDescriptor))
           })
         }
       );
@@ -323,4 +299,29 @@ export default class AbstractAPI implements AbstractInterface {
       return unwrapEnvelope(response.json());
     }
   };
+
+  async _denormalizeDescriptorForComment(
+    objectDescriptor: BranchDescriptor | LayerDescriptor
+  ): Promise<BranchNames | LayerNames> {
+    const branch = await this.branches.info(
+      objectDescriptor.layerId !== undefined
+        ? // $FlowFixMe: objectDescriptor with a defined layerId shouldn't be considered a BranchDescriptor?
+          layerBranchDescriptor(objectDescriptor)
+        : objectDescriptor
+    );
+
+    if (objectDescriptor.layerId) {
+      const { layer, page, file } = await this.layers.info(objectDescriptor);
+
+      return {
+        branchName: branch.name,
+        fileName: file.name,
+        pageName: page.name,
+        pageId: page.id,
+        layerName: layer.name
+      };
+    } else {
+      return { branchName: branch.name };
+    }
+  }
 }
