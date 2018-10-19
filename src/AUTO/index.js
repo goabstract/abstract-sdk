@@ -6,20 +6,17 @@ import AbstractAPI, { type Options as OptionsAPI } from "../AbstractAPI";
 type Options = OptionsCLI & OptionsAPI;
 
 // $FlowFixMe
-class AbstractAUTO extends Proxy<*> implements AbstractInterface {
+class AbstractAUTO implements AbstractInterface {
   constructor(options: Options) {
     const cli = new AbstractCLI(options);
     const api = new AbstractAPI(options);
 
-    super(
-      {},
-      {
-        get: function(obj, prop) {
-          // $FlowFixMe
-          return cli[prop] || api[prop];
-        }
+    return new Proxy(this, {
+      get: function(obj, prop) {
+        // $FlowFixMe
+        return cli[prop] || api[prop];
       }
-    );
+    });
   }
 }
 
