@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - save_cache:
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
+          key: v3-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - .yarn-cache
@@ -28,11 +28,11 @@ jobs:
           at: ~/repo
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
-            - v2-dependencies- # fallback to latest cache if no exact match is found
+            - v3-dependencies-{{ checksum "yarn.lock" }}
+            - v3-dependencies- # fallback to latest cache if no exact match is found
       - run: yarn install --frozen-lockfile
       - save_cache:
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
+          key: v3-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - .yarn-cache
@@ -46,8 +46,8 @@ jobs:
           at: ~/repo
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
-            - v2-dependencies- # fallback to latest cache if no exact match is found
+            - v3-dependencies-{{ checksum "yarn.lock" }}
+            - v3-dependencies- # fallback to latest cache if no exact match is found
       - run: yarn ci
 
   deploy:
@@ -59,8 +59,8 @@ jobs:
           at: ~/repo
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
-            - v2-dependencies- # fallback to latest cache if no exact match is found
+            - v3-dependencies-{{ checksum "yarn.lock" }}
+            - v3-dependencies- # fallback to latest cache if no exact match is found
       - run: sh .circleci/deploy
 
 workflows:
