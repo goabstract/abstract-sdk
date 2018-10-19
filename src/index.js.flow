@@ -1,5 +1,9 @@
 // @flow
 
+export type OrganizationDescriptor = {|
+  organizationId: string
+|};
+
 export type ProjectDescriptor = {|
   projectId: string
 |};
@@ -60,6 +64,13 @@ export interface AbstractInterface {
 
   organizations?: {
     list: () => Promise<*>
+  };
+
+  projects?: {
+    list: (
+      organizationDescriptor?: OrganizationDescriptor,
+      options: { filter?: "active" | "archived" }
+    ) => Promise<*>
   };
 
   collections: {

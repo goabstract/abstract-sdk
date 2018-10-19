@@ -8,6 +8,7 @@ import { fileBranchDescriptor, pageFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
+  OrganizationDescriptor,
   ProjectDescriptor,
   CommitDescriptor,
   BranchDescriptor,
@@ -50,6 +51,7 @@ export default class AbstractAPI implements AbstractInterface {
       "User-Agent": `Abstract SDK ${minorVersion}`,
       Authorization: `Bearer ${this.abstractToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
+      "Abstract-Api-Version": "7",
       ...(init.headers || {})
     };
 
@@ -91,6 +93,25 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
+  projects = {
+    list: async (
+      organizationDescriptor?: OrganizationDescriptor,
+      options: { filter?: "active" | "archived" } = {}
+    ) => {
+      const query = queryString.stringify({
+        organizationId:
+          organizationDescriptor && organizationDescriptor.organizationId
+            ? organizationDescriptor.organizationId
+            : undefined,
+        filter: options.filter
+      });
+
+      const response = await this.fetch(`projects?${query}`);
+
+      return unwrapEnvelope(response.json());
+    }
+  };
+
   commits = {
     list: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
@@ -102,8 +123,7 @@ export default class AbstractAPI implements AbstractInterface {
 
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/commits?${query}`,
-        { headers: { "Abstract-Api-Version": "2" } }
+        `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/commits?${query}`
       );
 
       return unwrapEnvelope(response.json());
@@ -171,8 +191,7 @@ export default class AbstractAPI implements AbstractInterface {
       const query = queryString.stringify(options);
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${fileDescriptor.projectId}/branches/${fileDescriptor.branchId}/files/${fileDescriptor.fileId}/layers?${query}`,
-        { headers: { "Abstract-Api-Version": "2" } }
+        `projects/${fileDescriptor.projectId}/branches/${fileDescriptor.branchId}/files/${fileDescriptor.fileId}/layers?${query}`
       );
 
       return unwrapEnvelope(response.json());
@@ -180,8 +199,7 @@ export default class AbstractAPI implements AbstractInterface {
     info: async (layerDescriptor: LayerDescriptor) => {
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
-        { headers: { "Abstract-Api-Version": "2" } }
+        `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       );
 
       return unwrapEnvelope(response.json());
@@ -211,8 +229,7 @@ export default class AbstractAPI implements AbstractInterface {
 
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`,
-        { headers: { "Abstract-Api-Version": "7" } } // TODO: No header should be the latest version?
+        `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`
       );
 
       return unwrapEnvelope(response.json());
@@ -224,8 +241,7 @@ export default class AbstractAPI implements AbstractInterface {
       const query = queryString.stringify(options);
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`,
-        { headers: { "Abstract-Api-Version": "7" } }
+        `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`
       );
 
       return unwrapEnvelope(response.json());
