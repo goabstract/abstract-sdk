@@ -2,7 +2,7 @@
 
 BUCKET=abstract-sdk-website
 
-# make sure aws cli is installed
+# make sure aws cli is installed first
 sudo apt-get update
 sudo apt-get install -y awscli
 
