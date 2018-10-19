@@ -51,6 +51,7 @@ export default class AbstractAPI implements AbstractInterface {
       "User-Agent": `Abstract SDK ${minorVersion}`,
       Authorization: `Bearer ${this.abstractToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
+      "Abstract-Api-Version": "7",
       ...(init.headers || {})
     };
 
@@ -100,9 +101,7 @@ export default class AbstractAPI implements AbstractInterface {
           : undefined
       });
 
-      const response = await this.fetch(`projects?${query}`, {
-        headers: { "Abstract-Api-Version": "2" }
-      });
+      const response = await this.fetch(`projects?${query}`);
 
       return unwrapEnvelope(response.json());
     }
@@ -119,8 +118,7 @@ export default class AbstractAPI implements AbstractInterface {
 
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/commits?${query}`,
-        { headers: { "Abstract-Api-Version": "2" } }
+        `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/commits?${query}`
       );
 
       return unwrapEnvelope(response.json());
@@ -188,8 +186,7 @@ export default class AbstractAPI implements AbstractInterface {
       const query = queryString.stringify(options);
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${fileDescriptor.projectId}/branches/${fileDescriptor.branchId}/files/${fileDescriptor.fileId}/layers?${query}`,
-        { headers: { "Abstract-Api-Version": "2" } }
+        `projects/${fileDescriptor.projectId}/branches/${fileDescriptor.branchId}/files/${fileDescriptor.fileId}/layers?${query}`
       );
 
       return unwrapEnvelope(response.json());
@@ -197,8 +194,7 @@ export default class AbstractAPI implements AbstractInterface {
     info: async (layerDescriptor: LayerDescriptor) => {
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
-        { headers: { "Abstract-Api-Version": "2" } }
+        `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       );
 
       return unwrapEnvelope(response.json());
@@ -228,8 +224,7 @@ export default class AbstractAPI implements AbstractInterface {
 
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`,
-        { headers: { "Abstract-Api-Version": "7" } } // TODO: No header should be the latest version?
+        `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`
       );
 
       return unwrapEnvelope(response.json());
@@ -241,8 +236,7 @@ export default class AbstractAPI implements AbstractInterface {
       const query = queryString.stringify(options);
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`,
-        { headers: { "Abstract-Api-Version": "7" } }
+        `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`
       );
 
       return unwrapEnvelope(response.json());
