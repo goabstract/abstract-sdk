@@ -28,6 +28,7 @@ describe("AbstractAPI", () => {
       // projects
       ["projects.list", buildOrganizationDescriptor()],
       ["projects.list", [undefined, { filter: "active" }]],
+      ["projects.info", buildProjectDescriptor()],
       // collections
       ["collections.list", buildProjectDescriptor()],
       ["collections.list", buildBranchDescriptor()],

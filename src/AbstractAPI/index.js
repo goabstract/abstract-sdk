@@ -109,6 +109,13 @@ export default class AbstractAPI implements AbstractInterface {
       const response = await this.fetch(`projects?${query}`);
 
       return unwrapEnvelope(response.json());
+    },
+    info: async (projectDescriptor: ProjectDescriptor) => {
+      const response = await this.fetch(
+        `projects/${projectDescriptor.projectId}`
+      );
+
+      return unwrapEnvelope(response.json());
     }
   };
 

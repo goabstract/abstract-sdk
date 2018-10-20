@@ -70,7 +70,8 @@ export interface AbstractInterface {
     list: (
       organizationDescriptor?: OrganizationDescriptor,
       options: { filter?: "active" | "archived" }
-    ) => Promise<*>
+    ) => Promise<*>,
+    info: (projectDescriptor: ProjectDescriptor) => Promise<*>
   };
 
   collections: {
