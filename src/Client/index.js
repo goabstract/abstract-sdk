@@ -5,13 +5,19 @@ import { AUTO } from "../transports";
 type Options = {
   abstractToken?: string,
   abstractCliPath?: string[],
-  transport?: *
+  transport?: *,
+  node?: {
+    fs?: Object,
+    child_process?: Object,
+    buffer?: Object
+  }
 };
 
 export default function Client({
   abstractToken = process.env.ABSTRACT_TOKEN || "",
   abstractCliPath,
-  transport: Transport = AUTO
+  transport: Transport = AUTO,
+  node
 }: Options = {}): AbstractInterface {
   if (!abstractToken) {
     throw new Error("options.abstractToken or ABSTRACT_TOKEN required");
@@ -21,5 +27,5 @@ export default function Client({
     throw new Error("options.transport required");
   }
 
-  return new Transport({ abstractToken, abstractCliPath });
+  return new Transport({ abstractToken, abstractCliPath, node });
 }

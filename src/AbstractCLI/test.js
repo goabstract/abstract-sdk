@@ -1,5 +1,4 @@
 // @flow
-import child_process from "child_process";
 import { Readable } from "readable-stream";
 import get from "lodash/get";
 import {
@@ -13,8 +12,6 @@ import {
   buildCollectionDescriptor
 } from "../support/factories";
 import AbstractCLI from "./";
-
-jest.mock("child_process");
 
 function buildTextStream(text?: string): ReadableStream {
   const stream = new Readable();
@@ -149,7 +146,8 @@ describe(AbstractCLI, () => {
 
       const transportMethod = get(transport, property).bind(transport);
 
-      child_process.spawn.mockReturnValueOnce({
+      transport.childProcess.spawn = jest.fn();
+      transport.childProcess.spawn.mockReturnValueOnce({
         stdout: buildTextStream(options.stdout),
         stderr: buildTextStream(options.stderr),
         on: jest.fn().mockReturnThis()
@@ -162,8 +160,8 @@ describe(AbstractCLI, () => {
         expect(await result).toEqual(options.result);
       }
 
-      expect(child_process.spawn.mock.calls.length).toEqual(1);
-      expect(child_process.spawn.mock.calls[0]).toMatchSnapshot();
+      expect(transport.childProcess.spawn.mock.calls.length).toEqual(1);
+      expect(transport.childProcess.spawn.mock.calls[0]).toMatchSnapshot();
     });
   });
 });

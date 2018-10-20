@@ -1,11 +1,8 @@
 // @flow
 import path from "path";
-import { spawn } from "child_process";
-import { Buffer } from "buffer";
 import find from "lodash/find";
-import locatePath from "locate-path";
 import JSONStream from "JSONStream";
-import { ref, pageFileDescriptor } from "../utils";
+import { ref, pageFileDescriptor, locatePath } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -33,13 +30,22 @@ function parsePath(input: ?string): ?Array<string> {
 export type Options = {
   abstractToken: string,
   abstractCliPath?: string[],
-  cwd?: string
+  cwd?: string,
+  node?: {
+    fs?: Object,
+    child_process?: Object,
+    buffer?: Buffer
+  }
 };
 
 export default class AbstractCLI implements AbstractInterface {
   abstractToken: string;
   abstractCliPath: string;
   cwd: string;
+
+  childProcess: Object;
+  fs: Object;
+  buffer: Object;
 
   constructor({
     cwd = process.cwd(),
@@ -54,15 +60,24 @@ export default class AbstractCLI implements AbstractInterface {
       ),
       // macOS App
       "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli"
-    ]
+    ],
+    node
   }: Options) {
     this.cwd = cwd;
     this.abstractToken = abstractToken;
 
+    this.fs = node && node.fs ? node.fs : require("fs");
+    this.childProcess =
+      node && node.child_process
+        ? node.child_process
+        : require("child_process");
+    this.buffer = node && node.buffer ? node.buffer : require("buffer");
+
     try {
       this.abstractCliPath = path.relative(
         cwd,
-        path.resolve(cwd, locatePath.sync(abstractCliPath))
+        // $FlowFixMe
+        path.resolve(cwd, locatePath(abstractCliPath, this.fs, path))
       );
     } catch (error) {
       throw new Error(
@@ -86,7 +101,9 @@ export default class AbstractCLI implements AbstractInterface {
       ];
 
       logSpawn(spawnArgs);
-      const abstractCli = spawn(...spawnArgs);
+
+      const abstractCli = this.childProcess.spawn(...spawnArgs);
+      const { Buffer } = this.buffer;
 
       let stderrBuffer = new Buffer.from("");
       abstractCli.stderr.on("data", chunk => {

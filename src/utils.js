@@ -34,3 +34,14 @@ export function pageFileDescriptor(pageDescriptor: PageDescriptor) {
     fileId: pageDescriptor.fileId
   };
 }
+
+export function locatePath(iterable: string[], fs: Object, path: Object) {
+  for (const el of iterable) {
+    try {
+      fs.accessSync(path.resolve(process.cwd(), el));
+      return el;
+    } catch (err) {
+      continue;
+    }
+  }
+}
