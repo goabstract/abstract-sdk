@@ -24,7 +24,7 @@ const logStatusError = log.extend("AbstractAPI:status:error");
 const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
-type Options = {
+export type Options = {
   abstractToken: string
 };
 
