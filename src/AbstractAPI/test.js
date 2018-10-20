@@ -85,9 +85,7 @@ describe("AbstractAPI", () => {
         buildFileDescriptor({ fileId: "file-id" }),
         {
           body: {
-            data: {
-              files: [{ id: "file-id" }, { id: "not-file-id" }]
-            }
+            files: [{ id: "file-id" }, { id: "not-file-id" }]
           },
           result: { id: "file-id" }
         }
