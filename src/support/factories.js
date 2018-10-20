@@ -16,6 +16,13 @@ export function buildOptions(options: *) {
   };
 }
 
+export function buildOrganizationDescriptor(organizationDescriptor: *) {
+  return {
+    organizationId: "organization-id",
+    ...organizationDescriptor
+  };
+}
+
 export function buildProjectDescriptor(
   projectDescriptor: *
 ): ProjectDescriptor {
