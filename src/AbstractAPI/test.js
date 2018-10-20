@@ -102,8 +102,8 @@ describe("AbstractAPI", () => {
       ["layers.list", buildFileDescriptor()],
       ["layers.info", buildLayerDescriptor()],
       // data
-      ["data.layer", buildLayerDescriptor()],
-      ["data.layer", buildLayerDescriptor({ sha: "sha" })]
+      ["data.info", buildLayerDescriptor()],
+      ["data.info", buildLayerDescriptor({ sha: "sha" })]
     ])("%s(%p)", async (property, descriptor, options = {}) => {
       const transport = new AbstractAPI(buildOptions());
       const transportMethod = get(transport, property).bind(transport);

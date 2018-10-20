@@ -114,6 +114,6 @@ export interface AbstractInterface {
   };
 
   data: {
-    layer: LayerDescriptor => Promise<*>
+    info: LayerDescriptor => Promise<*>
   };
 }

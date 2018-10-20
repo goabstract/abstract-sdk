@@ -215,7 +215,7 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   data = {
-    layer: (layerDescriptor: LayerDescriptor) => {
+    info: (layerDescriptor: LayerDescriptor) => {
       return this.spawn([
         "layer",
         "data",
