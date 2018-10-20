@@ -154,7 +154,7 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}/files`
       );
 
-      return unwrapEnvelope(response.json());
+      return response.json();
     },
     info: async (fileDescriptor: FileDescriptor) => {
       const { files } = await this.files.list(
@@ -207,11 +207,13 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   data = {
-    layer: (layerDescriptor: LayerDescriptor) => {
-      return this.fetch(
+    layer: async (layerDescriptor: LayerDescriptor) => {
+      const response = await this.fetch(
         // prettier-ignore
         `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}/data`
       );
+
+      return response.json();
     }
   };
 
