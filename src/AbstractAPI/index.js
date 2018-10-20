@@ -136,6 +136,28 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
+  branches = {
+    info: async (branchDescriptor: BranchDescriptor) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}`
+      );
+      return response.json();
+    },
+    list: async (
+      projectDescriptor: ProjectDescriptor,
+      options: { filter?: "active" | "archived" | "mine" } = {}
+    ) => {
+      const query = queryString.stringify({ filter: options.filter });
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${projectDescriptor.projectId}/branches/?${query}`
+      );
+
+      return response.json();
+    }
+  };
+
   changesets = {
     info: async (commitDescriptor: CommitDescriptor) => {
       const response = await this.fetch(

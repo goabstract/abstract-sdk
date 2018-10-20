@@ -78,6 +78,10 @@ describe("AbstractAPI", () => {
           }
         }
       ],
+      // branches
+      ["branches.list", buildProjectDescriptor()],
+      ["branches.list", [buildProjectDescriptor(), { filter: "mine" }]],
+      ["branches.info", buildBranchDescriptor()],
       // files
       ["files.list", buildBranchDescriptor()],
       [
