@@ -214,16 +214,20 @@ export default class AbstractAPI implements AbstractInterface {
 
   layers = {
     list: async (
-      fileDescriptor: FileDescriptor,
-      options: { pageId?: string, limit?: number, offset?: number } = {}
+      objectDescriptor: FileDescriptor | PageDescriptor,
+      options: { limit?: number, offset?: number } = {}
     ) => {
-      const query = queryString.stringify(options);
+      const query = queryString.stringify({
+        pageId: objectDescriptor.pageId ? objectDescriptor.pageId : undefined,
+        ...options
+      });
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${fileDescriptor.projectId}/branches/${fileDescriptor.branchId}/files/${fileDescriptor.fileId}/layers?${query}`
+        `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/files/${objectDescriptor.fileId}/layers?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await response.json();
+      return data.layers;
     },
     info: async (layerDescriptor: LayerDescriptor) => {
       const response = await this.fetch(
@@ -231,7 +235,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await response.json();
+      return data.layer;
     }
   };
 
