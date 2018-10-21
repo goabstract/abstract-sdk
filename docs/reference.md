@@ -390,14 +390,15 @@ A page is a container for layers, often a file will have several pages to organi
 
 ### The page object
 
-| Property    | Type     | Description                                         |
-|-------------|----------|-----------------------------------------------------|
-| `fileId`    | `string` | UUID of the file that this page is contained within |
-| `id`        | `string` | UUID identifier for the page                        |
-| `name`      | `string` | The name of the page                                |
-| `order`     | `number` | The order of the page in the file                   |
-| `projectId` | `string` | UUID of the project this page belongs to            |
-| `sha`       | `string` | SHA of the commit this page was loaded at           |
+| Property    | Type     | Description                                                  |
+|-------------|----------|--------------------------------------------------------------|
+| `fileId`    | `string` | UUID of the file that this page is contained within          |
+| `id`        | `string` | UUID identifier for the page                                 |
+| `name`      | `string` | The name of the page                                         |
+| `order`     | `number` | The order of the page in the file                            |
+| `projectId` | `string` | UUID of the project this page belongs to                     |
+| `sha`       | `string` | SHA of the commit this page was loaded at                    |
+| `type`      | `string` | This field has the value "library" for virtual library pages |
 
 ### List all pages
 
@@ -457,16 +458,40 @@ A layer is a container for designs. In Sketch a layer usually represents an artb
 
 ### List all layers
 
-  > TODO
+
+`layers.list(FileDescriptor | PageDescriptor): Promise<Layer[]>`
+
+List the layers for a file at a commit
+
+```js
+abstract.layers.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
 
 ### Retrieve a layer
 
-  > TODO
+`layers.info(LayerDescriptor): Promise<Layer>`
+
+Load the info for a layer in a file at the latest commit on a branch
+
+```js
+abstract.layers.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
+});
+```
 
 ## Previews
 
-A preview is a bitmap image that represents the rendered version of a layer. In Abstract all previews are currently saved in PNG format. Previews are loaded authenticated, and as such the URL includes your access
-token – we highly recommend using the `Blob` and saving it to your own storage.
+A preview is an image file that represents the rendered version of a layer. In Abstract all previews are currently
+only available in PNG format.
 
 ![API][api-icon]
 
@@ -503,6 +528,9 @@ abstract.previews.url({
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
 });
 ```
+
+  > Previews are loaded authenticated, and as such the URL includes your access
+token – we highly recommend using the `Blob` and saving the image file to your own storage.
 
 ## Data
 
