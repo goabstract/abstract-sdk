@@ -163,8 +163,8 @@ to be created for logic chunks of work – for example designing a new feature.
 
 ![API][api-icon]
 
-A comment in Abstract can be left on a branch, commit or layer. Comments on layers can also include an optional annotation that
-represents a box drawn ontop of the layer, this can be used to leave comments about specific areas of a layer.
+A comment in Abstract can be left on a branch, commit, or layer. Comments on layers can also include an optional annotation that
+represents a bounding area ontop of the layer, this can be used to leave comments about specific areas.
 
 ### The comment object
 
@@ -177,11 +177,11 @@ represents a box drawn ontop of the layer, this can be used to leave comments ab
 | `createdAt`    | `string`     | Timestamp of the comment creation time                                  |
 | `deletedAt`    | `string`     | Timestamp of the comment deletion time                                  |
 | `editedAt`     | `string`     | Timestamp of when the comment was last edited                           |
-| `fileId`       | `string`     | (optional) UUID of the file that this comment is on                     |
+| `fileId`       | `string`     | UUID of the file that this comment is on                                |
 | `id`           | `string`     | UUID identifier of the comment                                          |
-| `layerId`      | `string`     | (optional) UUID of the layer that this comment is on                    |
-| `pageId`       | `string`     | (optional) UUID of the page that this comment is on                     |
-| `parentId`     | `string`     | (optional) UUID of the parent comment if this is a reply                |
+| `layerId`      | `string`     | UUID of the layer that this comment is on                               |
+| `pageId`       | `string`     | UUID of the page that this comment is on                                |
+| `parentId`     | `string`     | UUID of the parent comment if this is a reply                           |
 | `projectId`    | `string`     | UUID of the project that this comment is contained within               |
 | `replyIds`     | `string[]`   | An array of comment UUID's that are replies to this comment             |
 | `reviewStatus` | `string`     | If the comment was a review this may be one of `APPROVED` or `REJECTED` |
@@ -199,7 +199,41 @@ represents a box drawn ontop of the layer, this can be used to leave comments ab
 
 ### Create a comment
 
-  > TODO
+`comments.create(BranchDescriptor | CommitDescriptor | LayerDescriptor, Comment): Promise<Comment>`
+
+Create a comment on a branch
+
+```js
+abstract.comments.create({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+}, {
+  body: "Hello from the Abstract SDK"
+});
+```
+
+Or, perhaps create an annotation on a layer…
+
+```js
+abstract.comments.create({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a",
+}, {
+  body: "Hello from the Abstract SDK",
+  annotation: {
+    width: 100,
+    height: 100,
+    x: 300,
+    y: 400
+  }
+});
+```
+
+  > Note: It's important to ensure that the annotation bounding box is within the dimensions of the layer!
 
 ## Commits
 
