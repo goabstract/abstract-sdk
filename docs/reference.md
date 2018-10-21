@@ -459,7 +459,7 @@ A layer is a container for designs. In Sketch a layer usually represents an artb
 ### List all layers
 
 
-`layers.list(FileDescriptor | PageDescriptor): Promise<Layer[]>`
+`layers.list(FileDescriptor | PageDescriptor, { limit?: number, offset?: number }): Promise<Layer[]>`
 
 List the layers for a file at a commit
 
@@ -469,6 +469,21 @@ abstract.layers.list({
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
+As a file can contain a lot of layers we recommend filtering by page and adding a limit…
+
+```js
+abstract.layers.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+}, {
+  limit: 25,
+  offset: 0
 });
 ```
 
