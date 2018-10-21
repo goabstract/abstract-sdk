@@ -140,9 +140,9 @@ describe(AbstractCLI, () => {
       ["layers.list", buildFileDescriptor({ sha: "sha" })],
       ["layers.info", buildLayerDescriptor({ sha: "sha" })],
       // data
-      ["data.layer", buildLayerDescriptor()],
-      ["data.layer", buildLayerDescriptor({ sha: "sha" })]
-    ])("%s(%j)", async (property, args, options = {}) => {
+      ["data.info", buildLayerDescriptor()],
+      ["data.info", buildLayerDescriptor({ sha: "sha" })]
+    ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
 
       const transport = new AbstractCLI(

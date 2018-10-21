@@ -4,26 +4,92 @@
 #
 version: 2
 jobs:
-  build:
+  checkout:
     docker:
-      - image: circleci/node:8-browsers
-
-    working_directory: ~/abstract-js
-
+      - image: circleci/node:10-browsers
+    working_directory: ~/repo
     steps:
       - checkout
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
 
+  install:
+    docker:
+      - image: circleci/node:10-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies- # fallback to latest cache if no exact match is found
-
-      - run: yarn install
-
+            - v4-dependencies-{{ checksum "yarn.lock" }}
+            - v4-dependencies- # fallback to latest cache if no exact match is found
+      - run: yarn install --frozen-lockfile
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v4-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - .yarn-cache
 
+  test:
+    docker:
+      - image: circleci/node:10-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          keys:
+            - v4-dependencies-{{ checksum "yarn.lock" }}
+            - v4-dependencies- # fallback to latest cache if no exact match is found
       - run: yarn ci
+
+  deploy:
+    docker:
+      - image: circleci/node:10-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          keys:
+            - v4-dependencies-{{ checksum "yarn.lock" }}
+            - v4-dependencies- # fallback to latest cache if no exact match is found
+      - run: sh .circleci/deploy
+  publish:
+    docker:
+      - image: circleci/node:10-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          keys:
+            - v4-dependencies-{{ checksum "yarn.lock" }}
+            - v4-dependencies- # fallback to latest cache if no exact match is found
+      - run: npm publish --access public
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - checkout
+      - install:
+          requires:
+            - checkout
+      - test:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: documentation
+      - publish:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/

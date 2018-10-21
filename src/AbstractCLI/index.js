@@ -30,7 +30,7 @@ function parsePath(input: ?string): ?Array<string> {
   return input.split(path.delimiter || ":");
 }
 
-type Options = {
+export type Options = {
   abstractToken: string,
   abstractCliPath?: string[],
   cwd?: string
@@ -215,7 +215,7 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   data = {
-    layer: (layerDescriptor: LayerDescriptor) => {
+    info: (layerDescriptor: LayerDescriptor) => {
       return this.spawn([
         "layer",
         "data",
