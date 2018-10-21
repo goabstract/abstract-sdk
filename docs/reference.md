@@ -167,7 +167,26 @@ represents a box drawn ontop of the layer, this can be used to leave comments ab
 
 ### The comment object
 
-  > TODO
+| Property       | Type         | Description                                                             |
+|----------------|--------------|-------------------------------------------------------------------------|
+| `annotation`   | `Annotation` | The optional bounding box for the comment on the layer                  |
+| `body`         | `string`     | The body of the comment                                                 |
+| `branchId`     | `string`     | UUID of the branch this comment is on, or the string "master"           |
+| `commitSha`    | `string`     | SHA of the commit this comment was left on                              |
+| `createdAt`    | `string`     | Timestamp of the comment creation time                                  |
+| `deletedAt`    | `string`     | Timestamp of the comment deletion time                                  |
+| `editedAt`     | `string`     | Timestamp of when the comment was last edited                           |
+| `fileId`       | `string`     | (optional) UUID of the file that this comment is on                     |
+| `id`           | `string`     | UUID identifier of the comment                                          |
+| `layerId`      | `string`     | (optional) UUID of the layer that this comment is on                    |
+| `pageId`       | `string`     | (optional) UUID of the page that this comment is on                     |
+| `parentId`     | `string`     | (optional) UUID of the parent comment if this is a reply                |
+| `projectId`    | `string`     | UUID of the project that this comment is contained within               |
+| `replyIds`     | `string[]`   | An array of comment UUID's that are replies to this comment             |
+| `reviewStatus` | `string`     | If the comment was a review this may be one of `APPROVED` or `REJECTED` |
+| `updatedAt`    | `string`     | Timestamp of when the comment was last updated                          |
+| `user`         | `User`       | The user that created the comment                                       |
+| `userId`       | `string`     | UUID of the user this commit was created by                             |
 
 ### List all comments
 
@@ -416,13 +435,39 @@ token – we highly recommend using the `Blob` and saving it to your own storage
 
 ![API][api-icon]
 
-### Retrieve a preview
+### Retrieve a preview Blob
 
-  > TODO
+`previews.blob(LayerDescriptor): Promise<Blob>`
+
+Load the preview image for a layer at a commit
+
+```js
+abstract.previews.blob({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+});
+```
 
 ### Retrieve a preview URL
 
-  > TODO
+`previews.url(LayerDescriptor): Promise<string>`
+
+Load the URL of a preview image for a layer at a commit
+
+```js
+abstract.previews.url({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+});
+```
 
 ## Data
 
