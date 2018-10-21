@@ -61,4 +61,4 @@ projects.map(project => {
 });
 ```
 
-Hopefully you just got a list of projects that are accessible to your token, nice! From here you can use the [API reference](/docs/methods) to dig deeper – try loading branches, commits, comments, artboard data, and more.
+Hopefully you just got a list of projects that are accessible to your token, nice! From here you can use the [API reference](/docs/reference) to dig deeper – try loading branches, commits, comments, artboard data, and more.

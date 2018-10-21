@@ -103,7 +103,18 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ### The collection object
 
-  > TODO
+| Property      | Type                | Description                                                                             |
+|---------------|---------------------|-----------------------------------------------------------------------------------------|
+| `branchId`    | `string`            | UUID of the branch that this collection belongs to, or the string "master"              |
+| `createdAt`   | `string`            | Timestamp that the collection was created                                               |
+| `description` | `string`            | A description of the collection                                                         |
+| `id`          | `string`            | UUID identifier of the collection                                                       |
+| `layers`      | `CollectionLayer[]` | An ordered array of collection layers. Note: These are not the same as `Layer` objects. |
+| `name`        | `string`            | The name of the collection                                                              |
+| `projectId`   | `string`            | UUID of the project this commit belongs to                                              |
+| `publishedAt` | `string`            | Timestamp that the collection was published                                             |
+| `user`        | `User`              | The user that created the collection                                                    |
+| `userId`      | `string`            | UUID of the user that created the collection                                            |
 
 ### List all collections
 
