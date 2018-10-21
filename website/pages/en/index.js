@@ -9,7 +9,7 @@ const React = require("react");
 
 const CompLibrary = require("../../core/CompLibrary.js");
 
-const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
+// const MarkdownBlock = CompLibrary.MarkdownBlock; /* Used to read markdown */
 const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
@@ -23,9 +23,9 @@ function docUrl(doc, language) {
   return `${siteConfig.baseUrl}docs/${language ? `${language}/` : ""}${doc}`;
 }
 
-function pageUrl(page, language) {
-  return siteConfig.baseUrl + (language ? `${language}/` : "") + page;
-}
+// function pageUrl(page, language) {
+//   return siteConfig.baseUrl + (language ? `${language}/` : "") + page;
+// }
 
 class Button extends React.Component {
   render() {
@@ -109,19 +109,6 @@ const Features = () => (
         image: imgUrl("docusaurus.svg"),
         imageAlign: "top",
         title: "Feature Two"
-      }
-    ]}
-  </Block>
-);
-
-const Description = () => (
-  <Block background="dark">
-    {[
-      {
-        content: "This is another description of how this project is useful",
-        image: imgUrl("docusaurus.svg"),
-        imageAlign: "right",
-        title: "Description"
       }
     ]}
   </Block>
