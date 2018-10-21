@@ -99,8 +99,7 @@ abstract.organizations.list();
 
 ![CLI][cli-icon] ![API][api-icon]
 
-A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used
- to group work together to communicate a flow, ask for review, or other usecases.
+A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
 
 ### The collection object
 
@@ -127,10 +126,13 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ## Branches
 
-![CLI][cli-icon] ![API][api-icon]
+![API][api-icon]
 
 A branch is where design work and commits happen. A branch acts as a personal workspace for contributors, we encourage branches
 to be created for logic chunks of work – for example designing a new feature.
+
+  > Note: Branches will be available through the CLI transport in the near future
+
 
 ### The branch object
 
@@ -154,11 +156,30 @@ to be created for logic chunks of work – for example designing a new feature.
 
 ### List all branches
 
-  > Not yet implemented
+`branches.list(ProjectDescriptor, { filter?: "active" | "archived" | "mine" }): Promise<Branch[]>`
+
+List the active branches for a project
+
+```js
+abstract.branches.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+}, {
+  filter: "active"
+});
+```
 
 ### Retrieve a branch
 
-  > Not yet implemented
+`branches.info(BranchDescriptor): Promise<Branch>`
+
+Load the info for a specific branch in a project
+
+```js
+abstract.branches.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+});
+```
 
 ## Comments
 
