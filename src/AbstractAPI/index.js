@@ -173,7 +173,7 @@ export default class AbstractAPI implements AbstractInterface {
         `comments`,
         {
           method: "POST",
-          body: JSON.stringify({
+          body: {
             projectId: objectDescriptor.projectId,
             branchId: objectDescriptor.branchId,
             commitSha: objectDescriptor.sha,
@@ -196,7 +196,7 @@ export default class AbstractAPI implements AbstractInterface {
                 }
               : undefined,
             ...(await this._denormalizeDescriptorForComment(objectDescriptor))
-          })
+          }
         }
       );
 
