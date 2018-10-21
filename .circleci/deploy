@@ -1,0 +1,15 @@
+#!/bin/bash
+
+BUCKET=abstract-sdk-website
+
+# make sure aws cli is installed first
+sudo apt-get update
+sudo apt-get install -y awscli
+
+# generate the static HTML
+cd website
+yarn install --frozen-lockfile
+yarn run build
+
+# Upload all assets first, then upload html
+aws s3 cp ./build/abstract-sdk/ s3://$BUCKET/ --recursive --include "*" --acl public-read

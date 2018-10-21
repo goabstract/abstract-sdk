@@ -1,6 +1,6 @@
 {
   "name": "abstract-sdk",
-  "version": "0.1.0",
+  "version": "0.2.5",
   "description": "",
   "files": [
     "/lib",
@@ -8,6 +8,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
+    "prepublish": "yarn run build",
     "build": "babel ./src -d ./lib",
     "lint": "eslint .",
     "test": "jest",

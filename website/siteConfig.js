@@ -9,16 +9,16 @@
 // site configuration options.
 
 const siteConfig = {
-  title: "abstract-js", // Title for your website.
-  tagline: "Universal javascript binding for Abstract's API",
-  url: "https://abstract-js.github.io", // Your website URL
+  title: "Abstract SDK",
+  tagline: "A universal javascript binding for the Abstract API and CLI",
+  url: "https://sdk.goabstract.com",
   baseUrl: "/", // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
 
   // Used for publishing and more
-  projectName: "abstract-js",
+  projectName: "abstract-sdk",
   organizationName: "goabstract",
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
@@ -26,32 +26,32 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    { doc: "index", label: "Docs" },
-    { doc: "api", label: "API" },
+    { doc: "getting-started", label: "Getting Started" },
+    { doc: "reference", label: "API" },
     { href: "https://spectrum.chat/abstract", label: "Help" }
   ],
 
   // List of projects/orgs using your project for the users page.
-  users: [
-    {
-      caption: "Abstract",
-      // You will need to prepend the image path with your baseUrl
-      // if it is not '/', like: '/test-site/img/docusaurus.svg'.
-      image: "img/docusaurus.svg",
-      infoLink: "https://goabstract.com",
-      pinned: true
-    }
-  ],
+  // users: [
+  //   {
+  //     caption: "Abstract",
+  //     // You will need to prepend the image path with your baseUrl
+  //     // if it is not '/', like: '/test-site/img/docusaurus.svg'.
+  //     image: "img/docusaurus.svg",
+  //     infoLink: "https://goabstract.com",
+  //     pinned: true
+  //   }
+  // ],
 
   /* path to images for header/footer */
-  headerIcon: "img/docusaurus.svg",
-  footerIcon: "img/docusaurus.svg",
+  headerIcon: "img/logo.svg",
+  footerIcon: "img/logo.svg",
   favicon: "img/favicon.png",
 
   /* Colors for website */
   colors: {
-    primaryColor: "#ff5c50",
-    secondaryColor: "#b9453d"
+    primaryColor: "#2e2f30",
+    secondaryColor: "#157ff3"
   },
 
   /* Custom fonts for website */
@@ -85,12 +85,10 @@ const siteConfig = {
   cleanUrl: true,
 
   // Open Graph and Twitter card images.
-  ogImage: "img/docusaurus.png",
-  twitterImage: "img/docusaurus.png"
+  ogImage: "img/social.png",
+  twitterImage: "img/social.png",
 
-  // You may provide arbitrary config keys to be used as needed by your
-  // template. For example, if you need your repo's URL...
-  //   repoUrl: 'https://github.com/facebook/test-site',
+  repoUrl: "https://github.com/goabstract/abstract-sdk"
 };
 
 module.exports = siteConfig;
