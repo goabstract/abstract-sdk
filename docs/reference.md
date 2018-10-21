@@ -253,12 +253,12 @@ to identify which version of the object you would like.
 | `fileIds`               | `string[]` | For system commits like file upgrades this represents the file UUID's that were changed |
 | `parents`               | `string[]` | SHA(s) of the parent commits                                                            |
 | `projectId`             | `string`   | UUID of the project this commit belongs to                                              |
-| `sha`                   | `string`   | SHA that represents this commit                                                         |
+| `sha`                   | `string`   | SHA of the hashed content of the commit. This acts as the unique identifer.             |
 | `sourceBranchId`        | `string`   | For merge commits this points to the merged from branch                                 |
 | `sourceBranchName`      | `string`   | For merge commits this is the name of the branch that was merged from                   |
 | `time`                  | `string`   | Timestamp of the commit                                                                 |
 | `title`                 | `string`   | The title of the commit                                                                 |
-| `type`                  | `string`   | The type of the commit, may be one of `NORMAL`, `PROJECT_CREATED`, `FILE_ADDED`, `FILE_RENAMED`, `FILE_DELETED`, `FILE_REPLACED`, `LIBRARY_ADDED`, `LIBRARY_REMOVED`, `RESTORE`, `UPDATE`, `MERGE`                                                |
+| `type`                  | `string`   | The type of the commit, may be one of `NORMAL`, `PROJECT_CREATED`, `FILE_ADDED`, `FILE_RENAMED`, `FILE_DELETED`, `FILE_REPLACED`, `LIBRARY_ADDED`, `LIBRARY_REMOVED`, `RESTORE`, `UPDATE`, `MERGE`                |
 | `userId`                | `string`   | UUID of the user this commit was created by                                             |
 | `userName`              | `string`   | Display name of the user this commit was created by                                     |
 

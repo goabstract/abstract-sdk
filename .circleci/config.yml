@@ -86,7 +86,7 @@ workflows:
             - test
           filters:
             branches:
-              only: documentation
+              only: master
       - publish:
           requires:
             - test

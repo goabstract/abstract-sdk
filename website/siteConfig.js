@@ -12,20 +12,12 @@ const siteConfig = {
   title: "Abstract SDK",
   tagline: "A universal javascript binding for the Abstract API and CLI",
   url: "https://sdk.goabstract.com",
-  baseUrl: "/", // Base URL for your project */
+  baseUrl: "/",
   editUrl: "https://github.com/goabstract/abstract-sdk/edit/master/docs/",
-  // For github.io type URLs, you would set the url and baseUrl like:
-  //   url: 'https://facebook.github.io',
-  //   baseUrl: '/test-site/',
 
   // Used for publishing and more
   projectName: "abstract-sdk",
   organizationName: "goabstract",
-  // For top-level user or org sites, the organization is still the same.
-  // e.g., for the https://JoelMarcey.github.io site, it would be set like...
-  //   organizationName: 'JoelMarcey'
-
-  // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     { doc: "getting-started", label: "Getting Started" },
     { doc: "reference", label: "API" },
