@@ -70,7 +70,8 @@ export interface AbstractInterface {
     list: (
       organizationDescriptor?: OrganizationDescriptor,
       options: { filter?: "active" | "archived" }
-    ) => Promise<*>
+    ) => Promise<*>,
+    info: (projectDescriptor: ProjectDescriptor) => Promise<*>
   };
 
   collections: {
@@ -84,6 +85,14 @@ export interface AbstractInterface {
   commits: {
     list: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>,
     info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>
+  };
+
+  branches?: {
+    list: (
+      ProjectDescriptor,
+      options: { filter?: "active" | "archived" | "mine" }
+    ) => Promise<*>,
+    info: BranchDescriptor => Promise<*>
   };
 
   changesets: {
@@ -106,6 +115,6 @@ export interface AbstractInterface {
   };
 
   data: {
-    layer: LayerDescriptor => Promise<*>
+    info: LayerDescriptor => Promise<*>
   };
 }
