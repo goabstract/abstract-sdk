@@ -109,6 +109,13 @@ export default class AbstractAPI implements AbstractInterface {
       const response = await this.fetch(`projects?${query}`);
 
       return unwrapEnvelope(response.json());
+    },
+    info: async (projectDescriptor: ProjectDescriptor) => {
+      const response = await this.fetch(
+        `projects/${projectDescriptor.projectId}`
+      );
+
+      return unwrapEnvelope(response.json());
     }
   };
 
@@ -136,6 +143,28 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
+  branches = {
+    info: async (branchDescriptor: BranchDescriptor) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}`
+      );
+      return response.json();
+    },
+    list: async (
+      projectDescriptor: ProjectDescriptor,
+      options: { filter?: "active" | "archived" | "mine" } = {}
+    ) => {
+      const query = queryString.stringify({ filter: options.filter });
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${projectDescriptor.projectId}/branches/?${query}`
+      );
+
+      return response.json();
+    }
+  };
+
   changesets = {
     info: async (commitDescriptor: CommitDescriptor) => {
       const response = await this.fetch(
@@ -154,7 +183,7 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}/files`
       );
 
-      return unwrapEnvelope(response.json());
+      return response.json();
     },
     info: async (fileDescriptor: FileDescriptor) => {
       const { files } = await this.files.list(
@@ -207,11 +236,13 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   data = {
-    layer: (layerDescriptor: LayerDescriptor) => {
-      return this.fetch(
+    info: async (layerDescriptor: LayerDescriptor) => {
+      const response = await this.fetch(
         // prettier-ignore
         `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}/data`
       );
+
+      return response.json();
     }
   };
 

@@ -14,6 +14,11 @@ import {
 import AbstractAPI from "./";
 
 jest.mock("./randomTraceId");
+jest.mock("../../package.json", () => ({
+  ...jest.requireActual("../../package.json"),
+  version: "0.0" // Mock version to make snapshots stable
+}));
+
 global.fetch = fetch;
 
 describe("AbstractAPI", () => {
@@ -28,6 +33,7 @@ describe("AbstractAPI", () => {
       // projects
       ["projects.list", buildOrganizationDescriptor()],
       ["projects.list", [undefined, { filter: "active" }]],
+      ["projects.info", buildProjectDescriptor()],
       // collections
       ["collections.list", buildProjectDescriptor()],
       ["collections.list", buildBranchDescriptor()],
@@ -78,6 +84,10 @@ describe("AbstractAPI", () => {
           }
         }
       ],
+      // branches
+      ["branches.list", buildProjectDescriptor()],
+      ["branches.list", [buildProjectDescriptor(), { filter: "mine" }]],
+      ["branches.info", buildBranchDescriptor()],
       // files
       ["files.list", buildBranchDescriptor()],
       [
@@ -85,9 +95,7 @@ describe("AbstractAPI", () => {
         buildFileDescriptor({ fileId: "file-id" }),
         {
           body: {
-            data: {
-              files: [{ id: "file-id" }, { id: "not-file-id" }]
-            }
+            files: [{ id: "file-id" }, { id: "not-file-id" }]
           },
           result: { id: "file-id" }
         }
@@ -100,8 +108,8 @@ describe("AbstractAPI", () => {
       ["layers.list", buildFileDescriptor()],
       ["layers.info", buildLayerDescriptor()],
       // data
-      ["data.layer", buildLayerDescriptor()],
-      ["data.layer", buildLayerDescriptor({ sha: "sha" })]
+      ["data.info", buildLayerDescriptor()],
+      ["data.info", buildLayerDescriptor({ sha: "sha" })]
     ])("%s(%p)", async (property, descriptor, options = {}) => {
       const transport = new AbstractAPI(buildOptions());
       const transportMethod = get(transport, property).bind(transport);

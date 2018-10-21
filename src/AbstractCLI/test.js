@@ -140,8 +140,8 @@ describe(AbstractCLI, () => {
       ["layers.list", buildFileDescriptor({ sha: "sha" })],
       ["layers.info", buildLayerDescriptor({ sha: "sha" })],
       // data
-      ["data.layer", buildLayerDescriptor()],
-      ["data.layer", buildLayerDescriptor({ sha: "sha" })]
+      ["data.info", buildLayerDescriptor()],
+      ["data.info", buildLayerDescriptor({ sha: "sha" })]
     ])("%s(%p)", async (property, descriptor, options = {}) => {
       const transport = new AbstractCLI(
         buildOptions({ abstractCliPath: ["./fixtures/abstract-cli"] })

@@ -1,5 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AbstractAPI with mocked global.fetch branches.info({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
+Array [
+  "https://api.goabstract.com/projects/project-id/branches/branch-id",
+  Object {
+    "headers": Object {
+      "Abstract-Api-Version": "7",
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.0",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
+exports[`AbstractAPI with mocked global.fetch branches.list([[Object], [Object]]) 1`] = `
+Array [
+  "https://api.goabstract.com/projects/undefined/branches/?",
+  Object {
+    "headers": Object {
+      "Abstract-Api-Version": "7",
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.0",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
+exports[`AbstractAPI with mocked global.fetch branches.list({"projectId": "project-id"}) 1`] = `
+Array [
+  "https://api.goabstract.com/projects/project-id/branches/?",
+  Object {
+    "headers": Object {
+      "Abstract-Api-Version": "7",
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.0",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
 exports[`AbstractAPI with mocked global.fetch changesets.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
   "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/commit-sha/changeset",
@@ -9,7 +57,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -25,7 +73,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -41,7 +89,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -57,7 +105,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -73,7 +121,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -89,7 +137,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -105,7 +153,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -121,7 +169,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -137,7 +185,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -153,14 +201,14 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
 ]
 `;
 
-exports[`AbstractAPI with mocked global.fetch data.layer({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
+exports[`AbstractAPI with mocked global.fetch data.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
 Array [
   "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id/data",
   Object {
@@ -169,14 +217,14 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
 ]
 `;
 
-exports[`AbstractAPI with mocked global.fetch data.layer({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
+exports[`AbstractAPI with mocked global.fetch data.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
   "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-id/data",
   Object {
@@ -185,7 +233,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -201,7 +249,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -217,7 +265,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -233,7 +281,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -249,7 +297,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -265,7 +313,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -281,7 +329,23 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
+      "X-Amzn-Trace-Id": "random-trace-id",
+    },
+  },
+]
+`;
+
+exports[`AbstractAPI with mocked global.fetch projects.info({"projectId": "project-id"}) 1`] = `
+Array [
+  "https://api.goabstract.com/projects/project-id",
+  Object {
+    "headers": Object {
+      "Abstract-Api-Version": "7",
+      "Accept": "application/json",
+      "Authorization": "Bearer abstract-token",
+      "Content-Type": "application/json",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -297,7 +361,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
@@ -313,7 +377,7 @@ Array [
       "Accept": "application/json",
       "Authorization": "Bearer abstract-token",
       "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.2",
+      "User-Agent": "Abstract SDK 0.0",
       "X-Amzn-Trace-Id": "random-trace-id",
     },
   },
