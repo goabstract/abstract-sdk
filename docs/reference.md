@@ -122,7 +122,22 @@ to be created for logic chunks of work – for example designing a new feature.
 
 ### The branch object
 
-  > TODO
+| Property               | Type     | Description                                                                                       |                      |          |                                                           |
+|------------------------|----------|---------------------------------------------------------------------------------------------------|----------------------|----------|-----------------------------------------------------------|
+| `createdAt`            | `string` | Timestamp that the branch was created                                                             |                      |          |                                                           |
+| `description`          | `string` | A summary of the branch – this field may contain markdown.                                        |                      |          |                                                           |
+| `divergedFromBranchId` | `string` | UUID identifier of the branch this branch diverged from                                           |                      |          |                                                           |
+| `head`                 | `string` | SHA that represents the latest commit on the branch                                               |                      |          |                                                           |
+| `id`                   | `string` | UUID identifier of the branch, or the string "master"                                             |                      |          |                                                           |
+| `mergeSha`             | `string` | SHA that represents the commit where this branch was merged                                       | `mergedIntoBranchId` | `string` | UUID identifier of the branch this branch was merged into |
+| `name`                 | `string` | The name of the branch                                                                            |                      |          |                                                           |
+| `parent`               | `string` | UUID identifier of the branch that this branch was created from, or the string "master"           |                      |          |                                                           |
+| `projectId`            | `string` | UUID of the project that this branch is contained within                                          |                      |          |                                                           |
+| `startedAtSha`         | `string` | SHA that represents the commit where this branch was created                                      |                      |          |                                                           |
+| `status`               | `string` | The current status of the branch. May be one of `active`, `wip`, `feedback`, `merged`, `archived` |                      |          |                                                           |
+| `updatedAt`            | `string` | Timestamp that the branch was last updated                                                        |                      |          |                                                           |
+| `userId`               | `string` | UUID of the user that created the branch                                                          |                      |          |                                                           |
+| `userName`             | `string` | The name of the user that created the branch                                                      |                      |          |                                                           |
 
 ### List all branches
 

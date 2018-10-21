@@ -45,7 +45,7 @@ If you want to ensure that the SDK only ever loads data from the API or the CLI 
 import * as Abstract from "abstract-sdk";
 
 const abstract = Abstract.Client({
-  transport: Abstract.Transports.CLI
+  transport: Abstract.TRANSPORTS.CLI
 });
 ```
 
