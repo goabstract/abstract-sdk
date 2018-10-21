@@ -129,7 +129,7 @@ A collection is a set of layers at the same or different commits on a branch, th
 ![API][api-icon]
 
 A branch is where design work and commits happen. A branch acts as a personal workspace for contributors, we encourage branches
-to be created for logic chunks of work – for example designing a new feature.
+to be created for logical chunks of work – for example designing a new feature.
 
   > Note: Branches will be available through the CLI transport in the near future
 
