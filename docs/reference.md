@@ -10,7 +10,8 @@ title: Reference
 
 ![API][api-icon]
 
-A project is a bucket for work.
+A project is a container for files, it belongs to an organization. Teams use projects to logically separate their files
+for example for a project, a platform (e.g. Web / iOS), or by client.
 
 ### The project object
 

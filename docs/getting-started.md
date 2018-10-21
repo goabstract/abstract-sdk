@@ -3,6 +3,8 @@ id: getting-started
 title: Getting Started
 ---
 
+> Important Note: This SDK is a beta – we are expecting to make major revisions to the methods and responses that are available before a wider public launch.
+
 The SDK was designed to allow interacting with both the Abstract API and the desktop CLI from a unified interface in any environment that supports JavaScript. The SDK should work well inside desktop design tools such as Sketch, on servers, or CI environments.
 
 ## Installation
