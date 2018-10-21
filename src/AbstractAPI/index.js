@@ -1,6 +1,6 @@
 // @flow
 /* global fetch */
-import "isomorphic-fetch";
+import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
@@ -53,6 +53,12 @@ async function unwrapEnvelope<T>(
   return (await response).data;
 }
 
+const ABSTRACT_API_URL =
+  process.env.ABSTRACT_API_URL || "https://api.goabstract.com";
+
+const ABSTRACT_PREVIEWS_URL =
+  process.env.ABSTRACT_PREVIEWS_URL || "https://previews.goabstract.com";
+
 export default class AbstractAPI implements AbstractInterface {
   abstractToken: string;
 
@@ -60,7 +66,11 @@ export default class AbstractAPI implements AbstractInterface {
     this.abstractToken = abstractToken;
   }
 
-  async fetch(input: string | URL, init?: Object = {}) {
+  async fetch(
+    input: string | URL,
+    init: Object = {},
+    hostname: string = ABSTRACT_API_URL
+  ) {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -75,11 +85,7 @@ export default class AbstractAPI implements AbstractInterface {
       init.body = JSON.stringify(init.body);
     }
 
-    const fetchArgs = [
-      `${process.env.ABSTRACT_API_URL ||
-        "https://api.goabstract.com"}/${input.toString()}`,
-      init
-    ];
+    const fetchArgs = [`${hostname}/${input.toString()}`, init];
 
     logFetch(fetchArgs);
     const request = fetch(...fetchArgs);
@@ -96,10 +102,32 @@ export default class AbstractAPI implements AbstractInterface {
     }
 
     if (logStatusSuccess.enabled) {
-      logStatusSuccess(await response.clone().json());
+      if (
+        (response.headers.get("content-type") || "").includes(
+          "application/json"
+        )
+      ) {
+        logStatusSuccess(await response.clone().json());
+      }
     }
 
     return request;
+  }
+
+  async fetchPreview(input: string | URL, init?: Object = {}) {
+    return this.fetch(
+      input,
+      {
+        ...init,
+        headers: {
+          Accept: undefined,
+          "Content-Type": undefined,
+          "Abstract-Api-Version": undefined,
+          ...init.headers
+        }
+      },
+      ABSTRACT_PREVIEWS_URL
+    );
   }
 
   organizations = {
@@ -271,6 +299,22 @@ export default class AbstractAPI implements AbstractInterface {
       );
 
       return response.json();
+    }
+  };
+
+  previews = {
+    url: (layerDescriptor: LayerDescriptor) => {
+      // prettier-ignore
+      return `${ABSTRACT_PREVIEWS_URL}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`;
+    },
+    blob: async (layerDescriptor: LayerDescriptor, options: *) => {
+      const response = await this.fetchPreview(
+        // prettier-ignore
+        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
+        options
+      );
+
+      return response.blob();
     }
   };
 

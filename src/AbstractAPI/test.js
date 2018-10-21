@@ -1,4 +1,6 @@
 // @flow
+import fs from "fs";
+import path from "path";
 import fetch from "jest-fetch-mock";
 import get from "lodash/get";
 import {
@@ -49,6 +51,14 @@ const responses = {
       }),
       { status: 200 }
     ]
+  },
+  previews: {
+    blob: (
+      // inlined to avoid multiple reads
+      data = fs.readFileSync(
+        path.resolve(__dirname, "../../fixtures/preview.png")
+      )
+    ) => [data, { status: 200 }]
   }
 };
 
@@ -149,6 +159,25 @@ describe("AbstractAPI", () => {
       // layers
       ["layers.list", buildFileDescriptor()],
       ["layers.info", buildLayerDescriptor()],
+      // previews
+      [
+        "previews.url",
+        buildLayerDescriptor({
+          projectId: "project-id",
+          sha: "layer-sha",
+          fileId: "file-id",
+          layerId: "layer-id"
+        }),
+        {
+          result:
+            "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id"
+        }
+      ],
+      [
+        "previews.blob",
+        buildLayerDescriptor(),
+        { responses: [responses.previews.blob()] }
+      ],
       // data
       ["data.layer", buildLayerDescriptor()],
       ["data.layer", buildLayerDescriptor({ sha: "sha" })]
