@@ -159,7 +159,8 @@ represents a box drawn ontop of the layer, this can be used to leave comments ab
 
 ![CLI][cli-icon] ![API][api-icon]
 
-A commit represents a point in time – contributors can create commits in the desktop app to save their work at different stages.
+A commit represents a point in time – contributors can create commits in the desktop app to save their work at different stages. When loading data from the Abstract SDK you will almost always need to provide a commit `SHA`
+to identify which version of the object you would like.
 
 ### The commit object
 
@@ -245,11 +246,23 @@ abstract.commits.info({
 
 ## Files
 
+A file represents a standard file – in Abstract a file is always loaded from a specific commit `SHA`, or point in time.
+
 ![CLI][cli-icon] ![API][api-icon]
 
 ### The file object
 
-  > TODO
+| Property                     | Type      | Description                                                     |
+|------------------------------|-----------|-----------------------------------------------------------------|
+| `applicationDocumentVersion` | `number`  | The application (eg Sketch's) version of the file               |
+| `applicationVersion`         | `string`  | The version of the application the file was created with        |
+| `id`                         | `string`  | UUID identifier for the file                                    |
+| `isLibrary`                  | `boolean` | Is this file a library file or not                              |
+| `lastChangedAtSha`           | `string`  | SHA that represents the commit where this file was last changed |
+| `name`                       | `string`  | The name of the file                                            |
+| `projectId`                  | `string`  | UUID of the project this file belongs to                        |
+| `sha`                        | `string`  | SHA that this file was loaded at                                |
+| `type`                       | `string`  | The application that the file was created in                    |
 
 ### List all files
 
@@ -291,11 +304,20 @@ abstract.files.info({
 
 ## Pages
 
+A page is a container for layers, often a file will have several pages to organize design work.
+
 ![CLI][cli-icon] ![API][api-icon]
 
 ### The page object
 
-  > TODO
+| Property    | Type     | Description                                         |
+|-------------|----------|-----------------------------------------------------|
+| `fileId`    | `string` | UUID of the file that this page is contained within |
+| `id`        | `string` | UUID identifier for the page                        |
+| `name`      | `string` | The name of the page                                |
+| `order`     | `number` | The order of the page in the file                   |
+| `projectId` | `string` | UUID of the project this page belongs to            |
+| `sha`       | `string` | SHA of the commit this page was loaded at           |
 
 ### List all pages
 
@@ -331,9 +353,27 @@ abstract.pages.info({
 
 ![CLI][cli-icon] ![API][api-icon]
 
+A layer is a container for designs. In Sketch a layer usually represents an artboard however it can also be a non-contained layer floating on the page.
+
 ### The layer object
 
-  > TODO
+| Property           | Type     | Description                                                              |
+|--------------------|----------|--------------------------------------------------------------------------|
+| `fileId`           | `string` | UUID of the file that this layer is contained within                     |
+| `height`           | `number` | The height of the layer in pixels                                        |
+| `id`               | `string` | UUID identifier of the layer                                             |
+| `lastChangedAtSha` | `string` | SHA of the commit where the layer was last changed                       |
+| `libraryId`        | `string` | UUID of the library file that this layer was included from               |
+| `name`             | `string` | The name of the layer                                                    |
+| `order`            | `number` | The order of the layer in the page                                       |
+| `pageId`           | `string` | UUID of the page that this layer is contained within                     |
+| `projectId`        | `string` | UUID of the project that this layer is contained within                  |
+| `sha`              | `string` | SHA of the commit this layer was loaded at                               |
+| `type`             | `string` | The type of the layer, eg "artboard"                                     |
+| `updatedAt`        | `string` | Timestamp of the commit that this layer was last changed                 |
+| `width`            | `number` | The width of the layer in pixels                                         |
+| `x`                | `number` | The horizontal position of the layer on the page, measured from the left |
+| `y`                | `number` | The vertical position of the layer on the page, measured from the top    |
 
 ### List all layers
 
@@ -344,6 +384,9 @@ abstract.pages.info({
   > TODO
 
 ## Previews
+
+A preview is a bitmap image that represents the rendered version of a layer. In Abstract all previews are currently saved in PNG format. Previews are loaded authenticated, and as such the URL includes your access
+token – we highly recommend using the `Blob` and saving it to your own storage.
 
 ![API][api-icon]
 

@@ -23,3 +23,11 @@ img[alt="API"] {
   position: relative;
   top: -10px;
 }
+
+a {
+  color: #157ff3;
+}
+
+a:hover {
+  color: #074182;
+}
