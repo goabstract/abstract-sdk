@@ -14,6 +14,11 @@ import {
 import AbstractAPI from "./";
 
 jest.mock("./randomTraceId");
+jest.mock("../../package.json", () => ({
+  ...jest.requireActual("../../package.json"),
+  version: "0.0" // Mock version to make snapshots stable
+}));
+
 global.fetch = fetch;
 
 describe("AbstractAPI", () => {
