@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/abstract-sdk.svg)](https://badge.fury.io/js/abstract-sdk) [![CircleCI](https://circleci.com/gh/goabstract/abstract-sdk.svg?style=svg)](https://circleci.com/gh/goabstract/abstract-sdk)
+[![npm version](https://badge.fury.io/js/abstract-sdk.svg)](https://badge.fury.io/js/abstract-sdk) [![CircleCI](https://circleci.com/gh/goabstract/abstract-sdk.svg?style=svg)](https://circleci.com/gh/goabstract/abstract-sdk)
 
 # Abstract SDK
 
