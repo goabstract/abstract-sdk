@@ -24,6 +24,20 @@ jest.mock("../../package.json", () => ({
 global.fetch = fetch;
 
 const responses = {
+  collections: {
+    list: () => [
+      JSON.stringify({
+        data: {
+          collections: [{ id: "first-collection" }, { id: "second-collection" }]
+        }
+      }),
+      { status: 200 }
+    ],
+    info: () => [
+      JSON.stringify({ collections: [{ id: "first-collection" }] }),
+      { status: 200 }
+    ]
+  },
   branches: {
     info: () => [JSON.stringify({ name: "branch-name" }), { status: 200 }]
   },
@@ -79,9 +93,21 @@ describe("AbstractAPI", () => {
       ["projects.list", [undefined, { filter: "active" }]],
       ["projects.info", buildProjectDescriptor()],
       // collections
-      ["collections.list", buildProjectDescriptor()],
-      ["collections.list", buildBranchDescriptor()],
-      ["collections.info", buildCollectionDescriptor()],
+      [
+        "collections.list",
+        buildProjectDescriptor(),
+        { responses: [responses.collections.list()] }
+      ],
+      [
+        "collections.list",
+        buildBranchDescriptor(),
+        { responses: [responses.collections.list()] }
+      ],
+      [
+        "collections.info",
+        buildCollectionDescriptor(),
+        { responses: [responses.collections.list()] }
+      ],
       // comments
       [
         "comments.create",

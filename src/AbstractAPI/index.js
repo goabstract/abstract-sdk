@@ -257,7 +257,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${projectDescriptor.projectId}/branches/?${query}`
       );
 
-      return response.json();
+      const data = await response.json();
+      return data.branches;
     }
   };
 
@@ -268,7 +269,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${commitDescriptor.projectId}/branches/${commitDescriptor.branchId}/commits/${commitDescriptor.sha}/changeset`
       );
 
-      return response.json();
+      const data = await response.json();
+      return data.changeset;
     }
   };
 
@@ -279,13 +281,11 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}/files`
       );
 
-      return response.json();
+      const data = await response.json();
+      return data.files;
     },
     info: async (fileDescriptor: FileDescriptor) => {
-      const { files } = await this.files.list(
-        fileBranchDescriptor(fileDescriptor)
-      );
-
+      const files = await this.files.list(fileBranchDescriptor(fileDescriptor));
       return find(files, { id: fileDescriptor.fileId });
     }
   };
@@ -297,13 +297,11 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${fileOrBranchDescriptor.projectId}/branches/${fileOrBranchDescriptor.branchId}/files/${fileOrBranchDescriptor.fileId}/pages`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await response.json();
+      return data.pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const { pages } = await this.files.info(
-        pageFileDescriptor(pageDescriptor)
-      );
-
+      const pages = await this.files.info(pageFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
@@ -317,6 +315,7 @@ export default class AbstractAPI implements AbstractInterface {
         pageId: objectDescriptor.pageId ? objectDescriptor.pageId : undefined,
         ...options
       });
+
       const response = await this.fetch(
         // prettier-ignore
         `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/files/${objectDescriptor.fileId}/layers?${query}`
@@ -380,7 +379,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await unwrapEnvelope(response.json());
+      return data.collections;
     },
     info: async (
       collectionDescriptor: CollectionDescriptor,
@@ -392,7 +392,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await unwrapEnvelope(response.json());
+      return data.collections[0];
     }
   };
 
