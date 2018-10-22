@@ -118,33 +118,36 @@ export default class AbstractCLI implements AbstractInterface {
   }
 
   commits = {
-    list: (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
-    ) => {
-      const fileIdArgs =
-        objectDescriptor.fileId && !objectDescriptor.layerId
-          ? ["--file-id", objectDescriptor.fileId]
-          : [];
+    list: (objectDescriptor: BranchDescriptor | LayerDescriptor) => {
+      let layerArgs = [];
 
-      const layerIdArgs = objectDescriptor.layerId
-        ? ["--layer-id", objectDescriptor.layerId]
-        : [];
+      if (objectDescriptor.fileId && objectDescriptor.layerId) {
+        layerArgs = [
+          "-f",
+          objectDescriptor.fileId,
+          "-l",
+          objectDescriptor.layerId
+        ];
+      }
 
       return this.spawn([
         "commits",
         objectDescriptor.projectId,
         objectDescriptor.branchId,
-        ...fileIdArgs,
-        ...layerIdArgs
+        ...layerArgs
       ]);
     },
     info: (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+      objectDescriptor: FileDescriptor | LayerDescriptor | CommitDescriptor
     ) => {
+      if (!objectDescriptor.sha) {
+        throw new Error(`Descriptor must include "sha" to load a commit`);
+      }
+
       return this.spawn([
         "commit",
         objectDescriptor.projectId,
-        ref(objectDescriptor)
+        objectDescriptor.sha
       ]);
     }
   };

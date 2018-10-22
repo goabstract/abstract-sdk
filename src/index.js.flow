@@ -97,8 +97,8 @@ export interface AbstractInterface {
   };
 
   commits: {
-    list: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>,
-    info: (BranchDescriptor | FileDescriptor | LayerDescriptor) => Promise<*>
+    list: (BranchDescriptor | LayerDescriptor) => Promise<*>,
+    info: (FileDescriptor | LayerDescriptor | CommitDescriptor) => Promise<*>
   };
 
   branches?: {

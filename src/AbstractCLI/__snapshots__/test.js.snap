@@ -75,24 +75,6 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
-Array [
-  "./fixtures/abstract-cli",
-  Array [
-    "--user-token",
-    "abstract-token",
-    "--api-url",
-    "https://api.goabstract.com",
-    "commit",
-    "project-id",
-    "layer-sha",
-  ],
-  Object {
-    "cwd": "<PROJECT_ROOT>",
-  },
-]
-`;
-
 exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
   "./fixtures/abstract-cli",
@@ -129,7 +111,7 @@ Array [
 ]
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
   "./fixtures/abstract-cli",
   Array [
@@ -139,43 +121,7 @@ Array [
     "https://api.goabstract.com",
     "commit",
     "project-id",
-    "branch-id",
-  ],
-  Object {
-    "cwd": "<PROJECT_ROOT>",
-  },
-]
-`;
-
-exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
-Array [
-  "./fixtures/abstract-cli",
-  Array [
-    "--user-token",
-    "abstract-token",
-    "--api-url",
-    "https://api.goabstract.com",
-    "commit",
-    "project-id",
-    "sha",
-  ],
-  Object {
-    "cwd": "<PROJECT_ROOT>",
-  },
-]
-`;
-
-exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "./fixtures/abstract-cli",
-  Array [
-    "--user-token",
-    "abstract-token",
-    "--api-url",
-    "https://api.goabstract.com",
-    "commit",
-    "project-id",
-    "branch-id",
+    "commit-sha",
   ],
   Object {
     "cwd": "<PROJECT_ROOT>",
@@ -194,7 +140,9 @@ Array [
     "commits",
     "project-id",
     "branch-id",
-    "--layer-id",
+    "-f",
+    "file-id",
+    "-l",
     "layer-id",
   ],
   Object {
@@ -214,7 +162,9 @@ Array [
     "commits",
     "project-id",
     "branch-id",
-    "--layer-id",
+    "-f",
+    "file-id",
+    "-l",
     "layer-id",
   ],
   Object {
@@ -234,8 +184,6 @@ Array [
     "commits",
     "project-id",
     "branch-id",
-    "--file-id",
-    "file-id",
   ],
   Object {
     "cwd": "<PROJECT_ROOT>",
@@ -254,8 +202,6 @@ Array [
     "commits",
     "project-id",
     "branch-id",
-    "--file-id",
-    "file-id",
   ],
   Object {
     "cwd": "<PROJECT_ROOT>",
