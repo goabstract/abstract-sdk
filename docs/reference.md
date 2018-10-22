@@ -118,11 +118,30 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ### List all collections
 
-  > TODO
+`collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<Collection[]>`
+
+List all collections for a branch
+
+```js
+abstract.collections.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+});
+```
 
 ### Retrieve a collection
 
-  > TODO
+`collections.info(CollectionDescriptor): Promise<Collection>`
+
+Load an individual collection
+
+```js
+abstract.collections.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  collectionId: "413daa80-1456-11e8-b8b0-4d1fec7ae555"
+});
+```
 
 ## Branches
 
@@ -574,11 +593,43 @@ token – we highly recommend using the `Blob` and saving the image file to your
 
 ### The data object
 
-  > TODO
+| Property    | Type        | Description                                                         |
+|-------------|-------------|---------------------------------------------------------------------|
+| `branchId`  | `string`    | UUID of the branch that this layer is contained within              |
+| `fileId`    | `string`    | UUID of the file that this layer is contained within                |
+| `layerId`   | `string`    | UUID of the layer that this data is loaded from                     |
+| `layers`    | `{string: LayerData }` | An object that describes the child layers                |
+| `projectId` | `string`    | UUID of the project that this data is contained within              |
+| `sha`       | `string`    | SHA of the commit where the layer was last changed                  |
 
-### Retrieve a layer
+#### LayerData
 
-  > TODO
+| Property      | Type              | Description                                     |
+|---------------|-------------------|-------------------------------------------------|
+| `childIds`    | `string[]`        | Array of UUID's for the layers children, if any |
+| `id`          | `string`          | UUID of the chid layer                          |
+| `libraryId`   | `string`          | UUID of the library file this layer is from     |
+| `libraryName` | `string`          | The name of the library file this layer is from |
+| `parentId`    | `string`          | UUID of the parent layer, if any                |
+| `properties`  | `LayerProperties` | Layer properties (to be documented)             |
+| `symbolId`    | `string`          | UUID of the parent symbol, if any               |
+| `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
+
+
+### Retrieve layer data
+
+`data.info(LayerDescriptor): Promise<Data>`
+
+```js
+abstract.data.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+});
+```
 
 ## Descriptors
 
@@ -644,5 +695,15 @@ Reference for the parameters required to load resources with Abstract SDK.
   pageId: string,
   layerId: string,
   sha?: string
+}
+```
+
+### CollectionDescriptor
+
+```js
+{
+  projectId: string,
+  branchId: string | "master",
+  collectionId: string
 }
 ```
