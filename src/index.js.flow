@@ -18,7 +18,7 @@ export type ObjectDescriptor = {|
 
 export type CommitDescriptor = {|
   ...ObjectDescriptor,
-  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">> // Commit is the only object read by it's sha
+  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">> // Commit is read by it's sha
 |};
 
 export type BranchDescriptor = {|
@@ -44,7 +44,7 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   ...ObjectDescriptor,
-  sha: string | "latest",
+  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">>, // Layer requires sha
   fileId: string,
   pageId: string,
   layerId: string
@@ -57,6 +57,16 @@ export type Cursor<T> = Promise<{
   currentPage: number // possibly under pageInfo?
   // next(): <T>Cursor,
   // [Symbol.asyncIterator](): string
+};
+
+export type Comment = {
+  body: string,
+  annotation?: {
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  }
 };
 
 export interface AbstractInterface {
@@ -80,6 +90,10 @@ export interface AbstractInterface {
       options?: Object
     ) => Promise<*>,
     info: (CollectionDescriptor, options?: Object) => Promise<*>
+  };
+
+  comments?: {
+    create: (BranchDescriptor | LayerDescriptor, comment: Comment) => Promise<*>
   };
 
   commits: {
@@ -112,6 +126,11 @@ export interface AbstractInterface {
   layers: {
     list: FileDescriptor => Promise<*>,
     info: LayerDescriptor => Promise<*>
+  };
+
+  previews?: {
+    blob: LayerDescriptor => Promise<Blob>,
+    url: LayerDescriptor => string
   };
 
   data: {

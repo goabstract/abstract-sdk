@@ -1,10 +1,14 @@
 // @flow
 /* global fetch */
-import "isomorphic-fetch";
+import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
-import { fileBranchDescriptor, pageFileDescriptor } from "../utils";
+import {
+  fileBranchDescriptor,
+  layerBranchDescriptor,
+  pageFileDescriptor
+} from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -15,7 +19,8 @@ import type {
   PageDescriptor,
   FileDescriptor,
   LayerDescriptor,
-  CollectionDescriptor
+  CollectionDescriptor,
+  Comment
 } from "../";
 import randomTraceId from "./randomTraceId";
 
@@ -28,6 +33,17 @@ export type Options = {
   abstractToken: string
 };
 
+type BranchNames = {
+  branchName: string
+};
+
+type LayerNames = {
+  branchName: string,
+  fileName: string,
+  pageName: string,
+  layerName: string
+};
+
 async function unwrapEnvelope<T>(
   response: Promise<{
     data: T,
@@ -37,6 +53,12 @@ async function unwrapEnvelope<T>(
   return (await response).data;
 }
 
+const ABSTRACT_API_URL =
+  process.env.ABSTRACT_API_URL || "https://api.goabstract.com";
+
+const ABSTRACT_PREVIEWS_URL =
+  process.env.ABSTRACT_PREVIEWS_URL || "https://previews.goabstract.com";
+
 export default class AbstractAPI implements AbstractInterface {
   abstractToken: string;
 
@@ -44,7 +66,11 @@ export default class AbstractAPI implements AbstractInterface {
     this.abstractToken = abstractToken;
   }
 
-  async fetch(input: string | URL, init?: Object = {}) {
+  async fetch(
+    input: string | URL,
+    init: Object = {},
+    hostname: string = ABSTRACT_API_URL
+  ) {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -59,11 +85,7 @@ export default class AbstractAPI implements AbstractInterface {
       init.body = JSON.stringify(init.body);
     }
 
-    const fetchArgs = [
-      `${process.env.ABSTRACT_API_URL ||
-        "https://api.goabstract.com"}/${input.toString()}`,
-      init
-    ];
+    const fetchArgs = [`${hostname}/${input.toString()}`, init];
 
     logFetch(fetchArgs);
     const request = fetch(...fetchArgs);
@@ -80,10 +102,32 @@ export default class AbstractAPI implements AbstractInterface {
     }
 
     if (logStatusSuccess.enabled) {
-      logStatusSuccess(await response.clone().json());
+      if (
+        (response.headers.get("content-type") || "").includes(
+          "application/json"
+        )
+      ) {
+        logStatusSuccess(await response.clone().json());
+      }
     }
 
     return request;
+  }
+
+  async fetchPreview(input: string | URL, init?: Object = {}) {
+    return this.fetch(
+      input,
+      {
+        ...init,
+        headers: {
+          Accept: undefined,
+          "Content-Type": undefined,
+          "Abstract-Api-Version": undefined,
+          ...init.headers
+        }
+      },
+      ABSTRACT_PREVIEWS_URL
+    );
   }
 
   organizations = {
@@ -116,6 +160,58 @@ export default class AbstractAPI implements AbstractInterface {
       );
 
       return unwrapEnvelope(response.json());
+    }
+  };
+
+  comments = {
+    create: async (
+      objectDescriptor: BranchDescriptor | LayerDescriptor,
+      comment: Comment
+    ) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `comments`,
+        {
+          method: "POST",
+          body: {
+            projectId: objectDescriptor.projectId,
+            branchId: objectDescriptor.branchId,
+            commitSha: objectDescriptor.sha,
+            fileId: objectDescriptor.layerId
+              ? objectDescriptor.fileId
+              : undefined,
+            pageId: objectDescriptor.layerId
+              ? objectDescriptor.pageId
+              : undefined,
+            layerId: objectDescriptor.layerId
+              ? objectDescriptor.layerId
+              : undefined,
+            body: comment.body,
+            annotation: comment.annotation
+              ? {
+                  x: comment.annotation.x,
+                  y: comment.annotation.y,
+                  width: comment.annotation.width,
+                  height: comment.annotation.height
+                }
+              : undefined,
+            ...(await this._denormalizeDescriptorForComment(objectDescriptor))
+          }
+        }
+      );
+
+      return response.json();
+    }
+  };
+
+  branches = {
+    info: async (branchDescriptor: BranchDescriptor) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}`
+      );
+
+      return response.json();
     }
   };
 
@@ -240,6 +336,22 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
+  previews = {
+    url: (layerDescriptor: LayerDescriptor) => {
+      // prettier-ignore
+      return `${ABSTRACT_PREVIEWS_URL}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`;
+    },
+    blob: async (layerDescriptor: LayerDescriptor, options: *) => {
+      const response = await this.fetchPreview(
+        // prettier-ignore
+        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
+        options
+      );
+
+      return response.blob();
+    }
+  };
+
   data = {
     info: async (layerDescriptor: LayerDescriptor) => {
       const response = await this.fetch(
@@ -283,4 +395,29 @@ export default class AbstractAPI implements AbstractInterface {
       return unwrapEnvelope(response.json());
     }
   };
+
+  async _denormalizeDescriptorForComment(
+    objectDescriptor: BranchDescriptor | LayerDescriptor
+  ): Promise<BranchNames | LayerNames> {
+    const branch = await this.branches.info(
+      objectDescriptor.layerId !== undefined
+        ? // $FlowFixMe: objectDescriptor with a defined layerId shouldn't be considered a BranchDescriptor?
+          layerBranchDescriptor(objectDescriptor)
+        : objectDescriptor
+    );
+
+    if (objectDescriptor.layerId) {
+      const { layer, page, file } = await this.layers.info(objectDescriptor);
+
+      return {
+        branchName: branch.name,
+        fileName: file.name,
+        pageName: page.name,
+        pageId: page.id,
+        layerName: layer.name
+      };
+    } else {
+      return { branchName: branch.name };
+    }
+  }
 }

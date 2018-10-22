@@ -99,16 +99,14 @@ const Features = () => (
   <Block layout="fourColumn">
     {[
       {
-        content: "This is the content of my feature",
-        image: imgUrl("docusaurus.svg"),
-        imageAlign: "top",
-        title: "Feature One"
+        content:
+          "Abstract is built on an extensive HTTP API, you can use the SDK to access Abstract's data from servers, other apps, or CI environments.",
+        title: "API"
       },
       {
-        content: "The content of my second feature",
-        image: imgUrl("docusaurus.svg"),
-        imageAlign: "top",
-        title: "Feature Two"
+        content:
+          "The Abstract desktop application comes with an embedded CLI tool. This SDK provides an easy and consistent interface to accessing local data stored in Abstract.",
+        title: "CLI"
       }
     ]}
   </Block>

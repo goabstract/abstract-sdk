@@ -1,385 +1,673 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AbstractAPI with mocked global.fetch branches.info({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch branches.list([[Object], [Object]]) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/undefined/branches/?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/?filter=mine",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch branches.list({"projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/?",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch changesets.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/commit-sha/changeset",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/commit-sha/changeset",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/collections/collection-id?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/collections/collection-id?",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch collections.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/collections?branch_id=branch-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/collections?branch_id=branch-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch collections.list({"projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/collections?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/collections?",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch comments.create([[Object], [Object]]) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/comments",
+      Object {
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer/\\",/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\"}\\"",
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch comments.create([[Object], [Object]]) 2`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/comments",
+      Object {
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"layer-sha/\\",/\\"fileId/\\":/\\"file-id/\\",/\\"pageId/\\":/\\"page-id/\\",/\\"layerId/\\":/\\"layer-id/\\",/\\"body/\\":/\\"Comment on layer with annotation/\\",/\\"annotation/\\":{/\\"x/\\":1,/\\"y/\\":1,/\\"width/\\":1,/\\"height/\\":1},/\\"branchName/\\":/\\"branch-name/\\",/\\"fileName/\\":/\\"file-name/\\",/\\"pageName/\\":/\\"page-name/\\",/\\"layerName/\\":/\\"layer-name/\\"}\\"",
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch comments.create([[Object], [Object]]) 3`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/comments",
+      Object {
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"body/\\":/\\"Comment on branch HEAD/\\",/\\"branchName/\\":/\\"branch-name/\\"}\\"",
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch comments.create([[Object], [Object]]) 4`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/comments",
+      Object {
+        "body": "\\"{/\\"projectId/\\":/\\"project-id/\\",/\\"branchId/\\":/\\"branch-id/\\",/\\"commitSha/\\":/\\"my-sha/\\",/\\"body/\\":/\\"Comment on branch at my-sha/\\",/\\"branchName/\\":/\\"branch-name/\\"}\\"",
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch commits.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch commits.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch commits.info({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch commits.list({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch commits.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch commits.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch data.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id/data",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id/data",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch data.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-id/data",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-id/data",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch files.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch layers.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits/layer-sha/files/file-id/layers/layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch layers.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/layers?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/layers?",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch organizations.list(undefined) 1`] = `
-Array [
-  "https://api.goabstract.com/organizations",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/organizations",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch pages.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/pages",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/pages",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch previews.blob({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": undefined,
+          "Accept": undefined,
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": undefined,
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch previews.url({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
+Object {
+  "fetch": Array [],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch projects.info({"projectId": "project-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects/project-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch projects.list([undefined, [Object]]) 1`] = `
-Array [
-  "https://api.goabstract.com/projects?",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects?filter=active",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
 
 exports[`AbstractAPI with mocked global.fetch projects.list({"organizationId": "organization-id"}) 1`] = `
-Array [
-  "https://api.goabstract.com/projects?organizationId=organization-id",
-  Object {
-    "headers": Object {
-      "Abstract-Api-Version": "7",
-      "Accept": "application/json",
-      "Authorization": "Bearer abstract-token",
-      "Content-Type": "application/json",
-      "User-Agent": "Abstract SDK 0.0",
-      "X-Amzn-Trace-Id": "random-trace-id",
-    },
-  },
-]
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects?organizationId=organization-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
 `;
