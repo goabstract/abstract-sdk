@@ -331,6 +331,11 @@ export default class AbstractAPI implements AbstractInterface {
       );
 
       const data = await response.json();
+
+      // for comments.create
+      data.layer._file = data.file;
+      data.layer._page = data.page;
+
       return data.layer;
     }
   };
@@ -408,13 +413,13 @@ export default class AbstractAPI implements AbstractInterface {
     );
 
     if (objectDescriptor.layerId) {
-      const { layer, page, file } = await this.layers.info(objectDescriptor);
+      const layer = await this.layers.info(objectDescriptor);
 
       return {
         branchName: branch.name,
-        fileName: file.name,
-        pageName: page.name,
-        pageId: page.id,
+        fileName: layer._file.name,
+        pageName: layer._page.name,
+        pageId: layer._page.id,
         layerName: layer.name
       };
     } else {
