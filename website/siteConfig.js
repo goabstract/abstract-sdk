@@ -24,6 +24,8 @@ const siteConfig = {
     { href: "https://spectrum.chat/abstract", label: "Help" }
   ],
 
+  gaTrackingId: "UA-102434873-3",
+
   // List of projects/orgs using your project for the users page.
   // users: [
   //   {
