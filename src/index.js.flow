@@ -129,8 +129,8 @@ export interface AbstractInterface {
   };
 
   previews?: {
-    blob: LayerDescriptor => Promise<Blob>,
-    url: LayerDescriptor => string
+    raw: LayerDescriptor => Promise<ArrayBuffer>,
+    html_url: LayerDescriptor => string
   };
 
   data: {

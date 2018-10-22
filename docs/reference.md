@@ -531,14 +531,36 @@ only available in PNG format.
 
 ![API][api-icon]
 
-### Retrieve a preview Blob
+### Retrieve a preview
 
-`previews.blob(LayerDescriptor): Promise<Blob>`
+`previews.raw(LayerDescriptor): Promise<ArrayBuffer>`
 
-Load the preview image for a layer at a commit
+Load the preview image for a layer at a commit. The resulting `Buffer` can be used with node `fs` API's – for example you can write the image to disk:
 
 ```js
-abstract.previews.blob({
+const buffer = await abstract.previews.raw({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+});
+
+fs.writeFile(`preview.png`, buffer, (err) => {
+  if (err) throw err;
+  console.log("Preview image written!");
+});
+```
+
+### Retrieve a preview link
+
+`previews.html_url(LayerDescriptor): Promise<string>`
+
+Load the canonical URL to preview the layer in the Abstract web app
+
+```js
+abstract.previews.html_url({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
@@ -547,26 +569,6 @@ abstract.previews.blob({
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
 });
 ```
-
-### Retrieve a preview URL
-
-`previews.url(LayerDescriptor): Promise<string>`
-
-Load the URL of a preview image for a layer at a commit
-
-```js
-abstract.previews.url({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
-});
-```
-
-  > Previews are loaded authenticated, and as such the URL includes your access
-token – we highly recommend using the `Blob` and saving the image file to your own storage.
 
 ## Data
 

@@ -56,7 +56,7 @@ const responses = {
     ]
   },
   previews: {
-    blob: (
+    arrayBuffer: (
       // inlined to avoid multiple reads
       data = fs.readFileSync(
         path.resolve(__dirname, "../../fixtures/preview.png")
@@ -86,7 +86,9 @@ describe("AbstractAPI", () => {
       [
         "comments.create",
         [buildLayerDescriptor(), { body: "Comment on layer" }],
-        { responses: [responses.branches.info(), responses.layers.info()] }
+        {
+          responses: [responses.branches.info(), responses.layers.info()]
+        }
       ],
       [
         "comments.create",
@@ -169,7 +171,7 @@ describe("AbstractAPI", () => {
       ["layers.info", buildLayerDescriptor()],
       // previews
       [
-        "previews.url",
+        "previews.html_url",
         buildLayerDescriptor({
           projectId: "project-id",
           sha: "layer-sha",
@@ -182,9 +184,9 @@ describe("AbstractAPI", () => {
         }
       ],
       [
-        "previews.blob",
+        "previews.raw",
         buildLayerDescriptor(),
-        { responses: [responses.previews.blob()] }
+        { responses: [responses.previews.arrayBuffer()] }
       ],
       // data
       ["data.info", buildLayerDescriptor()],
