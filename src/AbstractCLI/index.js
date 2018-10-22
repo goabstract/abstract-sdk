@@ -91,7 +91,7 @@ export default class AbstractCLI implements AbstractInterface {
       let stderrBuffer = new Buffer.from("");
       abstractCli.stderr.on("data", chunk => {
         logStderrData(chunk.toString());
-        stderrBuffer.concat(chunk);
+        stderrBuffer = Buffer.concat([stderrBuffer, chunk]);
       });
 
       abstractCli.stdout
