@@ -31,20 +31,22 @@ function parsePath(input: ?string): ?Array<string> {
 }
 
 export type Options = {
-  abstractToken: string,
-  abstractCliPath?: string[],
+  accessToken: string,
+  cliPath?: string[],
+  apiUrl: string,
   cwd?: string
 };
 
 export default class AbstractCLI implements AbstractInterface {
-  abstractToken: string;
-  abstractCliPath: string;
+  accessToken: string;
+  cliPath: string;
+  apiUrl: string;
   cwd: string;
 
   constructor({
     cwd = process.cwd(),
-    abstractToken,
-    abstractCliPath = parsePath(process.env.ABSTRACT_CLI_PATH) || [
+    accessToken,
+    cliPath = parsePath(process.env.ABSTRACT_CLI_PATH) || [
       // Relative to cwd
       path.join(cwd, "abstract-cli"),
       // Relative to node_modules in cwd (also makes test easier)
@@ -54,32 +56,37 @@ export default class AbstractCLI implements AbstractInterface {
       ),
       // macOS App
       "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
-    ]
+    ],
+    apiUrl
   }: Options) {
     this.cwd = cwd;
-    this.abstractToken = abstractToken;
+    this.accessToken = accessToken;
+    this.apiUrl = apiUrl;
 
     try {
-      this.abstractCliPath = path.relative(
+      this.cliPath = path.relative(
         cwd,
-        path.resolve(cwd, locatePath.sync(abstractCliPath))
+        path.resolve(cwd, locatePath.sync(cliPath))
       );
     } catch (error) {
-      throw new Error(
-        `Cannot find abstract-cli in "${abstractCliPath.join(":")}"`
-      );
+      throw new Error(`Cannot find abstract-cli in "${cliPath.join(":")}"`);
     }
   }
 
   async spawn(args: string[]) {
     return new Promise((resolve, reject) => {
+      let authArgs = [];
+
+      if (this.accessToken) {
+        authArgs = ["--user-token", this.accessToken];
+      }
+
       const spawnArgs = [
-        `./${path.relative(this.cwd, this.abstractCliPath)}`,
+        `./${path.relative(this.cwd, this.cliPath)}`,
         [
-          "--user-token",
-          this.abstractToken,
+          ...authArgs,
           "--api-url",
-          process.env.ABSTRACT_API_URL || "https://api.goabstract.com",
+          this.apiUrl,
           ...args // First args win for https://github.com/spf13/cobra
         ],
         { cwd: this.cwd }

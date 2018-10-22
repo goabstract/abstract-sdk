@@ -3,23 +3,29 @@ import type { AbstractInterface } from "../";
 import { AUTO } from "../transports";
 
 type Options = {
-  abstractToken?: string,
-  abstractCliPath?: string[],
+  accessToken?: string,
+  cliPath?: string[],
+  apiUrl?: string,
+  previewsUrl?: string,
   transport?: *
 };
 
 export default function Client({
-  abstractToken = process.env.ABSTRACT_TOKEN || "",
-  abstractCliPath,
+  accessToken = process.env.ABSTRACT_TOKEN || "",
+  cliPath,
+  apiUrl = "https://api.goabstract.com",
+  previewsUrl = "https://api.goabstract.com",
   transport: Transport = AUTO
 }: Options = {}): AbstractInterface {
-  if (!abstractToken) {
-    throw new Error("options.abstractToken or ABSTRACT_TOKEN required");
+  if (!accessToken) {
+    throw new Error(
+      "options.accessToken or ABSTRACT_TOKEN set as an environment variable is required"
+    );
   }
 
   if (!Transport) {
-    throw new Error("options.transport required");
+    throw new Error("options.transport is required");
   }
 
-  return new Transport({ abstractToken, abstractCliPath });
+  return new Transport({ accessToken, cliPath, apiUrl, previewsUrl });
 }
