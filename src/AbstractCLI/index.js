@@ -212,8 +212,8 @@ export default class AbstractCLI implements AbstractInterface {
         fileDescriptor.fileId
       ]);
     },
-    info: (layerDescriptor: LayerDescriptor) => {
-      return this.spawn([
+    info: async (layerDescriptor: LayerDescriptor) => {
+      const data = await this.spawn([
         "layer",
         "meta",
         layerDescriptor.projectId,
@@ -221,6 +221,8 @@ export default class AbstractCLI implements AbstractInterface {
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
+
+      return data.layer;
     }
   };
 

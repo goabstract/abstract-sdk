@@ -46,6 +46,11 @@ const responses = {
         file: {} // required
       })
     })
+  },
+  layers: {
+    info: () => ({
+      stdout: JSON.stringify({ layer: { id: "layer-id" } })
+    })
   }
 };
 
@@ -134,28 +139,32 @@ describe(AbstractCLI, () => {
         "files.info",
         buildFileDescriptor(),
         {
-          responses: [responses.files.info()]
+          responses: [responses.files.info()],
+          result: { id: "file-id" }
         }
       ],
       [
         "files.list",
         buildBranchDescriptor({ sha: "sha" }),
         {
-          responses: [responses.files.list()]
+          responses: [responses.files.list()],
+          result: [{ id: "file-id" }, { id: "not-file-id" }]
         }
       ],
       [
         "files.list",
         buildCommitDescriptor({ sha: "sha" }),
         {
-          responses: [responses.files.list()]
+          responses: [responses.files.list()],
+          result: [{ id: "file-id" }, { id: "not-file-id" }]
         }
       ],
       [
         "files.info",
         buildFileDescriptor({ sha: "sha" }),
         {
-          responses: [responses.files.info()]
+          responses: [responses.files.info()],
+          result: { id: "file-id" }
         }
       ],
       // pages
@@ -179,9 +188,23 @@ describe(AbstractCLI, () => {
       ],
       // layers
       ["layers.list", buildFileDescriptor()],
-      ["layers.info", buildLayerDescriptor()],
+      [
+        "layers.info",
+        buildLayerDescriptor(),
+        {
+          responses: [responses.layers.info()],
+          result: { id: "layer-id" }
+        }
+      ],
       ["layers.list", buildFileDescriptor({ sha: "sha" })],
-      ["layers.info", buildLayerDescriptor({ sha: "sha" })],
+      [
+        "layers.info",
+        buildLayerDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.layers.info()],
+          result: { id: "layer-id" }
+        }
+      ],
       // data
       ["data.info", buildLayerDescriptor()],
       ["data.info", buildLayerDescriptor({ sha: "sha" })]
