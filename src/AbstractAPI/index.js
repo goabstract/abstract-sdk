@@ -334,6 +334,7 @@ export default class AbstractAPI implements AbstractInterface {
       const data = await response.json();
 
       // for comments.create
+      // TODO: Create cache so that files.info and pages.info can be used instead
       data.layer._file = data.file;
       data.layer._page = data.page;
 
@@ -414,12 +415,15 @@ export default class AbstractAPI implements AbstractInterface {
     );
 
     if (objectDescriptor.layerId) {
-      const layer = await this.layers.info(objectDescriptor);
+      const layer: Layer = await this.layers.info(objectDescriptor);
 
       return {
         branchName: branch.name,
+        // $FlowFixMe _file not in type
         fileName: layer._file.name,
+        // $FlowFixMe _file not in type
         pageName: layer._page.name,
+        // $FlowFixMe _page not in type
         pageId: layer._page.id,
         layerName: layer.name
       };
