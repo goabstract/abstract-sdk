@@ -30,7 +30,9 @@ const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
 export type Options = {
-  abstractToken: string
+  accessToken: string,
+  apiUrl: string,
+  previewsUrl: string
 };
 
 type BranchNames = {
@@ -52,30 +54,23 @@ async function unwrapEnvelope<T>(
 ): Promise<T> {
   return (await response).data;
 }
-
-const ABSTRACT_API_URL =
-  process.env.ABSTRACT_API_URL || "https://api.goabstract.com";
-
-const ABSTRACT_PREVIEWS_URL =
-  process.env.ABSTRACT_PREVIEWS_URL || "https://previews.goabstract.com";
-
 export default class AbstractAPI implements AbstractInterface {
-  abstractToken: string;
+  accessToken: string;
+  apiUrl: string;
+  previewsUrl: string;
 
-  constructor({ abstractToken }: Options) {
-    this.abstractToken = abstractToken;
+  constructor({ accessToken, apiUrl, previewsUrl }: Options) {
+    this.accessToken = accessToken;
+    this.apiUrl = apiUrl;
+    this.previewsUrl = previewsUrl;
   }
 
-  async fetch(
-    input: string | URL,
-    init: Object = {},
-    hostname: string = ABSTRACT_API_URL
-  ) {
+  async fetch(input: string | URL, init: Object = {}, hostname?: string) {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
-      Authorization: `Bearer ${this.abstractToken}`,
+      Authorization: `Bearer ${this.accessToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
       "Abstract-Api-Version": "7",
       ...(init.headers || {})
@@ -85,6 +80,7 @@ export default class AbstractAPI implements AbstractInterface {
       init.body = JSON.stringify(init.body);
     }
 
+    hostname = hostname || this.apiUrl;
     const fetchArgs = [`${hostname}/${input.toString()}`, init];
 
     logFetch(fetchArgs);
@@ -126,7 +122,7 @@ export default class AbstractAPI implements AbstractInterface {
           ...init.headers
         }
       },
-      ABSTRACT_PREVIEWS_URL
+      this.previewsUrl
     );
   }
 
@@ -340,7 +336,7 @@ export default class AbstractAPI implements AbstractInterface {
     info: (layerDescriptor: LayerDescriptor) => {
       // prettier-ignore
       return {
-        webUrl: `${ABSTRACT_PREVIEWS_URL}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
+        webUrl: `${this.previewsUrl}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       };
     },
     raw: async (layerDescriptor: LayerDescriptor, options: *) => {

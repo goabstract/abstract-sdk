@@ -11,7 +11,7 @@ import type {
 
 export function buildOptions(options: *) {
   return {
-    abstractToken: "abstract-token",
+    accessToken: "abstract-token",
     ...options
   };
 }

@@ -70,7 +70,7 @@ export type Comment = {
 };
 
 export interface AbstractInterface {
-  abstractToken: string;
+  accessToken: string;
 
   organizations?: {
     list: () => Promise<*>
