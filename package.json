@@ -20,7 +20,7 @@
     "url": "git+https://github.com/goabstract/abstract-js.git"
   },
   "author": "Abstract <andrew@goabstract.com>",
-  "license": "UNLICENCED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/goabstract/abstract-js/issues"
   },
