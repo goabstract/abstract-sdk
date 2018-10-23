@@ -39,6 +39,10 @@ const responses = {
     ]
   },
   branches: {
+    list: () => [
+      JSON.stringify({ data: [{ name: "branch-name" }] }),
+      { status: 200 }
+    ],
     info: () => [JSON.stringify({ name: "branch-name" }), { status: 200 }]
   },
   commits: {
@@ -70,7 +74,7 @@ const responses = {
     ]
   },
   previews: {
-    blob: (
+    arrayBuffer: (
       // inlined to avoid multiple reads
       data = fs.readFileSync(
         path.resolve(__dirname, "../../fixtures/preview.png")
@@ -112,7 +116,9 @@ describe("AbstractAPI", () => {
       [
         "comments.create",
         [buildLayerDescriptor(), { body: "Comment on layer" }],
-        { responses: [responses.branches.info(), responses.layers.info()] }
+        {
+          responses: [responses.branches.info(), responses.layers.info()]
+        }
       ],
       [
         "comments.create",
@@ -167,8 +173,16 @@ describe("AbstractAPI", () => {
         }
       ],
       // branches
-      ["branches.list", buildProjectDescriptor()],
-      ["branches.list", [buildProjectDescriptor(), { filter: "mine" }]],
+      [
+        "branches.list",
+        buildProjectDescriptor(),
+        { responses: [responses.branches.list()] }
+      ],
+      [
+        "branches.list",
+        [buildProjectDescriptor(), { filter: "mine" }],
+        { responses: [responses.branches.list()] }
+      ],
       ["branches.info", buildBranchDescriptor()],
       // files
       ["files.list", buildBranchDescriptor()],
@@ -193,22 +207,18 @@ describe("AbstractAPI", () => {
       ],
       // previews
       [
-        "previews.url",
+        "previews.info",
         buildLayerDescriptor({
           projectId: "project-id",
           sha: "layer-sha",
           fileId: "file-id",
           layerId: "layer-id"
-        }),
-        {
-          result:
-            "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id"
-        }
+        })
       ],
       [
-        "previews.blob",
+        "previews.raw",
         buildLayerDescriptor(),
-        { responses: [responses.previews.blob()] }
+        { responses: [responses.previews.arrayBuffer()] }
       ],
       // data
       ["data.info", buildLayerDescriptor()],

@@ -6,143 +6,6 @@ title: Reference
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-blue.svg
 
-## Projects
-
-![API][api-icon]
-
-A project is a container for files, it belongs to an organization. Teams use projects to logically separate their files
-for example for a project, a platform (e.g. Web / iOS), or by client.
-
-### The project object
-
-| Property         | Type     | Description                                                                   |
-|------------------|----------|-------------------------------------------------------------------------------|
-| `about`          | `string` | A longer description of the project (May optionally include markdown tags)    |
-| `archivedAt`     | `string` | Timestamp that the project was archived                                       |
-| `color`          | `string` | A hex value that represents a custom project color                            |
-| `createdAt`      | `string` | Timestamp that the project was created                                        |
-| `createdByUser`  | `User`   | The user that created the project                                             |
-| `description`    | `string` | A longer summary of the project                                               |
-| `firstPushedAt`  | `string` | Timestamp that the project first received data                                |
-| `id`             | `string` | UUID                                                                          |
-| `name`           | `string` | The name of the project                                                       |
-| `organizationId` | `string` | UUID of the organization this project belongs to                              |
-| `pushedAt`       | `string` | Timestamp that data was last received                                         |
-| `repoCreatedAt`  | `string` | Timestamp that the backend storage was created                                |
-| `sizeInBytes`    | `number` | The size of the project on disk in bytes                                      |
-| `updatedAt`      | `string` | Timestamp that the project was last updated                                   |
-| `visibility`     | `string` | Either "organization" for a team project, or "specific" for a private project |
-
-
-### List all projects
-
-`projects.list(OrganizationDescriptor?): Promise<Project[]>`
-
-List all projects accessible through the current authentication
-
-```js
-abstract.projects.list();
-```
-
-or, get a list of projects for a specific organization…
-
-```js
-abstract.projects.list({
-  organizationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
-});
-```
-
-### Retrive a project
-
-  > Not yet implemented
-
-
-## Organizations
-
-![API][api-icon]
-
-Organizations contain users and projects.
-
-### The organization object
-
-| Property                   | Type       | Description                                                                              |
-|----------------------------|------------|------------------------------------------------------------------------------------------|
-| `createdAt`                | `string`   | Timestamp that the organization was created                                              |
-| `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
-| `id`                       | `string`   | UUID                                                                                     |
-| `isUsernameOrganization`   | `boolean`  | A username organization is a free organization included with every user account          |
-| `isWithinSubscriptionTerm` | `boolean`  | Whether the organizations subscription is in good standing                               |
-| `logoUrl`                  | `string`   | A url for the organization logo                                                          |
-| `name`                     | `string`   | The name of the organization                                                             |
-| `restrictedToDomains`      | `string[]` | An optional list of domain names that invitations to this organization are restricted to |
-| `trialEndsAt`              | `string`   | Timestamp of when the trial ends, if within trial period                                 |
-| `updatedAt`                | `string`   | Timestamp that the organization was last updated                                         |
-| `userId`                   | `string`   | UUID of the user that created the organization                                           |
-
-
-### List all organizations
-
-`organizations.list(): Promise<Organization[]>`
-
-Load the organizations accessible by the current access token
-
-```js
-abstract.organizations.list();
-```
-
-### Retrive an organization
-
-  > Not yet implemented
-
-
-## Collections
-
-![CLI][cli-icon] ![API][api-icon]
-
-A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
-
-### The collection object
-
-| Property      | Type                | Description                                                                             |
-|---------------|---------------------|-----------------------------------------------------------------------------------------|
-| `branchId`    | `string`            | UUID of the branch that this collection belongs to, or the string "master"              |
-| `createdAt`   | `string`            | Timestamp that the collection was created                                               |
-| `description` | `string`            | A description of the collection                                                         |
-| `id`          | `string`            | UUID identifier of the collection                                                       |
-| `layers`      | `CollectionLayer[]` | An ordered array of collection layers. Note: These are not the same as `Layer` objects. |
-| `name`        | `string`            | The name of the collection                                                              |
-| `projectId`   | `string`            | UUID of the project this commit belongs to                                              |
-| `publishedAt` | `string`            | Timestamp that the collection was published                                             |
-| `user`        | `User`              | The user that created the collection                                                    |
-| `userId`      | `string`            | UUID of the user that created the collection                                            |
-
-### List all collections
-
-`collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<Collection[]>`
-
-List all collections for a branch
-
-```js
-abstract.collections.list({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
-});
-```
-
-### Retrieve a collection
-
-`collections.info(CollectionDescriptor): Promise<Collection>`
-
-Load an individual collection
-
-```js
-abstract.collections.info({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  collectionId: "413daa80-1456-11e8-b8b0-4d1fec7ae555"
-});
-```
-
 ## Branches
 
 ![API][api-icon]
@@ -199,6 +62,56 @@ abstract.branches.info({
   branchId: "master"
 });
 ```
+
+
+## Collections
+
+![CLI][cli-icon] ![API][api-icon]
+
+A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
+
+### The collection object
+
+| Property      | Type                | Description                                                                             |
+|---------------|---------------------|-----------------------------------------------------------------------------------------|
+| `branchId`    | `string`            | UUID of the branch that this collection belongs to, or the string "master"              |
+| `createdAt`   | `string`            | Timestamp that the collection was created                                               |
+| `description` | `string`            | A description of the collection                                                         |
+| `id`          | `string`            | UUID identifier of the collection                                                       |
+| `layers`      | `CollectionLayer[]` | An ordered array of collection layers. Note: These are not the same as `Layer` objects. |
+| `name`        | `string`            | The name of the collection                                                              |
+| `projectId`   | `string`            | UUID of the project this commit belongs to                                              |
+| `publishedAt` | `string`            | Timestamp that the collection was published                                             |
+| `user`        | `User`              | The user that created the collection                                                    |
+| `userId`      | `string`            | UUID of the user that created the collection                                            |
+
+### List all collections
+
+`collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<Collection[]>`
+
+List all collections for a branch
+
+```js
+abstract.collections.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+});
+```
+
+### Retrieve a collection
+
+`collections.info(CollectionDescriptor): Promise<Collection>`
+
+Load an individual collection
+
+```js
+abstract.collections.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  collectionId: "413daa80-1456-11e8-b8b0-4d1fec7ae555"
+});
+```
+
 
 ## Comments
 
@@ -276,6 +189,7 @@ abstract.comments.create({
 
   > Note: It's important to ensure that the annotation bounding box is within the dimensions of the layer!
 
+
 ## Commits
 
 ![CLI][cli-icon] ![API][api-icon]
@@ -348,7 +262,6 @@ abstract.commits.list({
 });
 ```
 
-
 ### Retrieve a commit 
 
 `commits.info (FileDescriptor | LayerDescriptor | CommitDescriptor): Promise<Commit>`
@@ -360,6 +273,51 @@ abstract.commits.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
+
+## Data
+
+![CLI][cli-icon] ![API][api-icon]
+
+### The data object
+
+| Property    | Type        | Description                                                         |
+|-------------|-------------|---------------------------------------------------------------------|
+| `branchId`  | `string`    | UUID of the branch that this layer is contained within              |
+| `fileId`    | `string`    | UUID of the file that this layer is contained within                |
+| `layerId`   | `string`    | UUID of the layer that this data is loaded from                     |
+| `layers`    | `{string: LayerData }` | An object that describes the child layers                |
+| `projectId` | `string`    | UUID of the project that this data is contained within              |
+| `sha`       | `string`    | SHA of the commit where the layer was last changed                  |
+
+#### LayerData
+
+| Property      | Type              | Description                                     |
+|---------------|-------------------|-------------------------------------------------|
+| `childIds`    | `string[]`        | Array of UUID's for the layers children, if any |
+| `id`          | `string`          | UUID of the chid layer                          |
+| `libraryId`   | `string`          | UUID of the library file this layer is from     |
+| `libraryName` | `string`          | The name of the library file this layer is from |
+| `parentId`    | `string`          | UUID of the parent layer, if any                |
+| `properties`  | `LayerProperties` | Layer properties (to be documented)             |
+| `symbolId`    | `string`          | UUID of the parent symbol, if any               |
+| `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
+
+
+### Retrieve layer data
+
+`data.info(LayerDescriptor): Promise<Data>`
+
+```js
+abstract.data.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
 });
 ```
 
@@ -422,53 +380,6 @@ abstract.files.info({
 });
 ```
 
-## Pages
-
-A page is a container for layers, often a file will have several pages to organize design work.
-
-![CLI][cli-icon] ![API][api-icon]
-
-### The page object
-
-| Property    | Type     | Description                                                  |
-|-------------|----------|--------------------------------------------------------------|
-| `fileId`    | `string` | UUID of the file that this page is contained within          |
-| `id`        | `string` | UUID identifier for the page                                 |
-| `name`      | `string` | The name of the page                                         |
-| `order`     | `number` | The order of the page in the file                            |
-| `projectId` | `string` | UUID of the project this page belongs to                     |
-| `sha`       | `string` | SHA of the commit this page was loaded at                    |
-| `type`      | `string` | This field has the value "library" for virtual library pages |
-
-### List all pages
-
-`pages.list(FileDescriptor): Promise<Page[]>`
-
-List the pages for a file at a commit
-
-```js
-abstract.pages.list({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
-});
-```
-
-### Retrieve a page
-
-`pages.info(PageDescriptor): Promise<Page>`
-
-Load the info for a page in a file at the latest commit on a branch
-
-```js
-abstract.pages.info({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A"
-});
-```
 
 ## Layers
 
@@ -543,93 +454,197 @@ abstract.layers.info({
 });
 ```
 
+
+## Organizations
+
+![API][api-icon]
+
+Organizations contain users and projects.
+
+### The organization object
+
+| Property                   | Type       | Description                                                                              |
+|----------------------------|------------|------------------------------------------------------------------------------------------|
+| `createdAt`                | `string`   | Timestamp that the organization was created                                              |
+| `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
+| `id`                       | `string`   | UUID                                                                                     |
+| `isUsernameOrganization`   | `boolean`  | A username organization is a free organization included with every user account          |
+| `isWithinSubscriptionTerm` | `boolean`  | Whether the organizations subscription is in good standing                               |
+| `logoUrl`                  | `string`   | A url for the organization logo                                                          |
+| `name`                     | `string`   | The name of the organization                                                             |
+| `restrictedToDomains`      | `string[]` | An optional list of domain names that invitations to this organization are restricted to |
+| `trialEndsAt`              | `string`   | Timestamp of when the trial ends, if within trial period                                 |
+| `updatedAt`                | `string`   | Timestamp that the organization was last updated                                         |
+| `userId`                   | `string`   | UUID of the user that created the organization                                           |
+
+
+### List all organizations
+
+`organizations.list(): Promise<Organization[]>`
+
+Load the organizations accessible by the current access token
+
+```js
+abstract.organizations.list();
+```
+
+### Retrive an organization
+
+  > Not yet implemented
+
+
+## Pages
+
+A page is a container for layers, often a file will have several pages to organize design work.
+
+![CLI][cli-icon] ![API][api-icon]
+
+### The page object
+
+| Property    | Type     | Description                                                  |
+|-------------|----------|--------------------------------------------------------------|
+| `fileId`    | `string` | UUID of the file that this page is contained within          |
+| `id`        | `string` | UUID identifier for the page                                 |
+| `name`      | `string` | The name of the page                                         |
+| `order`     | `number` | The order of the page in the file                            |
+| `projectId` | `string` | UUID of the project this page belongs to                     |
+| `sha`       | `string` | SHA of the commit this page was loaded at                    |
+| `type`      | `string` | This field has the value "library" for virtual library pages |
+
+### List all pages
+
+`pages.list(FileDescriptor): Promise<Page[]>`
+
+List the pages for a file at a commit
+
+```js
+abstract.pages.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
+### Retrieve a page
+
+`pages.info(PageDescriptor): Promise<Page>`
+
+Load the info for a page in a file at the latest commit on a branch
+
+```js
+abstract.pages.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A"
+});
+```
+
+
 ## Previews
+
+![API][api-icon]
 
 A preview is an image file that represents the rendered version of a layer. In Abstract all previews are currently
 only available in PNG format.
 
+### The preview object
+
+| Property | Type     | Description                                                       |
+|----------|----------|-------------------------------------------------------------------|
+| `webUrl` | `string` | A url to where this preview can be loaded in the Abstract web app |
+
+### Retrieve an image file
+
+`previews.raw(LayerDescriptor): Promise<ArrayBuffer>`
+
+Load the preview image for a layer at a commit. The resulting `Buffer` can be used with node `fs` API's – for example you can write the image to disk:
+
+```js
+const buffer = await abstract.previews.raw({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+});
+
+fs.writeFile(`preview.png`, buffer, (err) => {
+  if (err) throw err;
+  console.log("Preview image written!");
+});
+```
+
+### Retrieve a preview
+
+`previews.info(LayerDescriptor): Promise<Preview>`
+
+Load the info for a layer preview
+
+```js
+abstract.previews.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+});
+```
+
+
+## Projects
+
 ![API][api-icon]
 
-### Retrieve a preview Blob
+A project is a container for files, it belongs to an organization. Teams use projects to logically separate their files
+for example for a project, a platform (e.g. Web / iOS), or by client.
 
-`previews.blob(LayerDescriptor): Promise<Blob>`
+### The project object
 
-Load the preview image for a layer at a commit
+| Property         | Type     | Description                                                                   |
+|------------------|----------|-------------------------------------------------------------------------------|
+| `about`          | `string` | A longer description of the project (May optionally include markdown tags)    |
+| `archivedAt`     | `string` | Timestamp that the project was archived                                       |
+| `color`          | `string` | A hex value that represents a custom project color                            |
+| `createdAt`      | `string` | Timestamp that the project was created                                        |
+| `createdByUser`  | `User`   | The user that created the project                                             |
+| `description`    | `string` | A longer summary of the project                                               |
+| `firstPushedAt`  | `string` | Timestamp that the project first received data                                |
+| `id`             | `string` | UUID                                                                          |
+| `name`           | `string` | The name of the project                                                       |
+| `organizationId` | `string` | UUID of the organization this project belongs to                              |
+| `pushedAt`       | `string` | Timestamp that data was last received                                         |
+| `repoCreatedAt`  | `string` | Timestamp that the backend storage was created                                |
+| `sizeInBytes`    | `number` | The size of the project on disk in bytes                                      |
+| `updatedAt`      | `string` | Timestamp that the project was last updated                                   |
+| `visibility`     | `string` | Either "organization" for a team project, or "specific" for a private project |
+
+
+### List all projects
+
+`projects.list(OrganizationDescriptor?): Promise<Project[]>`
+
+List all projects accessible through the current authentication
 
 ```js
-abstract.previews.blob({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+abstract.projects.list();
+```
+
+or, get a list of projects for a specific organization…
+
+```js
+abstract.projects.list({
+  organizationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
 });
 ```
 
-### Retrieve a preview URL
+### Retrive a project
 
-`previews.url(LayerDescriptor): Promise<string>`
+  > Not yet implemented
 
-Load the URL of a preview image for a layer at a commit
-
-```js
-abstract.previews.url({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
-});
-```
-
-  > Previews are loaded authenticated, and as such the URL includes your access
-token – we highly recommend using the `Blob` and saving the image file to your own storage.
-
-## Data
-
-![CLI][cli-icon] ![API][api-icon]
-
-### The data object
-
-| Property    | Type        | Description                                                         |
-|-------------|-------------|---------------------------------------------------------------------|
-| `branchId`  | `string`    | UUID of the branch that this layer is contained within              |
-| `fileId`    | `string`    | UUID of the file that this layer is contained within                |
-| `layerId`   | `string`    | UUID of the layer that this data is loaded from                     |
-| `layers`    | `{string: LayerData }` | An object that describes the child layers                |
-| `projectId` | `string`    | UUID of the project that this data is contained within              |
-| `sha`       | `string`    | SHA of the commit where the layer was last changed                  |
-
-#### LayerData
-
-| Property      | Type              | Description                                     |
-|---------------|-------------------|-------------------------------------------------|
-| `childIds`    | `string[]`        | Array of UUID's for the layers children, if any |
-| `id`          | `string`          | UUID of the chid layer                          |
-| `libraryId`   | `string`          | UUID of the library file this layer is from     |
-| `libraryName` | `string`          | The name of the library file this layer is from |
-| `parentId`    | `string`          | UUID of the parent layer, if any                |
-| `properties`  | `LayerProperties` | Layer properties (to be documented)             |
-| `symbolId`    | `string`          | UUID of the parent symbol, if any               |
-| `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
-
-
-### Retrieve layer data
-
-`data.info(LayerDescriptor): Promise<Data>`
-
-```js
-abstract.data.info({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
-});
-```
 
 ## Descriptors
 

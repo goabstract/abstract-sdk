@@ -60,9 +60,9 @@ describe(AbstractCLI, () => {
       () =>
         new AbstractCLI(
           buildOptions({
-            abstractCliPath: ["./fixtures/missing/abstract-cli"]
+            cliPath: ["./fixtures/missing/abstract-cli"]
           })
-        ).abstractCliPath
+        ).cliPath
     ).toThrow('Cannot find abstract-cli in "./fixtures/missing/abstract-cli"');
   });
 
@@ -88,23 +88,23 @@ describe(AbstractCLI, () => {
         "fixtures/other/abstract-cli"
       ]
     ])(
-      "configures options.abstractCliPath from process.env.ABSTRACT_CLI_PATH=%p",
-      (abstractCliPath, expected) => {
-        process.env.ABSTRACT_CLI_PATH = abstractCliPath;
+      "configures options.cliPath from process.env.ABSTRACT_CLI_PATH=%p",
+      (cliPath, expected) => {
+        process.env.ABSTRACT_CLI_PATH = cliPath;
         const { default: AbstractCLI } = require("./");
-        expect(new AbstractCLI(buildOptions()).abstractCliPath).toBe(expected);
+        expect(new AbstractCLI(buildOptions()).cliPath).toBe(expected);
       }
     );
 
-    test("prefers options.abstractCliPath=%p over process.env.ABSTRACT_CLI_PATH", () => {
+    test("prefers options.cliPath=%p over process.env.ABSTRACT_CLI_PATH", () => {
       process.env.ABSTRACT_CLI_PATH = "./fixtures/other/abstract-cli";
       const { default: AbstractCLI } = require("./");
       expect(
         new AbstractCLI(
           buildOptions({
-            abstractCliPath: ["./fixtures/abstract-cli"]
+            cliPath: ["./fixtures/abstract-cli"]
           })
-        ).abstractCliPath
+        ).cliPath
       ).toBe("fixtures/abstract-cli");
     });
   });
@@ -208,7 +208,7 @@ describe(AbstractCLI, () => {
       args = Array.isArray(args) ? args : [args];
 
       const transport = new AbstractCLI(
-        buildOptions({ abstractCliPath: ["./fixtures/abstract-cli"] })
+        buildOptions({ cliPath: ["./fixtures/abstract-cli"] })
       );
 
       const transportMethod = get(transport, property).bind(transport);

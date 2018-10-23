@@ -35,7 +35,7 @@ You can also specify a token to use, for example:
 import * as Abstract from "abstract-sdk";
 
 const abstract = Abstract.Client({
-  abstractToken: process.env.ABSTRACT_API_TOKEN
+  accessToken: process.env.ABSTRACT_API_TOKEN
 });
 ```
 

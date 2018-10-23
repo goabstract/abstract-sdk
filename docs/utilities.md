@@ -9,6 +9,6 @@ title: Utilities
 
 #### ES6 Async Iteration
 
-### abstractToken
+### accessToken
 
 ### version

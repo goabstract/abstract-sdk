@@ -688,7 +688,7 @@ export type LayerDataset = {
 };
 
 export interface AbstractInterface {
-  abstractToken: string;
+  accessToken: string;
 
   organizations?: {
     list: () => Promise<Branch[]>
@@ -754,8 +754,8 @@ export interface AbstractInterface {
   };
 
   previews?: {
-    blob: LayerDescriptor => Promise<Blob>,
-    url: LayerDescriptor => string
+    raw: LayerDescriptor => Promise<ArrayBuffer>,
+    info: LayerDescriptor => *
   };
 
   data: {
