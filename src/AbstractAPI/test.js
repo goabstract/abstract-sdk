@@ -44,9 +44,13 @@ const responses = {
   commits: {
     list: () => [
       JSON.stringify({
-        data: {
-          commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
-        }
+        commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [
+      JSON.stringify({
+        commits: [{ sha: "commit-sha" }]
       }),
       { status: 200 }
     ]
@@ -146,30 +150,24 @@ describe("AbstractAPI", () => {
         "commits.info",
         buildBranchDescriptor(),
         {
-          responses: [responses.commits.list()],
-          result: {
-            sha: "commit-sha"
-          }
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
         }
       ],
       [
         "commits.info",
         buildFileDescriptor(),
         {
-          responses: [responses.commits.list()],
-          result: {
-            sha: "commit-sha"
-          }
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
         }
       ],
       [
         "commits.info",
         buildLayerDescriptor(),
         {
-          responses: [responses.commits.list()],
-          result: {
-            sha: "commit-sha"
-          }
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
         }
       ],
       // branches
@@ -192,7 +190,11 @@ describe("AbstractAPI", () => {
       ["pages.list", buildFileDescriptor()],
       // layers
       ["layers.list", buildFileDescriptor()],
-      ["layers.info", buildLayerDescriptor()],
+      [
+        "layers.info",
+        buildLayerDescriptor(),
+        { responses: [responses.layers.info()] }
+      ],
       // previews
       [
         "previews.url",

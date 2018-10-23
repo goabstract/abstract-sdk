@@ -20,7 +20,8 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
-  Comment
+  Comment,
+  Layer
 } from "../";
 import randomTraceId from "./randomTraceId";
 
@@ -170,7 +171,7 @@ export default class AbstractAPI implements AbstractInterface {
     ) => {
       const response = await this.fetch(
         // prettier-ignore
-        `comments`,
+        "comments",
         {
           method: "POST",
           body: {
