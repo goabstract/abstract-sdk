@@ -560,7 +560,7 @@ Object {
 }
 `;
 
-exports[`AbstractAPI with mocked global.fetch previews.html_url({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
+exports[`AbstractAPI with mocked global.fetch previews.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
 Object {
   "fetch": Array [],
 }

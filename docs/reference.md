@@ -526,12 +526,18 @@ abstract.layers.info({
 
 ## Previews
 
+![API][api-icon]
+
 A preview is an image file that represents the rendered version of a layer. In Abstract all previews are currently
 only available in PNG format.
 
-![API][api-icon]
+### The preview object
 
-### Retrieve a preview
+| Property | Type     | Description                                                       |
+|----------|----------|-------------------------------------------------------------------|
+| `webUrl` | `string` | A url to where this preview can be loaded in the Abstract web app |
+
+### Retrieve an image file
 
 `previews.raw(LayerDescriptor): Promise<ArrayBuffer>`
 
@@ -553,14 +559,14 @@ fs.writeFile(`preview.png`, buffer, (err) => {
 });
 ```
 
-### Retrieve a preview link
+### Retrieve a preview
 
-`previews.html_url(LayerDescriptor): Promise<string>`
+`previews.info(LayerDescriptor): Promise<Preview>`
 
-Load the canonical URL to preview the layer in the Abstract web app
+Load the info for a layer preview
 
 ```js
-abstract.previews.html_url({
+abstract.previews.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",

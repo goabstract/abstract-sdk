@@ -171,17 +171,13 @@ describe("AbstractAPI", () => {
       ["layers.info", buildLayerDescriptor()],
       // previews
       [
-        "previews.html_url",
+        "previews.info",
         buildLayerDescriptor({
           projectId: "project-id",
           sha: "layer-sha",
           fileId: "file-id",
           layerId: "layer-id"
-        }),
-        {
-          result:
-            "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id"
-        }
+        })
       ],
       [
         "previews.raw",

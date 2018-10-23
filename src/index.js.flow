@@ -130,7 +130,7 @@ export interface AbstractInterface {
 
   previews?: {
     raw: LayerDescriptor => Promise<ArrayBuffer>,
-    html_url: LayerDescriptor => string
+    info: LayerDescriptor => *
   };
 
   data: {
