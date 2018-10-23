@@ -56,7 +56,7 @@ const responses = {
     ]
   },
   previews: {
-    blob: (
+    arrayBuffer: (
       // inlined to avoid multiple reads
       data = fs.readFileSync(
         path.resolve(__dirname, "../../fixtures/preview.png")
@@ -86,7 +86,9 @@ describe("AbstractAPI", () => {
       [
         "comments.create",
         [buildLayerDescriptor(), { body: "Comment on layer" }],
-        { responses: [responses.branches.info(), responses.layers.info()] }
+        {
+          responses: [responses.branches.info(), responses.layers.info()]
+        }
       ],
       [
         "comments.create",
@@ -169,22 +171,18 @@ describe("AbstractAPI", () => {
       ["layers.info", buildLayerDescriptor()],
       // previews
       [
-        "previews.url",
+        "previews.info",
         buildLayerDescriptor({
           projectId: "project-id",
           sha: "layer-sha",
           fileId: "file-id",
           layerId: "layer-id"
-        }),
-        {
-          result:
-            "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id"
-        }
+        })
       ],
       [
-        "previews.blob",
+        "previews.raw",
         buildLayerDescriptor(),
-        { responses: [responses.previews.blob()] }
+        { responses: [responses.previews.arrayBuffer()] }
       ],
       // data
       ["data.info", buildLayerDescriptor()],
