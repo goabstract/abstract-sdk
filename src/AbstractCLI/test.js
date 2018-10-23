@@ -28,6 +28,27 @@ function buildTextStream(text?: string): ReadableStream {
   return stream;
 }
 
+const responses = {
+  files: {
+    list: () => ({
+      stdout: JSON.stringify({
+        files: [{ id: "file-id" }, { id: "not-file-id" }]
+      })
+    }),
+    info: () => ({
+      stdout: JSON.stringify({ file: { id: "file-id" } })
+    })
+  },
+  pages: {
+    info: () => ({
+      stdout: JSON.stringify({
+        pages: [{ id: "not-page-id" }, { id: "page-id" }],
+        file: {} // required
+      })
+    })
+  }
+};
+
 describe(AbstractCLI, () => {
   test("throws when abstract-cli cannot be located", () => {
     expect(
@@ -109,12 +130,34 @@ describe(AbstractCLI, () => {
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // files
-      ["files.list", buildBranchDescriptor()],
-      ["files.list", buildCommitDescriptor()],
-      ["files.info", buildFileDescriptor()],
-      ["files.list", buildBranchDescriptor({ sha: "sha" })],
-      ["files.list", buildCommitDescriptor({ sha: "sha" })],
-      ["files.info", buildFileDescriptor({ sha: "sha" })],
+      [
+        "files.info",
+        buildFileDescriptor(),
+        {
+          responses: [responses.files.info()]
+        }
+      ],
+      [
+        "files.list",
+        buildBranchDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.files.list()]
+        }
+      ],
+      [
+        "files.list",
+        buildCommitDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.files.list()]
+        }
+      ],
+      [
+        "files.info",
+        buildFileDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.files.info()]
+        }
+      ],
       // pages
       ["pages.list", buildFileDescriptor()],
       ["pages.list", buildFileDescriptor({ sha: "sha" })],
@@ -122,7 +165,7 @@ describe(AbstractCLI, () => {
         "pages.info",
         buildPageDescriptor(),
         {
-          stdout: '{"pages":[{"id":"not-page-id"},{"id":"page-id"}]}',
+          responses: [responses.pages.info()],
           result: { id: "page-id" }
         }
       ],
@@ -130,7 +173,7 @@ describe(AbstractCLI, () => {
         "pages.info",
         buildPageDescriptor({ sha: "sha" }),
         {
-          stdout: '{"pages":[{"id":"not-page-id"},{"id":"page-id"}]}',
+          responses: [responses.pages.info()],
           result: { id: "page-id" }
         }
       ],
@@ -151,9 +194,19 @@ describe(AbstractCLI, () => {
 
       const transportMethod = get(transport, property).bind(transport);
 
+      if (options.responses) {
+        options.responses.forEach(response => {
+          child_process.spawn.mockReturnValueOnce({
+            stdout: buildTextStream(response.stdout),
+            stderr: buildTextStream(response.stderr),
+            on: jest.fn().mockReturnThis()
+          });
+        });
+      }
+
       child_process.spawn.mockReturnValueOnce({
-        stdout: buildTextStream(options.stdout),
-        stderr: buildTextStream(options.stderr),
+        stdout: buildTextStream("{}"),
+        stderr: buildTextStream(""),
         on: jest.fn().mockReturnThis()
       });
 

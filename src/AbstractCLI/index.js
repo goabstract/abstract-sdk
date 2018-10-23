@@ -163,32 +163,42 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   files = {
-    list: (branchDescriptor: BranchDescriptor) => {
-      return this.spawn([
+    list: async (branchDescriptor: BranchDescriptor) => {
+      if (!branchDescriptor.sha) throw new Error("files.list requires sha");
+
+      const data = await this.spawn([
         "files",
         branchDescriptor.projectId,
-        ref(branchDescriptor)
+        branchDescriptor.sha
       ]);
+
+      return data.files;
     },
-    info: (fileDescriptor: FileDescriptor) => {
-      return this.spawn([
+    info: async (fileDescriptor: FileDescriptor) => {
+      const data = await this.spawn([
         "file",
         fileDescriptor.projectId,
         ref(fileDescriptor),
         fileDescriptor.fileId
       ]);
+
+      const file = {
+        ...data.file,
+        _pages: data.pages
+      };
+
+      return file;
     }
   };
 
   pages = {
     list: async (fileDescriptor: FileDescriptor) => {
-      return await this.files.info(fileDescriptor);
+      const file: File = await this.files.info(fileDescriptor);
+      // $FlowFixMe: _pages not in type
+      return file._pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const { pages } = await this.files.info(
-        pageFileDescriptor(pageDescriptor)
-      );
-
+      const pages = await this.pages.list(pageFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
