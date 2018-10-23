@@ -31,3 +31,11 @@ a {
 a:hover {
   color: #074182;
 }
+
+.fixedHeaderContainer header a:hover {
+  color: #FFF;
+}
+
+.fixedHeaderContainer header img {
+  height: 28px;
+}
