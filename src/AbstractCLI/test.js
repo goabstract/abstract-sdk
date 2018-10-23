@@ -28,6 +28,32 @@ function buildTextStream(text?: string): ReadableStream {
   return stream;
 }
 
+const responses = {
+  files: {
+    list: () => ({
+      stdout: JSON.stringify({
+        files: [{ id: "file-id" }, { id: "not-file-id" }]
+      })
+    }),
+    info: () => ({
+      stdout: JSON.stringify({ file: { id: "file-id" } })
+    })
+  },
+  pages: {
+    info: () => ({
+      stdout: JSON.stringify({
+        pages: [{ id: "not-page-id" }, { id: "page-id" }],
+        file: {} // required
+      })
+    })
+  },
+  layers: {
+    info: () => ({
+      stdout: JSON.stringify({ layer: { id: "layer-id" } })
+    })
+  }
+};
+
 describe(AbstractCLI, () => {
   test("throws when abstract-cli cannot be located", () => {
     expect(
@@ -98,23 +124,45 @@ describe(AbstractCLI, () => {
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
       ["commits.list", buildBranchDescriptor({ sha: "sha" })],
-      ["commits.list", buildFileDescriptor({ sha: "sha" })],
       ["commits.list", buildLayerDescriptor({ sha: "sha" })],
-      ["commits.info", buildBranchDescriptor()],
-      ["commits.info", buildFileDescriptor()],
-      ["commits.info", buildLayerDescriptor()],
-      ["commits.info", buildBranchDescriptor({ sha: "sha" })],
+      ["commits.info", buildCommitDescriptor()],
       ["commits.info", buildFileDescriptor({ sha: "sha" })],
       ["commits.info", buildLayerDescriptor({ sha: "sha" })],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // files
-      ["files.list", buildBranchDescriptor()],
-      ["files.list", buildCommitDescriptor()],
-      ["files.info", buildFileDescriptor()],
-      ["files.list", buildBranchDescriptor({ sha: "sha" })],
-      ["files.list", buildCommitDescriptor({ sha: "sha" })],
-      ["files.info", buildFileDescriptor({ sha: "sha" })],
+      [
+        "files.info",
+        buildFileDescriptor(),
+        {
+          responses: [responses.files.info()],
+          result: { id: "file-id" }
+        }
+      ],
+      [
+        "files.list",
+        buildBranchDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.files.list()],
+          result: [{ id: "file-id" }, { id: "not-file-id" }]
+        }
+      ],
+      [
+        "files.list",
+        buildCommitDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.files.list()],
+          result: [{ id: "file-id" }, { id: "not-file-id" }]
+        }
+      ],
+      [
+        "files.info",
+        buildFileDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.files.info()],
+          result: { id: "file-id" }
+        }
+      ],
       // pages
       ["pages.list", buildFileDescriptor()],
       ["pages.list", buildFileDescriptor({ sha: "sha" })],
@@ -122,7 +170,7 @@ describe(AbstractCLI, () => {
         "pages.info",
         buildPageDescriptor(),
         {
-          stdout: '{"pages":[{"id":"not-page-id"},{"id":"page-id"}]}',
+          responses: [responses.pages.info()],
           result: { id: "page-id" }
         }
       ],
@@ -130,15 +178,29 @@ describe(AbstractCLI, () => {
         "pages.info",
         buildPageDescriptor({ sha: "sha" }),
         {
-          stdout: '{"pages":[{"id":"not-page-id"},{"id":"page-id"}]}',
+          responses: [responses.pages.info()],
           result: { id: "page-id" }
         }
       ],
       // layers
       ["layers.list", buildFileDescriptor()],
-      ["layers.info", buildLayerDescriptor()],
+      [
+        "layers.info",
+        buildLayerDescriptor(),
+        {
+          responses: [responses.layers.info()],
+          result: { id: "layer-id" }
+        }
+      ],
       ["layers.list", buildFileDescriptor({ sha: "sha" })],
-      ["layers.info", buildLayerDescriptor({ sha: "sha" })],
+      [
+        "layers.info",
+        buildLayerDescriptor({ sha: "sha" }),
+        {
+          responses: [responses.layers.info()],
+          result: { id: "layer-id" }
+        }
+      ],
       // data
       ["data.info", buildLayerDescriptor()],
       ["data.info", buildLayerDescriptor({ sha: "sha" })]
@@ -151,9 +213,19 @@ describe(AbstractCLI, () => {
 
       const transportMethod = get(transport, property).bind(transport);
 
+      if (options.responses) {
+        options.responses.forEach(response => {
+          child_process.spawn.mockReturnValueOnce({
+            stdout: buildTextStream(response.stdout),
+            stderr: buildTextStream(response.stderr),
+            on: jest.fn().mockReturnThis()
+          });
+        });
+      }
+
       child_process.spawn.mockReturnValueOnce({
-        stdout: buildTextStream(options.stdout),
-        stderr: buildTextStream(options.stderr),
+        stdout: buildTextStream("{}"),
+        stderr: buildTextStream(""),
         on: jest.fn().mockReturnThis()
       });
 

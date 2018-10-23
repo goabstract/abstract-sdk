@@ -24,24 +24,42 @@ jest.mock("../../package.json", () => ({
 global.fetch = fetch;
 
 const responses = {
+  collections: {
+    list: () => [
+      JSON.stringify({
+        data: {
+          collections: [{ id: "first-collection" }, { id: "second-collection" }]
+        }
+      }),
+      { status: 200 }
+    ],
+    info: () => [
+      JSON.stringify({ collections: [{ id: "first-collection" }] }),
+      { status: 200 }
+    ]
+  },
   branches: {
+    list: () => [
+      JSON.stringify({ data: [{ name: "branch-name" }] }),
+      { status: 200 }
+    ],
     info: () => [JSON.stringify({ name: "branch-name" }), { status: 200 }]
   },
   commits: {
     list: () => [
       JSON.stringify({
-        data: {
-          commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
-        }
+        commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
       }),
+      { status: 200 }
+    ],
+    info: () => [
+      JSON.stringify({ commits: [{ sha: "commit-sha" }] }),
       { status: 200 }
     ]
   },
   files: {
     list: () => [
-      JSON.stringify({
-        files: [{ id: "file-id" }, { id: "not-file-id" }]
-      }),
+      JSON.stringify({ files: [{ id: "file-id" }, { id: "not-file-id" }] }),
       { status: 200 }
     ]
   },
@@ -79,9 +97,21 @@ describe("AbstractAPI", () => {
       ["projects.list", [undefined, { filter: "active" }]],
       ["projects.info", buildProjectDescriptor()],
       // collections
-      ["collections.list", buildProjectDescriptor()],
-      ["collections.list", buildBranchDescriptor()],
-      ["collections.info", buildCollectionDescriptor()],
+      [
+        "collections.list",
+        buildProjectDescriptor(),
+        { responses: [responses.collections.list()] }
+      ],
+      [
+        "collections.list",
+        buildBranchDescriptor(),
+        { responses: [responses.collections.list()] }
+      ],
+      [
+        "collections.info",
+        buildCollectionDescriptor(),
+        { responses: [responses.collections.list()] }
+      ],
       // comments
       [
         "comments.create",
@@ -120,37 +150,39 @@ describe("AbstractAPI", () => {
       ["commits.list", buildLayerDescriptor()],
       [
         "commits.info",
-        buildBranchDescriptor(),
+        buildBranchDescriptor({ sha: "commit-sha" }),
         {
-          responses: [responses.commits.list()],
-          result: {
-            sha: "commit-sha"
-          }
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
         }
       ],
       [
         "commits.info",
-        buildFileDescriptor(),
+        buildFileDescriptor({ sha: "commit-sha" }),
         {
-          responses: [responses.commits.list()],
-          result: {
-            sha: "commit-sha"
-          }
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
         }
       ],
       [
         "commits.info",
-        buildLayerDescriptor(),
+        buildLayerDescriptor({ sha: "commit-sha" }),
         {
-          responses: [responses.commits.list()],
-          result: {
-            sha: "commit-sha"
-          }
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
         }
       ],
       // branches
-      ["branches.list", buildProjectDescriptor()],
-      ["branches.list", [buildProjectDescriptor(), { filter: "mine" }]],
+      [
+        "branches.list",
+        buildProjectDescriptor(),
+        { responses: [responses.branches.list()] }
+      ],
+      [
+        "branches.list",
+        [buildProjectDescriptor(), { filter: "mine" }],
+        { responses: [responses.branches.list()] }
+      ],
       ["branches.info", buildBranchDescriptor()],
       // files
       ["files.list", buildBranchDescriptor()],
@@ -168,7 +200,11 @@ describe("AbstractAPI", () => {
       ["pages.list", buildFileDescriptor()],
       // layers
       ["layers.list", buildFileDescriptor()],
-      ["layers.info", buildLayerDescriptor()],
+      [
+        "layers.info",
+        buildLayerDescriptor(),
+        { responses: [responses.layers.info()] }
+      ],
       // previews
       [
         "previews.info",

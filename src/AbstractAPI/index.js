@@ -5,6 +5,7 @@ import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
 import {
+  objectBranchDescriptor,
   fileBranchDescriptor,
   layerBranchDescriptor,
   pageFileDescriptor
@@ -20,7 +21,8 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
-  Comment
+  Comment,
+  Layer
 } from "../";
 import randomTraceId from "./randomTraceId";
 
@@ -59,7 +61,7 @@ export default class AbstractAPI implements AbstractInterface {
   apiUrl: string;
   previewsUrl: string;
 
-  constructor({ accessToken, apiUrl, previewsUrl }: Options) {
+  constructor({ accessToken, apiUrl, previewsUrl }: Options = {}) {
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
@@ -166,7 +168,7 @@ export default class AbstractAPI implements AbstractInterface {
     ) => {
       const response = await this.fetch(
         // prettier-ignore
-        `comments`,
+        "comments",
         {
           method: "POST",
           body: {
@@ -225,13 +227,26 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/commits?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await response.json();
+      return data.commits;
     },
     info: async (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+      objectDescriptor:
+        | BranchDescriptor
+        | FileDescriptor
+        | CommitDescriptor
+        | LayerDescriptor
     ) => {
-      const { commits } = await this.commits.list(objectDescriptor);
-      return commits[0];
+      if (objectDescriptor.sha !== undefined) {
+        const commits = await this.commits.list(
+          objectBranchDescriptor(objectDescriptor)
+        );
+
+        return find(commits, { sha: objectDescriptor.sha });
+      } else {
+        const commits = await this.commits.list(objectDescriptor);
+        return commits[0];
+      }
     }
   };
 
@@ -253,7 +268,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${projectDescriptor.projectId}/branches/?${query}`
       );
 
-      return response.json();
+      const data = await unwrapEnvelope(response.json());
+      return data.branches;
     }
   };
 
@@ -264,7 +280,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${commitDescriptor.projectId}/branches/${commitDescriptor.branchId}/commits/${commitDescriptor.sha}/changeset`
       );
 
-      return response.json();
+      const data = await response.json();
+      return data.changeset;
     }
   };
 
@@ -275,13 +292,11 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}/files`
       );
 
-      return response.json();
+      const data = await response.json();
+      return data.files;
     },
     info: async (fileDescriptor: FileDescriptor) => {
-      const { files } = await this.files.list(
-        fileBranchDescriptor(fileDescriptor)
-      );
-
+      const files = await this.files.list(fileBranchDescriptor(fileDescriptor));
       return find(files, { id: fileDescriptor.fileId });
     }
   };
@@ -293,13 +308,11 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${fileOrBranchDescriptor.projectId}/branches/${fileOrBranchDescriptor.branchId}/files/${fileOrBranchDescriptor.fileId}/pages`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await response.json();
+      return data.pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const { pages } = await this.files.info(
-        pageFileDescriptor(pageDescriptor)
-      );
-
+      const pages = await this.files.info(pageFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
@@ -313,6 +326,7 @@ export default class AbstractAPI implements AbstractInterface {
         pageId: objectDescriptor.pageId ? objectDescriptor.pageId : undefined,
         ...options
       });
+
       const response = await this.fetch(
         // prettier-ignore
         `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/files/${objectDescriptor.fileId}/layers?${query}`
@@ -328,7 +342,16 @@ export default class AbstractAPI implements AbstractInterface {
       );
 
       const data = await response.json();
-      return data.layer;
+
+      // for comments.create
+      // TODO: Create cache so that files.info and pages.info can be used instead
+      const layer = {
+        ...data.layer,
+        _file: data.file,
+        _page: data.page
+      };
+
+      return layer;
     }
   };
 
@@ -378,7 +401,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await unwrapEnvelope(response.json());
+      return data.collections;
     },
     info: async (
       collectionDescriptor: CollectionDescriptor,
@@ -390,7 +414,8 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await unwrapEnvelope(response.json());
+      return data.collections[0];
     }
   };
 
@@ -405,13 +430,16 @@ export default class AbstractAPI implements AbstractInterface {
     );
 
     if (objectDescriptor.layerId) {
-      const { layer, page, file } = await this.layers.info(objectDescriptor);
+      const layer: Layer = await this.layers.info(objectDescriptor);
 
       return {
         branchName: branch.name,
-        fileName: file.name,
-        pageName: page.name,
-        pageId: page.id,
+        // $FlowFixMe _file not in type
+        fileName: layer._file.name,
+        // $FlowFixMe _file not in type
+        pageName: layer._page.name,
+        // $FlowFixMe _page not in type
+        pageId: layer._page.id,
         layerName: layer.name
       };
     } else {

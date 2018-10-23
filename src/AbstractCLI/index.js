@@ -57,8 +57,8 @@ export default class AbstractCLI implements AbstractInterface {
       // macOS App
       "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
     ],
-    apiUrl
-  }: Options) {
+    apiUrl = "https://api.goabstract.com"
+  }: Options = {}) {
     this.cwd = cwd;
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
@@ -75,16 +75,14 @@ export default class AbstractCLI implements AbstractInterface {
 
   async spawn(args: string[]) {
     return new Promise((resolve, reject) => {
-      let authArgs = [];
-
-      if (this.accessToken) {
-        authArgs = ["--user-token", this.accessToken];
-      }
+      const userToken = this.accessToken
+        ? ["--user-token", this.accessToken]
+        : [];
 
       const spawnArgs = [
         `./${path.relative(this.cwd, this.cliPath)}`,
         [
-          ...authArgs,
+          ...userToken,
           "--api-url",
           this.apiUrl,
           ...args // First args win for https://github.com/spf13/cobra
@@ -125,34 +123,43 @@ export default class AbstractCLI implements AbstractInterface {
   }
 
   commits = {
-    list: (
+    list: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => {
-      const fileIdArgs =
-        objectDescriptor.fileId && !objectDescriptor.layerId
-          ? ["--file-id", objectDescriptor.fileId]
-          : [];
+      const fileIdArgs = objectDescriptor.fileId
+        ? ["--file-id", objectDescriptor.fileId]
+        : [];
 
       const layerIdArgs = objectDescriptor.layerId
         ? ["--layer-id", objectDescriptor.layerId]
         : [];
 
-      return this.spawn([
+      const data = await this.spawn([
         "commits",
         objectDescriptor.projectId,
         objectDescriptor.branchId,
         ...fileIdArgs,
         ...layerIdArgs
       ]);
+
+      return data.commits;
     },
-    info: (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+    info: async (
+      objectDescriptor:
+        | BranchDescriptor
+        | FileDescriptor
+        | CommitDescriptor
+        | LayerDescriptor
     ) => {
-      return this.spawn([
+      if (!objectDescriptor.sha) throw new Error("commits.info requires sha");
+
+      const data = await this.spawn([
         "commit",
         objectDescriptor.projectId,
-        ref(objectDescriptor)
+        objectDescriptor.sha ? objectDescriptor.sha : "latest" // TODO latest
       ]);
+
+      return data.commit;
     }
   };
 
@@ -170,32 +177,42 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   files = {
-    list: (branchDescriptor: BranchDescriptor) => {
-      return this.spawn([
+    list: async (branchDescriptor: BranchDescriptor) => {
+      if (!branchDescriptor.sha) throw new Error("files.list requires sha");
+
+      const data = await this.spawn([
         "files",
         branchDescriptor.projectId,
-        ref(branchDescriptor)
+        branchDescriptor.sha
       ]);
+
+      return data.files;
     },
-    info: (fileDescriptor: FileDescriptor) => {
-      return this.spawn([
+    info: async (fileDescriptor: FileDescriptor) => {
+      const data = await this.spawn([
         "file",
         fileDescriptor.projectId,
         ref(fileDescriptor),
         fileDescriptor.fileId
       ]);
+
+      const file = {
+        ...data.file,
+        _pages: data.pages
+      };
+
+      return file;
     }
   };
 
   pages = {
     list: async (fileDescriptor: FileDescriptor) => {
-      return await this.files.info(fileDescriptor);
+      const file: File = await this.files.info(fileDescriptor);
+      // $FlowFixMe: _pages not in type
+      return file._pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const { pages } = await this.files.info(
-        pageFileDescriptor(pageDescriptor)
-      );
-
+      const pages = await this.pages.list(pageFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
@@ -209,8 +226,8 @@ export default class AbstractCLI implements AbstractInterface {
         fileDescriptor.fileId
       ]);
     },
-    info: (layerDescriptor: LayerDescriptor) => {
-      return this.spawn([
+    info: async (layerDescriptor: LayerDescriptor) => {
+      const data = await this.spawn([
         "layer",
         "meta",
         layerDescriptor.projectId,
@@ -218,6 +235,8 @@ export default class AbstractCLI implements AbstractInterface {
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
+
+      return data.layer;
     }
   };
 
