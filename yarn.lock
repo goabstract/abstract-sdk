@@ -2426,12 +2426,12 @@ fs.realpath@^1.0.0:
 fsevents@^1.2.2, fsevents@^1.2.3:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.4.tgz#f41dcb1af2582af3692da36fc55cbd8e1041c426"
-  integrity sha1-5IjZXREfEd0JROAIN9imArcBVAU=
+  integrity sha512-z8H8/diyk76B7q5wg+Ud0+CqzcAF3mBBI/bA5ne5zrRUUIvNkJY//D3BqyH571KuAC4Nr7Rw7CjWX4r0y9DvNg==
   dependencies:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
   prebuiltVariants:
-    fsevents-v1.2.4-darwin-x64-57 e488d95d111f11dd0944e00837d8a602b7015405
+    fsevents-v1.2.4-darwin-x64-57 "21c5cc95342c7ceb4039d575ddebcd4ebe30686e"
 
 fstream@~1.0.10:
   version "1.0.11"
