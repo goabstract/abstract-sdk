@@ -49,17 +49,13 @@ const responses = {
       { status: 200 }
     ],
     info: () => [
-      JSON.stringify({
-        commits: [{ sha: "commit-sha" }]
-      }),
+      JSON.stringify({ commits: [{ sha: "commit-sha" }] }),
       { status: 200 }
     ]
   },
   files: {
     list: () => [
-      JSON.stringify({
-        files: [{ id: "file-id" }, { id: "not-file-id" }]
-      }),
+      JSON.stringify({ files: [{ id: "file-id" }, { id: "not-file-id" }] }),
       { status: 200 }
     ]
   },

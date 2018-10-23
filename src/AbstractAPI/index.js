@@ -336,10 +336,13 @@ export default class AbstractAPI implements AbstractInterface {
 
       // for comments.create
       // TODO: Create cache so that files.info and pages.info can be used instead
-      data.layer._file = data.file;
-      data.layer._page = data.page;
+      const layer = {
+        ...data.layer,
+        _file: data.file,
+        _page: data.page
+      };
 
-      return data.layer;
+      return layer;
     }
   };
 
