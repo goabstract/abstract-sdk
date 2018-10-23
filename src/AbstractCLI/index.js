@@ -55,7 +55,7 @@ export default class AbstractCLI implements AbstractInterface {
       // macOS App
       "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
     ]
-  }: Options) {
+  }: Options = {}) {
     this.cwd = cwd;
     this.abstractToken = abstractToken;
 

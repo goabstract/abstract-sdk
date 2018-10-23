@@ -62,7 +62,7 @@ const ABSTRACT_PREVIEWS_URL =
 export default class AbstractAPI implements AbstractInterface {
   abstractToken: string;
 
-  constructor({ abstractToken }: Options) {
+  constructor({ abstractToken }: Options = {}) {
     this.abstractToken = abstractToken;
   }
 
