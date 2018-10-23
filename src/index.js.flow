@@ -718,11 +718,9 @@ export interface AbstractInterface {
   };
 
   commits: {
-    list: (
-      BranchDescriptor | FileDescriptor | LayerDescriptor
-    ) => Promise<Commit[]>,
+    list: (BranchDescriptor | LayerDescriptor) => Promise<Commit[]>,
     info: (
-      BranchDescriptor | FileDescriptor | LayerDescriptor
+      FileDescriptor | LayerDescriptor | CommitDescriptor
     ) => Promise<Commit>
   };
 

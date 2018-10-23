@@ -124,12 +124,8 @@ describe(AbstractCLI, () => {
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
       ["commits.list", buildBranchDescriptor({ sha: "sha" })],
-      ["commits.list", buildFileDescriptor({ sha: "sha" })],
       ["commits.list", buildLayerDescriptor({ sha: "sha" })],
-      ["commits.info", buildBranchDescriptor()],
-      ["commits.info", buildFileDescriptor()],
-      ["commits.info", buildLayerDescriptor()],
-      ["commits.info", buildBranchDescriptor({ sha: "sha" })],
+      ["commits.info", buildCommitDescriptor()],
       ["commits.info", buildFileDescriptor({ sha: "sha" })],
       ["commits.info", buildLayerDescriptor({ sha: "sha" })],
       // changesets

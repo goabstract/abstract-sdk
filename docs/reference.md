@@ -351,7 +351,7 @@ abstract.commits.list({
 
 ### Retrieve a commit 
 
-`commits.info (CommitDescriptor): Promise<Commit>`
+`commits.info (FileDescriptor | LayerDescriptor | CommitDescriptor): Promise<Commit>`
 
 Load the commit info for a specific commit SHA on a branch
 
