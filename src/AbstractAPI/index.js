@@ -337,18 +337,20 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   previews = {
-    url: (layerDescriptor: LayerDescriptor) => {
+    info: (layerDescriptor: LayerDescriptor) => {
       // prettier-ignore
-      return `${ABSTRACT_PREVIEWS_URL}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`;
+      return {
+        webUrl: `${ABSTRACT_PREVIEWS_URL}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
+      };
     },
-    blob: async (layerDescriptor: LayerDescriptor, options: *) => {
+    raw: async (layerDescriptor: LayerDescriptor, options: *) => {
       const response = await this.fetchPreview(
         // prettier-ignore
         `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
         options
       );
 
-      return response.blob();
+      return response.arrayBuffer();
     }
   };
 
