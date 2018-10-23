@@ -13,8 +13,8 @@ type Options = {
 export default function Client({
   accessToken = process.env.ABSTRACT_TOKEN || "",
   cliPath,
-  apiUrl = "https://api.goabstract.com",
-  previewsUrl = "https://api.goabstract.com",
+  apiUrl,
+  previewsUrl,
   transport: Transport = AUTO
 }: Options = {}): AbstractInterface {
   if (!accessToken) {

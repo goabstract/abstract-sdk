@@ -33,7 +33,7 @@ function parsePath(input: ?string): ?Array<string> {
 export type Options = {
   accessToken: string,
   cliPath?: string[],
-  apiUrl: string,
+  apiUrl?: string,
   cwd?: string
 };
 

@@ -33,8 +33,8 @@ const logFetch = log.extend("AbstractAPI:fetch");
 
 export type Options = {
   accessToken: string,
-  apiUrl: string,
-  previewsUrl: string
+  apiUrl?: string,
+  previewsUrl?: string
 };
 
 type BranchNames = {
@@ -61,7 +61,11 @@ export default class AbstractAPI implements AbstractInterface {
   apiUrl: string;
   previewsUrl: string;
 
-  constructor({ accessToken, apiUrl, previewsUrl }: Options = {}) {
+  constructor({
+    accessToken,
+    apiUrl = "https://api.goabstract.com",
+    previewsUrl = "https://previews.goabstract.com"
+  }: Options = {}) {
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
