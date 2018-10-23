@@ -229,12 +229,13 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${objectDescriptor.projectId}/branches/${objectDescriptor.branchId}/commits?${query}`
       );
 
-      return unwrapEnvelope(response.json());
+      const data = await response.json();
+      return data.commits;
     },
     info: async (
       objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
     ) => {
-      const { commits } = await this.commits.list(objectDescriptor);
+      const commits = await this.commits.list(objectDescriptor);
       return commits[0];
     }
   };
