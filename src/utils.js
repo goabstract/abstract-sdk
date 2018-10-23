@@ -1,5 +1,6 @@
 // @flow
 import type {
+  CommitDescriptor,
   BranchDescriptor,
   PageDescriptor,
   FileDescriptor,
@@ -43,5 +44,18 @@ export function pageFileDescriptor(
     branchId: pageDescriptor.branchId,
     sha: pageDescriptor.sha,
     fileId: pageDescriptor.fileId
+  };
+}
+
+export function objectBranchDescriptor(
+  objectDescriptor:
+    | BranchDescriptor
+    | FileDescriptor
+    | CommitDescriptor
+    | LayerDescriptor
+): BranchDescriptor {
+  return {
+    projectId: objectDescriptor.projectId,
+    branchId: objectDescriptor.branchId
   };
 }

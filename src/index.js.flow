@@ -8,7 +8,7 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
-export type ObjectDescriptor = {|
+type ObjectDescriptor = {|
   projectId: string,
   sha?: string, // undefined is "latest"
 
@@ -718,9 +718,11 @@ export interface AbstractInterface {
   };
 
   commits: {
-    list: (BranchDescriptor | LayerDescriptor) => Promise<Commit[]>,
+    list: (
+      BranchDescriptor | FileDescriptor | LayerDescriptor
+    ) => Promise<Commit[]>,
     info: (
-      FileDescriptor | LayerDescriptor | CommitDescriptor
+      BranchDescriptor | FileDescriptor | CommitDescriptor | LayerDescriptor
     ) => Promise<Commit>
   };
 

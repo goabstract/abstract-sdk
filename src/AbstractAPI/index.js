@@ -5,6 +5,7 @@ import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
 import {
+  objectBranchDescriptor,
   fileBranchDescriptor,
   layerBranchDescriptor,
   pageFileDescriptor
@@ -234,10 +235,22 @@ export default class AbstractAPI implements AbstractInterface {
       return data.commits;
     },
     info: async (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+      objectDescriptor:
+        | BranchDescriptor
+        | FileDescriptor
+        | CommitDescriptor
+        | LayerDescriptor
     ) => {
-      const commits = await this.commits.list(objectDescriptor);
-      return commits[0];
+      if (objectDescriptor.sha !== undefined) {
+        const commits = await this.commits.list(
+          objectBranchDescriptor(objectDescriptor)
+        );
+
+        return find(commits, { sha: objectDescriptor.sha });
+      } else {
+        const commits = await this.commits.list(objectDescriptor);
+        return commits[0];
+      }
     }
   };
 
