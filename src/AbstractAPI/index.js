@@ -272,7 +272,7 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${projectDescriptor.projectId}/branches/?${query}`
       );
 
-      const data = await response.json();
+      const data = await unwrapEnvelope(response.json());
       return data.branches;
     }
   };
