@@ -15,17 +15,9 @@ const GridBlock = CompLibrary.GridBlock;
 
 const siteConfig = require(`${process.cwd()}/siteConfig.js`);
 
-function imgUrl(img) {
-  return `${siteConfig.baseUrl}img/${img}`;
-}
-
 function docUrl(doc, language) {
   return `${siteConfig.baseUrl}docs/${language ? `${language}/` : ""}${doc}`;
 }
-
-// function pageUrl(page, language) {
-//   return siteConfig.baseUrl + (language ? `${language}/` : "") + page;
-// }
 
 class Button extends React.Component {
   render() {
@@ -96,16 +88,16 @@ const Block = props => (
 );
 
 const Features = () => (
-  <Block layout="fourColumn">
+  <Block layout="twoColumn" background="light">
     {[
       {
         content:
-          "Abstract is built on an extensive HTTP API, you can use the SDK to access Abstract's data from servers, other apps, or CI environments.",
+          "Abstract is built on an extensive HTTP API, you can use the SDK to access the data stored in Abstract from servers, other apps, or CI environments.",
         title: "API"
       },
       {
         content:
-          "The Abstract desktop application comes with an embedded CLI tool. This SDK provides an easy and consistent interface to accessing local data stored in Abstract.",
+          "The Abstract desktop application comes with an embedded CLI. This SDK provides an easy and consistent interface to accessing your data stored locally in Abstract.",
         title: "CLI"
       }
     ]}

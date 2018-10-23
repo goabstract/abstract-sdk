@@ -21,7 +21,7 @@ const siteConfig = {
   headerLinks: [
     { doc: "getting-started", label: "Getting Started" },
     { doc: "reference", label: "API" },
-    { href: "https://spectrum.chat/abstract", label: "Help" }
+    { href: "https://spectrum.chat/abstract/developers", label: "Community" }
   ],
 
   gaTrackingId: "UA-102434873-3",
