@@ -63,6 +63,8 @@ export default class AbstractCLI implements AbstractInterface {
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
 
+    console.log(locatePath.sync(cliPath));
+
     try {
       this.cliPath = path.relative(
         cwd,
@@ -80,7 +82,7 @@ export default class AbstractCLI implements AbstractInterface {
         : [];
 
       const spawnArgs = [
-        `./${path.relative(this.cwd, this.cliPath)}`,
+        this.cliPath,
         [
           ...userToken,
           "--api-url",
@@ -99,15 +101,22 @@ export default class AbstractCLI implements AbstractInterface {
         stderrBuffer = Buffer.concat([stderrBuffer, chunk]);
       });
 
+      const stream = JSONStream.parse();
+      stream.on("data", data => {
+        logStdoutData(data);
+        resolve(data);
+      });
+
       abstractCli.stdout
-        .pipe(JSONStream.parse())
         .on("data", data => {
-          logStdoutData(data);
-          resolve(data);
+          stream.write(data);
         })
         .on("error", error => {
           logStdoutError(error.toString());
           reject(error);
+        })
+        .on("end", () => {
+          stream.end();
         });
 
       abstractCli.on("error", reject);
