@@ -66,6 +66,12 @@ export default class AbstractAPI implements AbstractInterface {
     apiUrl = "https://api.goabstract.com",
     previewsUrl = "https://previews.goabstract.com"
   }: Options = {}) {
+    if (!accessToken) {
+      throw new Error(
+        "options.accessToken or ABSTRACT_TOKEN set as an environment variable is required"
+      );
+    }
+
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
