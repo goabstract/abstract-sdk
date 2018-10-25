@@ -650,6 +650,14 @@ abstract.projects.list({
 
 Reference for the parameters required to load resources with Abstract SDK.
 
+### OrganizationDescriptor
+
+```js
+{
+  organizationId: string,
+}
+```
+
 ### ProjectDescriptor
 
 ```js

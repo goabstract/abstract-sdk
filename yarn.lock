@@ -2431,7 +2431,7 @@ fsevents@^1.2.2, fsevents@^1.2.3:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
   prebuiltVariants:
-    fsevents-v1.2.4-darwin-x64-57 "21c5cc95342c7ceb4039d575ddebcd4ebe30686e"
+    fsevents-v1.2.4-darwin-x64-57 aa1e64ccf1eadb39effed6f8067dae90662edd27
 
 fstream@~1.0.10:
   version "1.0.11"
