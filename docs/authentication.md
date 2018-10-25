@@ -3,7 +3,7 @@ id: authentication
 title: Authentication
 ---
 
-Authentication with the SDK is achieved by using an OAuth access token. You can [generate a personal access](https://app.goabstract.com/account/tokens) token for your own account on the Abstract website.
+Authentication with the SDK is achieved by using an OAuth access token. During the beta period you will need to [fill out this form](https://docs.google.com/forms/d/e/1FAIpQLSfJMH-mGdlcE4Rfi8-1UzrTBPsx3qCHhkwF9J-DJrdrw6flJQ/viewform) to get access to the API and we'll get back you.
 
   > API tokens should be treated like a password, as they provide access to all data that your user has access to. Do not commit them to version control.
 
