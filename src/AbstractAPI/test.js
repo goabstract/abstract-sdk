@@ -123,18 +123,27 @@ describe("AbstractAPI", () => {
       [
         "comments.create",
         [
-          buildLayerDescriptor(),
+          buildLayerDescriptor({ sha: "latest" }),
           {
             body: "Comment on layer with annotation",
             annotation: { x: 1, y: 1, width: 1, height: 1 }
           }
         ],
-        { responses: [responses.branches.info(), responses.layers.info()] }
+        {
+          responses: [
+            responses.commits.list(),
+            responses.branches.info(),
+            responses.layers.info()
+          ]
+        }
       ],
       [
         "comments.create",
-        [buildBranchDescriptor(), { body: "Comment on branch HEAD" }],
-        { responses: [responses.branches.info()] }
+        [
+          buildBranchDescriptor({ sha: "latest" }),
+          { body: "Comment on branch HEAD" }
+        ],
+        { responses: [responses.commits.list(), responses.branches.info()] }
       ],
       [
         "comments.create",
@@ -205,24 +214,34 @@ describe("AbstractAPI", () => {
         buildLayerDescriptor(),
         { responses: [responses.layers.info()] }
       ],
+      [
+        "layers.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list(), responses.layers.info()] }
+      ],
       // previews
+      ["previews.info", buildLayerDescriptor()],
       [
         "previews.info",
-        buildLayerDescriptor({
-          projectId: "project-id",
-          sha: "layer-sha",
-          fileId: "file-id",
-          layerId: "layer-id"
-        })
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
       ],
       [
         "previews.raw",
         buildLayerDescriptor(),
-        { responses: [responses.previews.arrayBuffer()] }
+        { responses: [responses.previews.arrayBuffer()] },
+        "previews.raw",
+        buildLayerDescriptor({ sha: "latest" }),
+        {
+          responses: [
+            responses.commits.list(),
+            responses.previews.arrayBuffer()
+          ]
+        }
       ],
       // data
       ["data.info", buildLayerDescriptor()],
-      ["data.info", buildLayerDescriptor({ sha: "sha" })]
+      ["data.info", buildLayerDescriptor({ sha: "latest" })]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
 

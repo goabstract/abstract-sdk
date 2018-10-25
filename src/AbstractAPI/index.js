@@ -132,6 +132,25 @@ export default class AbstractAPI implements AbstractInterface {
     );
   }
 
+  async resolveDescriptor<T: BranchDescriptor | LayerDescriptor>(
+    objectDescriptor: T
+  ): Promise<T> {
+    if (objectDescriptor.sha !== "latest") return objectDescriptor;
+
+    const commits = await this.commits.list(objectDescriptor);
+
+    try {
+      return {
+        ...objectDescriptor,
+        sha: commits[0].sha
+      };
+    } catch (error) {
+      throw new Error(
+        `Could not resolve sha "latest" for ${JSON.stringify(objectDescriptor)}`
+      );
+    }
+  }
+
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
@@ -170,6 +189,8 @@ export default class AbstractAPI implements AbstractInterface {
       objectDescriptor: BranchDescriptor | LayerDescriptor,
       comment: Comment
     ) => {
+      objectDescriptor = await this.resolveDescriptor(objectDescriptor);
+
       const response = await this.fetch(
         // prettier-ignore
         "comments",
@@ -340,6 +361,8 @@ export default class AbstractAPI implements AbstractInterface {
       return data.layers;
     },
     info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       const response = await this.fetch(
         // prettier-ignore
         `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
@@ -360,13 +383,17 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   previews = {
-    info: (layerDescriptor: LayerDescriptor) => {
+    info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       // prettier-ignore
       return {
         webUrl: `${this.previewsUrl}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       };
     },
     raw: async (layerDescriptor: LayerDescriptor, options: *) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       const response = await this.fetchPreview(
         // prettier-ignore
         `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,

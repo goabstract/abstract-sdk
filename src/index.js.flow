@@ -8,10 +8,15 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
+export type CollectionDescriptor = {|
+  projectId: string,
+  branchId: string,
+  collectionId: string
+|};
+
 type ObjectDescriptor = {|
   projectId: string,
-  sha?: string, // undefined is "latest"
-
+  sha: string | "latest",
   // Require branchId across all objects
   branchId: $PropertyType<BranchDescriptor, "branchId"> // eslint-disable-line no-use-before-define
 |};
@@ -22,13 +27,9 @@ export type CommitDescriptor = {|
 |};
 
 export type BranchDescriptor = {|
-  ...ObjectDescriptor,
+  projectId: string,
+  sha: string | "latest", // undefined is "latest"
   branchId: string | "master"
-|};
-
-export type CollectionDescriptor = {|
-  ...ObjectDescriptor,
-  collectionId: string
 |};
 
 export type FileDescriptor = {|

@@ -32,7 +32,8 @@ export function layerBranchDescriptor(
 ): BranchDescriptor {
   return {
     projectId: layerDescriptor.projectId,
-    branchId: layerDescriptor.branchId
+    branchId: layerDescriptor.branchId,
+    sha: layerDescriptor.sha
   };
 }
 
@@ -56,6 +57,7 @@ export function objectBranchDescriptor(
 ): BranchDescriptor {
   return {
     projectId: objectDescriptor.projectId,
-    branchId: objectDescriptor.branchId
+    branchId: objectDescriptor.branchId,
+    sha: objectDescriptor.sha
   };
 }

@@ -45,6 +45,7 @@ export function buildBranchDescriptor(branchDescriptor: *): BranchDescriptor {
   return {
     projectId: "project-id",
     branchId: "branch-id",
+    sha: "branch-sha",
     ...branchDescriptor
   };
 }
@@ -54,6 +55,7 @@ export function buildFileDescriptor(fileDescriptor: *): FileDescriptor {
     projectId: "project-id",
     branchId: "branch-id",
     fileId: "file-id",
+    sha: "file-sha",
     ...fileDescriptor
   };
 }
@@ -64,6 +66,7 @@ export function buildPageDescriptor(pageDescriptor: *): PageDescriptor {
     branchId: "branch-id",
     fileId: "file-id",
     pageId: "page-id",
+    sha: "page-sha",
     ...pageDescriptor
   };
 }
@@ -72,10 +75,10 @@ export function buildLayerDescriptor(layerDescriptor: *): LayerDescriptor {
   return {
     projectId: "project-id",
     branchId: "branch-id",
-    sha: "layer-sha",
     fileId: "file-id",
     pageId: "page-id",
     layerId: "layer-id",
+    sha: "layer-sha",
     ...layerDescriptor
   };
 }
