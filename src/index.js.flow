@@ -50,15 +50,6 @@ export type LayerDescriptor = {|
   layerId: string
 |};
 
-export type Cursor<T> = Promise<{
-  value: T,
-  done: boolean
-}> & {
-  currentPage: number // possibly under pageInfo?
-  // next(): <T>Cursor,
-  // [Symbol.asyncIterator](): string
-};
-
 export type User = {
   id: string,
   email: string,
