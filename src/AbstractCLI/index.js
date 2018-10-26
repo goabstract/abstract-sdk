@@ -102,8 +102,6 @@ export default class AbstractCLI implements AbstractInterface {
         resolve(data);
       });
 
-      abstractCli.stdout.setEncoding("utf8");
-
       abstractCli.stdout
         .on("data", data => {
           stream.write(data);
