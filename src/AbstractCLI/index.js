@@ -76,9 +76,6 @@ export default class AbstractCLI implements AbstractInterface {
         ? ["--user-token", this.accessToken]
         : [];
 
-      console.log("-------");
-      console.log(this.cliPath);
-
       const spawnArgs = [
         this.cliPath,
         [
@@ -90,7 +87,6 @@ export default class AbstractCLI implements AbstractInterface {
         { cwd: this.cwd }
       ];
 
-      console.log("SPAWN ARGS", spawnArgs);
       logSpawn(spawnArgs);
       const abstractCli = spawn(...spawnArgs);
 
@@ -102,25 +98,21 @@ export default class AbstractCLI implements AbstractInterface {
 
       const stream = JSONStream.parse();
       stream.on("data", data => {
-      abstractCli.stdout.setEncoding("utf8");
-
-        console.log(data);
         logStdoutData(data);
         resolve(data);
       });
 
+      abstractCli.stdout.setEncoding("utf8");
+
       abstractCli.stdout
         .on("data", data => {
-          console.log("GOT DATA");
           stream.write(data);
         })
         .on("error", error => {
-          console.log("GOT ERROR");
           logStdoutError(error.toString());
           reject(error);
         })
         .on("end", () => {
-          console.log("END");
           stream.end();
         });
 
