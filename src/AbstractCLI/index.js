@@ -63,13 +63,8 @@ export default class AbstractCLI implements AbstractInterface {
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
 
-    console.log(locatePath.sync(cliPath));
-
     try {
-      this.cliPath = path.relative(
-        cwd,
-        path.resolve(cwd, locatePath.sync(cliPath))
-      );
+      this.cliPath = path.resolve(cwd, locatePath.sync(cliPath));
     } catch (error) {
       throw new Error(`Cannot find abstract-cli in "${cliPath.join(":")}"`);
     }
@@ -80,6 +75,9 @@ export default class AbstractCLI implements AbstractInterface {
       const userToken = this.accessToken
         ? ["--user-token", this.accessToken]
         : [];
+
+      console.log("-------");
+      console.log(this.cliPath);
 
       const spawnArgs = [
         this.cliPath,
@@ -92,10 +90,11 @@ export default class AbstractCLI implements AbstractInterface {
         { cwd: this.cwd }
       ];
 
+      console.log("SPAWN ARGS", spawnArgs);
       logSpawn(spawnArgs);
       const abstractCli = spawn(...spawnArgs);
 
-      let stderrBuffer = new Buffer.from("");
+      let stderrBuffer = Buffer.from("");
       abstractCli.stderr.on("data", chunk => {
         logStderrData(chunk.toString());
         stderrBuffer = Buffer.concat([stderrBuffer, chunk]);
@@ -103,19 +102,23 @@ export default class AbstractCLI implements AbstractInterface {
 
       const stream = JSONStream.parse();
       stream.on("data", data => {
+        console.log(data);
         logStdoutData(data);
         resolve(data);
       });
 
       abstractCli.stdout
         .on("data", data => {
+          console.log("GOT DATA");
           stream.write(data);
         })
         .on("error", error => {
+          console.log("GOT ERROR");
           logStdoutError(error.toString());
           reject(error);
         })
         .on("end", () => {
+          console.log("END");
           stream.end();
         });
 
