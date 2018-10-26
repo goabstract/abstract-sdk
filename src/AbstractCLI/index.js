@@ -102,6 +102,8 @@ export default class AbstractCLI implements AbstractInterface {
 
       const stream = JSONStream.parse();
       stream.on("data", data => {
+      abstractCli.stdout.setEncoding("utf8");
+
         console.log(data);
         logStdoutData(data);
         resolve(data);
