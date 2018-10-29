@@ -28,6 +28,12 @@ $ yarn test --watch
 
 This project is maintained by a team at [Abstract](https://www.goabstract.com). We are very willing to accept contributions, first please ensure there is a relavant [issue in the tracker](https://github.com/goabstract/abstract-sdk/issues) and an approach has been discussed before beginning to write code – this makes it more likely we will be able to accept your contribution and ensure nobody's time (especially yours!) is wasted.
 
+Changes and additions to the SDK should include tests and documentation updates as part of the pull request.
+
+### Tests
+
+
+
 ## Publishing
 
 ```bash
