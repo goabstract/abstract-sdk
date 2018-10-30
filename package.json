@@ -10,7 +10,6 @@
   "scripts": {
     "prepublish": "yarn run build",
     "build": "babel ./src -d ./lib",
-    "watch": "yarn build --watch",
     "lint": "eslint .",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
