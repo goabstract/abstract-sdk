@@ -29,6 +29,13 @@ function buildTextStream(text?: string): ReadableStream {
 }
 
 const responses = {
+  commits: {
+    list: () => ({
+      stdout: JSON.stringify({
+        commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
+      })
+    })
+  },
   files: {
     list: () => ({
       stdout: JSON.stringify({
@@ -123,11 +130,7 @@ describe(AbstractCLI, () => {
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
-      ["commits.list", buildBranchDescriptor({ sha: "sha" })],
-      ["commits.list", buildLayerDescriptor({ sha: "sha" })],
       ["commits.info", buildCommitDescriptor()],
-      ["commits.info", buildFileDescriptor({ sha: "sha" })],
-      ["commits.info", buildLayerDescriptor({ sha: "sha" })],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // files
@@ -141,7 +144,7 @@ describe(AbstractCLI, () => {
       ],
       [
         "files.list",
-        buildBranchDescriptor({ sha: "sha" }),
+        buildBranchDescriptor(),
         {
           responses: [responses.files.list()],
           result: [{ id: "file-id" }, { id: "not-file-id" }]
@@ -149,34 +152,17 @@ describe(AbstractCLI, () => {
       ],
       [
         "files.list",
-        buildCommitDescriptor({ sha: "sha" }),
+        buildCommitDescriptor(),
         {
           responses: [responses.files.list()],
           result: [{ id: "file-id" }, { id: "not-file-id" }]
         }
       ],
-      [
-        "files.info",
-        buildFileDescriptor({ sha: "sha" }),
-        {
-          responses: [responses.files.info()],
-          result: { id: "file-id" }
-        }
-      ],
       // pages
       ["pages.list", buildFileDescriptor()],
-      ["pages.list", buildFileDescriptor({ sha: "sha" })],
       [
         "pages.info",
         buildPageDescriptor(),
-        {
-          responses: [responses.pages.info()],
-          result: { id: "page-id" }
-        }
-      ],
-      [
-        "pages.info",
-        buildPageDescriptor({ sha: "sha" }),
         {
           responses: [responses.pages.info()],
           result: { id: "page-id" }
@@ -192,18 +178,23 @@ describe(AbstractCLI, () => {
           result: { id: "layer-id" }
         }
       ],
-      ["layers.list", buildFileDescriptor({ sha: "sha" })],
       [
         "layers.info",
-        buildLayerDescriptor({ sha: "sha" }),
+        buildLayerDescriptor({ sha: "latest" }),
         {
-          responses: [responses.layers.info()],
+          responses: [responses.commits.list(), responses.layers.info()],
           result: { id: "layer-id" }
         }
       ],
       // data
       ["data.info", buildLayerDescriptor()],
-      ["data.info", buildLayerDescriptor({ sha: "sha" })]
+      [
+        "data.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        {
+          responses: [responses.commits.list()]
+        }
+      ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
 
@@ -236,7 +227,6 @@ describe(AbstractCLI, () => {
         expect(await result).toEqual(options.result);
       }
 
-      expect(child_process.spawn.mock.calls.length).toEqual(1);
       expect(child_process.spawn.mock.calls[0]).toMatchSnapshot();
     });
   });

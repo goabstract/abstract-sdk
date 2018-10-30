@@ -122,9 +122,27 @@ export default class AbstractCLI implements AbstractInterface {
     });
   }
 
+  async resolveDescriptor<T: LayerDescriptor>(objectDescriptor: T): Promise<T> {
+    if (objectDescriptor.sha !== "latest") return objectDescriptor;
+
+    const commits = await this.commits.list(objectDescriptor, { limit: 1 });
+
+    try {
+      return {
+        ...objectDescriptor,
+        sha: commits[0].sha
+      };
+    } catch (error) {
+      throw new Error(
+        `Could not resolve sha "latest" for ${JSON.stringify(objectDescriptor)}`
+      );
+    }
+  }
+
   commits = {
     list: async (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor,
+      options?: { limit?: number } = {}
     ) => {
       const fileIdArgs = objectDescriptor.fileId
         ? ["--file-id", objectDescriptor.fileId]
@@ -134,12 +152,17 @@ export default class AbstractCLI implements AbstractInterface {
         ? ["--layer-id", objectDescriptor.layerId]
         : [];
 
+      const limitArgs = options.limit
+        ? ["--limit", options.limit.toString()]
+        : [];
+
       const data = await this.spawn([
         "commits",
         objectDescriptor.projectId,
         objectDescriptor.branchId,
         ...fileIdArgs,
-        ...layerIdArgs
+        ...layerIdArgs,
+        ...limitArgs
       ]);
 
       return data.commits;
@@ -227,6 +250,8 @@ export default class AbstractCLI implements AbstractInterface {
       ]);
     },
     info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       const data = await this.spawn([
         "layer",
         "meta",
@@ -241,7 +266,9 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   data = {
-    info: (layerDescriptor: LayerDescriptor) => {
+    info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       return this.spawn([
         "layer",
         "data",
