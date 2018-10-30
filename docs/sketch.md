@@ -27,22 +27,22 @@ Detect whether the official Abstract plugin is currently installed and enabled i
 Detect whether the current selected document was opened from Abstract, either tracked or untracked.
 
 
-## projectId
+## project
 
-`Abstract.Sketch.projectId(context: SketchContext): string`
+`Abstract.Sketch.project(context: SketchContext): ProjectDescriptor`
 
-Get the UUID of the project from which the current document was opened.
-
-
-## branchId
-
-`Abstract.Sketch.branchId(context: SketchContext): string`
-
-Get the UUID (or "master") of the branch from which the current document was opened.
+Get a descriptor of the project from which the current document was opened.
 
 
-## fileId
+## branch
 
-`Abstract.Sketch.fileId(context: SketchContext): string`
+`Abstract.Sketch.branch(context: SketchContext): BranchDescriptor`
 
-Get the UUID of the currently open document.
+Get a descriptor of the branch from which the current document was opened.
+
+
+## file
+
+`Abstract.Sketch.file(context: SketchContext): FileDescriptor`
+
+Get a descriptor for the currently open document.

@@ -1,37 +1,62 @@
 // @flow
 /* global process NSString PROSketchBootstrap */
+import type { ProjectDescriptor, BranchDescriptor, FileDescriptor } from ".";
 
 export function isSketchPlugin() {
   // New versions of skpm set process type to "sketch". For older
   // versions we can infer from the presence of ObjectiveC classes
-  // $FlowFixMe
-  return process.type === "sketch" || !!NSString;
+  // $FlowFixMe property type is missing in process
+  return process.type === "sketch" || NSString !== undefined;
 }
 
 export function isAbstractPluginInstalled() {
   // The Abstract plugin makes available the PROSketchBootstrap
   // class, regardless of whether the current document is managed
-  // $FlowFixMe
-  return isSketchPlugin() && !!PROSketchBootstrap;
+  return isSketchPlugin() && PROSketchBootstrap !== undefined;
 }
 
 export function isAbstractDocument(context: *) {
   return isSketchPlugin() && !!documentKey(context);
 }
 
-export function projectId(context: *) {
-  return documentKey(context).split("/")[0];
+export function project(context: *): ProjectDescriptor {
+  const key = documentKey(context);
+  return {
+    projectId: projectId(key)
+  };
 }
 
-export function branchId(context: *) {
-  return documentKey(context).split("/")[1];
+export function branch(context: *): BranchDescriptor {
+  const key = documentKey(context);
+
+  return {
+    projectId: projectId(key),
+    branchId: branchId(key)
+  };
 }
 
-export function fileId(context: *) {
-  return documentKey(context).split("/")[3];
+export function file(context: *): FileDescriptor {
+  const key = documentKey(context);
+
+  return {
+    projectId: projectId(key),
+    branchId: branchId(key),
+    fileId: fileId(key)
+  };
+}
+
+function projectId(key: string) {
+  return key.split("/")[0];
+}
+
+function branchId(key: string) {
+  return key.split("/")[1];
+}
+
+function fileId(key: string) {
+  return key.split("/")[3];
 }
 
 function documentKey(context: *) {
-  // $FlowFixMe
   return PROSketchBootstrap.documentKey(context.document);
 }
