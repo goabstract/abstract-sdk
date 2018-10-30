@@ -711,7 +711,8 @@ export interface AbstractInterface {
 
   commits: {
     list: (
-      BranchDescriptor | FileDescriptor | LayerDescriptor
+      BranchDescriptor | FileDescriptor | LayerDescriptor,
+      options?: { limit?: number }
     ) => Promise<Commit[]>,
     info: (
       BranchDescriptor | FileDescriptor | CommitDescriptor | LayerDescriptor

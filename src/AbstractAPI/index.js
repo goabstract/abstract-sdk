@@ -137,7 +137,7 @@ export default class AbstractAPI implements AbstractInterface {
   ): Promise<T> {
     if (objectDescriptor.sha !== "latest") return objectDescriptor;
 
-    const commits = await this.commits.list(objectDescriptor);
+    const commits = await this.commits.list(objectDescriptor, { limit: 1 });
 
     try {
       return {
@@ -240,9 +240,11 @@ export default class AbstractAPI implements AbstractInterface {
 
   commits = {
     list: async (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor,
+      options?: { limit?: number } = {}
     ) => {
       const query = queryString.stringify({
+        limit: options.limit ? options.limit : undefined,
         fileId: objectDescriptor.fileId ? objectDescriptor.fileId : undefined,
         layerId: objectDescriptor.layerId ? objectDescriptor.layerId : undefined
       });
