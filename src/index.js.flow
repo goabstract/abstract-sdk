@@ -48,6 +48,20 @@ export type LayerDescriptor = {|
   layerId: string
 |};
 
+export type ShareableDescriptor =
+  | ProjectDescriptor
+  | CollectionDescriptor
+  // | CommitDescriptor
+  // | BranchDescriptor
+  | FileDescriptor
+  | PageDescriptor
+  | LayerDescriptor;
+
+export type ShareDescriptor = {|
+  id?: string,
+  url?: string
+|};
+
 export type User = {
   id: string,
   email: string,
@@ -85,6 +99,74 @@ export type Project = {
   sizeInBytes: number,
   userIds: [string]
 };
+
+export type ProjectShare = {
+  kind: "project",
+  projectId: string
+};
+
+export type CommitShare = {
+  kind: "commit",
+  projectId: string,
+  branchId: string,
+  commitSha: string
+};
+
+export type BranchShare = {
+  kind: "branch",
+  projectId: string,
+  branchId: string
+};
+
+export type FileShare = {
+  kind: "file",
+  projectId: string,
+  branchId: string,
+  commitSha: string,
+  fileId: string
+};
+
+export type PageShare = {
+  kind: "page",
+  projectId: string,
+  branchId: string,
+  commitSha: string,
+  fileId: string,
+  pageId: string
+};
+
+export type LayerShare = {
+  kind: "layer",
+  projectId: string,
+  branchId: string,
+  commitSha: string,
+  fileId: string,
+  pageId: string,
+  layerId: string
+};
+
+export type CommentShare = {
+  kind: "comment",
+  projectId: string,
+  commentId: string
+};
+
+export type CollectionShare = {
+  kind: "collection",
+  projectId: string,
+  branchId: string,
+  collectionId: string
+};
+
+export type Share =
+  | ProjectShare
+  | CommitShare
+  | BranchShare
+  | FileShare
+  | PageShare
+  | LayerShare
+  | CommentShare
+  | CollectionShare;
 
 export type Annotation = {
   id: string,
@@ -679,8 +761,18 @@ export type LayerDataset = {
 export interface AbstractInterface {
   accessToken: string;
 
+  // descriptors?: {
+  //   info: <+T: ShareableDescriptor>(
+  //     shareDescriptor: ShareDescriptor<Sh>
+  //   ) => Promise<ShareableDescriptor>
+  // };
+
   organizations?: {
     list: () => Promise<Branch[]>
+  };
+
+  shares?: {
+    info: (shareUrl: string) => Promise<Share>
   };
 
   projects?: {

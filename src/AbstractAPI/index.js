@@ -8,6 +8,8 @@ import { objectBranchDescriptor, objectFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
+  ShareDescriptor,
+  ShareableDescriptor,
   OrganizationDescriptor,
   ProjectDescriptor,
   CommitDescriptor,
@@ -19,6 +21,7 @@ import type {
   Comment,
   Layer
 } from "../";
+import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
 
 const minorVersion = version.split(".", 2).join(".");
@@ -144,10 +147,93 @@ export default class AbstractAPI implements AbstractInterface {
     }
   }
 
+  descriptors = {
+    info: async function(
+      shareDescriptor: ShareDescriptor
+    ): Promise<ShareDescriptor> {
+      let shareUrl = shareDescriptor.url;
+
+      if (!shareUrl && shareDescriptor.id) {
+        shareUrl = `https://share.goabstract.com/${shareDescriptor.id}`;
+      }
+
+      if (!shareUrl) {
+        throw new Error(
+          `Malformed share descriptor, "id" or "url" required: ${JSON.stringify(
+            shareDescriptor
+          )}`
+        );
+      }
+
+      const share = await this.shares.info(shareUrl);
+
+      switch (share.kind) {
+        case "project": {
+          return { projectId: share.projectId };
+        }
+        case "collection": {
+          return {
+            projectId: share.projectId,
+            collectionId: share.collectionId
+          };
+        }
+        case "comment":
+        case "commit":
+        case "branch": {
+          return {
+            projectId: share.projectId,
+            branchId: share.branchId,
+            sha: share.commitSha
+          };
+        }
+        case "file": {
+          return {
+            projectId: share.projectId,
+            branchId: share.branchId,
+            fileId: share.fileId,
+            sha: share.commitSha
+          };
+        }
+        case "page": {
+          return {
+            projectId: share.projectId,
+            branchId: share.branchId,
+            fileId: share.fileId,
+            pageId: share.pageId,
+            sha: share.commitSha
+          };
+        }
+        case "layer": {
+          return {
+            projectId: share.projectId,
+            branchId: share.branchId,
+            fileId: share.fileId,
+            pageId: share.pageId,
+            layerId: share.layerId,
+            sha: share.commitSha
+          };
+        }
+        default: {
+          throw new Error(`Could not create descriptor for ${share.kind}`);
+        }
+      }
+    }.bind(this) // flow + async + generic = https://github.com/babel/babylon/issues/235#issuecomment-319450941
+  };
+
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
       return unwrapEnvelope(response.json());
+    }
+  };
+
+  shares = {
+    info: async (shareUrl: string) => {
+      const response = await this.fetch(
+        `share_links/${parseShareURL(shareUrl)}`
+      );
+
+      return response.json();
     }
   };
 
@@ -484,4 +570,14 @@ export default class AbstractAPI implements AbstractInterface {
       return { branchName: branch.name };
     }
   }
+}
+
+async function main() {
+  const abstract = Abstract.Client();
+
+  abstract.files.info(
+    abstract.descriptors.info({
+      url: "https://share.goabstract.com/5449e5e9-6c9b-4216-b22b-0baeb94b0d50"
+    })
+  );
 }
