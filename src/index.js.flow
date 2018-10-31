@@ -8,6 +8,11 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
+export type CommentDescriptor = {|
+  projectId: string,
+  commentId: string
+|};
+
 export type CollectionDescriptor = {|
   projectId: string,
   branchId: string,
@@ -50,9 +55,10 @@ export type LayerDescriptor = {|
 
 export type ShareableDescriptor =
   | ProjectDescriptor
+  | CommentDescriptor
   | CollectionDescriptor
-  // | CommitDescriptor
-  // | BranchDescriptor
+  | CommitDescriptor
+  | BranchDescriptor
   | FileDescriptor
   | PageDescriptor
   | LayerDescriptor;
@@ -102,60 +108,42 @@ export type Project = {
 
 export type ProjectShare = {
   kind: "project",
-  projectId: string
+  descriptor: ProjectDescriptor
 };
 
 export type CommitShare = {
   kind: "commit",
-  projectId: string,
-  branchId: string,
-  commitSha: string
+  descriptor: CommitDescriptor
 };
 
 export type BranchShare = {
   kind: "branch",
-  projectId: string,
-  branchId: string
+  descriptor: BranchDescriptor
 };
 
 export type FileShare = {
   kind: "file",
-  projectId: string,
-  branchId: string,
-  commitSha: string,
-  fileId: string
+  descriptor: FileDescriptor
 };
 
 export type PageShare = {
   kind: "page",
-  projectId: string,
-  branchId: string,
-  commitSha: string,
-  fileId: string,
-  pageId: string
+  descriptor: PageDescriptor
 };
 
 export type LayerShare = {
   kind: "layer",
-  projectId: string,
-  branchId: string,
-  commitSha: string,
-  fileId: string,
-  pageId: string,
-  layerId: string
+  descriptor: LayerDescriptor
 };
 
 export type CommentShare = {
   kind: "comment",
-  projectId: string,
-  commentId: string
+  descriptor: CommentDescriptor
 };
 
 export type CollectionShare = {
   kind: "collection",
-  projectId: string,
-  branchId: string,
-  collectionId: string
+  descriptor: CollectionDescriptor
 };
 
 export type Share =
@@ -761,11 +749,9 @@ export type LayerDataset = {
 export interface AbstractInterface {
   accessToken: string;
 
-  // descriptors?: {
-  //   info: <+T: ShareableDescriptor>(
-  //     shareDescriptor: ShareDescriptor<Sh>
-  //   ) => Promise<ShareableDescriptor>
-  // };
+  descriptors?: {
+    info: (shareDescriptor: ShareDescriptor) => Promise<ShareableDescriptor>
+  };
 
   organizations?: {
     list: () => Promise<Branch[]>

@@ -505,6 +505,66 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch descriptors.info({"sha": "latest", "url": "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/share_links/738d0202-0eea-4e13-a911-a6e7dfafe85f",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch descriptors.info({"sha": "my-sha", "url": "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/share_links/738d0202-0eea-4e13-a911-a6e7dfafe85f",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch descriptors.info({"url": "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/share_links/738d0202-0eea-4e13-a911-a6e7dfafe85f",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "file-sha"}) 1`] = `
 Object {
   "fetch": Array [
@@ -835,26 +895,6 @@ Object {
   "fetch": Array [
     Array [
       "https://api.goabstract.com/projects?organizationId=organization-id",
-      Object {
-        "headers": Object {
-          "Abstract-Api-Version": "7",
-          "Accept": "application/json",
-          "Authorization": "Bearer abstract-token",
-          "Content-Type": "application/json",
-          "User-Agent": "Abstract SDK 0.0",
-          "X-Amzn-Trace-Id": "random-trace-id",
-        },
-      },
-    ],
-  ],
-}
-`;
-
-exports[`AbstractAPI with mocked global.fetch shares.info("https://share.goabstract.com/mock-share-id") 1`] = `
-Object {
-  "fetch": Array [
-    Array [
-      "https://api.goabstract.com/share_links/mock-share-id",
       Object {
         "headers": Object {
           "Abstract-Api-Version": "7",
