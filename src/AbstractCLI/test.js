@@ -244,7 +244,7 @@ describe(AbstractCLI, () => {
         expect(await result).toEqual(options.result);
       }
 
-      expect(child_process.spawn.mock.calls).toMatchSnapshot();
+      expect({ spawn: child_process.spawn.mock.calls }).toMatchSnapshot();
     });
   });
 });
