@@ -106,42 +106,57 @@ export type Project = {
   userIds: [string]
 };
 
+type BaseShare = {
+  id: string,
+  url: string,
+  appUrl: string,
+  userId: string
+};
+
 export type ProjectShare = {
+  ...BaseShare,
   kind: "project",
   descriptor: ProjectDescriptor
 };
 
 export type CommitShare = {
+  ...BaseShare,
   kind: "commit",
   descriptor: CommitDescriptor
 };
 
 export type BranchShare = {
+  ...BaseShare,
   kind: "branch",
   descriptor: BranchDescriptor
 };
 
 export type FileShare = {
+  ...BaseShare,
   kind: "file",
   descriptor: FileDescriptor
 };
 
 export type PageShare = {
+  ...BaseShare,
   kind: "page",
   descriptor: PageDescriptor
 };
 
 export type LayerShare = {
+  ...BaseShare,
   kind: "layer",
   descriptor: LayerDescriptor
 };
 
 export type CommentShare = {
+  ...BaseShare,
   kind: "comment",
   descriptor: CommentDescriptor
 };
 
 export type CollectionShare = {
+  ...BaseShare,
   kind: "collection",
   descriptor: CollectionDescriptor
 };
