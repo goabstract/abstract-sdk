@@ -408,6 +408,8 @@ export default class AbstractAPI implements AbstractInterface {
 
   data = {
     info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       const response = await this.fetch(
         // prettier-ignore
         `projects/${layerDescriptor.projectId}/branches/${layerDescriptor.branchId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}/data`

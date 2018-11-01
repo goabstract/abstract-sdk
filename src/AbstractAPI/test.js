@@ -244,7 +244,13 @@ describe("AbstractAPI", () => {
       ],
       // data
       ["data.info", buildLayerDescriptor()],
-      ["data.info", buildLayerDescriptor({ sha: "latest" })]
+      [
+        "data.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        {
+          responses: [responses.commits.list()]
+        }
+      ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
       logTest(property, args);

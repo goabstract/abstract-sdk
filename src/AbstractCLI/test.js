@@ -194,9 +194,7 @@ describe(AbstractCLI, () => {
       [
         "data.info",
         buildLayerDescriptor({ sha: "latest" }),
-        {
-          responses: [responses.commits.list()]
-        }
+        { responses: [responses.commits.list()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
@@ -223,6 +221,8 @@ describe(AbstractCLI, () => {
         stderr: buildTextStream(""),
         on: jest.fn().mockReturnThis()
       });
+
+      logTest(transportMethod, args);
 
       const result = transportMethod(...args);
       await expect(result).resolves;
