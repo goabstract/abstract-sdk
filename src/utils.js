@@ -7,16 +7,6 @@ import type {
   LayerDescriptor
 } from "./";
 
-export function ref(
-  objectDescriptor:
-    | BranchDescriptor
-    | FileDescriptor
-    | PageDescriptor
-    | LayerDescriptor
-) {
-  return objectDescriptor.sha || objectDescriptor.branchId;
-}
-
 export function fileBranchDescriptor(
   fileDescriptor: FileDescriptor
 ): BranchDescriptor {

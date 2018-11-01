@@ -5,7 +5,7 @@ import { Buffer } from "buffer";
 import find from "lodash/find";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
-import { ref, pageFileDescriptor } from "../utils";
+import { pageFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -215,7 +215,7 @@ export default class AbstractCLI implements AbstractInterface {
       const data = await this.spawn([
         "file",
         fileDescriptor.projectId,
-        ref(fileDescriptor),
+        fileDescriptor.sha,
         fileDescriptor.fileId
       ]);
 
@@ -245,7 +245,7 @@ export default class AbstractCLI implements AbstractInterface {
       return this.spawn([
         "layers",
         fileDescriptor.projectId,
-        ref(fileDescriptor),
+        fileDescriptor.sha,
         fileDescriptor.fileId
       ]);
     },
@@ -256,7 +256,7 @@ export default class AbstractCLI implements AbstractInterface {
         "layer",
         "meta",
         layerDescriptor.projectId,
-        ref(layerDescriptor),
+        layerDescriptor.sha,
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
@@ -273,7 +273,7 @@ export default class AbstractCLI implements AbstractInterface {
         "layer",
         "data",
         layerDescriptor.projectId,
-        ref(layerDescriptor),
+        layerDescriptor.sha,
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
