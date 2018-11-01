@@ -12,9 +12,12 @@ import {
   buildLayerDescriptor,
   buildCollectionDescriptor
 } from "../support/factories";
+import { log } from "../debug";
 import AbstractCLI from "./";
 
 jest.mock("child_process");
+
+const logTest = log.extend("AbstractCLI:test");
 
 function buildTextStream(text?: string): ReadableStream {
   const stream = new Readable();
@@ -197,6 +200,7 @@ describe(AbstractCLI, () => {
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
+      logTest(property, args);
 
       const transport = new AbstractCLI(
         buildOptions({ cliPath: ["./fixtures/abstract-cli"] })

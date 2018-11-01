@@ -43,7 +43,7 @@ jobs:
           keys:
             - v4-dependencies-{{ checksum "yarn.lock" }}
             - v4-dependencies- # fallback to latest cache if no exact match is found
-      - run: yarn ci
+      - run: DEBUG=abstract:* yarn ci
 
   deploy:
     docker:

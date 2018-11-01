@@ -13,6 +13,7 @@ import {
   buildLayerDescriptor,
   buildCollectionDescriptor
 } from "../support/factories";
+import { log } from "../debug";
 import AbstractAPI from "./";
 
 jest.mock("./randomTraceId");
@@ -22,6 +23,8 @@ jest.mock("../../package.json", () => ({
 }));
 
 global.fetch = fetch;
+
+const logTest = log.extend("AbstractAPI:test");
 
 const responses = {
   collections: {
@@ -244,6 +247,7 @@ describe("AbstractAPI", () => {
       ["data.info", buildLayerDescriptor({ sha: "latest" })]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
+      logTest(property, args);
 
       const transport = new AbstractAPI(buildOptions());
       const transportMethod = get(transport, property).bind(transport);
