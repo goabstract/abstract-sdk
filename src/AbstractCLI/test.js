@@ -222,16 +222,14 @@ describe(AbstractCLI, () => {
         on: jest.fn().mockReturnThis()
       });
 
-      logTest(transportMethod, args);
-
       const result = transportMethod(...args);
-      await expect(result).resolves;
+      await expect(await result).resolves;
 
       if (options.result) {
         expect(await result).toEqual(options.result);
       }
 
-      expect(child_process.spawn.mock.calls[0]).toMatchSnapshot();
+      expect(child_process.spawn.mock.calls).toMatchSnapshot();
     });
   });
 });
