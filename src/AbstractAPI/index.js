@@ -151,11 +151,11 @@ export default class AbstractAPI implements AbstractInterface {
     info: async function(
       shareDescriptor: ShareDescriptor
     ): Promise<ShareableDescriptor> {
-      let shareUrl = shareDescriptor.url;
-
-      if (!shareUrl && shareDescriptor.id) {
-        shareUrl = `https://share.goabstract.com/${shareDescriptor.id}`;
-      }
+      const shareUrl = shareDescriptor.url
+        ? shareDescriptor.url
+        : shareDescriptor.id
+          ? `https://share.goabstract.com/${shareDescriptor.id}`
+          : undefined;
 
       if (!shareUrl) {
         throw new Error(

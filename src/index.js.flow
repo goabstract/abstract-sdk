@@ -63,10 +63,7 @@ export type ShareableDescriptor =
   | PageDescriptor
   | LayerDescriptor;
 
-export type ShareDescriptor = {|
-  id?: string,
-  url?: string
-|};
+export type ShareDescriptor = {| url: string |} | {| id: string |};
 
 export type User = {
   id: string,

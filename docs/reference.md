@@ -598,6 +598,7 @@ abstract.previews.info({
 });
 ```
 
+
 ## Projects
 
 ![API][api-icon]
@@ -645,8 +646,69 @@ abstract.projects.list({
 ```
 
 ### Retrieve a project
+> Not yet implemented
 
-  > Not yet implemented
+
+
+## Shares
+
+![API][api-icon]
+
+A share is a shareable link to an object. Use the desktop or web app to create share links.
+
+### The share object
+
+| Property         | Type     | Description                                                                                    |
+|------------------|----------|------------------------------------------------------------------------------------------------|
+| `descriptor`     | [Descriptor](#Descriptor) | A descriptor for the shared object                                            |
+| `url`            | `string`                  | The share url                                                                 |
+| `color`          | `string`                  | A hex value that represents a custom project color                            |
+| `createdAt`      | `string`                  | Timestamp that the project was created                                        |
+| `createdByUser`  | `User`                    | The user that created the project                                             |
+| `description`    | `string`                  | A longer summary of the project                                               |
+| `firstPushedAt`  | `string`                  | Timestamp that the project first received data                                |
+| `id`             | `string`                  | UUID                                                                          |
+| `name`           | `string`                  | The name of the project                                                       |
+| `organizationId` | `string`                  | UUID of the organization this project belongs to                              |
+| `pushedAt`       | `string`                  | Timestamp that data was last received                                         |
+| `repoCreatedAt`  | `string`                  | Timestamp that the backend storage was created                                |
+| `sizeInBytes`    | `number`                  | The size of the project on disk in bytes                                      |
+| `updatedAt`      | `string`                  | Timestamp that the project was last updated                                   |
+| `visibility`     | `string`                  | Either "organization" for a team project, or "specific" for a private project |
+
+> Note: The `descriptor` property can be used as the first argument for many of the SDK methods
+
+### Load info for a share
+
+`shares.info(ShareDescriptor): Promise<Share>`
+
+```js
+abstract.shares.info({
+  url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+});
+```
+
+or, by id…
+
+```js
+abstract.shares.info({
+  id: '49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+});
+```
+
+### Convert share link into descriptor
+
+`descriptors.info(ShareDescriptor): Promise<Descriptor>`
+
+List all files for branch share link
+
+```js
+abstract.files.list(
+  await abstract.descriptor.info({
+    url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+  })
+);
+```
 
 
 ## Descriptors
@@ -657,8 +719,14 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ```js
 {
-  projectId: string,
+  projectId: string
 }
+```
+
+### ShareDescriptor
+
+```js
+{ url: string } | { id: string }
 ```
 
 ### BranchDescriptor
