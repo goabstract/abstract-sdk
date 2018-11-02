@@ -2,7 +2,7 @@
 
 exports[`AbstractCLI with mocked child_process.spawn changesets.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -23,7 +23,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -41,7 +41,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn collections.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -60,7 +60,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn collections.list({"projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -77,7 +77,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -95,7 +95,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -113,7 +113,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.info({"branchId": "branch-id", "projectId": "project-id", "sha": "commit-sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -131,7 +131,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -153,7 +153,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -175,7 +175,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -195,7 +195,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -213,7 +213,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn commits.list({"branchId": "branch-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -231,7 +231,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn data.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -252,7 +252,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn data.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -273,7 +273,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -292,7 +292,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -311,7 +311,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -329,7 +329,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "sha"}) 2`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -347,7 +347,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn layers.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "layer-sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -368,7 +368,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn layers.info({"branchId": "branch-id", "fileId": "file-id", "layerId": "layer-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -389,7 +389,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn layers.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -408,7 +408,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn layers.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -427,7 +427,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn pages.info({"branchId": "branch-id", "fileId": "file-id", "pageId": "page-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -446,7 +446,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn pages.info({"branchId": "branch-id", "fileId": "file-id", "pageId": "page-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -465,7 +465,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn pages.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "sha"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
@@ -484,7 +484,7 @@ Array [
 
 exports[`AbstractCLI with mocked child_process.spawn pages.list({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id"}) 1`] = `
 Array [
-  "./fixtures/abstract-cli",
+  "<PROJECT_ROOT>/fixtures/abstract-cli",
   Array [
     "--user-token",
     "abstract-token",
