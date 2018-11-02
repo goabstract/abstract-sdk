@@ -7,37 +7,6 @@ import type {
   LayerDescriptor
 } from "./";
 
-export function fileBranchDescriptor(
-  fileDescriptor: FileDescriptor
-): BranchDescriptor {
-  return {
-    projectId: fileDescriptor.projectId,
-    branchId: fileDescriptor.branchId,
-    sha: fileDescriptor.sha || "latest"
-  };
-}
-
-export function layerBranchDescriptor(
-  layerDescriptor: LayerDescriptor
-): BranchDescriptor {
-  return {
-    projectId: layerDescriptor.projectId,
-    branchId: layerDescriptor.branchId,
-    sha: layerDescriptor.sha
-  };
-}
-
-export function pageFileDescriptor(
-  pageDescriptor: PageDescriptor
-): FileDescriptor {
-  return {
-    projectId: pageDescriptor.projectId,
-    branchId: pageDescriptor.branchId,
-    sha: pageDescriptor.sha,
-    fileId: pageDescriptor.fileId
-  };
-}
-
 export function objectBranchDescriptor(
   objectDescriptor:
     | BranchDescriptor
@@ -48,6 +17,17 @@ export function objectBranchDescriptor(
   return {
     projectId: objectDescriptor.projectId,
     branchId: objectDescriptor.branchId,
+    sha: objectDescriptor.sha
+  };
+}
+
+export function objectFileDescriptor(
+  objectDescriptor: PageDescriptor | FileDescriptor
+): FileDescriptor {
+  return {
+    projectId: objectDescriptor.projectId,
+    branchId: objectDescriptor.branchId,
+    fileId: objectDescriptor.fileId,
     sha: objectDescriptor.sha
   };
 }

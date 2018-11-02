@@ -154,12 +154,22 @@ describe(AbstractCLI, () => {
         }
       ],
       [
+        "files.info",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
         "files.list",
         buildCommitDescriptor(),
         {
           responses: [responses.files.list()],
           result: [{ id: "file-id" }, { id: "not-file-id" }]
         }
+      ],
+      [
+        "files.list",
+        buildBranchDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
       ],
       // pages
       ["pages.list", buildFileDescriptor()],
@@ -173,6 +183,11 @@ describe(AbstractCLI, () => {
       ],
       // layers
       ["layers.list", buildFileDescriptor()],
+      [
+        "layers.list",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       [
         "layers.info",
         buildLayerDescriptor(),

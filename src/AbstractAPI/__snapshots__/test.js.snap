@@ -525,9 +525,75 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch files.info({"branchId": "branch-id", "fileId": "file-id", "projectId": "project-id", "sha": "latest"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?fileId=file-id&limit=1",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "branch-sha"}) 1`] = `
 Object {
   "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch files.list({"branchId": "branch-id", "projectId": "project-id", "sha": "latest"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/commits?limit=1",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
     Array [
       "https://api.goabstract.com/projects/project-id/branches/branch-id/files",
       Object {
@@ -602,7 +668,7 @@ exports[`AbstractAPI with mocked global.fetch layers.list({"branchId": "branch-i
 Object {
   "fetch": Array [
     Array [
-      "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/layers?",
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/layers?sha=file-sha",
       Object {
         "headers": Object {
           "Abstract-Api-Version": "7",
@@ -623,6 +689,26 @@ Object {
   "fetch": Array [
     Array [
       "https://api.goabstract.com/organizations",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "7",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch pages.info({"branchId": "branch-id", "fileId": "file-id", "pageId": "page-id", "projectId": "project-id", "sha": "page-sha"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/branches/branch-id/files/file-id/pages",
       Object {
         "headers": Object {
           "Abstract-Api-Version": "7",

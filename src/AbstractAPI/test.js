@@ -10,6 +10,7 @@ import {
   buildCommitDescriptor,
   buildBranchDescriptor,
   buildFileDescriptor,
+  buildPageDescriptor,
   buildLayerDescriptor,
   buildCollectionDescriptor
 } from "../support/factories";
@@ -63,6 +64,12 @@ const responses = {
   files: {
     list: () => [
       JSON.stringify({ files: [{ id: "file-id" }, { id: "not-file-id" }] }),
+      { status: 200 }
+    ]
+  },
+  pages: {
+    list: () => [
+      JSON.stringify({ pages: [{ id: "page-id" }, { id: "not-page-id" }] }),
       { status: 200 }
     ]
   },
@@ -199,17 +206,32 @@ describe("AbstractAPI", () => {
       // files
       ["files.list", buildBranchDescriptor()],
       [
+        "files.list",
+        buildBranchDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
         "files.info",
-        buildFileDescriptor({ fileId: "file-id" }),
+        buildFileDescriptor(),
         {
           responses: [responses.files.list()],
           result: { id: "file-id" }
         }
       ],
+      [
+        "files.info",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // pages
       ["pages.list", buildFileDescriptor()],
+      [
+        "pages.info",
+        buildPageDescriptor(),
+        { responses: [responses.pages.list()] }
+      ],
       // layers
       ["layers.list", buildFileDescriptor()],
       [

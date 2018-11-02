@@ -16,24 +16,21 @@ export type CollectionDescriptor = {|
 
 type ObjectDescriptor = {|
   projectId: string,
-  sha: string | "latest",
-  // Require branchId across all objects
-  branchId: $PropertyType<BranchDescriptor, "branchId"> // eslint-disable-line no-use-before-define
+  branchId: string | "master",
+  sha: string
 |};
 
 export type CommitDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">> // Commit is read by it's sha
+  ...ObjectDescriptor
 |};
 
 export type BranchDescriptor = {|
-  projectId: string,
-  sha: string | "latest", // undefined is "latest"
-  branchId: string | "master"
+  ...ObjectDescriptor
 |};
 
 export type FileDescriptor = {|
   ...ObjectDescriptor,
+  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
   fileId: string
 |};
 
@@ -45,7 +42,7 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   ...ObjectDescriptor,
-  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">>, // Layer requires sha
+  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
   fileId: string,
   pageId: string,
   layerId: string

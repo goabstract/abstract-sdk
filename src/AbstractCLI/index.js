@@ -5,7 +5,7 @@ import { Buffer } from "buffer";
 import find from "lodash/find";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
-import { pageFileDescriptor } from "../utils";
+import { objectFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -122,7 +122,9 @@ export default class AbstractCLI implements AbstractInterface {
     });
   }
 
-  async resolveDescriptor<T: LayerDescriptor>(objectDescriptor: T): Promise<T> {
+  async resolveDescriptor<
+    T: BranchDescriptor | FileDescriptor | LayerDescriptor
+  >(objectDescriptor: T): Promise<T> {
     if (objectDescriptor.sha !== "latest") return objectDescriptor;
 
     const commits = await this.commits.list(objectDescriptor, { limit: 1 });
@@ -141,7 +143,11 @@ export default class AbstractCLI implements AbstractInterface {
 
   commits = {
     list: async (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor,
+      objectDescriptor:
+        | BranchDescriptor
+        | FileDescriptor
+        | PageDescriptor
+        | LayerDescriptor,
       options?: { limit?: number } = {}
     ) => {
       const fileIdArgs = objectDescriptor.fileId
@@ -201,7 +207,7 @@ export default class AbstractCLI implements AbstractInterface {
 
   files = {
     list: async (branchDescriptor: BranchDescriptor) => {
-      if (!branchDescriptor.sha) throw new Error("files.list requires sha");
+      branchDescriptor = await this.resolveDescriptor(branchDescriptor);
 
       const data = await this.spawn([
         "files",
@@ -212,6 +218,8 @@ export default class AbstractCLI implements AbstractInterface {
       return data.files;
     },
     info: async (fileDescriptor: FileDescriptor) => {
+      fileDescriptor = await this.resolveDescriptor(fileDescriptor);
+
       const data = await this.spawn([
         "file",
         fileDescriptor.projectId,
@@ -235,13 +243,15 @@ export default class AbstractCLI implements AbstractInterface {
       return file._pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const pages = await this.pages.list(pageFileDescriptor(pageDescriptor));
+      const pages = await this.pages.list(objectFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
 
   layers = {
-    list: (fileDescriptor: FileDescriptor) => {
+    list: async (fileDescriptor: FileDescriptor) => {
+      fileDescriptor = await this.resolveDescriptor(fileDescriptor);
+
       return this.spawn([
         "layers",
         fileDescriptor.projectId,

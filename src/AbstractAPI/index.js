@@ -4,12 +4,7 @@ import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
-import {
-  objectBranchDescriptor,
-  fileBranchDescriptor,
-  layerBranchDescriptor,
-  pageFileDescriptor
-} from "../utils";
+import { objectBranchDescriptor, objectFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -132,9 +127,9 @@ export default class AbstractAPI implements AbstractInterface {
     );
   }
 
-  async resolveDescriptor<T: BranchDescriptor | LayerDescriptor>(
-    objectDescriptor: T
-  ): Promise<T> {
+  async resolveDescriptor<
+    T: BranchDescriptor | FileDescriptor | LayerDescriptor
+  >(objectDescriptor: T): Promise<T> {
     if (objectDescriptor.sha !== "latest") return objectDescriptor;
 
     const commits = await this.commits.list(objectDescriptor, { limit: 1 });
@@ -314,6 +309,8 @@ export default class AbstractAPI implements AbstractInterface {
 
   files = {
     list: async (branchDescriptor: BranchDescriptor) => {
+      branchDescriptor = await this.resolveDescriptor(branchDescriptor);
+
       const response = await this.fetch(
         // prettier-ignore
         `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}/files`
@@ -323,23 +320,27 @@ export default class AbstractAPI implements AbstractInterface {
       return data.files;
     },
     info: async (fileDescriptor: FileDescriptor) => {
-      const files = await this.files.list(fileBranchDescriptor(fileDescriptor));
+      fileDescriptor = await this.resolveDescriptor(fileDescriptor);
+
+      const files = await this.files.list(
+        objectBranchDescriptor(fileDescriptor)
+      );
       return find(files, { id: fileDescriptor.fileId });
     }
   };
 
   pages = {
-    list: async (fileOrBranchDescriptor: FileDescriptor) => {
+    list: async (fileDescriptor: FileDescriptor) => {
       const response = await this.fetch(
         // prettier-ignore
-        `projects/${fileOrBranchDescriptor.projectId}/branches/${fileOrBranchDescriptor.branchId}/files/${fileOrBranchDescriptor.fileId}/pages`
+        `projects/${fileDescriptor.projectId}/branches/${fileDescriptor.branchId}/files/${fileDescriptor.fileId}/pages`
       );
 
       const data = await response.json();
       return data.pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const pages = await this.files.info(pageFileDescriptor(pageDescriptor));
+      const pages = await this.pages.list(objectFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
@@ -349,9 +350,14 @@ export default class AbstractAPI implements AbstractInterface {
       objectDescriptor: FileDescriptor | PageDescriptor,
       options: { limit?: number, offset?: number } = {}
     ) => {
+      const { sha } = await this.resolveDescriptor(
+        objectFileDescriptor(objectDescriptor)
+      );
+
       const query = queryString.stringify({
+        ...options,
         pageId: objectDescriptor.pageId ? objectDescriptor.pageId : undefined,
-        ...options
+        sha
       });
 
       const response = await this.fetch(
@@ -459,8 +465,7 @@ export default class AbstractAPI implements AbstractInterface {
   ): Promise<BranchNames | LayerNames> {
     const branch = await this.branches.info(
       objectDescriptor.layerId !== undefined
-        ? // $FlowFixMe: objectDescriptor with a defined layerId shouldn't be considered a BranchDescriptor?
-          layerBranchDescriptor(objectDescriptor)
+        ? objectBranchDescriptor(objectDescriptor)
         : objectDescriptor
     );
 
