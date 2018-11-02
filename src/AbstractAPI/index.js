@@ -76,7 +76,7 @@ export default class AbstractAPI implements AbstractInterface {
       "User-Agent": `Abstract SDK ${minorVersion}`,
       Authorization: `Bearer ${this.accessToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
-      "Abstract-Api-Version": "7",
+      "Abstract-Api-Version": "8",
       ...(init.headers || {})
     };
 
