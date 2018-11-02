@@ -127,9 +127,7 @@ export default class AbstractAPI implements AbstractInterface {
     );
   }
 
-  async resolveDescriptor<
-    T: BranchDescriptor | FileDescriptor | LayerDescriptor
-  >(objectDescriptor: T): Promise<T> {
+  async resolveDescriptor<T: *>(objectDescriptor: T): Promise<T> {
     if (objectDescriptor.sha !== "latest") return objectDescriptor;
 
     const commits = await this.commits.list(objectDescriptor, { limit: 1 });
