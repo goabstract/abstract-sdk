@@ -30,7 +30,8 @@ export type CommitDescriptor = {|
 |};
 
 export type BranchDescriptor = {|
-  ...ObjectDescriptor
+  ...ObjectDescriptor,
+  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest"
 |};
 
 export type FileDescriptor = {|
