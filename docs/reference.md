@@ -10,7 +10,7 @@ title: Reference
 
 ![API][api-icon]
 
-An activity represents a designated type of event within a project. These events can be speceific to the project itself, or they can be specific to a collection, a branch, a commit, or a review within the project.
+An activity represents a designated type of event within a project. These events can be specific to the project itself, or they can be specific to a collection, a branch, a commit, or a review within the project.
 
 ### The activity object
 
@@ -27,7 +27,7 @@ An activity represents a designated type of event within a project. These events
 
 `activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): Promise<Activity[]>`
 
-List all activities for a given project on a specific branch
+List the first two activities for a given project on a specific branch
 
 ```js
 abstract.activities.list({

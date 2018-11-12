@@ -141,13 +141,19 @@ export default class AbstractAPI implements AbstractInterface {
 
   activities = {
     list: async (
-      objectDescriptor?:
-        | BranchDescriptor
-        | OrganizationDescriptor
-        | ProjectDescriptor,
+      objectDescriptor: $Shape<
+        BranchDescriptor & OrganizationDescriptor & ProjectDescriptor
+      > = {},
       options: ListOptions = {}
     ) => {
-      const query = queryString.stringify({ ...options, ...objectDescriptor });
+      const query = queryString.stringify({
+        ...options,
+        ...{
+          branchId: objectDescriptor.branchId,
+          organizationId: objectDescriptor.organizationId,
+          projectId: objectDescriptor.projectId
+        }
+      });
       const response = await this.fetch(`activities?${query}`);
       const { activities } = await unwrapEnvelope(response.json());
       return activities;
