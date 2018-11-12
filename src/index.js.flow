@@ -59,6 +59,44 @@ export type Cursor<T> = Promise<{
   // [Symbol.asyncIterator](): string
 };
 
+export type ListOptions = {
+  limit?: number,
+  offset?: number
+};
+
+export type Activity = {
+  branchId: string,
+  createdAt: string,
+  id: string,
+  payload: Object,
+  projectId: string,
+  type:
+    | "BRANCH_ARCHIVED"
+    | "BRANCH_CREATED"
+    | "BRANCH_DELETED"
+    | "BRANCH_DESCRIPTION_UPDATED"
+    | "BRANCH_RENAMED"
+    | "BRANCH_STATUS_UPDATED"
+    | "BRANCH_UNARCHIVED"
+    | "COLLECTION_PUBLISHED"
+    | "COMMENT_CREATED"
+    | "COMMIT"
+    | "MERGE_COMMIT"
+    | "PROJECT_ARCHIVED"
+    | "PROJECT_CREATED"
+    | "PROJECT_DELETED"
+    | "PROJECT_DESCRIPTION_CHANGED"
+    | "PROJECT_RENAMED"
+    | "PROJECT_TRANSFERRED"
+    | "PROJECT_UNARCHIVED"
+    | "REVIEWER_REMOVED"
+    | "REVIEW_COMPLETED"
+    | "REVIEW_DISMISSED"
+    | "REVIEW_REQUESTED"
+    | "UPDATE_COMMIT",
+  userId: string
+};
+
 export type User = {
   id: string,
   email: string,
@@ -690,6 +728,13 @@ export type LayerDataset = {
 export interface AbstractInterface {
   accessToken: string;
 
+  activities?: {
+    list: (
+      objectDescriptor?: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
+      options?: ListOptions
+    ) => Promise<Activity[]>
+  };
+
   organizations?: {
     list: () => Promise<Branch[]>
   };
@@ -749,7 +794,7 @@ export interface AbstractInterface {
   };
 
   layers: {
-    list: FileDescriptor => Promise<Layer[]>,
+    list: (FileDescriptor, ListOptions) => Promise<Layer[]>,
     info: LayerDescriptor => Promise<Layer>
   };
 

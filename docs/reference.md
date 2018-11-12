@@ -6,6 +6,36 @@ title: Reference
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-blue.svg
 
+## Activities
+
+![API][api-icon]
+
+An activity represents a designated type of event within a project. These events can be speceific to the project itself, or they can be specific to a collection, a branch, a commit, or a review within the project.
+
+### The activity object
+
+| Property      | Type                | Description                                                                             |
+|---------------|---------------------|-----------------------------------------------------------------------------------------|
+| `branchId`    | `string`            | UUID of the branch that this activity was triggered on                                  |
+| `createdAt`   | `string`            | Timestamp at which the activity was triggered                                           |
+| `id`          | `string`            | UUID identifier of the activity                                                         |
+| `payload`     | `Object`            | Object containing information specific to this type of activity                         |
+| `type`        | `string`            | The type of this activity, may be one of `BRANCH_ARCHIVED`, `BRANCH_CREATED`, `BRANCH_DELETED`, `BRANCH_DESCRIPTION_UPDATED`, `BRANCH_RENAMED`, `BRANCH_STATUS_UPDATED`, `BRANCH_UNARCHIVED`, `COLLECTION_PUBLISHED`, `COMMENT_CREATED`, `COMMIT`, `MERGE_COMMIT`, `PROJECT_ARCHIVED`, `PROJECT_CREATED`, `PROJECT_DELETED`, `PROJECT_DESCRIPTION_CHANGED`, `PROJECT_RENAMED`, `PROJECT_TRANSFERRED`, `PROJECT_UNARCHIVED`, `REVIEWER_REMOVED`, `REVIEW_COMPLETED`, `REVIEW_DISMISSED`, `REVIEW_REQUESTED`, `UPDATE_COMMIT` |
+| `userId`      | `string`            | UUID of the user that triggered this activity                                           |
+
+### List all activities
+
+`activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): Promise<Activity[]>`
+
+List all activities for a given project on a specific branch
+
+```js
+abstract.activities.list({
+  branchId: "8a13eb62-a42f-435f-b3a3-39af939ad31b",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f",
+}, { limit: 2 });
+```
+
 ## Branches
 
 ![API][api-icon]

@@ -11,6 +11,7 @@
     "prepublish": "yarn run build",
     "build": "babel ./src -d ./lib",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "ci": "yarn lint && yarn flow && ABSTRACT_CLI_PATH=./fixtures/abstract-cli yarn test"
