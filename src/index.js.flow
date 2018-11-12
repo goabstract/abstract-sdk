@@ -64,11 +64,252 @@ export type ListOptions = {
   offset?: number
 };
 
+export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
+
+type PayloadBase = {
+  id: string,
+  createdAt: string,
+  projectId: string,
+  branchId: string,
+  userId: string
+};
+
+export type PayloadBranchArchived = PayloadBase & {
+  type: "BRANCH_ARCHIVED",
+  payload: {
+    branchName: string,
+    previousStatus: string
+  }
+};
+
+export type PayloadBranchCreated = PayloadBase & {
+  type: "BRANCH_CREATED",
+  payload: {
+    branchName: string,
+    branchDescription?: string
+  }
+};
+
+export type PayloadBranchDeleted = PayloadBase & {
+  type: "BRANCH_DELETED",
+  payload: {
+    branchName: string,
+    previousStatus: string
+  }
+};
+
+export type PayloadBranchDescriptionUpdated = PayloadBase & {
+  type: "BRANCH_DESCRIPTION_UPDATED",
+  payload: {
+    branchName: string,
+    branchDescription: string,
+    previousDescription: string
+  }
+};
+
+export type PayloadBranchRenamed = PayloadBase & {
+  type: "BRANCH_RENAMED",
+  payload: {
+    branchName: string,
+    previousName: string
+  }
+};
+
+export type PayloadBranchStatusUpdated = PayloadBase & {
+  type: "BRANCH_STATUS_UPDATED",
+  payload: {
+    branchName: string,
+    previousStatus: string,
+    status: string
+  }
+};
+
+export type PayloadBranchUnarchived = PayloadBase & {
+  type: "BRANCH_UNARCHIVED",
+  payload: {
+    branchName: string,
+    status: string
+  }
+};
+
+export type PayloadCollectionPublished = PayloadBase & {
+  type: "COLLECTION_PUBLISHED",
+  payload: {
+    collectionId: string,
+    name: string
+  }
+};
+
+export type PayloadProjectArchived = PayloadBase & {
+  type: "PROJECT_ARCHIVED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type PayloadProjectCreated = PayloadBase & {
+  type: "PROJECT_CREATED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type PayloadProjectDeleted = PayloadBase & {
+  type: "PROJECT_DELETED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type PayloadProjectDescriptionChanged = PayloadBase & {
+  type: "PROJECT_DESCRIPTION_CHANGED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type PayloadProjectRenamed = PayloadBase & {
+  type: "PROJECT_RENAMED",
+  payload: {
+    previousName: string,
+    newName: string
+  }
+};
+
+export type PayloadProjectUnarchived = PayloadBase & {
+  type: "PROJECT_UNARCHIVED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type PayloadProjectTransferred = PayloadBase & {
+  type: "PROJECT_TRANSFERRED",
+  payload: {
+    projectName: string,
+    previousOrganizationName: string,
+    newOrganizationName: string
+  }
+};
+
+type PayloadCommitCommon = {
+  pushActivityId: string,
+  sha: string,
+  title: string,
+  description: string,
+  branchName: string
+};
+
+export type PayloadCommit = PayloadBase & {
+  type: "COMMIT",
+  payload: PayloadCommitCommon
+};
+
+export type PayloadMergeCommit = PayloadBase & {
+  type: "MERGE_COMMIT",
+  payload: PayloadCommitCommon & {
+    sourceBranchId: string,
+    sourceBranchName: string,
+    destinationBranchId: string,
+    destinationBranchName: string
+  }
+};
+
+export type PayloadUpdateCommit = PayloadBase & {
+  type: "UPDATE_COMMIT",
+  payload: PayloadCommitCommon & {
+    sourceBranchId: string,
+    sourceBranchName: string
+  }
+};
+
+export type PayloadCommentCreated = PayloadBase & {
+  type: "COMMENT_CREATED",
+  payload: {
+    reviewId?: string,
+    reviewStatus?: ReviewStatus,
+    commentFileId: ?string,
+    commentFileName: ?string,
+    commentId: string,
+    commentLayerId: ?string,
+    commentLayerName: ?string,
+    commentPageId: ?string,
+    commentPageName: ?string,
+    commentParentId: ?string,
+    commitBranchId: string,
+    commitBranchName: string,
+    commitSha: ?string,
+    commitMessage: ?string
+  }
+};
+
+export type PayloadReviewRequested = PayloadBase & {
+  type: "REVIEW_REQUESTED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type PayloadReviewDismissed = PayloadBase & {
+  type: "REVIEW_DISMISSED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type PayloadReviewerRemoved = PayloadBase & {
+  type: "REVIEWER_REMOVED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type PayloadReviewCompleted = PayloadBase & {
+  type: "REVIEW_COMPLETED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string,
+    status: string
+  }
+};
+
+export type Payload =
+  | PayloadBranchArchived
+  | PayloadBranchCreated
+  | PayloadBranchDeleted
+  | PayloadBranchDescriptionUpdated
+  | PayloadBranchRenamed
+  | PayloadBranchStatusUpdated
+  | PayloadBranchUnarchived
+  | PayloadCollectionPublished
+  | PayloadCommentCreated
+  | PayloadCommit
+  | PayloadMergeCommit
+  | PayloadProjectArchived
+  | PayloadProjectCreated
+  | PayloadProjectDeleted
+  | PayloadProjectDescriptionChanged
+  | PayloadProjectRenamed
+  | PayloadProjectTransferred
+  | PayloadProjectUnarchived
+  | PayloadReviewCompleted
+  | PayloadReviewDismissed
+  | PayloadReviewRequested
+  | PayloadReviewerRemoved
+  | PayloadUpdateCommit;
+
 export type Activity = {
   branchId: string,
   createdAt: string,
   id: string,
-  payload: Object,
+  payload: Payload,
   projectId: string,
   type:
     | "BRANCH_ARCHIVED"
@@ -163,7 +404,7 @@ export type Comment = {
   pageId: string,
   parentId?: string,
   reviewId?: string,
-  reviewStatus?: "REQUESTED" | "REJECTED" | "APPROVED",
+  reviewStatus?: ReviewStatus,
   replyIds: string[]
 };
 
