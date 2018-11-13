@@ -147,12 +147,11 @@ export default class AbstractAPI implements AbstractInterface {
       options: ListOptions = {}
     ) => {
       const query = queryString.stringify({
-        ...options,
-        ...{
-          branchId: objectDescriptor.branchId,
-          organizationId: objectDescriptor.organizationId,
-          projectId: objectDescriptor.projectId
-        }
+        limit: options.offset,
+        offset: options.offset,
+        branchId: objectDescriptor.branchId,
+        organizationId: objectDescriptor.organizationId,
+        projectId: objectDescriptor.projectId
       });
       const response = await this.fetch(`activities?${query}`);
       const { activities } = await unwrapEnvelope(response.json());

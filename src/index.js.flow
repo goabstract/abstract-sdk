@@ -66,7 +66,7 @@ export type ListOptions = {
 
 export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
 
-type PayloadBase = {
+type ActivityBase = {
   id: string,
   createdAt: string,
   projectId: string,
@@ -74,7 +74,7 @@ type PayloadBase = {
   userId: string
 };
 
-export type PayloadBranchArchived = PayloadBase & {
+export type ActivityBranchArchived = ActivityBase & {
   type: "BRANCH_ARCHIVED",
   payload: {
     branchName: string,
@@ -82,7 +82,7 @@ export type PayloadBranchArchived = PayloadBase & {
   }
 };
 
-export type PayloadBranchCreated = PayloadBase & {
+export type ActivityBranchCreated = ActivityBase & {
   type: "BRANCH_CREATED",
   payload: {
     branchName: string,
@@ -90,7 +90,7 @@ export type PayloadBranchCreated = PayloadBase & {
   }
 };
 
-export type PayloadBranchDeleted = PayloadBase & {
+export type ActivityBranchDeleted = ActivityBase & {
   type: "BRANCH_DELETED",
   payload: {
     branchName: string,
@@ -98,7 +98,7 @@ export type PayloadBranchDeleted = PayloadBase & {
   }
 };
 
-export type PayloadBranchDescriptionUpdated = PayloadBase & {
+export type ActivityBranchDescriptionUpdated = ActivityBase & {
   type: "BRANCH_DESCRIPTION_UPDATED",
   payload: {
     branchName: string,
@@ -107,7 +107,7 @@ export type PayloadBranchDescriptionUpdated = PayloadBase & {
   }
 };
 
-export type PayloadBranchRenamed = PayloadBase & {
+export type ActivityBranchRenamed = ActivityBase & {
   type: "BRANCH_RENAMED",
   payload: {
     branchName: string,
@@ -115,7 +115,7 @@ export type PayloadBranchRenamed = PayloadBase & {
   }
 };
 
-export type PayloadBranchStatusUpdated = PayloadBase & {
+export type ActivityBranchStatusUpdated = ActivityBase & {
   type: "BRANCH_STATUS_UPDATED",
   payload: {
     branchName: string,
@@ -124,7 +124,7 @@ export type PayloadBranchStatusUpdated = PayloadBase & {
   }
 };
 
-export type PayloadBranchUnarchived = PayloadBase & {
+export type ActivityBranchUnarchived = ActivityBase & {
   type: "BRANCH_UNARCHIVED",
   payload: {
     branchName: string,
@@ -132,7 +132,7 @@ export type PayloadBranchUnarchived = PayloadBase & {
   }
 };
 
-export type PayloadCollectionPublished = PayloadBase & {
+export type ActivityCollectionPublished = ActivityBase & {
   type: "COLLECTION_PUBLISHED",
   payload: {
     collectionId: string,
@@ -140,35 +140,35 @@ export type PayloadCollectionPublished = PayloadBase & {
   }
 };
 
-export type PayloadProjectArchived = PayloadBase & {
+export type ActivityProjectArchived = ActivityBase & {
   type: "PROJECT_ARCHIVED",
   payload: {
     projectName: string
   }
 };
 
-export type PayloadProjectCreated = PayloadBase & {
+export type ActivityProjectCreated = ActivityBase & {
   type: "PROJECT_CREATED",
   payload: {
     projectName: string
   }
 };
 
-export type PayloadProjectDeleted = PayloadBase & {
+export type ActivityProjectDeleted = ActivityBase & {
   type: "PROJECT_DELETED",
   payload: {
     projectName: string
   }
 };
 
-export type PayloadProjectDescriptionChanged = PayloadBase & {
+export type ActivityProjectDescriptionChanged = ActivityBase & {
   type: "PROJECT_DESCRIPTION_CHANGED",
   payload: {
     projectName: string
   }
 };
 
-export type PayloadProjectRenamed = PayloadBase & {
+export type ActivityProjectRenamed = ActivityBase & {
   type: "PROJECT_RENAMED",
   payload: {
     previousName: string,
@@ -176,14 +176,14 @@ export type PayloadProjectRenamed = PayloadBase & {
   }
 };
 
-export type PayloadProjectUnarchived = PayloadBase & {
+export type ActivityProjectUnarchived = ActivityBase & {
   type: "PROJECT_UNARCHIVED",
   payload: {
     projectName: string
   }
 };
 
-export type PayloadProjectTransferred = PayloadBase & {
+export type ActivityProjectTransferred = ActivityBase & {
   type: "PROJECT_TRANSFERRED",
   payload: {
     projectName: string,
@@ -192,7 +192,7 @@ export type PayloadProjectTransferred = PayloadBase & {
   }
 };
 
-type PayloadCommitCommon = {
+type ActivityCommitCommon = {
   pushActivityId: string,
   sha: string,
   title: string,
@@ -200,14 +200,14 @@ type PayloadCommitCommon = {
   branchName: string
 };
 
-export type PayloadCommit = PayloadBase & {
+export type ActivityCommit = ActivityBase & {
   type: "COMMIT",
-  payload: PayloadCommitCommon
+  payload: ActivityCommitCommon
 };
 
-export type PayloadMergeCommit = PayloadBase & {
+export type ActivityMergeCommit = ActivityBase & {
   type: "MERGE_COMMIT",
-  payload: PayloadCommitCommon & {
+  payload: ActivityCommitCommon & {
     sourceBranchId: string,
     sourceBranchName: string,
     destinationBranchId: string,
@@ -215,15 +215,15 @@ export type PayloadMergeCommit = PayloadBase & {
   }
 };
 
-export type PayloadUpdateCommit = PayloadBase & {
+export type ActivityUpdateCommit = ActivityBase & {
   type: "UPDATE_COMMIT",
-  payload: PayloadCommitCommon & {
+  payload: ActivityCommitCommon & {
     sourceBranchId: string,
     sourceBranchName: string
   }
 };
 
-export type PayloadCommentCreated = PayloadBase & {
+export type ActivityCommentCreated = ActivityBase & {
   type: "COMMENT_CREATED",
   payload: {
     reviewId?: string,
@@ -243,7 +243,7 @@ export type PayloadCommentCreated = PayloadBase & {
   }
 };
 
-export type PayloadReviewRequested = PayloadBase & {
+export type ActivityReviewRequested = ActivityBase & {
   type: "REVIEW_REQUESTED",
   payload: {
     branchName: string,
@@ -252,7 +252,7 @@ export type PayloadReviewRequested = PayloadBase & {
   }
 };
 
-export type PayloadReviewDismissed = PayloadBase & {
+export type ActivityReviewDismissed = ActivityBase & {
   type: "REVIEW_DISMISSED",
   payload: {
     branchName: string,
@@ -261,7 +261,7 @@ export type PayloadReviewDismissed = PayloadBase & {
   }
 };
 
-export type PayloadReviewerRemoved = PayloadBase & {
+export type ActivityReviewerRemoved = ActivityBase & {
   type: "REVIEWER_REMOVED",
   payload: {
     branchName: string,
@@ -270,7 +270,7 @@ export type PayloadReviewerRemoved = PayloadBase & {
   }
 };
 
-export type PayloadReviewCompleted = PayloadBase & {
+export type ActivityReviewCompleted = ActivityBase & {
   type: "REVIEW_COMPLETED",
   payload: {
     branchName: string,
@@ -280,63 +280,30 @@ export type PayloadReviewCompleted = PayloadBase & {
   }
 };
 
-export type Payload =
-  | PayloadBranchArchived
-  | PayloadBranchCreated
-  | PayloadBranchDeleted
-  | PayloadBranchDescriptionUpdated
-  | PayloadBranchRenamed
-  | PayloadBranchStatusUpdated
-  | PayloadBranchUnarchived
-  | PayloadCollectionPublished
-  | PayloadCommentCreated
-  | PayloadCommit
-  | PayloadMergeCommit
-  | PayloadProjectArchived
-  | PayloadProjectCreated
-  | PayloadProjectDeleted
-  | PayloadProjectDescriptionChanged
-  | PayloadProjectRenamed
-  | PayloadProjectTransferred
-  | PayloadProjectUnarchived
-  | PayloadReviewCompleted
-  | PayloadReviewDismissed
-  | PayloadReviewRequested
-  | PayloadReviewerRemoved
-  | PayloadUpdateCommit;
-
-export type Activity = {
-  branchId: string,
-  createdAt: string,
-  id: string,
-  payload: Payload,
-  projectId: string,
-  type:
-    | "BRANCH_ARCHIVED"
-    | "BRANCH_CREATED"
-    | "BRANCH_DELETED"
-    | "BRANCH_DESCRIPTION_UPDATED"
-    | "BRANCH_RENAMED"
-    | "BRANCH_STATUS_UPDATED"
-    | "BRANCH_UNARCHIVED"
-    | "COLLECTION_PUBLISHED"
-    | "COMMENT_CREATED"
-    | "COMMIT"
-    | "MERGE_COMMIT"
-    | "PROJECT_ARCHIVED"
-    | "PROJECT_CREATED"
-    | "PROJECT_DELETED"
-    | "PROJECT_DESCRIPTION_CHANGED"
-    | "PROJECT_RENAMED"
-    | "PROJECT_TRANSFERRED"
-    | "PROJECT_UNARCHIVED"
-    | "REVIEWER_REMOVED"
-    | "REVIEW_COMPLETED"
-    | "REVIEW_DISMISSED"
-    | "REVIEW_REQUESTED"
-    | "UPDATE_COMMIT",
-  userId: string
-};
+export type Activity =
+  | ActivityBranchArchived
+  | ActivityBranchCreated
+  | ActivityBranchDeleted
+  | ActivityBranchDescriptionUpdated
+  | ActivityBranchRenamed
+  | ActivityBranchStatusUpdated
+  | ActivityBranchUnarchived
+  | ActivityCollectionPublished
+  | ActivityCommentCreated
+  | ActivityCommit
+  | ActivityMergeCommit
+  | ActivityProjectArchived
+  | ActivityProjectCreated
+  | ActivityProjectDeleted
+  | ActivityProjectDescriptionChanged
+  | ActivityProjectRenamed
+  | ActivityProjectTransferred
+  | ActivityProjectUnarchived
+  | ActivityReviewCompleted
+  | ActivityReviewDismissed
+  | ActivityReviewRequested
+  | ActivityReviewerRemoved
+  | ActivityUpdateCommit;
 
 export type User = {
   id: string,
