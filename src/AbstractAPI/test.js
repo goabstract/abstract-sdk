@@ -24,6 +24,16 @@ jest.mock("../../package.json", () => ({
 global.fetch = fetch;
 
 const responses = {
+  activities: {
+    list: () => [
+      JSON.stringify({
+        data: {
+          activities: [{ id: "foo" }, { id: "bar" }]
+        }
+      }),
+      { status: 200 }
+    ]
+  },
   collections: {
     list: () => [
       JSON.stringify({
@@ -90,6 +100,22 @@ describe("AbstractAPI", () => {
     });
 
     test.each([
+      // activities
+      [
+        "activities.list",
+        buildBranchDescriptor(),
+        { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.list",
+        buildOrganizationDescriptor(),
+        { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.list",
+        buildProjectDescriptor(),
+        { responses: [responses.activities.list()] }
+      ],
       // organizations
       ["organizations.list", undefined],
       // projects

@@ -59,6 +59,252 @@ export type Cursor<T> = Promise<{
   // [Symbol.asyncIterator](): string
 };
 
+export type ListOptions = {
+  limit?: number,
+  offset?: number
+};
+
+export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
+
+type ActivityBase = {
+  id: string,
+  createdAt: string,
+  projectId: string,
+  branchId: string,
+  userId: string
+};
+
+export type ActivityBranchArchived = ActivityBase & {
+  type: "BRANCH_ARCHIVED",
+  payload: {
+    branchName: string,
+    previousStatus: string
+  }
+};
+
+export type ActivityBranchCreated = ActivityBase & {
+  type: "BRANCH_CREATED",
+  payload: {
+    branchName: string,
+    branchDescription?: string
+  }
+};
+
+export type ActivityBranchDeleted = ActivityBase & {
+  type: "BRANCH_DELETED",
+  payload: {
+    branchName: string,
+    previousStatus: string
+  }
+};
+
+export type ActivityBranchDescriptionUpdated = ActivityBase & {
+  type: "BRANCH_DESCRIPTION_UPDATED",
+  payload: {
+    branchName: string,
+    branchDescription: string,
+    previousDescription: string
+  }
+};
+
+export type ActivityBranchRenamed = ActivityBase & {
+  type: "BRANCH_RENAMED",
+  payload: {
+    branchName: string,
+    previousName: string
+  }
+};
+
+export type ActivityBranchStatusUpdated = ActivityBase & {
+  type: "BRANCH_STATUS_UPDATED",
+  payload: {
+    branchName: string,
+    previousStatus: string,
+    status: string
+  }
+};
+
+export type ActivityBranchUnarchived = ActivityBase & {
+  type: "BRANCH_UNARCHIVED",
+  payload: {
+    branchName: string,
+    status: string
+  }
+};
+
+export type ActivityCollectionPublished = ActivityBase & {
+  type: "COLLECTION_PUBLISHED",
+  payload: {
+    collectionId: string,
+    name: string
+  }
+};
+
+export type ActivityProjectArchived = ActivityBase & {
+  type: "PROJECT_ARCHIVED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type ActivityProjectCreated = ActivityBase & {
+  type: "PROJECT_CREATED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type ActivityProjectDeleted = ActivityBase & {
+  type: "PROJECT_DELETED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type ActivityProjectDescriptionChanged = ActivityBase & {
+  type: "PROJECT_DESCRIPTION_CHANGED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type ActivityProjectRenamed = ActivityBase & {
+  type: "PROJECT_RENAMED",
+  payload: {
+    previousName: string,
+    newName: string
+  }
+};
+
+export type ActivityProjectUnarchived = ActivityBase & {
+  type: "PROJECT_UNARCHIVED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type ActivityProjectTransferred = ActivityBase & {
+  type: "PROJECT_TRANSFERRED",
+  payload: {
+    projectName: string,
+    previousOrganizationName: string,
+    newOrganizationName: string
+  }
+};
+
+type ActivityCommitCommon = {
+  pushActivityId: string,
+  sha: string,
+  title: string,
+  description: string,
+  branchName: string
+};
+
+export type ActivityCommit = ActivityBase & {
+  type: "COMMIT",
+  payload: ActivityCommitCommon
+};
+
+export type ActivityMergeCommit = ActivityBase & {
+  type: "MERGE_COMMIT",
+  payload: ActivityCommitCommon & {
+    sourceBranchId: string,
+    sourceBranchName: string,
+    destinationBranchId: string,
+    destinationBranchName: string
+  }
+};
+
+export type ActivityUpdateCommit = ActivityBase & {
+  type: "UPDATE_COMMIT",
+  payload: ActivityCommitCommon & {
+    sourceBranchId: string,
+    sourceBranchName: string
+  }
+};
+
+export type ActivityCommentCreated = ActivityBase & {
+  type: "COMMENT_CREATED",
+  payload: {
+    reviewId?: string,
+    reviewStatus?: ReviewStatus,
+    commentFileId: ?string,
+    commentFileName: ?string,
+    commentId: string,
+    commentLayerId: ?string,
+    commentLayerName: ?string,
+    commentPageId: ?string,
+    commentPageName: ?string,
+    commentParentId: ?string,
+    commitBranchId: string,
+    commitBranchName: string,
+    commitSha: ?string,
+    commitMessage: ?string
+  }
+};
+
+export type ActivityReviewRequested = ActivityBase & {
+  type: "REVIEW_REQUESTED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type ActivityReviewDismissed = ActivityBase & {
+  type: "REVIEW_DISMISSED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type ActivityReviewerRemoved = ActivityBase & {
+  type: "REVIEWER_REMOVED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type ActivityReviewCompleted = ActivityBase & {
+  type: "REVIEW_COMPLETED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string,
+    status: string
+  }
+};
+
+export type Activity =
+  | ActivityBranchArchived
+  | ActivityBranchCreated
+  | ActivityBranchDeleted
+  | ActivityBranchDescriptionUpdated
+  | ActivityBranchRenamed
+  | ActivityBranchStatusUpdated
+  | ActivityBranchUnarchived
+  | ActivityCollectionPublished
+  | ActivityCommentCreated
+  | ActivityCommit
+  | ActivityMergeCommit
+  | ActivityProjectArchived
+  | ActivityProjectCreated
+  | ActivityProjectDeleted
+  | ActivityProjectDescriptionChanged
+  | ActivityProjectRenamed
+  | ActivityProjectTransferred
+  | ActivityProjectUnarchived
+  | ActivityReviewCompleted
+  | ActivityReviewDismissed
+  | ActivityReviewRequested
+  | ActivityReviewerRemoved
+  | ActivityUpdateCommit;
+
 export type User = {
   id: string,
   email: string,
@@ -125,7 +371,7 @@ export type Comment = {
   pageId: string,
   parentId?: string,
   reviewId?: string,
-  reviewStatus?: "REQUESTED" | "REJECTED" | "APPROVED",
+  reviewStatus?: ReviewStatus,
   replyIds: string[]
 };
 
@@ -690,6 +936,13 @@ export type LayerDataset = {
 export interface AbstractInterface {
   accessToken: string;
 
+  activities?: {
+    list: (
+      objectDescriptor?: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
+      options?: ListOptions
+    ) => Promise<Activity[]>
+  };
+
   organizations?: {
     list: () => Promise<Branch[]>
   };
@@ -749,7 +1002,7 @@ export interface AbstractInterface {
   };
 
   layers: {
-    list: FileDescriptor => Promise<Layer[]>,
+    list: (FileDescriptor, ListOptions) => Promise<Layer[]>,
     info: LayerDescriptor => Promise<Layer>
   };
 

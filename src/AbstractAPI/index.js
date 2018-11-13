@@ -22,7 +22,8 @@ import type {
   LayerDescriptor,
   CollectionDescriptor,
   Comment,
-  Layer
+  Layer,
+  ListOptions
 } from "../";
 import randomTraceId from "./randomTraceId";
 
@@ -138,6 +139,26 @@ export default class AbstractAPI implements AbstractInterface {
     );
   }
 
+  activities = {
+    list: async (
+      objectDescriptor: $Shape<
+        BranchDescriptor & OrganizationDescriptor & ProjectDescriptor
+      > = {},
+      options: ListOptions = {}
+    ) => {
+      const query = queryString.stringify({
+        limit: options.offset,
+        offset: options.offset,
+        branchId: objectDescriptor.branchId,
+        organizationId: objectDescriptor.organizationId,
+        projectId: objectDescriptor.projectId
+      });
+      const response = await this.fetch(`activities?${query}`);
+      const { activities } = await unwrapEnvelope(response.json());
+      return activities;
+    }
+  };
+
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
@@ -206,17 +227,6 @@ export default class AbstractAPI implements AbstractInterface {
             ...(await this._denormalizeDescriptorForComment(objectDescriptor))
           }
         }
-      );
-
-      return response.json();
-    }
-  };
-
-  branches = {
-    info: async (branchDescriptor: BranchDescriptor) => {
-      const response = await this.fetch(
-        // prettier-ignore
-        `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}`
       );
 
       return response.json();
@@ -330,7 +340,7 @@ export default class AbstractAPI implements AbstractInterface {
   layers = {
     list: async (
       objectDescriptor: FileDescriptor | PageDescriptor,
-      options: { limit?: number, offset?: number } = {}
+      options: ListOptions = {}
     ) => {
       const query = queryString.stringify({
         pageId: objectDescriptor.pageId ? objectDescriptor.pageId : undefined,
