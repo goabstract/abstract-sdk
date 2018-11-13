@@ -439,6 +439,22 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
 
+  notifications = {
+    list: async (
+      objectDescriptor?: OrganizationDescriptor,
+      options: ListOptions = {}
+    ) => {
+      const query = queryString.stringify({
+        limit: options.offset,
+        offset: options.offset,
+        organizationId: objectDescriptor && objectDescriptor.organizationId
+      });
+      const response = await this.fetch(`notifications?${query}`);
+      const notifications = await unwrapEnvelope(response.json());
+      return notifications;
+    }
+  };
+
   async _denormalizeDescriptorForComment(
     objectDescriptor: BranchDescriptor | LayerDescriptor
   ): Promise<BranchNames | LayerNames> {

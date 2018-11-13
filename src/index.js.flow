@@ -933,6 +933,251 @@ export type LayerDataset = {
   layers: { [layerId: string]: LayerData }
 };
 
+type NotificationBase = {
+  branchId: string,
+  commentId: string,
+  createdAt: string,
+  id: string,
+  initiatingUser: User,
+  initiatingUserId: string,
+  organization: Organization,
+  organizationId: string,
+  project: Project,
+  projectId: string,
+  readAt?: string
+};
+
+export type NotificationBranchArchived = NotificationBase & {
+  messageType: "BRANCH_ARCHIVED",
+  payload: {
+    branchName: string,
+    previousStatus: string
+  }
+};
+
+export type NotificationBranchCreated = NotificationBase & {
+  messageType: "BRANCH_CREATED",
+  payload: {
+    branchName: string,
+    branchDescription?: string
+  }
+};
+
+export type NotificationBranchDeleted = NotificationBase & {
+  messageType: "BRANCH_DELETED",
+  payload: {
+    branchName: string,
+    previousStatus: string
+  }
+};
+
+export type NotificationBranchDescriptionUpdated = NotificationBase & {
+  messageType: "BRANCH_DESCRIPTION_UPDATED",
+  payload: {
+    branchName: string,
+    branchDescription: string,
+    previousDescription: string
+  }
+};
+
+export type NotificationBranchRenamed = NotificationBase & {
+  messageType: "BRANCH_RENAMED",
+  payload: {
+    branchName: string,
+    previousName: string
+  }
+};
+
+export type NotificationBranchStatusUpdated = NotificationBase & {
+  messageType: "BRANCH_STATUS_UPDATED",
+  payload: {
+    branchName: string,
+    previousStatus: string,
+    status: string
+  }
+};
+
+export type NotificationBranchUnarchived = NotificationBase & {
+  messageType: "BRANCH_UNARCHIVED",
+  payload: {
+    branchName: string,
+    status: string
+  }
+};
+
+export type NotificationCollectionPublished = NotificationBase & {
+  messageType: "COLLECTION_PUBLISHED",
+  payload: {
+    collectionId: string,
+    name: string
+  }
+};
+
+export type NotificationProjectArchived = NotificationBase & {
+  messageType: "PROJECT_ARCHIVED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type NotificationProjectCreated = NotificationBase & {
+  messageType: "PROJECT_CREATED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type NotificationProjectDeleted = NotificationBase & {
+  messageType: "PROJECT_DELETED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type NotificationProjectDescriptionChanged = NotificationBase & {
+  messageType: "PROJECT_DESCRIPTION_CHANGED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type NotificationProjectRenamed = NotificationBase & {
+  messageType: "PROJECT_RENAMED",
+  payload: {
+    previousName: string,
+    newName: string
+  }
+};
+
+export type NotificationProjectUnarchived = NotificationBase & {
+  messageType: "PROJECT_UNARCHIVED",
+  payload: {
+    projectName: string
+  }
+};
+
+export type NotificationProjectTransferred = NotificationBase & {
+  messageType: "PROJECT_TRANSFERRED",
+  payload: {
+    projectName: string,
+    previousOrganizationName: string,
+    newOrganizationName: string
+  }
+};
+
+type NotificationCommitCommon = {
+  pushNotificationId: string,
+  sha: string,
+  title: string,
+  description: string,
+  branchName: string
+};
+
+export type NotificationCommit = NotificationBase & {
+  messageType: "COMMIT",
+  payload: NotificationCommitCommon
+};
+
+export type NotificationMergeCommit = NotificationBase & {
+  messageType: "MERGE_COMMIT",
+  payload: NotificationCommitCommon & {
+    sourceBranchId: string,
+    sourceBranchName: string,
+    destinationBranchId: string,
+    destinationBranchName: string
+  }
+};
+
+export type NotificationUpdateCommit = NotificationBase & {
+  messageType: "UPDATE_COMMIT",
+  payload: NotificationCommitCommon & {
+    sourceBranchId: string,
+    sourceBranchName: string
+  }
+};
+
+export type NotificationCommentCreated = NotificationBase & {
+  messageType: "COMMENT_CREATED",
+  payload: {
+    reviewId?: string,
+    reviewStatus?: ReviewStatus,
+    commentFileId: ?string,
+    commentFileName: ?string,
+    commentId: string,
+    commentLayerId: ?string,
+    commentLayerName: ?string,
+    commentPageId: ?string,
+    commentPageName: ?string,
+    commentParentId: ?string,
+    commitBranchId: string,
+    commitBranchName: string,
+    commitSha: ?string,
+    commitMessage: ?string
+  }
+};
+
+export type NotificationReviewRequested = NotificationBase & {
+  messageType: "REVIEW_REQUESTED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type NotificationReviewDismissed = NotificationBase & {
+  messageType: "REVIEW_DISMISSED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type NotificationReviewerRemoved = NotificationBase & {
+  messageType: "REVIEWER_REMOVED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string
+  }
+};
+
+export type NotificationReviewCompleted = NotificationBase & {
+  messageType: "REVIEW_COMPLETED",
+  payload: {
+    branchName: string,
+    reviewerName: string,
+    reviewerId: string,
+    status: string
+  }
+};
+
+export type Notification =
+  | NotificationBranchArchived
+  | NotificationBranchCreated
+  | NotificationBranchDeleted
+  | NotificationBranchDescriptionUpdated
+  | NotificationBranchRenamed
+  | NotificationBranchStatusUpdated
+  | NotificationBranchUnarchived
+  | NotificationCollectionPublished
+  | NotificationCommentCreated
+  | NotificationCommit
+  | NotificationMergeCommit
+  | NotificationProjectArchived
+  | NotificationProjectCreated
+  | NotificationProjectDeleted
+  | NotificationProjectDescriptionChanged
+  | NotificationProjectRenamed
+  | NotificationProjectTransferred
+  | NotificationProjectUnarchived
+  | NotificationReviewCompleted
+  | NotificationReviewDismissed
+  | NotificationReviewRequested
+  | NotificationReviewerRemoved
+  | NotificationUpdateCommit;
+
 export interface AbstractInterface {
   accessToken: string;
 
@@ -1013,5 +1258,12 @@ export interface AbstractInterface {
 
   data: {
     info: LayerDescriptor => Promise<LayerData>
+  };
+
+  notifications?: {
+    list: (
+      objectDescriptor?: OrganizationDescriptor,
+      options?: ListOptions
+    ) => Promise<Notification[]>
   };
 }

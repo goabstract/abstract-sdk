@@ -90,6 +90,14 @@ const responses = {
         path.resolve(__dirname, "../../fixtures/preview.png")
       )
     ) => [data, { status: 200 }]
+  },
+  notifications: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ]
   }
 };
 
@@ -248,7 +256,12 @@ describe("AbstractAPI", () => {
       ],
       // data
       ["data.info", buildLayerDescriptor()],
-      ["data.info", buildLayerDescriptor({ sha: "sha" })]
+      ["data.info", buildLayerDescriptor({ sha: "sha" })],
+      [
+        "notifications.list",
+        buildOrganizationDescriptor(),
+        { responses: [responses.notifications.list()] }
+      ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
 

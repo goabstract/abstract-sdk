@@ -485,6 +485,43 @@ abstract.layers.info({
 ```
 
 
+## Notifications
+
+![API][api-icon]
+
+A notification is a user-facing message triggered by an underlying activity. Notifications are both viewable and dismissable in the desktop application.
+
+### The notification object
+
+| Property           | Type     | Description                                                                         |
+|--------------------|---------------------|--------------------------------------------------------------------------|
+| `branchId`         | `string` | UUID of the branch that triggered this notification, if applicable                  |
+| `commentId`        | `string` | UUID of the comment that triggered this notification, if applicable                 |
+| `createdAt`        | `string` | Timestamp at which the notification was sent                                        |
+| `id`               | `string` | UUID identifier of the notification                                                 |
+| `initiatingUser`   | `User`   | User that triggered this notification, if applicable                                |
+| `initiatingUserId` | `string` | UUID of the user that triggered this notification, if applicable                    |
+| `messageType`      | `string` | The type of this activity that triggered this notification, may be one of `BRANCH_ARCHIVED`, `BRANCH_CREATED`, `BRANCH_DELETED`, `BRANCH_DESCRIPTION_UPDATED`, `BRANCH_RENAMED`, `BRANCH_STATUS_UPDATED`, `BRANCH_UNARCHIVED`, `COLLECTION_PUBLISHED`, `COMMENT_CREATED`, `COMMIT`, `MERGE_COMMIT`, `PROJECT_ARCHIVED`, `PROJECT_CREATED`, `PROJECT_DELETED`, `PROJECT_DESCRIPTION_CHANGED`, `PROJECT_RENAMED`, `PROJECT_TRANSFERRED`, `PROJECT_UNARCHIVED`, `REVIEWER_REMOVED`, `REVIEW_COMPLETED`, `REVIEW_DISMISSED`, `REVIEW_REQUESTED`, `UPDATE_COMMIT` |
+| `organization`     | `string` | Organization that triggered this notification, if applicable                        |
+| `organizationId`   | `string` | UUID of the organization that triggered this notification, if applicable            |
+| `project`          | `string` | Project that triggered this notification, if applicable                             |
+| `projectId`        | `string` | UUID of the project that triggered this notification, if applicable                 |
+| `payload`          | `Object` | Object containing information specific to activity that triggered this notification |
+| `readAt`           | `string` | Timestamp at which the notification was read or dismissed                           |
+
+### List notifications
+
+`notifications.list(OrganizationDescriptor, { limit?: number, offset?: number }): Promise<Notification[]>`
+
+List the first two notifications for a given organization
+
+```js
+abstract.notifications.list({
+  organizationId: "8a13eb62-a42f-435f-b3a3-39af939ad31b"
+}, { limit: 2 });
+```
+
+
 ## Organizations
 
 ![API][api-icon]
