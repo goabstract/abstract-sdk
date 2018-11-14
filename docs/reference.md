@@ -36,6 +36,18 @@ abstract.activities.list({
 }, { limit: 2 });
 ```
 
+### Retrieve an activity
+
+`activities.info(ActivityDescriptor): Promise<Activity>`
+
+Load the info for an activity
+
+```js
+abstract.activities.info({
+  activityId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
 ## Branches
 
 ![API][api-icon]
@@ -521,6 +533,18 @@ abstract.notifications.list({
 }, { limit: 2 });
 ```
 
+### Retrieve a notification
+
+`notifications.info(NotificationDescriptor): Promise<Notification>`
+
+Load the info for a notification
+
+```js
+abstract.notifications.info({
+  notificationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
 
 ## Organizations
 
@@ -803,5 +827,13 @@ Reference for the parameters required to load resources with Abstract SDK.
 ```js
 {
   activityId: string
+}
+```
+
+### NotificationDescriptor
+
+```js
+{
+  notificationId: string
 }
 ```

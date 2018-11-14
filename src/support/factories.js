@@ -97,3 +97,10 @@ export function buildActivityDescriptor(activityDescriptor: *) {
     ...activityDescriptor
   };
 }
+
+export function buildNotificationDescriptor(notificationDescriptor: *) {
+  return {
+    notificationId: "notification-id",
+    ...notificationDescriptor
+  };
+}

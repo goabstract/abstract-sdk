@@ -22,6 +22,7 @@ import type {
   LayerDescriptor,
   CollectionDescriptor,
   ActivityDescriptor,
+  NotificationDescriptor,
   Comment,
   Layer,
   ListOptions
@@ -457,6 +458,10 @@ export default class AbstractAPI implements AbstractInterface {
       const response = await this.fetch(`notifications?${query}`);
       const notifications = await unwrapEnvelope(response.json());
       return notifications;
+    },
+    info: async ({ notificationId }: NotificationDescriptor) => {
+      const response = await this.fetch(`notifications/${notificationId}`);
+      return response.json();
     }
   };
 

@@ -12,6 +12,10 @@ export type ActivityDescriptor = {|
   activityId: string
 |};
 
+export type NotificationDescriptor = {|
+  notificationId: string
+|}
+
 type ObjectDescriptor = {|
   projectId: string,
   sha?: string, // undefined is "latest"
@@ -1269,6 +1273,7 @@ export interface AbstractInterface {
     list: (
       objectDescriptor?: OrganizationDescriptor,
       options?: ListOptions
-    ) => Promise<Notification[]>
+    ) => Promise<Notification[]>,
+    info: (notificationDescriptor: NotificationDescriptor) => Promise<Notification>
   };
 }
