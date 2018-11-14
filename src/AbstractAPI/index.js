@@ -21,6 +21,7 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
+  ActivityDescriptor,
   Comment,
   Layer,
   ListOptions
@@ -156,6 +157,10 @@ export default class AbstractAPI implements AbstractInterface {
       const response = await this.fetch(`activities?${query}`);
       const { activities } = await unwrapEnvelope(response.json());
       return activities;
+    },
+    info: async ({ activityId }: ActivityDescriptor) => {
+      const response = await this.fetch(`activities/${activityId}`);
+      return response.json();
     }
   };
 

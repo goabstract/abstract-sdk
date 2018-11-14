@@ -8,6 +8,10 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
+export type ActivityDescriptor = {|
+  activityId: string
+|};
+
 type ObjectDescriptor = {|
   projectId: string,
   sha?: string, // undefined is "latest"
@@ -1185,7 +1189,8 @@ export interface AbstractInterface {
     list: (
       objectDescriptor?: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
       options?: ListOptions
-    ) => Promise<Activity[]>
+    ) => Promise<Activity[]>,
+    info: (activityDescriptor: ActivityDescriptor) => Promise<Activity>
   };
 
   organizations?: {

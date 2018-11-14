@@ -797,3 +797,11 @@ Reference for the parameters required to load resources with Abstract SDK.
   collectionId: string
 }
 ```
+
+### ActivityDescriptor
+
+```js
+{
+  activityId: string
+}
+```

@@ -11,7 +11,8 @@ import {
   buildBranchDescriptor,
   buildFileDescriptor,
   buildLayerDescriptor,
-  buildCollectionDescriptor
+  buildCollectionDescriptor,
+  buildActivityDescriptor
 } from "../support/factories";
 import AbstractAPI from "./";
 
@@ -32,7 +33,8 @@ const responses = {
         }
       }),
       { status: 200 }
-    ]
+    ],
+    info: () => [JSON.stringify({ id: "foo" })]
   },
   collections: {
     list: () => [
@@ -123,6 +125,11 @@ describe("AbstractAPI", () => {
         "activities.list",
         buildProjectDescriptor(),
         { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.info",
+        buildActivityDescriptor(),
+        { responses: [responses.activities.info()] }
       ],
       // organizations
       ["organizations.list", undefined],
