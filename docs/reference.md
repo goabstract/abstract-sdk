@@ -744,17 +744,13 @@ Reference for the parameters required to load resources with Abstract SDK.
 ### OrganizationDescriptor
 
 ```js
-{
-  organizationId: string,
-}
+{ organizationId: string }
 ```
 
 ### ProjectDescriptor
 
 ```js
-{
-  projectId: string,
-}
+{ projectId: string }
 ```
 
 ### BranchDescriptor
@@ -825,15 +821,11 @@ Reference for the parameters required to load resources with Abstract SDK.
 ### ActivityDescriptor
 
 ```js
-{
-  activityId: string
-}
+{ activityId: string }
 ```
 
 ### NotificationDescriptor
 
 ```js
-{
-  notificationId: string
-}
+{ notificationId: string }
 ```
