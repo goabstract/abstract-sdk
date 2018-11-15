@@ -11,7 +11,9 @@ import {
   buildBranchDescriptor,
   buildFileDescriptor,
   buildLayerDescriptor,
-  buildCollectionDescriptor
+  buildCollectionDescriptor,
+  buildActivityDescriptor,
+  buildNotificationDescriptor
 } from "../support/factories";
 import AbstractAPI from "./";
 
@@ -32,7 +34,8 @@ const responses = {
         }
       }),
       { status: 200 }
-    ]
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
   },
   collections: {
     list: () => [
@@ -97,7 +100,8 @@ const responses = {
         data: [{ id: "foo" }, { id: "bar" }]
       }),
       { status: 200 }
-    ]
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
   }
 };
 
@@ -123,6 +127,11 @@ describe("AbstractAPI", () => {
         "activities.list",
         buildProjectDescriptor(),
         { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.info",
+        buildActivityDescriptor(),
+        { responses: [responses.activities.info()] }
       ],
       // organizations
       ["organizations.list", undefined],
@@ -261,6 +270,11 @@ describe("AbstractAPI", () => {
         "notifications.list",
         buildOrganizationDescriptor(),
         { responses: [responses.notifications.list()] }
+      ],
+      [
+        "notifications.info",
+        buildNotificationDescriptor(),
+        { responses: [responses.notifications.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
