@@ -23,6 +23,7 @@ import type {
   CollectionDescriptor,
   ActivityDescriptor,
   NotificationDescriptor,
+  CommentDescriptor,
   Comment,
   Layer,
   ListOptions
@@ -235,6 +236,32 @@ export default class AbstractAPI implements AbstractInterface {
         }
       );
 
+      return response.json();
+    },
+    list: async (
+      objectDescriptor: {
+        projectId: $PropertyType<ProjectDescriptor, "projectId">
+      } & $Shape<
+        BranchDescriptor & CommitDescriptor & PageDescriptor & LayerDescriptor
+      >,
+      options: ListOptions = {}
+    ) => {
+      const query = queryString.stringify({
+        limit: options.offset,
+        offset: options.offset,
+        branchId: objectDescriptor.branchId,
+        commitSha: objectDescriptor.sha,
+        fileId: objectDescriptor.fileId,
+        layerId: objectDescriptor.layerId,
+        pageId: objectDescriptor.pageId,
+        projectId: objectDescriptor.projectId
+      });
+      const response = await this.fetch(`comments?${query}`);
+      const comments = await unwrapEnvelope(response.json());
+      return comments;
+    },
+    info: async ({ commentId }: CommentDescriptor) => {
+      const response = await this.fetch(`comments/${commentId}`);
       return response.json();
     }
   };

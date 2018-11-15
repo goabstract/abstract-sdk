@@ -187,11 +187,35 @@ represents a bounding area ontop of the layer, this can be used to leave comment
 
 ### List all comments
 
-  > Not yet implemented
+`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerDescriptor): Promise<Comment[]>`
+
+List the comments for a specific project
+```js
+abstract.comments.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+or, list the first two comments for a specific layer...
+
+```js
+abstract.comments.list({
+  layerId: '9FB27CF4-81F5-40A3-AB34-B2E5C792BEE3',
+  projectId: '616daa90-1736-11e8-b8b0-8d1fec7aef78'
+}, { limit: 2 });
+```
 
 ### Retrieve a comment
 
-  > Not yet implemented
+`comments.info(CommentDescriptor): Promise<Comment>`
+
+Load the info for a comment
+
+```js
+abstract.comments.info({
+  commentId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
 
 ### Create a comment
 
@@ -828,4 +852,11 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ```js
 { notificationId: string }
+```
+
+### CommentDescriptor
+ ```js
+{
+  commentId: string
+}
 ```
