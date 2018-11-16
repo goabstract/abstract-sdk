@@ -9,7 +9,6 @@ export type ProjectDescriptor = {|
 |};
 
 export type CommentDescriptor = {|
-  projectId: string,
   commentId: string
 |};
 
