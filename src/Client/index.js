@@ -17,12 +17,6 @@ export default function Client({
   previewsUrl,
   transport: Transport = AUTO
 }: Options = {}): AbstractInterface {
-  if (!accessToken) {
-    throw new Error(
-      "options.accessToken or ABSTRACT_TOKEN set as an environment variable is required"
-    );
-  }
-
   if (!Transport) {
     throw new Error("options.transport is required");
   }

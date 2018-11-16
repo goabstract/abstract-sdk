@@ -6,7 +6,8 @@ import type {
   FileDescriptor,
   PageDescriptor,
   LayerDescriptor,
-  CollectionDescriptor
+  CollectionDescriptor,
+  CommentDescriptor
 } from "../";
 
 export function buildOptions(options: *) {
@@ -91,5 +92,28 @@ export function buildCollectionDescriptor(
     branchId: "branch-id",
     collectionId: "collection-id",
     ...collectionDescriptor
+  };
+}
+
+export function buildActivityDescriptor(activityDescriptor: *) {
+  return {
+    activityId: "activity-id",
+    ...activityDescriptor
+  };
+}
+
+export function buildNotificationDescriptor(notificationDescriptor: *) {
+  return {
+    notificationId: "notification-id",
+    ...notificationDescriptor
+  };
+}
+
+export function buildCommentDescriptor(
+  commentDescriptor: *
+): CommentDescriptor {
+  return {
+    commentId: "comment-id",
+    ...commentDescriptor
   };
 }

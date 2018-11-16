@@ -13,3 +13,6 @@ yarn run build
 
 # Upload all assets first, then upload html
 aws s3 cp ./build/abstract-sdk/ s3://$BUCKET/ --recursive --include "*" --acl public-read
+
+# Purge the fastly cache
+curl -X POST --header "Fastly-Key: $FASTLY_TOKEN" https://api.fastly.com/service/6ArsCpVh1jHIbscuig0Ric/purge_all

@@ -6,6 +6,48 @@ title: Reference
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-blue.svg
 
+## Activities
+
+![API][api-icon]
+
+An activity represents a designated type of event within a project. These events can be specific to the project itself, or they can be specific to a collection, a branch, a commit, or a review within the project.
+
+### The activity object
+
+| Property      | Type                | Description                                                                             |
+|---------------|---------------------|-----------------------------------------------------------------------------------------|
+| `branchId`    | `string`            | UUID of the branch that this activity was triggered on                                  |
+| `createdAt`   | `string`            | Timestamp at which the activity was triggered                                           |
+| `id`          | `string`            | UUID identifier of the activity                                                         |
+| `payload`     | `Object`            | Object containing information specific to this type of activity                         |
+| `type`        | `string`            | The type of this activity, may be one of `BRANCH_ARCHIVED`, `BRANCH_CREATED`, `BRANCH_DELETED`, `BRANCH_DESCRIPTION_UPDATED`, `BRANCH_RENAMED`, `BRANCH_STATUS_UPDATED`, `BRANCH_UNARCHIVED`, `COLLECTION_PUBLISHED`, `COMMENT_CREATED`, `COMMIT`, `MERGE_COMMIT`, `PROJECT_ARCHIVED`, `PROJECT_CREATED`, `PROJECT_DELETED`, `PROJECT_DESCRIPTION_CHANGED`, `PROJECT_RENAMED`, `PROJECT_TRANSFERRED`, `PROJECT_UNARCHIVED`, `REVIEWER_REMOVED`, `REVIEW_COMPLETED`, `REVIEW_DISMISSED`, `REVIEW_REQUESTED`, `UPDATE_COMMIT` |
+| `userId`      | `string`            | UUID of the user that triggered this activity                                           |
+
+### List all activities
+
+`activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): Promise<Activity[]>`
+
+List the first two activities for a given project on a specific branch
+
+```js
+abstract.activities.list({
+  branchId: "8a13eb62-a42f-435f-b3a3-39af939ad31b",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f",
+}, { limit: 2 });
+```
+
+### Retrieve an activity
+
+`activities.info(ActivityDescriptor): Promise<Activity>`
+
+Load the info for an activity
+
+```js
+abstract.activities.info({
+  activityId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
 ## Branches
 
 ![API][api-icon]
@@ -145,11 +187,38 @@ represents a bounding area ontop of the layer, this can be used to leave comment
 
 ### List all comments
 
-  > Not yet implemented
+`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerDescriptor): Promise<Comment[]>`
+
+List the comments for a specific project
+```js
+abstract.comments.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+or, list the first two comments for a specific layer...
+
+```js
+abstract.comments.list({
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+}, { limit: 2 });
+```
 
 ### Retrieve a comment
 
-  > Not yet implemented
+`comments.info(CommentDescriptor): Promise<Comment>`
+
+Load the info for a comment
+
+```js
+abstract.comments.info({
+  commentId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
 
 ### Create a comment
 
@@ -459,6 +528,55 @@ abstract.layers.info({
 ```
 
 
+## Notifications
+
+![API][api-icon]
+
+A notification is a user-facing message triggered by an underlying activity. Notifications are both viewable and dismissable in the desktop application.
+
+### The notification object
+
+| Property           | Type     | Description                                                                         |
+|--------------------|---------------------|--------------------------------------------------------------------------|
+| `branchId`         | `string` | UUID of the branch that triggered this notification, if applicable                  |
+| `commentId`        | `string` | UUID of the comment that triggered this notification, if applicable                 |
+| `createdAt`        | `string` | Timestamp at which the notification was sent                                        |
+| `id`               | `string` | UUID identifier of the notification                                                 |
+| `initiatingUser`   | `User`   | User that triggered this notification, if applicable                                |
+| `initiatingUserId` | `string` | UUID of the user that triggered this notification, if applicable                    |
+| `messageType`      | `string` | The type of this activity that triggered this notification, may be one of `BRANCH_ARCHIVED`, `BRANCH_CREATED`, `BRANCH_DELETED`, `BRANCH_DESCRIPTION_UPDATED`, `BRANCH_RENAMED`, `BRANCH_STATUS_UPDATED`, `BRANCH_UNARCHIVED`, `COLLECTION_PUBLISHED`, `COMMENT_CREATED`, `COMMIT`, `MERGE_COMMIT`, `PROJECT_ARCHIVED`, `PROJECT_CREATED`, `PROJECT_DELETED`, `PROJECT_DESCRIPTION_CHANGED`, `PROJECT_RENAMED`, `PROJECT_TRANSFERRED`, `PROJECT_UNARCHIVED`, `REVIEWER_REMOVED`, `REVIEW_COMPLETED`, `REVIEW_DISMISSED`, `REVIEW_REQUESTED`, `UPDATE_COMMIT` |
+| `organization`     | `string` | Organization that triggered this notification, if applicable                        |
+| `organizationId`   | `string` | UUID of the organization that triggered this notification, if applicable            |
+| `project`          | `string` | Project that triggered this notification, if applicable                             |
+| `projectId`        | `string` | UUID of the project that triggered this notification, if applicable                 |
+| `payload`          | `Object` | Object containing information specific to activity that triggered this notification |
+| `readAt`           | `string` | Timestamp at which the notification was read or dismissed                           |
+
+### List notifications
+
+`notifications.list(OrganizationDescriptor, { limit?: number, offset?: number }): Promise<Notification[]>`
+
+List the first two notifications for a given organization
+
+```js
+abstract.notifications.list({
+  organizationId: "8a13eb62-a42f-435f-b3a3-39af939ad31b"
+}, { limit: 2 });
+```
+
+### Retrieve a notification
+
+`notifications.info(NotificationDescriptor): Promise<Notification>`
+
+Load the info for a notification
+
+```js
+abstract.notifications.info({
+  notificationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+
 ## Organizations
 
 ![API][api-icon]
@@ -715,12 +833,16 @@ abstract.files.list(
 
 Reference for the parameters required to load resources with Abstract SDK.
 
+### OrganizationDescriptor
+
+```js
+{ organizationId: string }
+```
+
 ### ProjectDescriptor
 
 ```js
-{
-  projectId: string
-}
+{ projectId: string }
 ```
 
 ### ShareDescriptor
@@ -791,5 +913,24 @@ Reference for the parameters required to load resources with Abstract SDK.
   projectId: string,
   branchId: string | "master",
   collectionId: string
+}
+```
+
+### ActivityDescriptor
+
+```js
+{ activityId: string }
+```
+
+### NotificationDescriptor
+
+```js
+{ notificationId: string }
+```
+
+### CommentDescriptor
+ ```js
+{
+  commentId: string
 }
 ```

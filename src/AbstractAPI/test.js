@@ -12,7 +12,10 @@ import {
   buildFileDescriptor,
   buildPageDescriptor,
   buildLayerDescriptor,
-  buildCollectionDescriptor
+  buildCollectionDescriptor,
+  buildActivityDescriptor,
+  buildNotificationDescriptor,
+  buildCommentDescriptor
 } from "../support/factories";
 import { log } from "../debug";
 import AbstractAPI from "./";
@@ -28,6 +31,17 @@ global.fetch = fetch;
 const logTest = log.extend("AbstractAPI:test");
 
 const responses = {
+  activities: {
+    list: () => [
+      JSON.stringify({
+        data: {
+          activities: [{ id: "foo" }, { id: "bar" }]
+        }
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
+  },
   collections: {
     list: () => [
       JSON.stringify({
@@ -90,6 +104,24 @@ const responses = {
         path.resolve(__dirname, "../../fixtures/preview.png")
       )
     ) => [data, { status: 200 }]
+  },
+  notifications: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
+  },
+  comments: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
   }
 };
 
@@ -123,6 +155,27 @@ describe("AbstractAPI", () => {
           url:
             "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"
         }
+      ],
+      // activities
+      [
+        "activities.list",
+        buildBranchDescriptor(),
+        { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.list",
+        buildOrganizationDescriptor(),
+        { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.list",
+        buildProjectDescriptor(),
+        { responses: [responses.activities.list()] }
+      ],
+      [
+        "activities.info",
+        buildActivityDescriptor(),
+        { responses: [responses.activities.info()] }
       ],
       // organizations
       ["organizations.list", undefined],
@@ -188,6 +241,16 @@ describe("AbstractAPI", () => {
           { body: "Comment on branch at my-sha" }
         ],
         { responses: [responses.branches.info()] }
+      ],
+      [
+        "comments.list",
+        buildProjectDescriptor(),
+        { responses: [responses.comments.list()] }
+      ],
+      [
+        "comments.info",
+        buildCommentDescriptor(),
+        { responses: [responses.comments.info()] }
       ],
       // commits
       ["commits.list", buildBranchDescriptor()],
@@ -295,9 +358,17 @@ describe("AbstractAPI", () => {
       [
         "data.info",
         buildLayerDescriptor({ sha: "latest" }),
-        {
-          responses: [responses.commits.list()]
-        }
+        { responses: [responses.commits.list()] }
+      ],
+      [
+        "notifications.list",
+        buildOrganizationDescriptor(),
+        { responses: [responses.notifications.list()] }
+      ],
+      [
+        "notifications.info",
+        buildNotificationDescriptor(),
+        { responses: [responses.notifications.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
