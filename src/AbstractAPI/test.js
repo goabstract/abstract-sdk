@@ -13,7 +13,8 @@ import {
   buildLayerDescriptor,
   buildCollectionDescriptor,
   buildActivityDescriptor,
-  buildNotificationDescriptor
+  buildNotificationDescriptor,
+  buildCommentDescriptor
 } from "../support/factories";
 import AbstractAPI from "./";
 
@@ -95,6 +96,15 @@ const responses = {
     ) => [data, { status: 200 }]
   },
   notifications: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
+  },
+  comments: {
     list: () => [
       JSON.stringify({
         data: [{ id: "foo" }, { id: "bar" }]
@@ -186,6 +196,16 @@ describe("AbstractAPI", () => {
           { body: "Comment on branch at my-sha" }
         ],
         { responses: [responses.branches.info()] }
+      ],
+      [
+        "comments.list",
+        buildProjectDescriptor(),
+        { responses: [responses.comments.list()] }
+      ],
+      [
+        "comments.info",
+        buildCommentDescriptor(),
+        { responses: [responses.comments.info()] }
       ],
       // commits
       ["commits.list", buildBranchDescriptor()],
