@@ -13,9 +13,12 @@ import {
   buildLayerDescriptor,
   buildCollectionDescriptor
 } from "../support/factories";
+import { log } from "../debug";
 import AbstractCLI from "./";
 
 jest.mock("child_process");
+
+const logTest = log.extend("AbstractCLI:test");
 
 function buildTextStream(text?: string): ReadableStream {
   const stream = new Readable();
@@ -30,6 +33,13 @@ function buildTextStream(text?: string): ReadableStream {
 }
 
 const responses = {
+  commits: {
+    list: () => ({
+      stdout: JSON.stringify({
+        commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
+      })
+    })
+  },
   files: {
     list: () => ({
       stdout: JSON.stringify({
@@ -126,11 +136,7 @@ describe(AbstractCLI, () => {
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
-      ["commits.list", buildBranchDescriptor({ sha: "sha" })],
-      ["commits.list", buildLayerDescriptor({ sha: "sha" })],
       ["commits.info", buildCommitDescriptor()],
-      ["commits.info", buildFileDescriptor({ sha: "sha" })],
-      ["commits.info", buildLayerDescriptor({ sha: "sha" })],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // files
@@ -144,15 +150,7 @@ describe(AbstractCLI, () => {
       ],
       [
         "files.list",
-        buildBranchDescriptor({ sha: "sha" }),
-        {
-          responses: [responses.files.list()],
-          result: [{ id: "file-id" }, { id: "not-file-id" }]
-        }
-      ],
-      [
-        "files.list",
-        buildCommitDescriptor({ sha: "sha" }),
+        buildBranchDescriptor(),
         {
           responses: [responses.files.list()],
           result: [{ id: "file-id" }, { id: "not-file-id" }]
@@ -160,15 +158,24 @@ describe(AbstractCLI, () => {
       ],
       [
         "files.info",
-        buildFileDescriptor({ sha: "sha" }),
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
+        "files.list",
+        buildCommitDescriptor(),
         {
-          responses: [responses.files.info()],
-          result: { id: "file-id" }
+          responses: [responses.files.list()],
+          result: [{ id: "file-id" }, { id: "not-file-id" }]
         }
+      ],
+      [
+        "files.list",
+        buildBranchDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
       ],
       // pages
       ["pages.list", buildFileDescriptor()],
-      ["pages.list", buildFileDescriptor({ sha: "sha" })],
       [
         "pages.info",
         buildPageDescriptor(),
@@ -177,16 +184,13 @@ describe(AbstractCLI, () => {
           result: { id: "page-id" }
         }
       ],
-      [
-        "pages.info",
-        buildPageDescriptor({ sha: "sha" }),
-        {
-          responses: [responses.pages.info()],
-          result: { id: "page-id" }
-        }
-      ],
       // layers
       ["layers.list", buildFileDescriptor()],
+      [
+        "layers.list",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       [
         "layers.info",
         buildLayerDescriptor(),
@@ -195,20 +199,24 @@ describe(AbstractCLI, () => {
           result: { id: "layer-id" }
         }
       ],
-      ["layers.list", buildFileDescriptor({ sha: "sha" })],
       [
         "layers.info",
-        buildLayerDescriptor({ sha: "sha" }),
+        buildLayerDescriptor({ sha: "latest" }),
         {
-          responses: [responses.layers.info()],
+          responses: [responses.commits.list(), responses.layers.info()],
           result: { id: "layer-id" }
         }
       ],
       // data
       ["data.info", buildLayerDescriptor()],
-      ["data.info", buildLayerDescriptor({ sha: "sha" })]
+      [
+        "data.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
+      logTest(property, args);
 
       const transport = new AbstractCLI(
         buildOptions({ cliPath: ["./fixtures/abstract-cli"] })
@@ -233,14 +241,13 @@ describe(AbstractCLI, () => {
       });
 
       const result = transportMethod(...args);
-      await expect(result).resolves;
+      await expect(await result).resolves;
 
       if (options.result) {
         expect(await result).toEqual(options.result);
       }
 
-      expect(child_process.spawn.mock.calls.length).toEqual(1);
-      expect(child_process.spawn.mock.calls[0]).toMatchSnapshot();
+      expect(child_process.spawn.mock.calls).toMatchSnapshot();
     });
   });
 });

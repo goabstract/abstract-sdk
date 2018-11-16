@@ -8,6 +8,12 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
+export type CollectionDescriptor = {|
+  projectId: string,
+  branchId: string,
+  collectionId: string
+|};
+
 export type ActivityDescriptor = {|
   activityId: string
 |};
@@ -16,31 +22,27 @@ export type NotificationDescriptor = {|
   notificationId: string
 |}
 
+export type CommentDescriptor = {|
+  commentId: string
+|};
+
 type ObjectDescriptor = {|
   projectId: string,
-  sha?: string, // undefined is "latest"
-
-  // Require branchId across all objects
-  branchId: $PropertyType<BranchDescriptor, "branchId"> // eslint-disable-line no-use-before-define
+  branchId: string | "master",
+  sha: string
 |};
 
 export type CommitDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">> // Commit is read by it's sha
+  ...ObjectDescriptor
 |};
 
 export type BranchDescriptor = {|
-  ...ObjectDescriptor,
-  branchId: string | "master"
-|};
-
-export type CollectionDescriptor = {|
-  ...ObjectDescriptor,
-  collectionId: string
+  ...ObjectDescriptor
 |};
 
 export type FileDescriptor = {|
   ...ObjectDescriptor,
+  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
   fileId: string
 |};
 
@@ -52,24 +54,11 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   ...ObjectDescriptor,
-  sha: $NonMaybeType<$PropertyType<ObjectDescriptor, "sha">>, // Layer requires sha
+  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
   fileId: string,
   pageId: string,
   layerId: string
 |};
-
-export type CommentDescriptor = {|
-  commentId: string
-|};
-
-export type Cursor<T> = Promise<{
-  value: T,
-  done: boolean
-}> & {
-  currentPage: number // possibly under pageInfo?
-  // next(): <T>Cursor,
-  // [Symbol.asyncIterator](): string
-};
 
 export type ListOptions = {
   limit?: number,
@@ -1237,7 +1226,8 @@ export interface AbstractInterface {
 
   commits: {
     list: (
-      BranchDescriptor | FileDescriptor | LayerDescriptor
+      BranchDescriptor | FileDescriptor | LayerDescriptor,
+      options?: { limit?: number }
     ) => Promise<Commit[]>,
     info: (
       BranchDescriptor | FileDescriptor | CommitDescriptor | LayerDescriptor

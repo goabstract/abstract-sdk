@@ -10,12 +10,14 @@ import {
   buildCommitDescriptor,
   buildBranchDescriptor,
   buildFileDescriptor,
+  buildPageDescriptor,
   buildLayerDescriptor,
   buildCollectionDescriptor,
   buildActivityDescriptor,
   buildNotificationDescriptor,
   buildCommentDescriptor
 } from "../support/factories";
+import { log } from "../debug";
 import AbstractAPI from "./";
 
 jest.mock("./randomTraceId");
@@ -25,6 +27,8 @@ jest.mock("../../package.json", () => ({
 }));
 
 global.fetch = fetch;
+
+const logTest = log.extend("AbstractAPI:test");
 
 const responses = {
   activities: {
@@ -74,6 +78,12 @@ const responses = {
   files: {
     list: () => [
       JSON.stringify({ files: [{ id: "file-id" }, { id: "not-file-id" }] }),
+      { status: 200 }
+    ]
+  },
+  pages: {
+    list: () => [
+      JSON.stringify({ pages: [{ id: "page-id" }, { id: "not-page-id" }] }),
       { status: 200 }
     ]
   },
@@ -176,18 +186,27 @@ describe("AbstractAPI", () => {
       [
         "comments.create",
         [
-          buildLayerDescriptor(),
+          buildLayerDescriptor({ sha: "latest" }),
           {
             body: "Comment on layer with annotation",
             annotation: { x: 1, y: 1, width: 1, height: 1 }
           }
         ],
-        { responses: [responses.branches.info(), responses.layers.info()] }
+        {
+          responses: [
+            responses.commits.list(),
+            responses.branches.info(),
+            responses.layers.info()
+          ]
+        }
       ],
       [
         "comments.create",
-        [buildBranchDescriptor(), { body: "Comment on branch HEAD" }],
-        { responses: [responses.branches.info()] }
+        [
+          buildBranchDescriptor({ sha: "latest" }),
+          { body: "Comment on branch HEAD" }
+        ],
+        { responses: [responses.commits.list(), responses.branches.info()] }
       ],
       [
         "comments.create",
@@ -250,17 +269,32 @@ describe("AbstractAPI", () => {
       // files
       ["files.list", buildBranchDescriptor()],
       [
+        "files.list",
+        buildBranchDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
         "files.info",
-        buildFileDescriptor({ fileId: "file-id" }),
+        buildFileDescriptor(),
         {
           responses: [responses.files.list()],
           result: { id: "file-id" }
         }
       ],
+      [
+        "files.info",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // pages
       ["pages.list", buildFileDescriptor()],
+      [
+        "pages.info",
+        buildPageDescriptor(),
+        { responses: [responses.pages.list()] }
+      ],
       // layers
       ["layers.list", buildFileDescriptor()],
       [
@@ -268,24 +302,38 @@ describe("AbstractAPI", () => {
         buildLayerDescriptor(),
         { responses: [responses.layers.info()] }
       ],
+      [
+        "layers.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list(), responses.layers.info()] }
+      ],
       // previews
+      ["previews.info", buildLayerDescriptor()],
       [
         "previews.info",
-        buildLayerDescriptor({
-          projectId: "project-id",
-          sha: "layer-sha",
-          fileId: "file-id",
-          layerId: "layer-id"
-        })
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
       ],
       [
         "previews.raw",
         buildLayerDescriptor(),
-        { responses: [responses.previews.arrayBuffer()] }
+        { responses: [responses.previews.arrayBuffer()] },
+        "previews.raw",
+        buildLayerDescriptor({ sha: "latest" }),
+        {
+          responses: [
+            responses.commits.list(),
+            responses.previews.arrayBuffer()
+          ]
+        }
       ],
       // data
       ["data.info", buildLayerDescriptor()],
-      ["data.info", buildLayerDescriptor({ sha: "sha" })],
+      [
+        "data.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       [
         "notifications.list",
         buildOrganizationDescriptor(),
@@ -298,6 +346,7 @@ describe("AbstractAPI", () => {
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
+      logTest(property, args);
 
       const transport = new AbstractAPI(buildOptions());
       const transportMethod = get(transport, property).bind(transport);

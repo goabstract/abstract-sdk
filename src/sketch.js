@@ -31,7 +31,8 @@ export function branch(context: *): BranchDescriptor {
 
   return {
     projectId: projectId(key),
-    branchId: branchId(key)
+    branchId: branchId(key),
+    sha: "latest"
   };
 }
 
@@ -41,7 +42,8 @@ export function file(context: *): FileDescriptor {
   return {
     projectId: projectId(key),
     branchId: branchId(key),
-    fileId: fileId(key)
+    fileId: fileId(key),
+    sha: "latest"
   };
 }
 

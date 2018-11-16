@@ -244,7 +244,7 @@ abstract.comments.create({
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a", // or sha: "latest"
 }, {
   body: "Hello from the Abstract SDK",
   annotation: {
@@ -285,7 +285,7 @@ to identify which version of the object you would like.
 | `userId`                | `string`   | UUID of the user this commit was created by                                             |
 | `userName`              | `string`   | Display name of the user this commit was created by                                     |
 
-#### Example response 
+#### Example response
 
 ```js
 {
@@ -327,11 +327,12 @@ abstract.commits.list({
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "latest"
 });
 ```
 
-### Retrieve a commit 
+### Retrieve a commit
 
 `commits.info (FileDescriptor | LayerDescriptor | CommitDescriptor): Promise<Commit>`
 
@@ -386,7 +387,7 @@ abstract.data.info({
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
 });
 ```
 
@@ -420,11 +421,12 @@ List the files for a branch at the latest commit
 ```js
 abstract.files.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "master",
+  sha: "latest"
 });
 ```
 
-### Retrieve a file 
+### Retrieve a file
 
 `files.info(FileDescriptor): Promise<File>`
 
@@ -435,6 +437,7 @@ abstract.files.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  sha: "latest"
 });
 ```
 
@@ -519,7 +522,8 @@ abstract.layers.info({
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "latest"
 });
 ```
 
@@ -686,7 +690,7 @@ const buffer = await abstract.previews.raw({
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
 });
 
 fs.writeFile(`preview.png`, buffer, (err) => {
@@ -708,10 +712,9 @@ abstract.previews.info({
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
 });
 ```
-
 
 ## Projects
 
@@ -759,7 +762,7 @@ abstract.projects.list({
 });
 ```
 
-### Retrive a project
+### Retrieve a project
 
   > Not yet implemented
 
@@ -795,7 +798,7 @@ Reference for the parameters required to load resources with Abstract SDK.
 {
   projectId: string,
   branchId: string | "master",
-  sha?: string
+  sha: string
 }
 ```
 
@@ -806,7 +809,7 @@ Reference for the parameters required to load resources with Abstract SDK.
   projectId: string,
   branchId: string | "master",
   fileId: string,
-  sha?: string
+  sha: string | "latest"
 }
 ```
 
@@ -818,7 +821,7 @@ Reference for the parameters required to load resources with Abstract SDK.
   branchId: string | "master",
   fileId: string,
   pageId: string,
-  sha?: string
+  sha: string
 }
 ```
 
@@ -831,7 +834,7 @@ Reference for the parameters required to load resources with Abstract SDK.
   fileId: string,
   pageId: string,
   layerId: string,
-  sha?: string
+  sha: string | "latest"
 }
 ```
 

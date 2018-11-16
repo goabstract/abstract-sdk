@@ -5,7 +5,7 @@ import { Buffer } from "buffer";
 import find from "lodash/find";
 import locatePath from "locate-path";
 import JSONStream from "JSONStream";
-import { ref, pageFileDescriptor } from "../utils";
+import { objectFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -126,9 +126,31 @@ export default class AbstractCLI implements AbstractInterface {
     });
   }
 
+  async resolveDescriptor<T: *>(objectDescriptor: T): Promise<T> {
+    if (objectDescriptor.sha !== "latest") return objectDescriptor;
+
+    const commits = await this.commits.list(objectDescriptor, { limit: 1 });
+
+    try {
+      return {
+        ...objectDescriptor,
+        sha: commits[0].sha
+      };
+    } catch (error) {
+      throw new Error(
+        `Could not resolve sha "latest" for ${JSON.stringify(objectDescriptor)}`
+      );
+    }
+  }
+
   commits = {
     list: async (
-      objectDescriptor: BranchDescriptor | FileDescriptor | LayerDescriptor
+      objectDescriptor:
+        | BranchDescriptor
+        | FileDescriptor
+        | PageDescriptor
+        | LayerDescriptor,
+      options?: { limit?: number } = {}
     ) => {
       const fileIdArgs = objectDescriptor.fileId
         ? ["--file-id", objectDescriptor.fileId]
@@ -138,12 +160,17 @@ export default class AbstractCLI implements AbstractInterface {
         ? ["--layer-id", objectDescriptor.layerId]
         : [];
 
+      const limitArgs = options.limit
+        ? ["--limit", options.limit.toString()]
+        : [];
+
       const data = await this.spawn([
         "commits",
         objectDescriptor.projectId,
         objectDescriptor.branchId,
         ...fileIdArgs,
-        ...layerIdArgs
+        ...layerIdArgs,
+        ...limitArgs
       ]);
 
       return data.commits;
@@ -182,7 +209,7 @@ export default class AbstractCLI implements AbstractInterface {
 
   files = {
     list: async (branchDescriptor: BranchDescriptor) => {
-      if (!branchDescriptor.sha) throw new Error("files.list requires sha");
+      branchDescriptor = await this.resolveDescriptor(branchDescriptor);
 
       const data = await this.spawn([
         "files",
@@ -193,10 +220,12 @@ export default class AbstractCLI implements AbstractInterface {
       return data.files;
     },
     info: async (fileDescriptor: FileDescriptor) => {
+      fileDescriptor = await this.resolveDescriptor(fileDescriptor);
+
       const data = await this.spawn([
         "file",
         fileDescriptor.projectId,
-        ref(fileDescriptor),
+        fileDescriptor.sha,
         fileDescriptor.fileId
       ]);
 
@@ -216,26 +245,30 @@ export default class AbstractCLI implements AbstractInterface {
       return file._pages;
     },
     info: async (pageDescriptor: PageDescriptor) => {
-      const pages = await this.pages.list(pageFileDescriptor(pageDescriptor));
+      const pages = await this.pages.list(objectFileDescriptor(pageDescriptor));
       return find(pages, { id: pageDescriptor.pageId });
     }
   };
 
   layers = {
-    list: (fileDescriptor: FileDescriptor) => {
+    list: async (fileDescriptor: FileDescriptor) => {
+      fileDescriptor = await this.resolveDescriptor(fileDescriptor);
+
       return this.spawn([
         "layers",
         fileDescriptor.projectId,
-        ref(fileDescriptor),
+        fileDescriptor.sha,
         fileDescriptor.fileId
       ]);
     },
     info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       const data = await this.spawn([
         "layer",
         "meta",
         layerDescriptor.projectId,
-        ref(layerDescriptor),
+        layerDescriptor.sha,
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
@@ -245,12 +278,14 @@ export default class AbstractCLI implements AbstractInterface {
   };
 
   data = {
-    info: (layerDescriptor: LayerDescriptor) => {
+    info: async (layerDescriptor: LayerDescriptor) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
       return this.spawn([
         "layer",
         "data",
         layerDescriptor.projectId,
-        ref(layerDescriptor),
+        layerDescriptor.sha,
         layerDescriptor.fileId,
         layerDescriptor.layerId
       ]);
