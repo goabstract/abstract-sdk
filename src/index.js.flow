@@ -27,10 +27,6 @@ export type NotificationDescriptor = {|
   notificationId: string
 |}
 
-export type CommentDescriptor = {|
-  commentId: string
-|};
-
 type ObjectDescriptor = {|
   projectId: string,
   branchId: string | "master",
@@ -1265,17 +1261,16 @@ export type Notification =
 export interface AbstractInterface {
   accessToken: string;
 
-<<<<<<< HEAD
   descriptors?: {
     info: (shareDescriptor: ShareDescriptor) => Promise<ShareableDescriptor>
-=======
+  };
+
   activities?: {
     list: (
       objectDescriptor?: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
       options?: ListOptions
     ) => Promise<Activity[]>,
     info: (activityDescriptor: ActivityDescriptor) => Promise<Activity>
->>>>>>> origin/master
   };
 
   organizations?: {

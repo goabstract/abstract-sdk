@@ -113,6 +113,7 @@ export function buildCommentDescriptor(
   commentDescriptor: *
 ): CommentDescriptor {
   return {
+    projectId: "project-id",
     commentId: "comment-id",
     ...commentDescriptor
   };

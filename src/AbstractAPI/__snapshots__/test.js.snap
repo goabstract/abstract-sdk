@@ -412,7 +412,7 @@ Object {
 }
 `;
 
-exports[`AbstractAPI with mocked global.fetch comments.info({"commentId": "comment-id"}) 1`] = `
+exports[`AbstractAPI with mocked global.fetch comments.info({"commentId": "comment-id", "projectId": "project-id"}) 1`] = `
 Object {
   "fetch": Array [
     Array [

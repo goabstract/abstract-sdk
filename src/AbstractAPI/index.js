@@ -178,7 +178,7 @@ export default class AbstractAPI implements AbstractInterface {
       const share = await this.shares.info(shareUrl);
       return share.descriptor;
     }.bind(this) // flow + async + generic = https://github.com/babel/babylon/issues/235#issuecomment-319450941
-  }
+  };
 
   activities = {
     list: async (
