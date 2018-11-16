@@ -22,6 +22,10 @@ export type NotificationDescriptor = {|
   notificationId: string
 |}
 
+export type CommentDescriptor = {|
+  commentId: string
+|};
+
 type ObjectDescriptor = {|
   projectId: string,
   branchId: string | "master",
@@ -1210,7 +1214,14 @@ export interface AbstractInterface {
     create: (
       BranchDescriptor | LayerDescriptor,
       comment: Comment
-    ) => Promise<Comment>
+    ) => Promise<Comment>,
+    list: (
+      {
+        projectId: $PropertyType<ProjectDescriptor, "projectId">
+      } & $Shape<BranchDescriptor & CommitDescriptor & PageDescriptor & LayerDescriptor>,
+      options?: ListOptions
+    ) => Promise<Comment[]>,
+    info: (commentDescriptor: CommentDescriptor) => Promise<Comment>
   };
 
   commits: {
