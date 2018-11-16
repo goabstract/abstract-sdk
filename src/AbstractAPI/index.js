@@ -157,15 +157,6 @@ export default class AbstractAPI implements AbstractInterface {
     }
   }
 
-  descriptors = {
-    info: async function(
-      shareDescriptor: ShareDescriptor
-    ): Promise<ShareableDescriptor> {
-      const share = await this.shares.info(shareDescriptor);
-      return share.descriptor;
-    }.bind(this) // flow + async + generic = https://github.com/babel/babylon/issues/235#issuecomment-319450941
-  };
-
   activities = {
     list: async (
       objectDescriptor: $Shape<

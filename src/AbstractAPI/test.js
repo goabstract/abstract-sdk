@@ -132,30 +132,6 @@ describe("AbstractAPI", () => {
     });
 
     test.each([
-      // descriptors
-      [
-        "descriptors.info",
-        {
-          url:
-            "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"
-        }
-      ],
-      [
-        "descriptors.info",
-        {
-          sha: "latest",
-          url:
-            "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"
-        }
-      ],
-      [
-        "descriptors.info",
-        {
-          sha: "my-sha",
-          url:
-            "https://share.goabstract.com/738d0202-0eea-4e13-a911-a6e7dfafe85f"
-        }
-      ],
       // activities
       [
         "activities.list",
@@ -180,8 +156,8 @@ describe("AbstractAPI", () => {
       // organizations
       ["organizations.list", undefined],
       // shares
-      ["shares.info", {url: "https://share.goabstract.com/share-id"}],
-      ["shares.info", {shareId: "share-id"}],
+      ["shares.info", { url: "https://share.goabstract.com/share-id" }],
+      ["shares.info", { shareId: "share-id" }],
       // projects
       ["projects.list", buildOrganizationDescriptor()],
       ["projects.list", [undefined, { filter: "active" }]],

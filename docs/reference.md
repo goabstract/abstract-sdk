@@ -772,27 +772,18 @@ abstract.projects.list({
 
 ![API][api-icon]
 
-A share is a shareable link to an object. Use the desktop or web app to create share links.
+A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
+
+> Note: The format of a share url is `https://share.goabstract.com/<UUID>`.
 
 ### The share object
 
 | Property         | Type     | Description                                                                                    |
 |------------------|----------|------------------------------------------------------------------------------------------------|
 | `descriptor`     | [Descriptor](#Descriptor) | A descriptor for the shared object                                            |
-| `url`            | `string`                  | The share url                                                                 |
-| `color`          | `string`                  | A hex value that represents a custom project color                            |
-| `createdAt`      | `string`                  | Timestamp that the project was created                                        |
-| `createdByUser`  | `User`                    | The user that created the project                                             |
-| `description`    | `string`                  | A longer summary of the project                                               |
-| `firstPushedAt`  | `string`                  | Timestamp that the project first received data                                |
+| `appUrl`         | `string`                  | A url that can be used to open the desktop app                                |
+| `userId`         | `string`                  | UUID of the user that created the share                                       |
 | `id`             | `string`                  | UUID                                                                          |
-| `name`           | `string`                  | The name of the project                                                       |
-| `organizationId` | `string`                  | UUID of the organization this project belongs to                              |
-| `pushedAt`       | `string`                  | Timestamp that data was last received                                         |
-| `repoCreatedAt`  | `string`                  | Timestamp that the backend storage was created                                |
-| `sizeInBytes`    | `number`                  | The size of the project on disk in bytes                                      |
-| `updatedAt`      | `string`                  | Timestamp that the project was last updated                                   |
-| `visibility`     | `string`                  | Either "organization" for a team project, or "specific" for a private project |
 
 > Note: The `descriptor` property can be used as the first argument for many of the SDK methods
 
@@ -810,22 +801,20 @@ or, by id…
 
 ```js
 abstract.shares.info({
-  id: '49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+  shareId: '49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
 });
 ```
 
-### Convert share link into descriptor
+### Using share.descriptor
 
-`descriptors.info(ShareDescriptor): Promise<Descriptor>`
-
-List all files for branch share link
+List all files for branch's share url
 
 ```js
-abstract.files.list(
-  await abstract.descriptor.info({
-    url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
-  })
-);
+const branchShare = await abstract.share.info({
+  url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+})
+
+const branchFiles = await abstract.files.list(branchShare.descriptor);
 ```
 
 
@@ -848,7 +837,7 @@ Reference for the parameters required to load resources with Abstract SDK.
 ### ShareDescriptor
 
 ```js
-{ url: string } | { id: string }
+{ url: string } | { shareId: string }
 ```
 
 ### BranchDescriptor
