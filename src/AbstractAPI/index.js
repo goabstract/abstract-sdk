@@ -9,7 +9,6 @@ import { log } from "../debug";
 import type {
   AbstractInterface,
   ShareDescriptor,
-  ShareableDescriptor,
   OrganizationDescriptor,
   ProjectDescriptor,
   CommitDescriptor,
