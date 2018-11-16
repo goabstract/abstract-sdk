@@ -8,6 +8,10 @@ export type ProjectDescriptor = {|
   projectId: string
 |};
 
+export type CommentDescriptor = {|
+  commentId: string
+|};
+
 export type CollectionDescriptor = {|
   projectId: string,
   branchId: string,
@@ -22,10 +26,6 @@ export type NotificationDescriptor = {|
   notificationId: string
 |}
 
-export type CommentDescriptor = {|
-  commentId: string
-|};
-
 type ObjectDescriptor = {|
   projectId: string,
   branchId: string | "master",
@@ -37,7 +37,8 @@ export type CommitDescriptor = {|
 |};
 
 export type BranchDescriptor = {|
-  ...ObjectDescriptor
+  ...ObjectDescriptor,
+  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest"
 |};
 
 export type FileDescriptor = {|
@@ -59,6 +60,8 @@ export type LayerDescriptor = {|
   pageId: string,
   layerId: string
 |};
+
+export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
 export type ListOptions = {
   limit?: number,
@@ -343,6 +346,71 @@ export type Project = {
   sizeInBytes: number,
   userIds: [string]
 };
+
+type BaseShare = {
+  id: string,
+  url: string,
+  appUrl: string,
+  userId: string
+};
+
+export type ProjectShare = {
+  ...BaseShare,
+  kind: "project",
+  descriptor: ProjectDescriptor
+};
+
+export type CommitShare = {
+  ...BaseShare,
+  kind: "commit",
+  descriptor: CommitDescriptor
+};
+
+export type BranchShare = {
+  ...BaseShare,
+  kind: "branch",
+  descriptor: BranchDescriptor
+};
+
+export type FileShare = {
+  ...BaseShare,
+  kind: "file",
+  descriptor: FileDescriptor
+};
+
+export type PageShare = {
+  ...BaseShare,
+  kind: "page",
+  descriptor: PageDescriptor
+};
+
+export type LayerShare = {
+  ...BaseShare,
+  kind: "layer",
+  descriptor: LayerDescriptor
+};
+
+export type CommentShare = {
+  ...BaseShare,
+  kind: "comment",
+  descriptor: CommentDescriptor
+};
+
+export type CollectionShare = {
+  ...BaseShare,
+  kind: "collection",
+  descriptor: CollectionDescriptor
+};
+
+export type Share =
+  | ProjectShare
+  | CommitShare
+  | BranchShare
+  | FileShare
+  | PageShare
+  | LayerShare
+  | CommentShare
+  | CollectionShare;
 
 export type Annotation = {
   id: string,
@@ -1192,6 +1260,10 @@ export interface AbstractInterface {
 
   organizations?: {
     list: () => Promise<Branch[]>
+  };
+
+  shares?: {
+    info: (shareDescriptor: ShareDescriptor) => Promise<Share>
   };
 
   projects?: {

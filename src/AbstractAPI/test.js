@@ -155,6 +155,9 @@ describe("AbstractAPI", () => {
       ],
       // organizations
       ["organizations.list", undefined],
+      // shares
+      ["shares.info", { url: "https://share.goabstract.com/share-id" }],
+      ["shares.info", { shareId: "share-id" }],
       // projects
       ["projects.list", buildOrganizationDescriptor()],
       ["projects.list", [undefined, { filter: "active" }]],

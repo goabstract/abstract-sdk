@@ -8,6 +8,7 @@ import { objectBranchDescriptor, objectFileDescriptor } from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
+  ShareDescriptor,
   OrganizationDescriptor,
   ProjectDescriptor,
   CommitDescriptor,
@@ -23,6 +24,7 @@ import type {
   Layer,
   ListOptions
 } from "../";
+import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
 
 const minorVersion = version.split(".", 2).join(".");
@@ -83,7 +85,7 @@ export default class AbstractAPI implements AbstractInterface {
       "User-Agent": `Abstract SDK ${minorVersion}`,
       Authorization: `Bearer ${this.accessToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
-      "Abstract-Api-Version": "7",
+      "Abstract-Api-Version": "8",
       ...(init.headers || {})
     };
 
@@ -182,6 +184,31 @@ export default class AbstractAPI implements AbstractInterface {
     list: async () => {
       const response = await this.fetch("organizations");
       return unwrapEnvelope(response.json());
+    }
+  };
+
+  shares = {
+    info: async (shareDescriptor: ShareDescriptor) => {
+      let shareId;
+
+      if (shareDescriptor.url) {
+        shareId = parseShareURL(shareDescriptor.url);
+      }
+
+      if (shareDescriptor.shareId) {
+        shareId = shareDescriptor.shareId;
+      }
+
+      if (!shareId) {
+        throw new Error(
+          `Malformed share descriptor, "url" or "shareId" required: ${JSON.stringify(
+            shareDescriptor
+          )}`
+        );
+      }
+
+      const response = await this.fetch(`share_links/${shareId}`);
+      return response.json();
     }
   };
 

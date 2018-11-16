@@ -716,6 +716,7 @@ abstract.previews.info({
 });
 ```
 
+
 ## Projects
 
 ![API][api-icon]
@@ -763,8 +764,58 @@ abstract.projects.list({
 ```
 
 ### Retrieve a project
+> Not yet implemented
 
-  > Not yet implemented
+
+
+## Shares
+
+![API][api-icon]
+
+A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
+
+> Note: The format of a share url is `https://share.goabstract.com/<UUID>`.
+
+### The share object
+
+| Property         | Type     | Description                                                                                    |
+|------------------|----------|------------------------------------------------------------------------------------------------|
+| `descriptor`     | [Descriptor](#Descriptor) | A descriptor for the shared object                                            |
+| `appUrl`         | `string`                  | A url that can be used to open the desktop app                                |
+| `userId`         | `string`                  | UUID of the user that created the share                                       |
+| `id`             | `string`                  | UUID                                                                          |
+
+> Note: The `descriptor` property can be used as the first argument for many of the SDK methods
+
+### Load info for a share
+
+`shares.info(ShareDescriptor): Promise<Share>`
+
+```js
+abstract.shares.info({
+  url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+});
+```
+
+or, by id…
+
+```js
+abstract.shares.info({
+  shareId: '49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+});
+```
+
+### Using share.descriptor
+
+List all files for branch's share url
+
+```js
+const branchShare = await abstract.share.info({
+  url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
+})
+
+const branchFiles = await abstract.files.list(branchShare.descriptor);
+```
 
 
 ## Descriptors
@@ -781,6 +832,12 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ```js
 { projectId: string }
+```
+
+### ShareDescriptor
+
+```js
+{ url: string } | { shareId: string }
 ```
 
 ### BranchDescriptor
