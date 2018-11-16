@@ -5,8 +5,10 @@
     ],
     "API": [
       "authentication",
-      "reference",
-      "utilities"
+      "reference"
+    ],
+    "Utilities": [
+      "sketch"
     ]
   }
 }

@@ -1,5 +1,6 @@
 // @flow
 import child_process from "child_process";
+import path from "path";
 import { Readable } from "readable-stream";
 import get from "lodash/get";
 import {
@@ -102,7 +103,9 @@ describe(AbstractCLI, () => {
       (cliPath, expected) => {
         process.env.ABSTRACT_CLI_PATH = cliPath;
         const { default: AbstractCLI } = require("./");
-        expect(new AbstractCLI(buildOptions()).cliPath).toBe(expected);
+        expect(new AbstractCLI(buildOptions()).cliPath).toBe(
+          path.resolve(expected)
+        );
       }
     );
 
@@ -115,7 +118,7 @@ describe(AbstractCLI, () => {
             cliPath: ["./fixtures/abstract-cli"]
           })
         ).cliPath
-      ).toBe("fixtures/abstract-cli");
+      ).toBe(path.resolve("fixtures/abstract-cli"));
     });
   });
 

@@ -93,3 +93,17 @@ export function buildCollectionDescriptor(
     ...collectionDescriptor
   };
 }
+
+export function buildActivityDescriptor(activityDescriptor: *) {
+  return {
+    activityId: "activity-id",
+    ...activityDescriptor
+  };
+}
+
+export function buildNotificationDescriptor(notificationDescriptor: *) {
+  return {
+    notificationId: "notification-id",
+    ...notificationDescriptor
+  };
+}

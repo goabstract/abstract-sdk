@@ -64,10 +64,7 @@ export default class AbstractCLI implements AbstractInterface {
     this.apiUrl = apiUrl;
 
     try {
-      this.cliPath = path.relative(
-        cwd,
-        path.resolve(cwd, locatePath.sync(cliPath))
-      );
+      this.cliPath = path.resolve(cwd, locatePath.sync(cliPath));
     } catch (error) {
       throw new Error(`Cannot find abstract-cli in "${cliPath.join(":")}"`);
     }
@@ -80,7 +77,7 @@ export default class AbstractCLI implements AbstractInterface {
         : [];
 
       const spawnArgs = [
-        `./${path.relative(this.cwd, this.cliPath)}`,
+        this.cliPath,
         [
           ...userToken,
           "--api-url",
@@ -93,21 +90,28 @@ export default class AbstractCLI implements AbstractInterface {
       logSpawn(spawnArgs);
       const abstractCli = spawn(...spawnArgs);
 
-      let stderrBuffer = new Buffer.from("");
+      let stderrBuffer = Buffer.from("");
       abstractCli.stderr.on("data", chunk => {
         logStderrData(chunk.toString());
         stderrBuffer = Buffer.concat([stderrBuffer, chunk]);
       });
 
+      const stream = JSONStream.parse();
+      stream.on("data", data => {
+        logStdoutData(data);
+        resolve(data);
+      });
+
       abstractCli.stdout
-        .pipe(JSONStream.parse())
         .on("data", data => {
-          logStdoutData(data);
-          resolve(data);
+          stream.write(data);
         })
         .on("error", error => {
           logStdoutError(error.toString());
           reject(error);
+        })
+        .on("end", () => {
+          stream.end();
         });
 
       abstractCli.on("error", reject);

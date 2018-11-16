@@ -16,8 +16,11 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
+  ActivityDescriptor,
+  NotificationDescriptor,
   Comment,
-  Layer
+  Layer,
+  ListOptions
 } from "../";
 import randomTraceId from "./randomTraceId";
 
@@ -61,6 +64,12 @@ export default class AbstractAPI implements AbstractInterface {
     apiUrl = "https://api.goabstract.com",
     previewsUrl = "https://previews.goabstract.com"
   }: Options = {}) {
+    if (!accessToken) {
+      throw new Error(
+        "options.accessToken or ABSTRACT_TOKEN set as an environment variable is required"
+      );
+    }
+
     this.accessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
@@ -144,6 +153,30 @@ export default class AbstractAPI implements AbstractInterface {
     }
   }
 
+  activities = {
+    list: async (
+      objectDescriptor: $Shape<
+        BranchDescriptor & OrganizationDescriptor & ProjectDescriptor
+      > = {},
+      options: ListOptions = {}
+    ) => {
+      const query = queryString.stringify({
+        limit: options.offset,
+        offset: options.offset,
+        branchId: objectDescriptor.branchId,
+        organizationId: objectDescriptor.organizationId,
+        projectId: objectDescriptor.projectId
+      });
+      const response = await this.fetch(`activities?${query}`);
+      const { activities } = await unwrapEnvelope(response.json());
+      return activities;
+    },
+    info: async ({ activityId }: ActivityDescriptor) => {
+      const response = await this.fetch(`activities/${activityId}`);
+      return response.json();
+    }
+  };
+
   organizations = {
     list: async () => {
       const response = await this.fetch("organizations");
@@ -214,17 +247,6 @@ export default class AbstractAPI implements AbstractInterface {
             ...(await this._denormalizeDescriptorForComment(objectDescriptor))
           }
         }
-      );
-
-      return response.json();
-    }
-  };
-
-  branches = {
-    info: async (branchDescriptor: BranchDescriptor) => {
-      const response = await this.fetch(
-        // prettier-ignore
-        `projects/${branchDescriptor.projectId}/branches/${branchDescriptor.branchId}`
       );
 
       return response.json();
@@ -346,7 +368,7 @@ export default class AbstractAPI implements AbstractInterface {
   layers = {
     list: async (
       objectDescriptor: FileDescriptor | PageDescriptor,
-      options: { limit?: number, offset?: number } = {}
+      options: ListOptions = {}
     ) => {
       const { sha } = await this.resolveDescriptor(
         objectFileDescriptor(objectDescriptor)
@@ -455,6 +477,26 @@ export default class AbstractAPI implements AbstractInterface {
 
       const data = await unwrapEnvelope(response.json());
       return data.collections[0];
+    }
+  };
+
+  notifications = {
+    list: async (
+      objectDescriptor?: OrganizationDescriptor,
+      options: ListOptions = {}
+    ) => {
+      const query = queryString.stringify({
+        limit: options.offset,
+        offset: options.offset,
+        organizationId: objectDescriptor && objectDescriptor.organizationId
+      });
+      const response = await this.fetch(`notifications?${query}`);
+      const notifications = await unwrapEnvelope(response.json());
+      return notifications;
+    },
+    info: async ({ notificationId }: NotificationDescriptor) => {
+      const response = await this.fetch(`notifications/${notificationId}`);
+      return response.json();
     }
   };
 
