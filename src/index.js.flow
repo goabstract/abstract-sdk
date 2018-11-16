@@ -72,7 +72,7 @@ export type ShareableDescriptor =
   | PageDescriptor
   | LayerDescriptor;
 
-export type ShareDescriptor = {| url: string |} | {| id: string |};
+export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
 export type ListOptions = {
   limit?: number,
@@ -1278,7 +1278,7 @@ export interface AbstractInterface {
   };
 
   shares?: {
-    info: (shareUrl: string) => Promise<Share>
+    info: (shareDescriptor: ShareDescriptor) => Promise<Share>
   };
 
   projects?: {

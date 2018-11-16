@@ -161,21 +161,7 @@ export default class AbstractAPI implements AbstractInterface {
     info: async function(
       shareDescriptor: ShareDescriptor
     ): Promise<ShareableDescriptor> {
-      const shareUrl = shareDescriptor.url
-        ? shareDescriptor.url
-        : shareDescriptor.id
-          ? `https://share.goabstract.com/${shareDescriptor.id}`
-          : undefined;
-
-      if (!shareUrl) {
-        throw new Error(
-          `Malformed share descriptor, "id" or "url" required: ${JSON.stringify(
-            shareDescriptor
-          )}`
-        );
-      }
-
-      const share = await this.shares.info(shareUrl);
+      const share = await this.shares.info(shareDescriptor);
       return share.descriptor;
     }.bind(this) // flow + async + generic = https://github.com/babel/babylon/issues/235#issuecomment-319450941
   };
@@ -212,11 +198,26 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   shares = {
-    info: async (shareUrl: string) => {
-      const response = await this.fetch(
-        `share_links/${parseShareURL(shareUrl)}`
-      );
+    info: async (shareDescriptor: ShareDescriptor) => {
+      let shareId;
 
+      if (shareDescriptor.url) {
+        shareId = parseShareURL(shareDescriptor.url);
+      }
+
+      if (shareDescriptor.shareId) {
+        shareId = shareDescriptor.shareId;
+      }
+
+      if (!shareId) {
+        throw new Error(
+          `Malformed share descriptor, "url" or "shareId" required: ${JSON.stringify(
+            shareDescriptor
+          )}`
+        );
+      }
+
+      const response = await this.fetch(`share_links/${shareId}`);
       return response.json();
     }
   };
