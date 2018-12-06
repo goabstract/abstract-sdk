@@ -106,6 +106,54 @@ abstract.branches.info({
 ```
 
 
+## Changesets
+
+![CLI][cli-icon] ![API][api-icon]
+
+A changeset is a group of changes that together form a single, indivisible modification to a project. Changesets include data on all visual and nonvisual changes and provide insight into the differences between two versions of a project.
+
+### The changeset object
+
+| Property       | Type                | Description                                                                             |
+|----------------|---------------------|-----------------------------------------------------------------------------------------|
+| `branchId`     | `string`            | UUID of the branch that this changeset is part of, or the string "master"               |
+| `changes`      | `ChangesetChange[]` | List of changes that make up this changeset                                             |
+| `compareToSha` | `string`            | SHA of the commit introducing changes in this changeset                                 |
+| `id`           | `string`            | UUID identifier of the changeset                                                        |
+| `projectId`    | `string`            | UUID of the project this changeset belongs to                                           |
+| `sha`          | `string`            | SHA of the base commit in this changeset that changes are against                       |
+
+#### ChangesetChange
+
+| Property       | Type                             | Description                                                |
+|----------------|----------------------------------|------------------------------------------------------------|
+| `type`         | `string`                         | Type of this change, can be one of `file`, `page`, `layer`, `symbol`, `artboard`, `colors`, `gradient`, `layer-style`, `text-style` |
+| `status`       | `string`                         | Status of this change, can be one of `added`, `deleted`, `edited`, `edited-indirectly`, `none` |
+| `hasPreview`   | `boolean`                        | Indicates if this change has a visual preview              |
+| `meta`         | `{ [key: string]: [any, any] }`  | Object containing additional information about this change |
+| `fileId`       | `string`                         | UUID of the file this change was made against              |
+| `pageId`       | `string`                         | UUID of the page this change was made against              |
+| `layerId`      | `string`                         | UUID of the layer this change was made against             |
+| `colorsId`     | `string`                         | UUID of the color associated with this change              |
+| `gradientId`   | `string`                         | UUID of the gradient associated with this change           |
+| `layerStyleId` | `string`                         | UUID of the layer style associated with this change        |
+| `textStyleId`  | `string`                         | UUID of the text style associated with this change         |
+
+### Retrieve a changeset
+
+`changesets.info(CommitDescriptor): Promise<Changeset>`
+
+Load an individual changeset
+
+```js
+abstract.changesets.info({
+  branchId: "master",
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  sha: "e2a0a301c4a530ec16024cbb339dfc135c841b10"
+});
+```
+
+
 ## Collections
 
 ![CLI][cli-icon] ![API][api-icon]
