@@ -110,7 +110,7 @@ abstract.branches.info({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-A changeset is a group of changes that together form a single, indivisible modification to a repository. A changeset can be thought of as the differences between two successive commits in a repository's history. Changesets are automatically generated as new commits are created, and provide insight into what changed between two versions of a repository.
+A changeset is a group of changes that together form a single, indivisible modification to a project. Changesets include data on all visual and nonvisual changes and provide insight into the differences between two versions of a project.
 
 ### The changeset object
 
@@ -122,6 +122,22 @@ A changeset is a group of changes that together form a single, indivisible modif
 | `id`           | `string`            | UUID identifier of the changeset                                                        |
 | `projectId`    | `string`            | UUID of the project this changeset belongs to                                           |
 | `sha`          | `string`            | SHA of the base commit in this changeset that changes are against                       |
+
+#### ChangesetChange
+
+| Property       | Type                             | Description                                                |
+|----------------|----------------------------------|------------------------------------------------------------|
+| `type`         | `string`                         | Type of this change, can be one of `file`, `page`, `layer`, `symbol`, `artboard`, `colors`, `gradient`, `layer-style`, `text-style` |
+| `status`       | `string`                         | Status of this change, can be one of `added`, `deleted`, `edited`, `edited-indirectly`, `none` |
+| `hasPreview`   | `boolean`                        | Indicates if this change has a visual preview              |
+| `meta`         | `{ [key: string]: [any, any] }`  | Object containing additional information about this change |
+| `fileId`       | `string`                         | UUID of the file this change was made against              |
+| `pageId`       | `string`                         | UUID of the page this change was made against              |
+| `layerId`      | `string`                         | UUID of the layer this change was made against             |
+| `colorsId`     | `string`                         | UUID of the color associated with this change              |
+| `gradientId`   | `string`                         | UUID of the gradient associated with this change           |
+| `layerStyleId` | `string`                         | UUID of the layer style associated with this change        |
+| `textStyleId`  | `string`                         | UUID of the text style associated with this change         |
 
 ### Retrieve a changeset
 
