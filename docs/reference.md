@@ -106,6 +106,38 @@ abstract.branches.info({
 ```
 
 
+## Changesets
+
+![CLI][cli-icon] ![API][api-icon]
+
+A changeset is a group of changes that together form a single, indivisible modification to a repository. A changeset can be thought of as the differences between two successive commits in a repository's history. Changesets are automatically generated as new commits are created, and provide insight into what changed between two versions of a repository.
+
+### The changeset object
+
+| Property       | Type                | Description                                                                             |
+|----------------|---------------------|-----------------------------------------------------------------------------------------|
+| `branchId`     | `string`            | UUID of the branch that this changeset is part of, or the string "master"               |
+| `changes`      | `ChangesetChange[]` | List of changes that make up this changeset                                             |
+| `compareToSha` | `string`            | SHA of the commit introducing changes in this changeset                                 |
+| `id`           | `string`            | UUID identifier of the changeset                                                        |
+| `projectId`    | `string`            | UUID of the project this changeset belongs to                                           |
+| `sha`          | `string`            | SHA of the base commit in this changeset that changes are against                       |
+
+### Retrieve a changeset
+
+`changesets.info(CommitDescriptor): Promise<Changeset>`
+
+Load an individual changeset
+
+```js
+abstract.changesets.info({
+  branchId: "master",
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  sha: "e2a0a301c4a530ec16024cbb339dfc135c841b10"
+});
+```
+
+
 ## Collections
 
 ![CLI][cli-icon] ![API][api-icon]
