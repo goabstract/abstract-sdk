@@ -19,8 +19,8 @@ const siteConfig = {
   projectName: "abstract-sdk",
   organizationName: "goabstract",
   headerLinks: [
-    { doc: "getting-started", label: "Getting Started" },
-    { doc: "reference", label: "API" },
+    { doc: "installation", label: "Installation" },
+    { doc: "abstract-api", label: "API Reference" },
     { href: "https://spectrum.chat/abstract/developers", label: "Community" }
   ],
 

@@ -19,4 +19,4 @@ After creating an API token, you can copy it to your clipboard to save in a diff
 
 ## Using a token
 
-To use the token simply save it in your environment as `ABSTRACT_TOKEN` and it will automatically be used. You can also use another method to load the token and pass it to the SDK on initialization – see [Getting Started](/docs/getting-started) for more details.
+To use the token simply save it in your environment as `ABSTRACT_TOKEN` and it will automatically be used. You can also use another method to load the token and pass it to the SDK on initialization – see [Configuration](/docs/configuration) for more details.

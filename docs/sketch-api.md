@@ -1,6 +1,6 @@
 ---
-id: sketch
-title: Sketch
+id: sketch-api
+title: Abstract.Sketch
 ---
 
 This package contains a selection of utilities for dealing with documents inside of Sketch.

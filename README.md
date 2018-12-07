@@ -6,7 +6,7 @@ This library provides a universal javascript binding for the Abstract API and CL
 
 ## Documentation
 
-Check out the [Getting Started](https://sdk.goabstract.com/docs/getting-started/) page for a quick overview.
+Check out the [Getting Started](https://sdk.goabstract.com/docs/installation/) page for a quick overview.
 
 For full documentation please visit:
 
