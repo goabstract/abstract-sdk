@@ -1,6 +1,6 @@
 ---
 id: abstract-api
-title: Abstract.Client
+title: Client
 ---
 
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
