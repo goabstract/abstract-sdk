@@ -3,7 +3,7 @@ id: configuration
 title: Configuration
 ---
 
-In order to use the SDK you'll need to instantiate an instance and give it an [authentication](/docs/authentication) token. We recommend storing the token in your environment as `ABSTRACT_TOKEN` and it will be automatically loaded – don't commit it with your code!
+In order to use the SDK you'll need to instantiate a client and give it an [authentication](/docs/authentication) token. We recommend storing the token in your environment as `ABSTRACT_TOKEN` and it will be automatically loaded – don't commit it with your code!
 
 ## Passing a token
 
@@ -33,6 +33,6 @@ If you want to ensure that the SDK only ever loads data from the API or the CLI 
 import * as Abstract from "abstract-sdk";
 
 const abstract = Abstract.Client({
-  transport: Abstract.TRANSPORTS.CLI
+  transport: Abstract.TRANSPORTS.CLI // or Abstract.TRANSPORTS.API
 });
 ```
