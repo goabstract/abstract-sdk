@@ -1,5 +1,5 @@
 ---
-id: sketch
+id: sketch-api
 title: Sketch
 ---
 

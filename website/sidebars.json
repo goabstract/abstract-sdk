@@ -1,14 +1,18 @@
 {
   "docs": {
-    "Introduction": [
-      "getting-started"
-    ],
-    "API": [
+    "Getting Started": [
+      "installation",
       "authentication",
-      "reference"
+      "configuration",
+      "usage"
     ],
-    "Utilities": [
-      "sketch"
+    "Concepts": [
+      "pagination",
+      "latest"
+    ],
+    "API Reference": [
+      "abstract-api",
+      "sketch-api"
     ]
   }
 }

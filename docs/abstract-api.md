@@ -1,6 +1,6 @@
 ---
-id: reference
-title: Reference
+id: abstract-api
+title: Client
 ---
 
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
