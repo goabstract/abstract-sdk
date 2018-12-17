@@ -33,7 +33,7 @@ const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
 export type Options = {
-  accessToken: string,
+  accessToken: string | (() => string | Promise<string>),
   apiUrl?: string,
   previewsUrl?: string
 };
@@ -58,7 +58,7 @@ async function unwrapEnvelope<T>(
   return (await response).data;
 }
 export default class AbstractAPI implements AbstractInterface {
-  accessToken: string;
+  _optionAccessToken: string | (() => string | Promise<string>);
   apiUrl: string;
   previewsUrl: string;
 
@@ -73,17 +73,22 @@ export default class AbstractAPI implements AbstractInterface {
       );
     }
 
-    this.accessToken = accessToken;
+    this._optionAccessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
   }
+
+  accessToken = async () =>
+    typeof this._optionAccessToken === "string"
+      ? this._optionAccessToken
+      : await this._optionAccessToken();
 
   async fetch(input: string | URL, init: Object = {}, hostname?: string) {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
-      Authorization: `Bearer ${this.accessToken}`,
+      Authorization: `Bearer ${await this.accessToken()}`,
       "X-Amzn-Trace-Id": randomTraceId(),
       "Abstract-Api-Version": "8",
       ...(init.headers || {})

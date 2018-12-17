@@ -31,14 +31,14 @@ function parsePath(input: ?string): ?Array<string> {
 }
 
 export type Options = {
-  accessToken: string,
+  accessToken: string | (() => string | Promise<string>),
   cliPath?: string[],
   apiUrl?: string,
   cwd?: string
 };
 
 export default class AbstractCLI implements AbstractInterface {
-  accessToken: string;
+  _optionAccessToken: string | (() => string | Promise<string>);
   cliPath: string;
   apiUrl: string;
   cwd: string;
@@ -60,7 +60,7 @@ export default class AbstractCLI implements AbstractInterface {
     apiUrl = "https://api.goabstract.com"
   }: Options = {}) {
     this.cwd = cwd;
-    this.accessToken = accessToken;
+    this._optionAccessToken = accessToken;
     this.apiUrl = apiUrl;
 
     try {
@@ -70,12 +70,16 @@ export default class AbstractCLI implements AbstractInterface {
     }
   }
 
-  async spawn(args: string[]) {
-    return new Promise((resolve, reject) => {
-      const userToken = this.accessToken
-        ? ["--user-token", this.accessToken]
-        : [];
+  accessToken = async () =>
+    typeof this._optionAccessToken === "string"
+      ? this._optionAccessToken
+      : await this._optionAccessToken();
 
+  async spawn(args: string[]) {
+    const accessToken = await this.accessToken();
+    const userToken = accessToken ? ["--user-token", accessToken] : [];
+
+    return new Promise((resolve, reject) => {
       const spawnArgs = [
         this.cliPath,
         [
