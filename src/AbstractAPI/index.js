@@ -23,10 +23,13 @@ import type {
   Comment,
   Layer,
   ListOptions,
-  AccessTokenOption
+  AccessTokenOption,
+  Activity,
+  Notification
 } from "../";
 import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
+import Cursor from "./Cursor";
 
 const minorVersion = version.split(".", 2).join(".");
 const logStatusError = log.extend("AbstractAPI:status:error");
@@ -170,22 +173,32 @@ export default class AbstractAPI implements AbstractInterface {
   }
 
   activities = {
-    list: async (
+    list: (
       objectDescriptor: $Shape<
         BranchDescriptor & OrganizationDescriptor & ProjectDescriptor
       > = {},
       options: ListOptions = {}
     ) => {
-      const query = queryString.stringify({
-        limit: options.offset,
-        offset: options.offset,
-        branchId: objectDescriptor.branchId,
-        organizationId: objectDescriptor.organizationId,
-        projectId: objectDescriptor.projectId
-      });
-      const response = await this.fetch(`activities?${query}`);
-      const { activities } = await unwrapEnvelope(response.json());
-      return activities;
+      return new Cursor<Activity[]>(
+        async (meta = { nextOffset: options.offset }) => {
+          const query = queryString.stringify({
+            limit: options.limit,
+            offset: meta.nextOffset,
+            branchId: objectDescriptor.branchId,
+            organizationId: objectDescriptor.organizationId,
+            projectId: objectDescriptor.projectId
+          });
+          const response = await this.fetch(`activities?${query}`);
+          const {
+            data: { activities },
+            meta: newMeta
+          } = await response.json();
+          return {
+            data: activities,
+            meta: newMeta
+          };
+        }
+      ).promise;
     },
     info: async ({ activityId }: ActivityDescriptor) => {
       const response = await this.fetch(`activities/${activityId}`);
@@ -292,7 +305,7 @@ export default class AbstractAPI implements AbstractInterface {
 
       return response.json();
     },
-    list: async (
+    list: (
       objectDescriptor: {
         projectId: $PropertyType<ProjectDescriptor, "projectId">
       } & $Shape<
@@ -300,19 +313,22 @@ export default class AbstractAPI implements AbstractInterface {
       >,
       options: ListOptions = {}
     ) => {
-      const query = queryString.stringify({
-        limit: options.offset,
-        offset: options.offset,
-        branchId: objectDescriptor.branchId,
-        commitSha: objectDescriptor.sha,
-        fileId: objectDescriptor.fileId,
-        layerId: objectDescriptor.layerId,
-        pageId: objectDescriptor.pageId,
-        projectId: objectDescriptor.projectId
-      });
-      const response = await this.fetch(`comments?${query}`);
-      const comments = await unwrapEnvelope(response.json());
-      return comments;
+      return new Cursor<Comment[]>(
+        async (meta = { nextOffset: options.offset }) => {
+          const query = queryString.stringify({
+            limit: options.limit,
+            offset: meta.nextOffset,
+            branchId: objectDescriptor.branchId,
+            commitSha: objectDescriptor.sha,
+            fileId: objectDescriptor.fileId,
+            layerId: objectDescriptor.layerId,
+            pageId: objectDescriptor.pageId,
+            projectId: objectDescriptor.projectId
+          });
+          const response = await this.fetch(`comments?${query}`);
+          return await response.json();
+        }
+      ).promise;
     },
     info: async ({ commentId }: CommentDescriptor) => {
       const response = await this.fetch(`comments/${commentId}`);
@@ -548,18 +564,21 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   notifications = {
-    list: async (
+    list: (
       objectDescriptor?: OrganizationDescriptor,
       options: ListOptions = {}
     ) => {
-      const query = queryString.stringify({
-        limit: options.offset,
-        offset: options.offset,
-        organizationId: objectDescriptor && objectDescriptor.organizationId
-      });
-      const response = await this.fetch(`notifications?${query}`);
-      const notifications = await unwrapEnvelope(response.json());
-      return notifications;
+      return new Cursor<Notification[]>(
+        async (meta = { nextOffset: options.offset }) => {
+          const query = queryString.stringify({
+            limit: options.offset,
+            offset: meta.nextOffset,
+            organizationId: objectDescriptor && objectDescriptor.organizationId
+          });
+          const response = await this.fetch(`notifications?${query}`);
+          return await response.json();
+        }
+      ).promise;
     },
     info: async ({ notificationId }: NotificationDescriptor) => {
       const response = await this.fetch(`notifications/${notificationId}`);

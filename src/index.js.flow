@@ -1247,6 +1247,23 @@ export type Notification =
   | NotificationReviewerRemoved
   | NotificationUpdateCommit;
 
+export interface CursorPromise<T> extends Promise<T> {
+  next(): CursorPromise<T>;
+}
+
+export type CursorMeta = {
+  limit: number,
+  maxCreatedAt: string,
+  nextOffset?: number,
+  offset: number,
+  total: number
+};
+
+export type CursorResponse<T> = {
+  data: T,
+  meta: CursorMeta
+};
+
 export interface AbstractInterface {
   accessToken: () => Promise<?string>;
 
@@ -1257,7 +1274,7 @@ export interface AbstractInterface {
         | OrganizationDescriptor
         | ProjectDescriptor,
       options?: ListOptions
-    ) => Promise<Activity[]>,
+    ) => CursorPromise<Activity[]>,
     info: (activityDescriptor: ActivityDescriptor) => Promise<Activity>
   };
 
@@ -1297,7 +1314,7 @@ export interface AbstractInterface {
         BranchDescriptor & CommitDescriptor & PageDescriptor & LayerDescriptor
       >,
       options?: ListOptions
-    ) => Promise<Comment[]>,
+    ) => CursorPromise<Comment[]>,
     info: (commentDescriptor: CommentDescriptor) => Promise<Comment>
   };
 
@@ -1351,10 +1368,8 @@ export interface AbstractInterface {
     list: (
       objectDescriptor?: OrganizationDescriptor,
       options?: ListOptions
-    ) => Promise<Notification[]>,
-    info: (
-      notificationDescriptor: NotificationDescriptor
-    ) => Promise<Notification>
+    ) => CursorPromise<Notification[]>,
+    info: (notificationDescriptor: NotificationDescriptor) => Promise<Notification>
   };
 }
 
