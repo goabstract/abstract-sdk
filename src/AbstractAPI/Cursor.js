@@ -6,10 +6,6 @@ export default class Cursor<T> {
   meta: CursorMeta;
   request: (meta?: CursorMeta) => Promise<CursorResponse<T>>;
 
-  get promise(): CursorPromise<T> {
-    return ((this: any): CursorPromise<T>);
-  }
-
   _next(first?: boolean): CursorPromise<T> {
     const makeRequest = async () => {
       if (!first && !this.meta.nextOffset) return;
@@ -28,8 +24,11 @@ export default class Cursor<T> {
     return cursorPromise;
   }
 
-  constructor(request: (meta?: CursorMeta) => Promise<CursorResponse<T>>) {
+  constructor(
+    request: (meta?: CursorMeta) => Promise<CursorResponse<T>>
+  ): CursorPromise<T> {
     this.request = request;
+    return ((this: any): CursorPromise<T>);
   }
 
   then(
@@ -41,7 +40,7 @@ export default class Cursor<T> {
     return cursorPromise;
   }
 
-  next(first?: boolean): CursorPromise<T> {
+  next(): CursorPromise<T> {
     return this._next();
   }
 }
