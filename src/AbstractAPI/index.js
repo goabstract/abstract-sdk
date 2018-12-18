@@ -90,13 +90,15 @@ export default class AbstractAPI implements AbstractInterface {
   }
 
   async fetch(input: string | URL, init: Object = {}, hostname?: string) {
+    const tokenHeader = await this.tokenHeader();
+
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
       "X-Amzn-Trace-Id": randomTraceId(),
       "Abstract-Api-Version": "8",
-      ...this.tokenHeader(),
+      ...tokenHeader,
       ...(init.headers || {})
     };
 
