@@ -25,7 +25,7 @@ const abstract = Abstract.Client({
 });
 ```
 
-You pass a function that returns a token.
+You can pass a function that returns a token.
 
 ```js
 import * as Abstract from "abstract-sdk";
