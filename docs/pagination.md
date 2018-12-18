@@ -20,17 +20,24 @@ The following example demonstrates how to work with pages of results.
 1. Use an SDK client instance to fetch the first ten activities for a project.
 
   ```js
-  const page = abstract.activities.list({
+  const firstPage = abstract.activities.list({
     projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
   }, { limit: 10 });
   ```
 
-2. Since `page` is a `CursorPromise`, it will resolve to the first ten activities. Its `next` method can be used to fetch the next page of activities.
+2. Since `firstPage` is a `CursorPromise`, it will resolve to the first ten activities. Its `next` method can be used to fetch the next page of activities.
 
   ```js
-  console.log(`Result page: ${(await page).length} items`);
-  const nextPage = response.next();
-  console.log(`Result page: ${(await nextPage).length} items`);
+  const firstPage = abstract.activities.list({
+    projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
+  }, { limit: 10 });
+
+  const firstPageResponse = await firstPage;
+
+  const secondPage = firstPage.next();
+  const secondPageResponse = await secondPage;
+
+  console.log(`First Page: ${firstPageResponse.length}, Second Page: ${secondPageResponse.length}`);
   ```
 
 3. Putting this all together, all activities could be fetched using recursion.
