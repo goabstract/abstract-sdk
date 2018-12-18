@@ -22,7 +22,8 @@ import type {
   CommentDescriptor,
   Comment,
   Layer,
-  ListOptions
+  ListOptions,
+  AccessTokenOption
 } from "../";
 import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
@@ -33,7 +34,7 @@ const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
 export type Options = {
-  accessToken: string | (() => string | Promise<string>),
+  accessToken: AccessTokenOption,
   apiUrl?: string,
   previewsUrl?: string
 };
@@ -58,7 +59,7 @@ async function unwrapEnvelope<T>(
   return (await response).data;
 }
 export default class AbstractAPI implements AbstractInterface {
-  _optionAccessToken: string | (() => string | Promise<string>);
+  _optionAccessToken: AccessTokenOption;
   apiUrl: string;
   previewsUrl: string;
 

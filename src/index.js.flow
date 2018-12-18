@@ -1357,3 +1357,8 @@ export interface AbstractInterface {
     ) => Promise<Notification>
   };
 }
+
+export type AccessTokenOption =
+  | string
+  | (() => string)
+  | (() => Promise<string>);

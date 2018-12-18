@@ -15,7 +15,8 @@ import type {
   PageDescriptor,
   FileDescriptor,
   LayerDescriptor,
-  CollectionDescriptor
+  CollectionDescriptor,
+  AccessTokenOption
 } from "../";
 
 const logSpawn = log.extend("AbstractCLI:spawn");
@@ -31,14 +32,14 @@ function parsePath(input: ?string): ?Array<string> {
 }
 
 export type Options = {
-  accessToken: string | (() => string | Promise<string>),
+  accessToken: AccessTokenOption,
   cliPath?: string[],
   apiUrl?: string,
   cwd?: string
 };
 
 export default class AbstractCLI implements AbstractInterface {
-  _optionAccessToken: string | (() => string | Promise<string>);
+  _optionAccessToken: AccessTokenOption;
   cliPath: string;
   apiUrl: string;
   cwd: string;
