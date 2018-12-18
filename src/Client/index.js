@@ -1,5 +1,5 @@
 // @flow
-import type { AbstractInterface } from "../";
+import type { AbstractInterface } from "../types";
 import { AUTO } from "../transports";
 
 type Options = {

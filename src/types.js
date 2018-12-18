@@ -24,7 +24,7 @@ export type ActivityDescriptor = {|
 
 export type NotificationDescriptor = {|
   notificationId: string
-|}
+|};
 
 type ObjectDescriptor = {|
   projectId: string,
@@ -1252,7 +1252,10 @@ export interface AbstractInterface {
 
   activities?: {
     list: (
-      objectDescriptor?: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
+      objectDescriptor?:
+        | BranchDescriptor
+        | OrganizationDescriptor
+        | ProjectDescriptor,
       options?: ListOptions
     ) => Promise<Activity[]>,
     info: (activityDescriptor: ActivityDescriptor) => Promise<Activity>
@@ -1290,7 +1293,9 @@ export interface AbstractInterface {
     list: (
       {
         projectId: $PropertyType<ProjectDescriptor, "projectId">
-      } & $Shape<BranchDescriptor & CommitDescriptor & PageDescriptor & LayerDescriptor>,
+      } & $Shape<
+        BranchDescriptor & CommitDescriptor & PageDescriptor & LayerDescriptor
+      >,
       options?: ListOptions
     ) => Promise<Comment[]>,
     info: (commentDescriptor: CommentDescriptor) => Promise<Comment>
@@ -1347,6 +1352,8 @@ export interface AbstractInterface {
       objectDescriptor?: OrganizationDescriptor,
       options?: ListOptions
     ) => Promise<Notification[]>,
-    info: (notificationDescriptor: NotificationDescriptor) => Promise<Notification>
+    info: (
+      notificationDescriptor: NotificationDescriptor
+    ) => Promise<Notification>
   };
 }

@@ -8,7 +8,7 @@ import type {
   LayerDescriptor,
   CollectionDescriptor,
   CommentDescriptor
-} from "../";
+} from "../types";
 
 export function buildOptions(options: *) {
   return {

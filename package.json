@@ -9,7 +9,7 @@
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "yarn run build",
-    "build": "babel ./src -d ./lib",
+    "build": "babel ./src -d ./lib && flow-copy-source src lib",
     "lint": "eslint .",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
@@ -46,6 +46,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.80.0",
+    "flow-copy-source": "^2.0.2",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0",
     "jest-fetch-mock": "GrahamTheCoder/jest-fetch-mock#blob-fix",

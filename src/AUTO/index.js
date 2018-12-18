@@ -1,5 +1,5 @@
 // @flow
-import type { AbstractInterface } from "../";
+import type { AbstractInterface } from "../types";
 import AbstractCLI, { type Options as OptionsCLI } from "../AbstractCLI";
 import AbstractAPI, { type Options as OptionsAPI } from "../AbstractAPI";
 

@@ -16,7 +16,7 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor
-} from "../";
+} from "../types";
 
 const logSpawn = log.extend("AbstractCLI:spawn");
 const logError = log.extend("AbstractCLI:error");

@@ -23,7 +23,7 @@ import type {
   Comment,
   Layer,
   ListOptions
-} from "../";
+} from "../types";
 import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
 
