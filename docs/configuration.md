@@ -25,6 +25,28 @@ const abstract = Abstract.Client({
 });
 ```
 
+You can pass a function that returns a token.
+
+```js
+import * as Abstract from "abstract-sdk";
+
+const abstract = Abstract.Client({
+  accessToken: () => Cookies.get("abstractToken")
+});
+```
+
+And you can pass a function that returns a promise to a token.
+
+```js
+import * as Abstract from "abstract-sdk";
+
+const abstract = Abstract.Client({
+  accessToken: () => {
+    return new Promise(resolve => resolve(Cookies.get("abstractToken")));
+  }
+});
+```
+
 ## Transports
 
 If you want to ensure that the SDK only ever loads data from the API or the CLI then you can achieve this by specifying a transport. This is useful when running in an environment without the Mac application installed or alternatively when you want to ensure you're only dealing with local data:
