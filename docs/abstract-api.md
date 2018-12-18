@@ -648,7 +648,6 @@ Organizations contain users and projects.
 | `restrictedToDomains`      | `string[]` | An optional list of domain names that invitations to this organization are restricted to |
 | `trialEndsAt`              | `string`   | Timestamp of when the trial ends, if within trial period                                 |
 | `userId`                   | `string`   | UUID of the user that created the organization                                           |
-| `userIds`                  | `string`   | Array of UUIDs of users that belong to this organization                                 |
 
 ### List all organizations
 
