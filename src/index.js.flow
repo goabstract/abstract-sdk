@@ -1248,7 +1248,7 @@ export type Notification =
   | NotificationUpdateCommit;
 
 export interface AbstractInterface {
-  accessToken: () => Promise<string>;
+  accessToken: () => Promise<?string>;
 
   activities?: {
     list: (
@@ -1360,5 +1360,5 @@ export interface AbstractInterface {
 
 export type AccessTokenOption =
   | string
-  | (() => string)
-  | (() => Promise<string>);
+  | (() => ?string)
+  | (() => Promise<?string>);

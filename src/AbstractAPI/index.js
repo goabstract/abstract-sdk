@@ -84,14 +84,19 @@ export default class AbstractAPI implements AbstractInterface {
       ? this._optionAccessToken
       : await this._optionAccessToken();
 
+  async tokenHeader() {
+    const accessToken = await this.accessToken();
+    return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  }
+
   async fetch(input: string | URL, init: Object = {}, hostname?: string) {
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
-      Authorization: `Bearer ${await this.accessToken()}`,
       "X-Amzn-Trace-Id": randomTraceId(),
       "Abstract-Api-Version": "8",
+      ...this.tokenHeader(),
       ...(init.headers || {})
     };
 
