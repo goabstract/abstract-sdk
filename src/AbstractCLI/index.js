@@ -71,10 +71,13 @@ export default class AbstractCLI implements AbstractInterface {
     }
   }
 
-  accessToken = async () =>
-    typeof this._optionAccessToken === "string"
-      ? this._optionAccessToken
-      : await this._optionAccessToken();
+  accessToken = async () => {
+    if (!this._optionAccessToken) return;
+    if (typeof this._optionAccessToken === "string") {
+      return this._optionAccessToken;
+    }
+    return this._optionAccessToken();
+  };
 
   async spawn(args: string[]) {
     const accessToken = await this.accessToken();
