@@ -635,18 +635,20 @@ Organizations contain users and projects.
 
 | Property                   | Type       | Description                                                                              |
 |----------------------------|------------|------------------------------------------------------------------------------------------|
-| `createdAt`                | `string`   | Timestamp that the organization was created                                              |
+| `billingEmail`             | `string`   | Billing email associated with this organization                                          |
+| `features`                 | `{[feature: string]: boolean}` | Map of feature flags enabled for this organization                   |
 | `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
 | `id`                       | `string`   | UUID                                                                                     |
 | `isUsernameOrganization`   | `boolean`  | A username organization is a free organization included with every user account          |
 | `isWithinSubscriptionTerm` | `boolean`  | Whether the organizations subscription is in good standing                               |
 | `logoUrl`                  | `string`   | A url for the organization logo                                                          |
 | `name`                     | `string`   | The name of the organization                                                             |
+| `privateProjectPublicSharingEnabled` | `boolean` | Flag indicating if this organization has sharing of private projects enabled    |
+| `publicSharingEnabled`     | `boolean`  | Flag indicating if this organization has sharing of public projects enabled              |
 | `restrictedToDomains`      | `string[]` | An optional list of domain names that invitations to this organization are restricted to |
 | `trialEndsAt`              | `string`   | Timestamp of when the trial ends, if within trial period                                 |
-| `updatedAt`                | `string`   | Timestamp that the organization was last updated                                         |
 | `userId`                   | `string`   | UUID of the user that created the organization                                           |
-
+| `userIds`                  | `string`   | Array of UUIDs of users that belong to this organization                                 |
 
 ### List all organizations
 
@@ -658,9 +660,16 @@ Load the organizations accessible by the current access token
 abstract.organizations.list();
 ```
 
-### Retrive an organization
+### Retrieve an organization
 
-  > Not yet implemented
+`organizations.info(OrganizationDescriptor): Promise<Organization>`
+
+Load the info for an organization
+
+```js
+abstract.organizations.info({
+  organizationId: "8a13eb62-a42f-435f-b3a3-39af939ad31b"
+});
 
 
 ## Pages

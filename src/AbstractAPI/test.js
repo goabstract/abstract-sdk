@@ -154,6 +154,7 @@ describe("AbstractAPI", () => {
         { responses: [responses.activities.info()] }
       ],
       // organizations
+      ["organizations.info", buildOrganizationDescriptor()],
       ["organizations.list", undefined],
       // shares
       ["shares.info", { url: "https://share.goabstract.com/share-id" }],
