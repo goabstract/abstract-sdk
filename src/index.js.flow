@@ -63,6 +63,10 @@ export type LayerDescriptor = {|
 
 export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
+export type UserDescriptor = {|
+  userId: string
+|};
+
 export type ListOptions = {
   limit?: number,
   offset?: number
@@ -1355,6 +1359,15 @@ export interface AbstractInterface {
     info: (
       notificationDescriptor: NotificationDescriptor
     ) => Promise<Notification>
+  };
+
+  users?: {
+    list: (
+      objectDescriptor: OrganizationDescriptor | ProjectDescriptor
+    ) => Promise<User[]>,
+    info: (
+      userDescriptor: UserDescriptor
+    ) => Promise<User>
   };
 }
 

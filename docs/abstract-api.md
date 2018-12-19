@@ -866,6 +866,52 @@ const branchFiles = await abstract.files.list(branchShare.descriptor);
 ```
 
 
+## Users
+
+A user contains information specific to an individual account. Users are created by creating a new account.
+
+![API][api-icon]
+
+### The user object
+
+| Property          | Type     | Description                                                  |
+|-------------------|----------|--------------------------------------------------------------|
+| `avatarUrl`       | `string` | URL of the avatar for this user                              |
+| `createdAt`       |  `string`| Timestamp indicating when this account was created           |
+| `deletedAt`       | `string` | Timestamp indicating when this account was deleted           |
+| `email`           | `string` | Email associated with this user account                      |
+| `id`              | `string` | UUID identifier for the user                                 |
+| `name`            | `string` | The name of the page                                         |
+| `primaryEmailId`  | `string` | ID of the primary email for this user                        |
+| `releaseChannel`  | `string` | Release channel this user belongs to                         |
+| `updatedAt`       | `string` | Timestamp indicating when this account was updated           |
+| `username`        | `string` | Username associated with this user                           |
+
+### List all users
+
+`users.list(OrganizationDescriptor | ProjectDescriptor): Promise<User[]>`
+
+List the users in an organization
+
+```js
+abstract.users.list({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+### Retrieve a user
+
+`users.info(UserDescriptor): Promise<User>`
+
+Load the info for a specific user
+
+```js
+abstract.users.info({
+  userId: "48b5d670-2002-45ea-929d-4b00863778e4"
+});
+```
+
+
 ## Descriptors
 
 Reference for the parameters required to load resources with Abstract SDK.
@@ -969,5 +1015,13 @@ Reference for the parameters required to load resources with Abstract SDK.
  ```js
 {
   commentId: string
+}
+```
+
+### UserDescriptor
+
+ ```js
+{
+  userId: string
 }
 ```

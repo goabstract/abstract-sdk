@@ -15,7 +15,8 @@ import {
   buildCollectionDescriptor,
   buildActivityDescriptor,
   buildNotificationDescriptor,
-  buildCommentDescriptor
+  buildCommentDescriptor,
+  buildUserDescriptor
 } from "../support/factories";
 import { log } from "../debug";
 import AbstractAPI from "./";
@@ -115,6 +116,15 @@ const responses = {
     info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
   },
   comments: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
+  },
+  users: {
     list: () => [
       JSON.stringify({
         data: [{ id: "foo" }, { id: "bar" }]
@@ -346,6 +356,22 @@ describe("AbstractAPI", () => {
         "notifications.info",
         buildNotificationDescriptor(),
         { responses: [responses.notifications.info()] }
+      ],
+      // users
+      [
+        "users.list",
+        buildProjectDescriptor(),
+        { responses: [responses.users.list()] }
+      ],
+      [
+        "users.list",
+        buildOrganizationDescriptor(),
+        { responses: [responses.users.list()] }
+      ],
+      [
+        "comments.info",
+        buildUserDescriptor(),
+        { responses: [responses.users.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
