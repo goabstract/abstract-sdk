@@ -13,11 +13,15 @@ type Options = {
 export default function Client(options: Options = {}): AbstractInterface {
   const Transport = options.transport || AUTO;
   const accessToken = options.accessToken || process.env.ABSTRACT_TOKEN;
-  const { apiUrl, cliPath, previewsUrl } = options;
 
   if (!Transport) {
     throw new Error("options.transport is required");
   }
 
-  return new Transport({ accessToken, cliPath, apiUrl, previewsUrl });
+  return new Transport({
+    accessToken,
+    cliPath: options.cliPath,
+    apiUrl: options.apiUrl,
+    previewsUrl: options.previewsUrl
+  });
 }
