@@ -1372,6 +1372,6 @@ export interface AbstractInterface {
 }
 
 export type AccessTokenOption =
-  | string
+  | ?string
   | (() => ?string)
   | (() => Promise<?string>);
