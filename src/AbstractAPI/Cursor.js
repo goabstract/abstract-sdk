@@ -1,5 +1,5 @@
 /* @flow */
-import type { CursorMeta, CursorPromise, CursorResponse } from "../";
+import type { CursorMeta, CursorPromise, CursorResponse } from "../types";
 
 export default class Cursor<T> {
   lastResponse: ?Promise<CursorResponse<T> | void>;
