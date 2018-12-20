@@ -323,8 +323,20 @@ export type User = {
 };
 
 export type Organization = {
+  billingEmail?: string,
+  features: {[feature: string]: boolean},
+  hasBillingInfo?: boolean,
   id: string,
-  name: string
+  isUsernameOrganization?: boolean,
+  isWithinSubscriptionTerm?: boolean,
+  logoUrl?: string,
+  name: string,
+  privateProjectPublicSharingEnabled?: boolean,
+  publicSharingEnabled?: boolean,
+  restrictedToDomains: string[],
+  trialEndsAt?: string,
+  userId: string,
+  userIds: string[]
 };
 
 export type Project = {
@@ -1262,7 +1274,8 @@ export interface AbstractInterface {
   };
 
   organizations?: {
-    list: () => Promise<Branch[]>
+    info: (organizationDescriptor: OrganizationDescriptor) => Promise<Organization>,
+    list: () => Promise<Organization[]>
   };
 
   shares?: {

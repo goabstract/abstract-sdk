@@ -194,6 +194,10 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   organizations = {
+    info: async ({ organizationId }: OrganizationDescriptor) => {
+      const response = await this.fetch(`organizations/${organizationId}`);
+      return unwrapEnvelope(response.json());
+    },
     list: async () => {
       const response = await this.fetch("organizations");
       return unwrapEnvelope(response.json());
