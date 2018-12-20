@@ -7,19 +7,19 @@ describe(Client, () => {
       jest.resetModules();
     });
 
-    test("configures options.accessToken from process.env.ABSTRACT_TOKEN", () => {
+    test("configures options.accessToken from process.env.ABSTRACT_TOKEN", async () => {
       process.env.ABSTRACT_TOKEN = "token-from-env";
       const { default: Client } = require("./");
-      expect(Client().accessToken).toBe("token-from-env");
+      expect(await Client().accessToken()).toBe("token-from-env");
     });
 
-    test("prefers options.accessToken over process.env.ABSTRACT_TOKEN", () => {
+    test("prefers options.accessToken over process.env.ABSTRACT_TOKEN", async () => {
       process.env.ABSTRACT_TOKEN = "token-from-env";
       const { default: Client } = require("./");
       expect(
-        Client({
+        await Client({
           accessToken: "token-from-options"
-        }).accessToken
+        }).accessToken()
       ).toBe("token-from-options");
     });
   });

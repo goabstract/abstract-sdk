@@ -323,8 +323,20 @@ export type User = {
 };
 
 export type Organization = {
+  billingEmail?: string,
+  features: { [feature: string]: boolean },
+  hasBillingInfo?: boolean,
   id: string,
-  name: string
+  isUsernameOrganization?: boolean,
+  isWithinSubscriptionTerm?: boolean,
+  logoUrl?: string,
+  name: string,
+  privateProjectPublicSharingEnabled?: boolean,
+  publicSharingEnabled?: boolean,
+  restrictedToDomains: string[],
+  trialEndsAt?: string,
+  userId: string,
+  userIds: string[]
 };
 
 export type Project = {
@@ -1248,7 +1260,7 @@ export type Notification =
   | NotificationUpdateCommit;
 
 export interface AbstractInterface {
-  accessToken: string;
+  accessToken: () => Promise<?string>;
 
   activities?: {
     list: (
@@ -1262,7 +1274,10 @@ export interface AbstractInterface {
   };
 
   organizations?: {
-    list: () => Promise<Branch[]>
+    info: (
+      organizationDescriptor: OrganizationDescriptor
+    ) => Promise<Organization>,
+    list: () => Promise<Organization[]>
   };
 
   shares?: {
@@ -1357,3 +1372,8 @@ export interface AbstractInterface {
     ) => Promise<Notification>
   };
 }
+
+export type AccessTokenOption =
+  | ?string
+  | (() => ?string)
+  | (() => Promise<?string>);

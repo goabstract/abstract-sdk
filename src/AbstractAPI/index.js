@@ -22,7 +22,8 @@ import type {
   CommentDescriptor,
   Comment,
   Layer,
-  ListOptions
+  ListOptions,
+  AccessTokenOption
 } from "../types";
 import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
@@ -33,7 +34,7 @@ const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
 export type Options = {
-  accessToken: string,
+  accessToken: AccessTokenOption,
   apiUrl?: string,
   previewsUrl?: string
 };
@@ -58,7 +59,7 @@ async function unwrapEnvelope<T>(
   return (await response).data;
 }
 export default class AbstractAPI implements AbstractInterface {
-  accessToken: string;
+  _optionAccessToken: AccessTokenOption;
   apiUrl: string;
   previewsUrl: string;
 
@@ -73,19 +74,31 @@ export default class AbstractAPI implements AbstractInterface {
       );
     }
 
-    this.accessToken = accessToken;
+    this._optionAccessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
   }
 
+  accessToken = async () =>
+    typeof this._optionAccessToken === "function"
+      ? this._optionAccessToken()
+      : this._optionAccessToken;
+
+  async tokenHeader() {
+    const accessToken = await this.accessToken();
+    return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  }
+
   async fetch(input: string | URL, init: Object = {}, hostname?: string) {
+    const tokenHeader = await this.tokenHeader();
+
     init.headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
-      Authorization: `Bearer ${this.accessToken}`,
       "X-Amzn-Trace-Id": randomTraceId(),
       "Abstract-Api-Version": "8",
+      ...tokenHeader,
       ...(init.headers || {})
     };
 
@@ -181,6 +194,10 @@ export default class AbstractAPI implements AbstractInterface {
   };
 
   organizations = {
+    info: async ({ organizationId }: OrganizationDescriptor) => {
+      const response = await this.fetch(`organizations/${organizationId}`);
+      return unwrapEnvelope(response.json());
+    },
     list: async () => {
       const response = await this.fetch("organizations");
       return unwrapEnvelope(response.json());

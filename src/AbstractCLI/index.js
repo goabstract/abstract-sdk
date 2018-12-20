@@ -15,7 +15,8 @@ import type {
   PageDescriptor,
   FileDescriptor,
   LayerDescriptor,
-  CollectionDescriptor
+  CollectionDescriptor,
+  AccessTokenOption
 } from "../types";
 
 const logSpawn = log.extend("AbstractCLI:spawn");
@@ -31,14 +32,14 @@ function parsePath(input: ?string): ?Array<string> {
 }
 
 export type Options = {
-  accessToken: string,
+  accessToken: AccessTokenOption,
   cliPath?: string[],
   apiUrl?: string,
   cwd?: string
 };
 
 export default class AbstractCLI implements AbstractInterface {
-  accessToken: string;
+  _optionAccessToken: AccessTokenOption;
   cliPath: string;
   apiUrl: string;
   cwd: string;
@@ -60,7 +61,7 @@ export default class AbstractCLI implements AbstractInterface {
     apiUrl = "https://api.goabstract.com"
   }: Options = {}) {
     this.cwd = cwd;
-    this.accessToken = accessToken;
+    this._optionAccessToken = accessToken;
     this.apiUrl = apiUrl;
 
     try {
@@ -70,12 +71,16 @@ export default class AbstractCLI implements AbstractInterface {
     }
   }
 
-  async spawn(args: string[]) {
-    return new Promise((resolve, reject) => {
-      const userToken = this.accessToken
-        ? ["--user-token", this.accessToken]
-        : [];
+  accessToken = async () =>
+    typeof this._optionAccessToken === "function"
+      ? this._optionAccessToken()
+      : this._optionAccessToken;
 
+  async spawn(args: string[]) {
+    const accessToken = await this.accessToken();
+    const userToken = accessToken ? ["--user-token", accessToken] : [];
+
+    return new Promise((resolve, reject) => {
       const spawnArgs = [
         this.cliPath,
         [
