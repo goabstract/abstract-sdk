@@ -1384,7 +1384,9 @@ export interface AbstractInterface {
       objectDescriptor?: OrganizationDescriptor,
       options?: ListOptions
     ) => CursorPromise<Notification[]>,
-    info: (notificationDescriptor: NotificationDescriptor) => Promise<Notification>
+    info: (
+      notificationDescriptor: NotificationDescriptor
+    ) => Promise<Notification>
   };
 }
 
