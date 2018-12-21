@@ -322,7 +322,6 @@ export type User = {
   deletedAt: string,
   username: string,
   name: ?string,
-  releaseChannel: ?string,
   avatarUrl: ?string
 };
 

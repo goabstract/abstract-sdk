@@ -868,7 +868,7 @@ const branchFiles = await abstract.files.list(branchShare.descriptor);
 
 ## Users
 
-A user contains information specific to an individual account. Users are created by creating a new account.
+A user contains information specific to an individual account. Users are global to Abstract and are not specific to organizations. A user is created in the application by creating a new account.
 
 ![API][api-icon]
 
@@ -883,7 +883,6 @@ A user contains information specific to an individual account. Users are created
 | `id`              | `string` | UUID identifier for the user                                 |
 | `name`            | `string` | The name of the page                                         |
 | `primaryEmailId`  | `string` | ID of the primary email for this user                        |
-| `releaseChannel`  | `string` | Release channel this user belongs to                         |
 | `updatedAt`       | `string` | Timestamp indicating when this account was updated           |
 | `username`        | `string` | Username associated with this user                           |
 
@@ -1021,7 +1020,5 @@ Reference for the parameters required to load resources with Abstract SDK.
 ### UserDescriptor
 
  ```js
-{
-  userId: string
-}
+{ userId: string }
 ```
