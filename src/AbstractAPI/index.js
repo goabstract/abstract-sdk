@@ -20,6 +20,7 @@ import type {
   ActivityDescriptor,
   NotificationDescriptor,
   CommentDescriptor,
+  UserDescriptor,
   Comment,
   Layer,
   ListOptions,
@@ -586,6 +587,26 @@ export default class AbstractAPI implements AbstractInterface {
     },
     info: async ({ notificationId }: NotificationDescriptor) => {
       const response = await this.fetch(`notifications/${notificationId}`);
+      return response.json();
+    }
+  };
+
+  users = {
+    list: async (
+      objectDescriptor: OrganizationDescriptor | ProjectDescriptor
+    ) => {
+      let url = "";
+      if (objectDescriptor.organizationId) {
+        url = `organizations/${objectDescriptor.organizationId}/memberships`;
+      } else if (objectDescriptor.projectId) {
+        url = `projects/${objectDescriptor.projectId}/memberships`;
+      }
+      const response = await this.fetch(url);
+      const memberships = await unwrapEnvelope(response.json());
+      return memberships.map(membership => membership.user);
+    },
+    info: async ({ userId }: UserDescriptor) => {
+      const response = await this.fetch(`users/${userId}`);
       return response.json();
     }
   };
