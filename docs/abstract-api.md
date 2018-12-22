@@ -669,6 +669,7 @@ Load the info for an organization
 abstract.organizations.info({
   organizationId: "8a13eb62-a42f-435f-b3a3-39af939ad31b"
 });
+```
 
 
 ## Pages
