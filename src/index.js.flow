@@ -1347,7 +1347,7 @@ export interface AbstractInterface {
   branches?: {
     list: (
       ProjectDescriptor,
-      options: { filter?: "active" | "archived" | "mine" }
+      options?: { filter?: "active" | "archived" | "mine" }
     ) => Promise<Branch[]>,
     info: BranchDescriptor => Promise<Branch>
   };
