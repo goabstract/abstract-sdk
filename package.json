@@ -7,6 +7,9 @@
     "/docs"
   ],
   "main": "lib/index.js",
+  "browser": {
+    "./lib/AbstractCLI": false
+  },
   "scripts": {
     "prepublish": "yarn run build",
     "build": "babel ./src -d ./lib",
