@@ -6,6 +6,7 @@ title: Client
 [cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
 [api-icon]: https://img.shields.io/badge/API-blue.svg
 
+
 ## Activities
 
 ![API][api-icon]
@@ -47,6 +48,82 @@ abstract.activities.info({
   activityId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
 });
 ```
+
+
+[cli-icon]: https://img.shields.io/badge/CLI-lightgrey.svg
+[api-icon]: https://img.shields.io/badge/API-blue.svg
+
+
+## Assets
+
+![API][api-icon]
+
+An asset represents an exportable resource from a Sketch file. Files are automatically scanned for new assets as new commits are pushed to a project.
+
+### The asset object
+
+| Property      | Type                | Description                                                                             |
+|---------------|---------------------|-----------------------------------------------------------------------------------------|
+| `createdAt`   | `string`            | Timestamp at which the asset was created                                                |
+| `defaultAbstractFormat` | `boolean` | Indicates if this asset is the default asset for a layer                                |
+| `fileFormat`  | `string`            | File type of this asset                                                                 |
+| `fileId`      | `string`            | File ID of this asset                                                                   |
+| `formatName`  | `string`            | Format of this file, e.g. "2x"                                                          |
+| `id`          | `string`            | UUID identifier of the asset                                                            |
+| `layerId`     | `string`            | UUID of the layer this asset belongs to                                                 |
+| `layerName`   | `string`            | Name of the layer this asset belongs to                                                 |
+| `namingScheme`| `string`            | Indicates the naming convention used for this asset                                     |
+| `nestedLayerId` | `string`          | ID of the nested layer this asset belongs to                                            |
+| `projectId`   | `string`            | ID of the project this layer belongs to                                                 |
+| `scale`       | `string`            | Scale of this asset in pixels                                                           |
+| `sha`         | `string`            | SHA of the commit containing the version of the file this asset belongs to              |
+| `url`         | `string`            | Direct URL to the asset file                                                            |
+
+### List all assets
+
+`assets.list(BranchDescriptor): Promise<Asset[]>`
+
+List all assets for a commit on a given branch of a project
+
+```js
+abstract.assets.list({
+  branchId: "8a13eb62-a42f-435f-b3a3-39af939ad31b",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a", // or sha: "latest"
+});
+```
+
+### Retrieve an asset
+
+`asset.info(AssetDescriptor): Promise<Asset>`
+
+Load the info for an asset
+
+```js
+abstract.assets.info({
+  assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
+});
+```
+
+### Retrieve an asset file
+
+`asset.raw(AssetDescriptor): Promise<ArrayBuffer>`
+
+Load given asset file based on its ID. The resulting `ArrayBuffer` can be used with node `fs` APIs. For example, it's possible to write the image to disk:
+
+```js
+const arrayBuffer = abstract.assets.raw({
+  assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
+});
+
+fs.writeFile("asset.png", Buffer.from(arrayBuffer), (err) => {
+  if (err) throw err;
+  console.log("Asset image written!");
+});
+```
+
 
 ## Branches
 
@@ -738,10 +815,10 @@ only available in PNG format.
 
 `previews.raw(LayerDescriptor): Promise<ArrayBuffer>`
 
-Load the preview image for a layer at a commit. The resulting `Buffer` can be used with node `fs` API's – for example you can write the image to disk:
+Load the preview image for a layer at a commit. The resulting `ArrayBuffer` can be used with node `fs` API's – for example you can write the image to disk:
 
 ```js
-const buffer = await abstract.previews.raw({
+const arrayBuffer = await abstract.previews.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
@@ -750,7 +827,7 @@ const buffer = await abstract.previews.raw({
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
 });
 
-fs.writeFile(`preview.png`, buffer, (err) => {
+fs.writeFile(`preview.png`, Buffer.from(arrayBuffer), (err) => {
   if (err) throw err;
   console.log("Preview image written!");
 });
@@ -1030,4 +1107,13 @@ Reference for the parameters required to load resources with Abstract SDK.
 
  ```js
 { userId: string }
+```
+
+### AssetDescriptor
+
+ ```js
+{
+  assetId: string,
+  projectId: string
+}
 ```
