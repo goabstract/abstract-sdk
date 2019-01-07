@@ -4,7 +4,11 @@ import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
-import { objectBranchDescriptor, objectFileDescriptor } from "../utils";
+import {
+  objectBranchDescriptor,
+  objectFileDescriptor,
+  inferShareId
+} from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -25,10 +29,10 @@ import type {
   Layer,
   ListOptions,
   AccessTokenOption,
+  AccessToken,
   Activity,
   Notification
 } from "../";
-import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 
@@ -83,14 +87,21 @@ export default class AbstractAPI implements AbstractInterface {
     this.previewsUrl = previewsUrl;
   }
 
-  accessToken = async () =>
+  accessToken = async (): Promise<AccessToken> =>
     typeof this._optionAccessToken === "function"
       ? this._optionAccessToken()
       : this._optionAccessToken;
 
   async tokenHeader() {
     const accessToken = await this.accessToken();
-    return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+
+    if (!accessToken) return {}; // No auth headers
+
+    if (typeof accessToken === "object") {
+      return { "Abstract-Share-Id": inferShareId(accessToken) };
+    } else {
+      return { Authorization: `Bearer ${accessToken}` };
+    }
   }
 
   async fetch(input: string | URL, init: Object = {}, hostname?: string) {
@@ -220,15 +231,7 @@ export default class AbstractAPI implements AbstractInterface {
 
   shares = {
     info: async (shareDescriptor: ShareDescriptor) => {
-      let shareId;
-
-      if (shareDescriptor.url) {
-        shareId = parseShareURL(shareDescriptor.url);
-      }
-
-      if (shareDescriptor.shareId) {
-        shareId = shareDescriptor.shareId;
-      }
+      const shareId = inferShareId(shareDescriptor);
 
       if (!shareId) {
         throw new Error(
