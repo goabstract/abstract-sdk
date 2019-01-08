@@ -94,7 +94,11 @@ export default class AbstractAPI implements AbstractInterface {
     return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
   }
 
-  async fetch(input: string | URL, init: Object = {}, hostname?: string) {
+  async fetch(
+    input: string | URL,
+    init: Object = {},
+    hostname?: string | boolean
+  ) {
     const tokenHeader = await this.tokenHeader();
 
     init.headers = {
@@ -111,9 +115,11 @@ export default class AbstractAPI implements AbstractInterface {
       init.body = JSON.stringify(init.body);
     }
 
-    hostname = typeof hostname === "string" ? hostname : this.apiUrl;
-    const hostnameRoot = hostname.length > 0 ? `${hostname}/` : "";
-    const fetchArgs = [`${hostnameRoot}${input.toString()}`, init];
+    const root = hostname || this.apiUrl;
+    const fetchArgs = [
+      hostname === false ? input : `${root.toString()}/${input.toString()}`,
+      init
+    ];
 
     logFetch(fetchArgs);
     const request = fetch(...fetchArgs);
@@ -649,7 +655,17 @@ export default class AbstractAPI implements AbstractInterface {
     },
     raw: async (assetDescriptor: AssetDescriptor) => {
       const asset = await this.assets.info(assetDescriptor);
-      const response = await this.fetchRaw(asset.url);
+      const response = await this.fetch(
+        asset.url,
+        {
+          headers: {
+            Accept: undefined,
+            "Content-Type": undefined,
+            "Abstract-Api-Version": undefined
+          }
+        },
+        false
+      );
       return response.arrayBuffer();
     }
   };
