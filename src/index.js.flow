@@ -1279,8 +1279,14 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
+export type AccessToken = ?string | ShareDescriptor;
+export type AccessTokenOption =
+  | AccessToken // TODO: Deprecate?
+  | (() => AccessToken) // TODO: Deprecate
+  | (() => Promise<AccessToken>);
+
 export interface AbstractInterface {
-  accessToken: () => Promise<?string>;
+  accessToken: () => Promise<AccessToken>;
 
   activities?: {
     list: (
@@ -1397,8 +1403,3 @@ export interface AbstractInterface {
     ) => Promise<User>
   };
 }
-
-export type AccessTokenOption =
-  | ?string
-  | (() => ?string)
-  | (() => Promise<?string>);

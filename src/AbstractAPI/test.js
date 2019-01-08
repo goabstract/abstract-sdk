@@ -318,6 +318,24 @@ describe("AbstractAPI", () => {
       ],
       [
         "layers.info",
+        buildLayerDescriptor(),
+        {
+          options: { accessToken: { shareId: "share-id" } },
+          responses: [responses.layers.info()]
+        }
+      ],
+      [
+        "layers.info",
+        buildLayerDescriptor(),
+        {
+          options: {
+            accessToken: { url: "https://share.goabstract.com/share-id" }
+          },
+          responses: [responses.layers.info()]
+        }
+      ],
+      [
+        "layers.info",
         buildLayerDescriptor({ sha: "latest" }),
         { responses: [responses.commits.list(), responses.layers.info()] }
       ],
@@ -378,7 +396,7 @@ describe("AbstractAPI", () => {
       args = Array.isArray(args) ? args : [args];
       logTest(property, args);
 
-      const transport = new AbstractAPI(buildOptions());
+      const transport = new AbstractAPI(buildOptions(options.options));
       const transportMethod = get(transport, property).bind(transport);
 
       if (options.responses) {
