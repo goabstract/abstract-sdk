@@ -1,3 +1,8 @@
+## v0.6.1
+
+- Added support for importing sdk in browser module loaders like webpack
+- Fixed `commits.info` with a descriptors using `sha: "latest"`
+
 ## v0.6.0
 
 - Added `organizations.info` method
