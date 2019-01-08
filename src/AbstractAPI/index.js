@@ -369,7 +369,7 @@ export default class AbstractAPI implements AbstractInterface {
       } else {
         const commits = await this.commits.list(
           objectBranchDescriptor(objectDescriptor),
-         { limit: 1 }
+          { limit: 1 }
         );
 
         return find(commits, { sha: objectDescriptor.sha });
