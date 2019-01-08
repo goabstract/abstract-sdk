@@ -130,6 +130,8 @@ Object {
         "file-id",
         "--layer-id",
         "layer-id",
+        "--limit",
+        "1",
       ],
       Object {
         "cwd": "<PROJECT_ROOT>",
@@ -176,6 +178,8 @@ Object {
         "branch-id",
         "--file-id",
         "file-id",
+        "--limit",
+        "1",
       ],
       Object {
         "cwd": "<PROJECT_ROOT>",

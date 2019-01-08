@@ -364,11 +364,12 @@ export default class AbstractAPI implements AbstractInterface {
     ) => {
       // Avoid using resolveDescriptor to prevent extra request
       if (objectDescriptor.sha === "latest") {
-        const commits = await this.commits.list(objectDescriptor);
+        const commits = await this.commits.list(objectDescriptor, { limit: 1 });
         return commits[0];
       } else {
         const commits = await this.commits.list(
-          objectBranchDescriptor(objectDescriptor)
+          objectBranchDescriptor(objectDescriptor),
+         { limit: 1 }
         );
 
         return find(commits, { sha: objectDescriptor.sha });
