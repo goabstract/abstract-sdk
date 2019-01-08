@@ -191,7 +191,6 @@ export default class AbstractCLI implements AbstractInterface {
       // Avoid using resolveDescriptor to prevent extra request
       if (objectDescriptor.sha === "latest") {
         const commits = await this.commits.list(objectDescriptor);
-        console.log('b', commits[0])
         return commits[0];
       } else {
         const data = await this.spawn([
