@@ -244,6 +244,7 @@ describe("AbstractAPI", () => {
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
+      ["commits.info", buildCommitDescriptor()],
       [
         "commits.info",
         buildBranchDescriptor({ sha: "commit-sha" }),

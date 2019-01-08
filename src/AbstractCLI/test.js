@@ -38,6 +38,11 @@ const responses = {
       stdout: JSON.stringify({
         commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
       })
+    }),
+    info: () => ({
+      stdout: JSON.stringify({
+        commit: { sha: "commit-sha" }
+      })
     })
   },
   files: {
@@ -137,6 +142,32 @@ describe(AbstractCLI, () => {
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
       ["commits.info", buildCommitDescriptor()],
+      [
+        "commits.info",
+        buildFileDescriptor({ sha: "commit-sha" }),
+        {
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
+        }
+      ],
+      [
+        "commits.info",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
+        "commits.info",
+        buildLayerDescriptor({ sha: "commit-sha" }),
+        {
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
+        }
+      ],
+      [
+        "commits.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // files
