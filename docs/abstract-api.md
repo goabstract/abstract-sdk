@@ -58,7 +58,7 @@ abstract.activities.info({
 
 ![API][api-icon]
 
-An asset represents an exportable resource from a Sketch file. Files are automatically scanned for new assets as new commits are pushed to a project.
+An asset represents a resource exported from a design file. Assets are automatically updated and available for new commits.
 
 ### The asset object
 
@@ -72,10 +72,10 @@ An asset represents an exportable resource from a Sketch file. Files are automat
 | `id`          | `string`            | UUID identifier of the asset                                                            |
 | `layerId`     | `string`            | UUID of the layer this asset belongs to                                                 |
 | `layerName`   | `string`            | Name of the layer this asset belongs to                                                 |
-| `namingScheme`| `string`            | Indicates the naming convention used for this asset                                     |
+| `namingScheme`| `string`            | String indicating the naming convention used for this asset, e.g. "1"                   |
 | `nestedLayerId` | `string`          | ID of the nested layer this asset belongs to                                            |
 | `projectId`   | `string`            | ID of the project this layer belongs to                                                 |
-| `scale`       | `string`            | Scale of this asset in pixels                                                           |
+| `scale`       | `string`            | Scale of this asset in pixels, e.g. "112px"                                             |
 | `sha`         | `string`            | SHA of the commit containing the version of the file this asset belongs to              |
 | `url`         | `string`            | Direct URL to the asset file                                                            |
 
