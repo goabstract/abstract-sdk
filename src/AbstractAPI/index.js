@@ -362,7 +362,7 @@ export default class AbstractAPI implements AbstractInterface {
         | CommitDescriptor
         | LayerDescriptor
     ) => {
-      if (objectDescriptor.sha !== undefined) {
+      if (objectDescriptor.sha !== "latest") {
         const commits = await this.commits.list(
           objectBranchDescriptor(objectDescriptor)
         );
