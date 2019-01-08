@@ -1021,9 +1021,7 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ### CommentDescriptor
  ```js
-{
-  commentId: string
-}
+{ commentId: string }
 ```
 
 ### UserDescriptor

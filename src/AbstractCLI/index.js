@@ -188,15 +188,19 @@ export default class AbstractCLI implements AbstractInterface {
         | CommitDescriptor
         | LayerDescriptor
     ) => {
-      if (!objectDescriptor.sha) throw new Error("commits.info requires sha");
+      // Avoid using resolveDescriptor to prevent extra request
+      if (objectDescriptor.sha === "latest") {
+        const commits = await this.commits.list(objectDescriptor, { limit: 1 });
+        return commits[0];
+      } else {
+        const data = await this.spawn([
+          "commit",
+          objectDescriptor.projectId,
+          objectDescriptor.sha
+        ]);
 
-      const data = await this.spawn([
-        "commit",
-        objectDescriptor.projectId,
-        objectDescriptor.sha ? objectDescriptor.sha : "latest" // TODO latest
-      ]);
-
-      return data.commit;
+        return data.commit;
+      }
     }
   };
 

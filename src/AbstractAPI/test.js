@@ -244,6 +244,7 @@ describe("AbstractAPI", () => {
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
+      ["commits.info", buildCommitDescriptor()],
       [
         "commits.info",
         buildBranchDescriptor({ sha: "commit-sha" }),
@@ -262,11 +263,21 @@ describe("AbstractAPI", () => {
       ],
       [
         "commits.info",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
+        "commits.info",
         buildLayerDescriptor({ sha: "commit-sha" }),
         {
           responses: [responses.commits.info()],
           result: { sha: "commit-sha" }
         }
+      ],
+      [
+        "commits.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
       ],
       // branches
       [
