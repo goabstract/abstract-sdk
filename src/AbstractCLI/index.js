@@ -335,14 +335,12 @@ export default class AbstractCLI implements AbstractInterface {
       return data.branches;
     },
     info: async (branchDescriptor: BranchDescriptor) => {
-      const data = await this.spawn([
+      return await this.spawn([
         "branch",
         "load",
         branchDescriptor.branchId,
         branchDescriptor.projectId
       ]);
-
-      return data;
     }
   };
 }
