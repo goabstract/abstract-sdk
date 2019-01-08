@@ -15,7 +15,8 @@ import {
   buildCollectionDescriptor,
   buildActivityDescriptor,
   buildNotificationDescriptor,
-  buildCommentDescriptor
+  buildCommentDescriptor,
+  buildUserDescriptor
 } from "../support/factories";
 import { log } from "../debug";
 import AbstractAPI from "./";
@@ -115,6 +116,15 @@ const responses = {
     info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
   },
   comments: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
+  },
+  users: {
     list: () => [
       JSON.stringify({
         data: [{ id: "foo" }, { id: "bar" }]
@@ -308,6 +318,24 @@ describe("AbstractAPI", () => {
       ],
       [
         "layers.info",
+        buildLayerDescriptor(),
+        {
+          options: { accessToken: { shareId: "share-id" } },
+          responses: [responses.layers.info()]
+        }
+      ],
+      [
+        "layers.info",
+        buildLayerDescriptor(),
+        {
+          options: {
+            accessToken: { url: "https://share.goabstract.com/share-id" }
+          },
+          responses: [responses.layers.info()]
+        }
+      ],
+      [
+        "layers.info",
         buildLayerDescriptor({ sha: "latest" }),
         { responses: [responses.commits.list(), responses.layers.info()] }
       ],
@@ -347,12 +375,28 @@ describe("AbstractAPI", () => {
         "notifications.info",
         buildNotificationDescriptor(),
         { responses: [responses.notifications.info()] }
+      ],
+      // users
+      [
+        "users.list",
+        buildProjectDescriptor(),
+        { responses: [responses.users.list()] }
+      ],
+      [
+        "users.list",
+        buildOrganizationDescriptor(),
+        { responses: [responses.users.list()] }
+      ],
+      [
+        "comments.info",
+        buildUserDescriptor(),
+        { responses: [responses.users.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
       logTest(property, args);
 
-      const transport = new AbstractAPI(buildOptions());
+      const transport = new AbstractAPI(buildOptions(options.options));
       const transportMethod = get(transport, property).bind(transport);
 
       if (options.responses) {

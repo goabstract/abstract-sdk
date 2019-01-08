@@ -63,6 +63,10 @@ export type LayerDescriptor = {|
 
 export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
+export type UserDescriptor = {|
+  userId: string
+|};
+
 export type ListOptions = {
   limit?: number,
   offset?: number
@@ -318,7 +322,6 @@ export type User = {
   deletedAt: string,
   username: string,
   name: ?string,
-  releaseChannel: ?string,
   avatarUrl: ?string
 };
 
@@ -1276,8 +1279,14 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
+export type AccessToken = ?string | ShareDescriptor;
+export type AccessTokenOption =
+  | AccessToken // TODO: Deprecate?
+  | (() => AccessToken) // TODO: Deprecate
+  | (() => Promise<AccessToken>);
+
 export interface AbstractInterface {
-  accessToken: () => Promise<?string>;
+  accessToken: () => Promise<AccessToken>;
 
   activities?: {
     list: (
@@ -1388,9 +1397,11 @@ export interface AbstractInterface {
       notificationDescriptor: NotificationDescriptor
     ) => Promise<Notification>
   };
-}
 
-export type AccessTokenOption =
-  | ?string
-  | (() => ?string)
-  | (() => Promise<?string>);
+  users?: {
+    list: (
+      objectDescriptor: OrganizationDescriptor | ProjectDescriptor
+    ) => Promise<User[]>,
+    info: (userDescriptor: UserDescriptor) => Promise<User>
+  };
+}

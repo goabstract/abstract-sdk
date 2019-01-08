@@ -7,7 +7,8 @@ import type {
   PageDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
-  CommentDescriptor
+  CommentDescriptor,
+  UserDescriptor
 } from "../types";
 
 export function buildOptions(options: *) {
@@ -115,5 +116,12 @@ export function buildCommentDescriptor(
   return {
     commentId: "comment-id",
     ...commentDescriptor
+  };
+}
+
+export function buildUserDescriptor(userDescriptor: *): UserDescriptor {
+  return {
+    userId: "user-id",
+    ...userDescriptor
   };
 }

@@ -4,7 +4,11 @@ import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
 import { version } from "../../package.json";
-import { objectBranchDescriptor, objectFileDescriptor } from "../utils";
+import {
+  objectBranchDescriptor,
+  objectFileDescriptor,
+  inferShareId
+} from "../utils";
 import { log } from "../debug";
 import type {
   AbstractInterface,
@@ -20,14 +24,15 @@ import type {
   ActivityDescriptor,
   NotificationDescriptor,
   CommentDescriptor,
+  UserDescriptor,
   Comment,
   Layer,
   ListOptions,
   AccessTokenOption,
+  AccessToken,
   Activity,
   Notification
 } from "../types";
-import parseShareURL from "./parseShareURL";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 
@@ -82,14 +87,21 @@ export default class AbstractAPI implements AbstractInterface {
     this.previewsUrl = previewsUrl;
   }
 
-  accessToken = async () =>
+  accessToken = async (): Promise<AccessToken> =>
     typeof this._optionAccessToken === "function"
       ? this._optionAccessToken()
       : this._optionAccessToken;
 
   async tokenHeader() {
     const accessToken = await this.accessToken();
-    return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+
+    if (!accessToken) return {}; // No auth headers
+
+    if (typeof accessToken === "object") {
+      return { "Abstract-Share-Id": inferShareId(accessToken) };
+    } else {
+      return { Authorization: `Bearer ${accessToken}` };
+    }
   }
 
   async fetch(input: string | URL, init: Object = {}, hostname?: string) {
@@ -219,25 +231,9 @@ export default class AbstractAPI implements AbstractInterface {
 
   shares = {
     info: async (shareDescriptor: ShareDescriptor) => {
-      let shareId;
-
-      if (shareDescriptor.url) {
-        shareId = parseShareURL(shareDescriptor.url);
-      }
-
-      if (shareDescriptor.shareId) {
-        shareId = shareDescriptor.shareId;
-      }
-
-      if (!shareId) {
-        throw new Error(
-          `Malformed share descriptor, "url" or "shareId" required: ${JSON.stringify(
-            shareDescriptor
-          )}`
-        );
-      }
-
-      const response = await this.fetch(`share_links/${shareId}`);
+      const response = await this.fetch(
+        `share_links/${inferShareId(shareDescriptor)}`
+      );
       return response.json();
     }
   };
@@ -586,6 +582,26 @@ export default class AbstractAPI implements AbstractInterface {
     },
     info: async ({ notificationId }: NotificationDescriptor) => {
       const response = await this.fetch(`notifications/${notificationId}`);
+      return response.json();
+    }
+  };
+
+  users = {
+    list: async (
+      objectDescriptor: OrganizationDescriptor | ProjectDescriptor
+    ) => {
+      let url = "";
+      if (objectDescriptor.organizationId) {
+        url = `organizations/${objectDescriptor.organizationId}/memberships`;
+      } else if (objectDescriptor.projectId) {
+        url = `projects/${objectDescriptor.projectId}/memberships`;
+      }
+      const response = await this.fetch(url);
+      const memberships = await unwrapEnvelope(response.json());
+      return memberships.map(membership => membership.user);
+    },
+    info: async ({ userId }: UserDescriptor) => {
+      const response = await this.fetch(`users/${userId}`);
       return response.json();
     }
   };

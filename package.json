@@ -1,12 +1,15 @@
 {
   "name": "abstract-sdk",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "files": [
     "/lib",
     "/docs"
   ],
   "main": "lib/index.js",
+  "browser": {
+    "./lib/AbstractCLI": false
+  },
   "scripts": {
     "prepublish": "yarn run build",
     "build": "babel ./src -d ./lib && flow-copy-source src lib",

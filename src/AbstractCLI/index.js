@@ -78,13 +78,14 @@ export default class AbstractCLI implements AbstractInterface {
 
   async spawn(args: string[]) {
     const accessToken = await this.accessToken();
-    const userToken = accessToken ? ["--user-token", accessToken] : [];
+    const userTokenArgs =
+      typeof accessToken === "string" ? ["--user-token", accessToken] : [];
 
     return new Promise((resolve, reject) => {
       const spawnArgs = [
         this.cliPath,
         [
-          ...userToken,
+          ...userTokenArgs,
           "--api-url",
           this.apiUrl,
           ...args // First args win for https://github.com/spf13/cobra
