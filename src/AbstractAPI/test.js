@@ -321,7 +321,7 @@ describe("AbstractAPI", () => {
         buildLayerDescriptor(),
         {
           options: { accessToken: { shareId: "share-id" } },
-          responses: [responses.layers.info()],
+          responses: [responses.layers.info()]
         }
       ],
       [
@@ -331,7 +331,7 @@ describe("AbstractAPI", () => {
           options: {
             accessToken: { url: "https://share.goabstract.com/share-id" }
           },
-          responses: [responses.layers.info()],
+          responses: [responses.layers.info()]
         }
       ],
       [
