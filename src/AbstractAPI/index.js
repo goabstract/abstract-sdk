@@ -231,17 +231,7 @@ export default class AbstractAPI implements AbstractInterface {
 
   shares = {
     info: async (shareDescriptor: ShareDescriptor) => {
-      const shareId = inferShareId(shareDescriptor);
-
-      if (!shareId) {
-        throw new Error(
-          `Malformed share descriptor, "url" or "shareId" required: ${JSON.stringify(
-            shareDescriptor
-          )}`
-        );
-      }
-
-      const response = await this.fetch(`share_links/${shareId}`);
+      const response = await this.fetch(`share_links/${inferShareId(shareDescriptor)}`);
       return response.json();
     }
   };
