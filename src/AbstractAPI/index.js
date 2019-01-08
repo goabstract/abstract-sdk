@@ -158,6 +158,22 @@ export default class AbstractAPI implements AbstractInterface {
     );
   }
 
+  async fetchRaw(input: string | URL, init?: Object = {}) {
+    return this.fetch(
+      input,
+      {
+        ...init,
+        headers: {
+          Accept: undefined,
+          "Content-Type": undefined,
+          "Abstract-Api-Version": undefined,
+          ...init.headers
+        }
+      },
+      ""
+    );
+  }
+
   async resolveDescriptor<T: *>(objectDescriptor: T): Promise<T> {
     if (objectDescriptor.sha !== "latest") return objectDescriptor;
 
@@ -633,17 +649,7 @@ export default class AbstractAPI implements AbstractInterface {
     },
     raw: async (assetDescriptor: AssetDescriptor) => {
       const asset = await this.assets.info(assetDescriptor);
-      const response = await this.fetch(
-        asset.url,
-        {
-          headers: {
-            Accept: undefined,
-            "Content-Type": undefined,
-            "Abstract-Api-Version": undefined
-          }
-        },
-        ""
-      );
+      const response = await this.fetchRaw(asset.url);
       return response.arrayBuffer();
     }
   };
