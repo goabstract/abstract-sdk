@@ -8,7 +8,8 @@ import type {
   LayerDescriptor,
   CollectionDescriptor,
   CommentDescriptor,
-  UserDescriptor
+  UserDescriptor,
+  AssetDescriptor
 } from "../";
 
 export function buildOptions(options: *) {
@@ -123,5 +124,13 @@ export function buildUserDescriptor(userDescriptor: *): UserDescriptor {
   return {
     userId: "user-id",
     ...userDescriptor
+  };
+}
+
+export function buildAssetDescriptor(assetDescriptor: *): AssetDescriptor {
+  return {
+    assetId: "asset-id",
+    projectId: "project-id",
+    ...assetDescriptor
   };
 }

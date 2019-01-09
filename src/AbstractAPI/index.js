@@ -25,6 +25,7 @@ import type {
   NotificationDescriptor,
   CommentDescriptor,
   UserDescriptor,
+  AssetDescriptor,
   Comment,
   Layer,
   ListOptions,
@@ -104,7 +105,7 @@ export default class AbstractAPI implements AbstractInterface {
     }
   }
 
-  async fetch(input: string | URL, init: Object = {}, hostname?: string) {
+  async fetch(input: string | URL, init: Object = {}, hostname?: ?string) {
     const tokenHeader = await this.tokenHeader();
 
     init.headers = {
@@ -121,8 +122,11 @@ export default class AbstractAPI implements AbstractInterface {
       init.body = JSON.stringify(init.body);
     }
 
-    hostname = hostname || this.apiUrl;
-    const fetchArgs = [`${hostname}/${input.toString()}`, init];
+    const root = hostname || this.apiUrl;
+    const fetchArgs = [
+      hostname === null ? input : `${root.toString()}/${input.toString()}`,
+      init
+    ];
 
     logFetch(fetchArgs);
     const request = fetch(...fetchArgs);
@@ -605,6 +609,41 @@ export default class AbstractAPI implements AbstractInterface {
     info: async ({ userId }: UserDescriptor) => {
       const response = await this.fetch(`users/${userId}`);
       return response.json();
+    }
+  };
+
+  assets = {
+    info: async ({ assetId, projectId }: AssetDescriptor) => {
+      const response = await this.fetch(
+        `projects/${projectId}/assets/${assetId}`
+      );
+      return response.json();
+    },
+    list: async (objectDescriptor: BranchDescriptor) => {
+      objectDescriptor = await this.resolveDescriptor(objectDescriptor);
+      const query = queryString.stringify({
+        sha: objectDescriptor && objectDescriptor.sha
+      });
+      const response = await this.fetch(
+        `projects/${objectDescriptor.projectId}/assets?${query}`
+      );
+      const { assets } = await unwrapEnvelope(response.json());
+      return assets;
+    },
+    raw: async (assetDescriptor: AssetDescriptor) => {
+      const asset = await this.assets.info(assetDescriptor);
+      const response = await this.fetch(
+        asset.url,
+        {
+          headers: {
+            Accept: undefined,
+            "Content-Type": undefined,
+            "Abstract-Api-Version": undefined
+          }
+        },
+        null
+      );
+      return response.arrayBuffer();
     }
   };
 

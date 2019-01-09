@@ -16,7 +16,8 @@ import {
   buildActivityDescriptor,
   buildNotificationDescriptor,
   buildCommentDescriptor,
-  buildUserDescriptor
+  buildUserDescriptor,
+  buildAssetDescriptor
 } from "../support/factories";
 import { log } from "../debug";
 import AbstractAPI from "./";
@@ -30,6 +31,9 @@ jest.mock("../../package.json", () => ({
 global.fetch = fetch;
 
 const logTest = log.extend("AbstractAPI:test");
+const buffer = fs.readFileSync(
+  path.resolve(__dirname, "../../fixtures/preview.png")
+);
 
 const responses = {
   activities: {
@@ -99,12 +103,7 @@ const responses = {
     ]
   },
   previews: {
-    arrayBuffer: (
-      // inlined to avoid multiple reads
-      data = fs.readFileSync(
-        path.resolve(__dirname, "../../fixtures/preview.png")
-      )
-    ) => [data, { status: 200 }]
+    arrayBuffer: () => [buffer, { status: 200 }]
   },
   notifications: {
     list: () => [
@@ -114,6 +113,16 @@ const responses = {
       { status: 200 }
     ],
     info: () => [JSON.stringify({ id: "foo" }), { status: 200 }]
+  },
+  assets: {
+    list: () => [
+      JSON.stringify({
+        data: [{ id: "foo" }, { id: "bar" }]
+      }),
+      { status: 200 }
+    ],
+    info: () => [JSON.stringify({ id: "foo", url: "assets" }), { status: 200 }],
+    raw: () => [buffer, { status: 200 }]
   },
   comments: {
     list: () => [
@@ -386,6 +395,33 @@ describe("AbstractAPI", () => {
         "notifications.info",
         buildNotificationDescriptor(),
         { responses: [responses.notifications.info()] }
+      ],
+      // assets
+      [
+        "assets.list",
+        buildBranchDescriptor(),
+        { responses: [responses.assets.list()] }
+      ],
+      [
+        "assets.info",
+        buildAssetDescriptor(),
+        { responses: [responses.assets.info()] }
+      ],
+      [
+        "assets.raw",
+        buildAssetDescriptor(),
+        {
+          responses: [responses.assets.info(), responses.assets.raw()]
+        },
+        "assets.raw",
+        buildAssetDescriptor({ sha: "latest" }),
+        {
+          responses: [
+            responses.commits.list(),
+            responses.assets.info(),
+            responses.assets.raw()
+          ]
+        }
       ],
       // users
       [
