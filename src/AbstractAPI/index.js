@@ -97,7 +97,7 @@ export default class AbstractAPI implements AbstractInterface {
   async fetch(
     input: string | URL,
     init: Object = {},
-    hostname?: string | boolean
+    hostname?: string | false
   ) {
     const tokenHeader = await this.tokenHeader();
 
