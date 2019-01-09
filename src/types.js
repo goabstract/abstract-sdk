@@ -38,12 +38,12 @@ export type CommitDescriptor = {|
 
 export type BranchDescriptor = {|
   ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest"
+  sha: $PropertyType<ObjectDescriptor, "sha">
 |};
 
 export type FileDescriptor = {|
   ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
+  sha: $PropertyType<ObjectDescriptor, "sha">,
   fileId: string
 |};
 
@@ -55,7 +55,7 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
+  sha: $PropertyType<ObjectDescriptor, "sha">,
   fileId: string,
   pageId: string,
   layerId: string
