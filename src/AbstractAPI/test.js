@@ -122,7 +122,7 @@ const responses = {
       { status: 200 }
     ],
     info: () => [JSON.stringify({ id: "foo", url: "assets" }), { status: 200 }],
-    arrayBuffer: () => [buffer, { status: 200 }]
+    raw: () => [buffer, { status: 200 }]
   },
   comments: {
     list: () => [
@@ -382,7 +382,7 @@ describe("AbstractAPI", () => {
         "assets.raw",
         buildAssetDescriptor(),
         {
-          responses: [responses.assets.info(), responses.previews.arrayBuffer()]
+          responses: [responses.assets.info(), responses.assets.raw()]
         },
         "assets.raw",
         buildAssetDescriptor({ sha: "latest" }),
@@ -390,7 +390,7 @@ describe("AbstractAPI", () => {
           responses: [
             responses.commits.list(),
             responses.assets.info(),
-            responses.assets.arrayBuffer()
+            responses.assets.raw()
           ]
         }
       ],

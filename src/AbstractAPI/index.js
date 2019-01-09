@@ -160,22 +160,6 @@ export default class AbstractAPI implements AbstractInterface {
     );
   }
 
-  async fetchRaw(input: string | URL, init?: Object = {}) {
-    return this.fetch(
-      input,
-      {
-        ...init,
-        headers: {
-          Accept: undefined,
-          "Content-Type": undefined,
-          "Abstract-Api-Version": undefined,
-          ...init.headers
-        }
-      },
-      ""
-    );
-  }
-
   async resolveDescriptor<T: *>(objectDescriptor: T): Promise<T> {
     if (objectDescriptor.sha !== "latest") return objectDescriptor;
 
