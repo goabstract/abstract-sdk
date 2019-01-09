@@ -322,4 +322,28 @@ export default class AbstractCLI implements AbstractInterface {
       ]);
     }
   };
+
+  branches = {
+    list: async (
+      projectDescriptor: ProjectDescriptor,
+      options: { filter?: "active" | "archived" | "mine" } = {}
+    ) => {
+      const branchesArgs = options.filter ? ["--filter", options.filter] : [];
+
+      const data = await this.spawn([
+        "branches",
+        projectDescriptor.projectId,
+        ...branchesArgs
+      ]);
+      return data.branches;
+    },
+    info: async (branchDescriptor: BranchDescriptor) => {
+      return await this.spawn([
+        "branch",
+        "load",
+        branchDescriptor.branchId,
+        branchDescriptor.projectId
+      ]);
+    }
+  };
 }

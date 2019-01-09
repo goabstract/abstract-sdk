@@ -129,13 +129,10 @@ fs.writeFile("asset.png", Buffer.from(arrayBuffer), (err) => {
 
 ## Branches
 
-![API][api-icon]
+![CLI][cli-icon] ![API][api-icon]
 
 A branch is where design work and commits happen. A branch acts as a personal workspace for contributors, we encourage branches
 to be created for logical chunks of work – for example designing a new feature.
-
-  > Note: Branches will be available through the CLI transport in the near future
-
 
 ### The branch object
 

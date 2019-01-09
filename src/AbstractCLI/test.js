@@ -67,6 +67,16 @@ const responses = {
     info: () => ({
       stdout: JSON.stringify({ layer: { id: "layer-id" } })
     })
+  },
+  branches: {
+    list: () => ({
+      stdout: JSON.stringify({
+        branches: [{ id: "foo" }, { id: "bar" }]
+      })
+    }),
+    info: () => ({
+      stdout: JSON.stringify({ id: "baz" })
+    })
   }
 };
 
@@ -244,6 +254,17 @@ describe(AbstractCLI, () => {
         "data.info",
         buildLayerDescriptor({ sha: "latest" }),
         { responses: [responses.commits.list()] }
+      ],
+      // branches
+      [
+        "branches.list",
+        buildProjectDescriptor(),
+        { responses: [responses.branches.list()] }
+      ],
+      [
+        "branches.info",
+        buildBranchDescriptor(),
+        { responses: [responses.branches.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
