@@ -323,9 +323,7 @@ export default class AbstractCLI implements AbstractInterface {
       projectDescriptor: ProjectDescriptor,
       options: { filter?: "active" | "archived" | "mine" } = {}
     ) => {
-      const branchesArgs = options.filter
-        ? ["--branch-filter", options.filter]
-        : [];
+      const branchesArgs = options.filter ? ["--filter", options.filter] : [];
 
       const data = await this.spawn([
         "branches",
