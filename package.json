@@ -12,7 +12,8 @@
   },
   "scripts": {
     "prepublish": "yarn run build",
-    "build": "babel ./src -d ./lib && flow-copy-source src lib",
+    "build": "babel ./src --ignore **/*/__mocks__,**/test.js -d ./lib",
+    "prebuild": "flow-copy-source --ignore '**/*/__mocks__/*.js' --ignore '**/*test.js' ./src ./lib",
     "lint": "eslint .",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
