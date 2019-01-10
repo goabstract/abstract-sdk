@@ -188,15 +188,19 @@ export default class AbstractCLI implements AbstractInterface {
         | CommitDescriptor
         | LayerDescriptor
     ) => {
-      if (!objectDescriptor.sha) throw new Error("commits.info requires sha");
+      // Avoid using resolveDescriptor to prevent extra request
+      if (objectDescriptor.sha === "latest") {
+        const commits = await this.commits.list(objectDescriptor, { limit: 1 });
+        return commits[0];
+      } else {
+        const data = await this.spawn([
+          "commit",
+          objectDescriptor.projectId,
+          objectDescriptor.sha
+        ]);
 
-      const data = await this.spawn([
-        "commit",
-        objectDescriptor.projectId,
-        objectDescriptor.sha ? objectDescriptor.sha : "latest" // TODO latest
-      ]);
-
-      return data.commit;
+        return data.commit;
+      }
     }
   };
 
@@ -315,6 +319,30 @@ export default class AbstractCLI implements AbstractInterface {
         "collection",
         collectionDescriptor.projectId,
         collectionDescriptor.collectionId
+      ]);
+    }
+  };
+
+  branches = {
+    list: async (
+      projectDescriptor: ProjectDescriptor,
+      options: { filter?: "active" | "archived" | "mine" } = {}
+    ) => {
+      const branchesArgs = options.filter ? ["--filter", options.filter] : [];
+
+      const data = await this.spawn([
+        "branches",
+        projectDescriptor.projectId,
+        ...branchesArgs
+      ]);
+      return data.branches;
+    },
+    info: async (branchDescriptor: BranchDescriptor) => {
+      return await this.spawn([
+        "branch",
+        "load",
+        branchDescriptor.branchId,
+        branchDescriptor.projectId
       ]);
     }
   };

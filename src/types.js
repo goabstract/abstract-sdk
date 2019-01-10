@@ -67,6 +67,11 @@ export type UserDescriptor = {|
   userId: string
 |};
 
+export type AssetDescriptor = {|
+  assetId: string,
+  projectId: string
+|};
+
 export type ListOptions = {
   limit?: number,
   offset?: number
@@ -1262,6 +1267,23 @@ export type Notification =
   | NotificationReviewerRemoved
   | NotificationUpdateCommit;
 
+export type Asset = {
+  createdAt: string,
+  defaultAbstractFormat: boolean,
+  fileFormat: string,
+  fileId: string,
+  formatName: string,
+  id: string,
+  layerId: string,
+  layerName: string,
+  namingScheme: string,
+  nestedLayerId: string,
+  projectId: string,
+  scale: string,
+  sha: string,
+  url: string
+};
+
 export interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
@@ -1355,7 +1377,7 @@ export interface AbstractInterface {
   branches?: {
     list: (
       ProjectDescriptor,
-      options: { filter?: "active" | "archived" | "mine" }
+      options?: { filter?: "active" | "archived" | "mine" }
     ) => Promise<Branch[]>,
     info: BranchDescriptor => Promise<Branch>
   };
@@ -1403,5 +1425,11 @@ export interface AbstractInterface {
       objectDescriptor: OrganizationDescriptor | ProjectDescriptor
     ) => Promise<User[]>,
     info: (userDescriptor: UserDescriptor) => Promise<User>
+  };
+
+  assets?: {
+    list: (objectDescriptor: BranchDescriptor) => Promise<Asset[]>,
+    info: (assetDescriptor: AssetDescriptor) => Promise<Asset>,
+    raw: (assetDescriptor: AssetDescriptor) => Promise<ArrayBuffer>
   };
 }

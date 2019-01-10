@@ -38,6 +38,11 @@ const responses = {
       stdout: JSON.stringify({
         commits: [{ sha: "commit-sha" }, { sha: "next-commit-sha" }]
       })
+    }),
+    info: () => ({
+      stdout: JSON.stringify({
+        commit: { sha: "commit-sha" }
+      })
     })
   },
   files: {
@@ -61,6 +66,16 @@ const responses = {
   layers: {
     info: () => ({
       stdout: JSON.stringify({ layer: { id: "layer-id" } })
+    })
+  },
+  branches: {
+    list: () => ({
+      stdout: JSON.stringify({
+        branches: [{ id: "foo" }, { id: "bar" }]
+      })
+    }),
+    info: () => ({
+      stdout: JSON.stringify({ id: "baz" })
     })
   }
 };
@@ -137,6 +152,32 @@ describe(AbstractCLI, () => {
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
       ["commits.info", buildCommitDescriptor()],
+      [
+        "commits.info",
+        buildFileDescriptor({ sha: "commit-sha" }),
+        {
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
+        }
+      ],
+      [
+        "commits.info",
+        buildFileDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
+      [
+        "commits.info",
+        buildLayerDescriptor({ sha: "commit-sha" }),
+        {
+          responses: [responses.commits.info()],
+          result: { sha: "commit-sha" }
+        }
+      ],
+      [
+        "commits.info",
+        buildLayerDescriptor({ sha: "latest" }),
+        { responses: [responses.commits.list()] }
+      ],
       // changesets
       ["changesets.info", buildCommitDescriptor()],
       // files
@@ -213,6 +254,17 @@ describe(AbstractCLI, () => {
         "data.info",
         buildLayerDescriptor({ sha: "latest" }),
         { responses: [responses.commits.list()] }
+      ],
+      // branches
+      [
+        "branches.list",
+        buildProjectDescriptor(),
+        { responses: [responses.branches.list()] }
+      ],
+      [
+        "branches.info",
+        buildBranchDescriptor(),
+        { responses: [responses.branches.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
