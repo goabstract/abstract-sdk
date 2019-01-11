@@ -32,7 +32,8 @@ import type {
   AccessTokenOption,
   AccessToken,
   Activity,
-  Notification
+  Notification,
+  Collection
 } from "../types";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
@@ -566,6 +567,35 @@ export default class AbstractAPI implements AbstractInterface {
 
       const data = await unwrapEnvelope(response.json());
       return data.collections[0];
+    },
+    create: async (
+      objectDescriptor: ProjectDescriptor,
+      collection: Collection
+    ) => {
+      const response = await this.fetch(
+        `projects/${objectDescriptor.projectId}/collections`,
+        {
+          method: "POST",
+          body: collection
+        }
+      );
+
+      return response.json();
+    },
+    update: async (
+      collectionDescriptor: CollectionDescriptor,
+      collection: Collection
+    ) => {
+      const response = await this.fetch(
+        // prettier-ignore
+        `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}`,
+        {
+          method: "PUT",
+          body: collection
+        }
+      );
+
+      return response.json();
     }
   };
 

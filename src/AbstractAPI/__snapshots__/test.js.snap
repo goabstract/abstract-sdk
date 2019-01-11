@@ -233,6 +233,28 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch collections.create([[Object], [Object]]) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/collections",
+      Object {
+        "body": "{\\"body\\":{\\"name\\":\\"test-collection\\"}}",
+        "headers": Object {
+          "Abstract-Api-Version": "8",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
+      },
+    ],
+  ],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
 Object {
   "fetch": Array [
@@ -287,6 +309,28 @@ Object {
           "User-Agent": "Abstract SDK 0.0",
           "X-Amzn-Trace-Id": "random-trace-id",
         },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch collections.update([[Object], [Object]]) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/projects/project-id/collections/collection-id",
+      Object {
+        "body": "{\\"body\\":{\\"name\\":\\"test-collection\\"}}",
+        "headers": Object {
+          "Abstract-Api-Version": "8",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "PUT",
       },
     ],
   ],

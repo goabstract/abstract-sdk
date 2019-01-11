@@ -1345,7 +1345,9 @@ export interface AbstractInterface {
       ProjectDescriptor | BranchDescriptor,
       options?: Object
     ) => Promise<Collection[]>,
-    info: (CollectionDescriptor, options?: Object) => Promise<Collection>
+    info: (CollectionDescriptor, options?: Object) => Promise<Collection>,
+    create?: (ProjectDescriptor, Collection) => Promise<Collection>,
+    update?: (CollectionDescriptor, Collection) => Promise<Collection>
   };
 
   comments?: {

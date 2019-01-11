@@ -278,6 +278,37 @@ abstract.collections.info({
 });
 ```
 
+### Create a collection
+
+`collections.create(ProjectDescriptor, Collection): Promise<Collection>`
+
+Create a new collection
+
+```js
+abstract.collections.create({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+}, {
+  name: "Test collection",
+  description: "Test description",
+  branchId: "c426d0a6-e039-43d7-b7b3-e685a25e4cfb"
+});
+```
+
+### Update a collection
+
+`collections.update(CollectionDescriptor, Collection): Promise<Collection>`
+
+Update an existing collection
+
+```js
+abstract.collections.update({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  collectionId: "413daa80-1456-11e8-b8b0-4d1fec7ae555"
+}, {
+  name: "New name"
+});
+```
+
 
 ## Comments
 
