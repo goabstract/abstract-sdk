@@ -38,6 +38,7 @@ import type {
 } from "../";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
+import shareBody from "./shareBody";
 
 const minorVersion = version.split(".", 2).join(".");
 const logStatusError = log.extend("AbstractAPI:status:error");
@@ -235,25 +236,16 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
   shares = {
-    // Using an anonymous function instead of fat arrow function
-    // to avoid throwing a syntax error caused by the generics
+    // Using an anonymous function instead of a fat arrow function
+    // to avoid throwing some syntax error caused by the generics
     // https://github.com/babel/babylon/issues/235
     create: async function<T: Share>(
       organizationDescriptor: OrganizationDescriptor,
-      input: InputShare
+      inputShare: InputShare<T>
     ): Promise<T> {
       const response = await this.fetch("share_links", {
         method: "POST",
-        body: {
-          organizationId: input.organizationId,
-          projectId: input.projectId,
-          branchId: input.branchId,
-          commitSha: input.sha,
-          fileId: input.fileId,
-          pageId: input.pageId,
-          layerId: input.layerId,
-          mode: input.mode
-        }
+        body: shareBody<T>(inputShare)
       });
 
       return response.json();

@@ -439,7 +439,10 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-export type InputShare = $Diff<InputShare, { ...BaseShare, descriptor: * }>;
+export type InputShare<T: Share> = {
+  kind: $PropertyType<T, "kind">,
+  ...$PropertyType<T, "descriptor">
+};
 
 export type Annotation = {
   id: string,
@@ -1340,7 +1343,7 @@ export interface AbstractInterface {
   shares?: {
     create: <T: Share>(
       organizationDescriptor: OrganizationDescriptor,
-      share: InputShare
+      inputShare: InputShare<T>
     ) => Promise<T>,
     info: <T: Share>(shareDescriptor: ShareDescriptor) => Promise<T>
   };
