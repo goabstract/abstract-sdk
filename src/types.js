@@ -441,7 +441,8 @@ export type Share =
 
 export type InputShare<T: Share> = {
   kind: $PropertyType<T, "kind">,
-  ...$PropertyType<T, "descriptor">
+  ...$PropertyType<T, "descriptor">,
+  ...$PropertyType<T, "options">
 };
 
 export type Annotation = {
