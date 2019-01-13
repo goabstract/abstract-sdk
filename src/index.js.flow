@@ -371,7 +371,8 @@ type BaseShare = {|
   id: string,
   url: string,
   appUrl: string,
-  userId: string
+  userId: string,
+  options: {}
 |};
 
 export type ProjectShare = {|
@@ -407,7 +408,13 @@ export type PageShare = {|
 export type LayerShare = {|
   ...BaseShare,
   kind: "layer",
-  descriptor: LayerDescriptor
+  descriptor: LayerDescriptor,
+  options: {
+    public: boolean,
+    historyEnabled: boolean,
+    inspectEnabled: boolean,
+    mode: "design" | "compare" | "inspect"
+  }
 |};
 
 export type CommentShare = {|
