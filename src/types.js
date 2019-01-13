@@ -367,60 +367,67 @@ export type Project = {
   userIds: [string]
 };
 
-type BaseShare = {
+type BaseShare = {|
   id: string,
   url: string,
   appUrl: string,
-  userId: string
-};
+  userId: string,
+  options: {}
+|};
 
-export type ProjectShare = {
+export type ProjectShare = {|
   ...BaseShare,
   kind: "project",
   descriptor: ProjectDescriptor
-};
+|};
 
-export type CommitShare = {
+export type CommitShare = {|
   ...BaseShare,
   kind: "commit",
   descriptor: CommitDescriptor
-};
+|};
 
-export type BranchShare = {
+export type BranchShare = {|
   ...BaseShare,
   kind: "branch",
   descriptor: BranchDescriptor
-};
+|};
 
-export type FileShare = {
+export type FileShare = {|
   ...BaseShare,
   kind: "file",
   descriptor: FileDescriptor
-};
+|};
 
-export type PageShare = {
+export type PageShare = {|
   ...BaseShare,
   kind: "page",
   descriptor: PageDescriptor
-};
+|};
 
-export type LayerShare = {
+export type LayerShare = {|
   ...BaseShare,
   kind: "layer",
-  descriptor: LayerDescriptor
-};
+  descriptor: LayerDescriptor,
+  options: {
+    public: boolean,
+    historyEnabled: boolean,
+    inspectEnabled: boolean,
+    mode: "design" | "compare" | "inspect"
+  }
+|};
 
-export type CommentShare = {
+export type CommentShare = {|
   ...BaseShare,
   kind: "comment",
   descriptor: CommentDescriptor
-};
+|};
 
-export type CollectionShare = {
+export type CollectionShare = {|
   ...BaseShare,
   kind: "collection",
   descriptor: CollectionDescriptor
-};
+|};
 
 export type Share =
   | ProjectShare
@@ -431,6 +438,11 @@ export type Share =
   | LayerShare
   | CommentShare
   | CollectionShare;
+
+export type InputShare<T: Share> = {
+  kind: $PropertyType<T, "kind">,
+  ...$PropertyType<T, "descriptor">
+};
 
 export type Annotation = {
   id: string,
@@ -1329,7 +1341,11 @@ export interface AbstractInterface {
   };
 
   shares?: {
-    info: (shareDescriptor: ShareDescriptor) => Promise<Share>
+    create: <T: Share>(
+      organizationDescriptor: OrganizationDescriptor,
+      inputShare: InputShare<T>
+    ) => Promise<T>,
+    info: <T: Share>(shareDescriptor: ShareDescriptor) => Promise<T>
   };
 
   projects?: {

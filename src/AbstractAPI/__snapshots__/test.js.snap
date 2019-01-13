@@ -1223,6 +1223,28 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch shares.create([[Object], [Object]]) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/share_links",
+      Object {
+        "body": "{\\"organizationId\\":\\"organization-id\\",\\"projectId\\":\\"project-id\\",\\"branchId\\":\\"branch-id\\",\\"fileId\\":\\"file-id\\",\\"pageId\\":\\"page-id\\",\\"layerId\\":\\"layer-id\\",\\"mode\\":\\"mode\\"}",
+        "headers": Object {
+          "Abstract-Api-Version": "8",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
+      },
+    ],
+  ],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch shares.info({"shareId": "share-id"}) 1`] = `
 Object {
   "fetch": Array [
