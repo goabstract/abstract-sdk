@@ -176,6 +176,23 @@ describe("AbstractAPI", () => {
       ["organizations.info", buildOrganizationDescriptor()],
       ["organizations.list", undefined],
       // shares
+      [
+        "shares.create",
+        [
+          buildOrganizationDescriptor(),
+          {
+            kind: "layer",
+            projectId: "project-id",
+            organizationId: "organization-id",
+            branchId: "branch-id",
+            fileId: "file-id",
+            pageId: "page-id",
+            layerId: "layer-id",
+            commitSha: "sha",
+            mode: "mode"
+          }
+        ]
+      ],
       ["shares.info", { url: "https://share.goabstract.com/share-id" }],
       ["shares.info", { shareId: "share-id" }],
       // projects

@@ -26,13 +26,15 @@ import type {
   CommentDescriptor,
   UserDescriptor,
   AssetDescriptor,
+  Share,
   Comment,
   Layer,
   ListOptions,
   AccessTokenOption,
   AccessToken,
   Activity,
-  Notification
+  Notification,
+  InputShare
 } from "../";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
@@ -232,14 +234,35 @@ export default class AbstractAPI implements AbstractInterface {
       return unwrapEnvelope(response.json());
     }
   };
-
   shares = {
-    info: async (shareDescriptor: ShareDescriptor) => {
+    create: async function<T: Share>(
+      organizationDescriptor: OrganizationDescriptor,
+      input: InputShare
+    ): Promise<T> {
+      const response = await this.fetch("share_links", {
+        method: "POST",
+        body: {
+          organizationId: input.organizationId,
+          projectId: input.projectId,
+          branchId: input.branchId,
+          commitSha: input.sha,
+          fileId: input.fileId,
+          pageId: input.pageId,
+          layerId: input.layerId,
+          mode: input.mode
+        }
+      });
+
+      return response.json();
+    }.bind(this),
+    info: async function<T: Share>(
+      shareDescriptor: ShareDescriptor
+    ): Promise<T> {
       const response = await this.fetch(
         `share_links/${inferShareId(shareDescriptor)}`
       );
       return response.json();
-    }
+    }.bind(this)
   };
 
   projects = {
@@ -275,37 +298,33 @@ export default class AbstractAPI implements AbstractInterface {
     ) => {
       objectDescriptor = await this.resolveDescriptor(objectDescriptor);
 
-      const response = await this.fetch(
-        // prettier-ignore
-        "comments",
-        {
-          method: "POST",
-          body: {
-            projectId: objectDescriptor.projectId,
-            branchId: objectDescriptor.branchId,
-            commitSha: objectDescriptor.sha,
-            fileId: objectDescriptor.layerId
-              ? objectDescriptor.fileId
-              : undefined,
-            pageId: objectDescriptor.layerId
-              ? objectDescriptor.pageId
-              : undefined,
-            layerId: objectDescriptor.layerId
-              ? objectDescriptor.layerId
-              : undefined,
-            body: comment.body,
-            annotation: comment.annotation
-              ? {
-                  x: comment.annotation.x,
-                  y: comment.annotation.y,
-                  width: comment.annotation.width,
-                  height: comment.annotation.height
-                }
-              : undefined,
-            ...(await this._denormalizeDescriptorForComment(objectDescriptor))
-          }
+      const response = await this.fetch("comments", {
+        method: "POST",
+        body: {
+          projectId: objectDescriptor.projectId,
+          branchId: objectDescriptor.branchId,
+          commitSha: objectDescriptor.sha,
+          fileId: objectDescriptor.layerId
+            ? objectDescriptor.fileId
+            : undefined,
+          pageId: objectDescriptor.layerId
+            ? objectDescriptor.pageId
+            : undefined,
+          layerId: objectDescriptor.layerId
+            ? objectDescriptor.layerId
+            : undefined,
+          body: comment.body,
+          annotation: comment.annotation
+            ? {
+                x: comment.annotation.x,
+                y: comment.annotation.y,
+                width: comment.annotation.width,
+                height: comment.annotation.height
+              }
+            : undefined,
+          ...(await this._denormalizeDescriptorForComment(objectDescriptor))
         }
-      );
+      });
 
       return response.json();
     },
