@@ -235,6 +235,9 @@ export default class AbstractAPI implements AbstractInterface {
     }
   };
   shares = {
+    // Using an anonymous function instead of fat arrow function
+    // to avoid throwing a syntax error caused by the generics
+    // https://github.com/babel/babylon/issues/235
     create: async function<T: Share>(
       organizationDescriptor: OrganizationDescriptor,
       input: InputShare
