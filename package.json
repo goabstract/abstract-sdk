@@ -12,6 +12,7 @@
   },
   "scripts": {
     "prepublish": "yarn run build",
+    "prebuild": "rm -rf ./lib",
     "build": "babel ./src -d ./lib",
     "lint": "eslint .",
     "test": "jest",
