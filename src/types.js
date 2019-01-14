@@ -324,7 +324,7 @@ export type User = {
   primaryEmailId: string,
   createdAt: string,
   updatedAt: string,
-  deletedAt: string,
+  deletedAt?: string,
   username: string,
   name: ?string,
   avatarUrl: ?string
@@ -350,17 +350,17 @@ export type Organization = {
 export type Project = {
   id: string,
   name: string,
-  about: ?string,
-  description: ?string,
-  color: ?string,
+  about: string,
+  description: string,
+  color: string,
   createdAt: string,
   updatedAt: string,
   organizationId: string,
   createdByUser: User,
-  deletedAt: ?string,
-  archivedAt: ?string,
-  firstPushedAt: string,
-  pushedAt: ?string,
+  deletedAt?: string,
+  archivedAt?: string,
+  firstPushedAt?: string,
+  pushedAt?: string,
   repoCreatedAt: string,
   visibility: "organization" | "project",
   sizeInBytes: number,
@@ -519,32 +519,32 @@ export type Commit = {
     | "NORMAL",
   time: string,
   title: string,
-  description: ?string,
-  userName: ?string,
-  userId: ?string,
+  description: string,
+  userName: string,
+  userId: string,
   fileIds: string[],
   parents: string[],
-  destinationBranchId: ?string,
-  destinationBranchName: ?string,
-  sourceBranchId: ?string,
-  sourceBranchName: ?string
+  destinationBranchId: string,
+  destinationBranchName: string,
+  sourceBranchId: string,
+  sourceBranchName: string
 };
 
 export type Branch = {
   id: string,
   name: string,
-  description: ?string,
-  userName: ?string,
-  userId: ?string,
+  description: string,
+  userName: string,
+  userId: string,
   createdAt: string,
   updatedAt: string,
-  status: ?string,
-  parent: ?string,
-  startedAtSha: ?string,
+  status: string,
+  parent: string,
+  startedAtSha: string,
   head: string,
-  mergeSha: ?string,
-  mergedIntoBranchId: ?string,
-  divergedFromBranchId: ?string,
+  mergeSha: string,
+  mergedIntoBranchId: string,
+  divergedFromBranchId: string,
   projectId: string,
   user: User
 };
@@ -1420,6 +1420,8 @@ export interface AbstractInterface {
 
   previews?: {
     raw: LayerDescriptor => Promise<ArrayBuffer>,
+    blob: LayerDescriptor => Promise<Blob>,
+    url: LayerDescriptor => Promise<string>,
     info: LayerDescriptor => *
   };
 

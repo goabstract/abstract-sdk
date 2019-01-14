@@ -1,5 +1,5 @@
 // @flow
-/* global fetch */
+/* global fetch URL */
 import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
@@ -532,6 +532,20 @@ export default class AbstractAPI implements AbstractInterface {
       );
 
       return response.arrayBuffer();
+    },
+    blob: async (layerDescriptor: LayerDescriptor, options: *) => {
+      layerDescriptor = await this.resolveDescriptor(layerDescriptor);
+
+      const response = await this.fetchPreview(
+        // prettier-ignore
+        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
+        options
+      );
+
+      return response.blob();
+    },
+    url: async (layerDescriptor: LayerDescriptor, options: *) => {
+      return URL.createObjectURL(await this.previews.blob(layerDescriptor));
     }
   };
 
