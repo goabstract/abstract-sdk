@@ -1,5 +1,5 @@
 // @flow
-import * as Abstract from "../types";
+import * as Abstract from "../";
 
 export default function shareBody<T: Abstract.Share>(
   inputShare: Abstract.InputShare<T>
