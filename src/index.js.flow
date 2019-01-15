@@ -411,9 +411,9 @@ export type LayerShare = {|
   descriptor: LayerDescriptor,
   options: {
     public: boolean,
-    historyEnabled: boolean,
-    inspectEnabled: boolean,
-    mode: "design" | "compare" | "inspect"
+    canInspect: boolean,
+    canShowHistory: boolean,
+    mode: "design" | "compare" | "build"
   }
 |};
 
@@ -439,9 +439,11 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-export type InputShare<T: Share> = {
+export type InputShare<+T: Share> = {
   kind: $PropertyType<T, "kind">,
-  ...$PropertyType<T, "descriptor">
+  ...$PropertyType<T, "descriptor">,
+  ...$PropertyType<T, "options">,
+  organizationId: string
 };
 
 export type Annotation = {

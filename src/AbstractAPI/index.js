@@ -248,7 +248,7 @@ export default class AbstractAPI implements AbstractInterface {
         body: shareBody<T>(inputShare)
       });
 
-      return response.json();
+      return ((response.json(): any): T);
     }.bind(this),
     info: async function<T: Share>(
       shareDescriptor: ShareDescriptor
@@ -256,6 +256,7 @@ export default class AbstractAPI implements AbstractInterface {
       const response = await this.fetch(
         `share_links/${inferShareId(shareDescriptor)}`
       );
+
       return response.json();
     }.bind(this)
   };

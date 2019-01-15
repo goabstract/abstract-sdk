@@ -1,7 +1,9 @@
 // @flow
 import * as Abstract from "../types";
 
-export default function shareBody<T>(inputShare: Abstract.InputShare<T>) {
+export default function shareBody<T: Abstract.Share>(
+  inputShare: Abstract.InputShare<T>
+) {
   switch (inputShare.kind) {
     case "layer": {
       return {
