@@ -12,8 +12,8 @@
   },
   "scripts": {
     "prepublish": "yarn run build",
-    "prebuild": "rm -rf ./lib",
-    "build": "babel ./src -d ./lib",
+    "build": "babel ./src --ignore **/*/__mocks__,**/test.js -d ./lib",
+    "prebuild": "flow-copy-source --ignore '**/*/__mocks__/*.js' --ignore '**/*test.js' ./src ./lib",
     "lint": "eslint .",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
@@ -50,6 +50,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.80.0",
+    "flow-copy-source": "^2.0.2",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0",
     "jest-fetch-mock": "GrahamTheCoder/jest-fetch-mock#blob-fix",

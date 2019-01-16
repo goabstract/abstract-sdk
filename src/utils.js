@@ -6,7 +6,7 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   ShareDescriptor
-} from "./";
+} from "./types";
 
 export function objectBranchDescriptor(
   objectDescriptor:

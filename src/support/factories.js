@@ -10,7 +10,7 @@ import type {
   CommentDescriptor,
   UserDescriptor,
   AssetDescriptor
-} from "../";
+} from "../types";
 
 export function buildOptions(options: *) {
   return {

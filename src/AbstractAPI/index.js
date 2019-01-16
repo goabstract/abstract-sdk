@@ -35,7 +35,7 @@ import type {
   Activity,
   Notification,
   InputShare
-} from "../";
+} from "../types";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 import shareBody from "./shareBody";
@@ -248,7 +248,9 @@ export default class AbstractAPI implements AbstractInterface {
         body: shareBody<T>(inputShare)
       });
 
-      return ((response.json(): any): T);
+      const share: T = await response.json();
+
+      return (share: T);
     }.bind(this),
     info: async function<T: Share>(
       shareDescriptor: ShareDescriptor
