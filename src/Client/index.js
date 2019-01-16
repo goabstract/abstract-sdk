@@ -1,5 +1,5 @@
 // @flow
-import type { AbstractInterface, AccessTokenOption } from "../";
+import type { AbstractInterface, AccessTokenOption } from "../types";
 import { AUTO } from "../transports";
 
 type Options = {

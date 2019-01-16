@@ -33,7 +33,7 @@ import type {
   AccessToken,
   Activity,
   Notification
-} from "../";
+} from "../types";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 

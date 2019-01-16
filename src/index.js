@@ -5,3 +5,4 @@ import * as TRANSPORTS from "./transports";
 
 export { client, Sketch, TRANSPORTS };
 export { client as Client }; // Deprecated: prefer Abstract.client factory
+export type * from "./types";

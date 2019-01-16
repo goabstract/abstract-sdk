@@ -38,12 +38,12 @@ export type CommitDescriptor = {|
 
 export type BranchDescriptor = {|
   ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest"
+  sha: $PropertyType<ObjectDescriptor, "sha">
 |};
 
 export type FileDescriptor = {|
   ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
+  sha: $PropertyType<ObjectDescriptor, "sha">,
   fileId: string
 |};
 
@@ -55,7 +55,7 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha"> | "latest",
+  sha: $PropertyType<ObjectDescriptor, "sha">,
   fileId: string,
   pageId: string,
   layerId: string
@@ -67,7 +67,7 @@ export type UserDescriptor = {|
   userId: string
 |};
 
-export type AssetDescriptor ={|
+export type AssetDescriptor = {|
   assetId: string,
   projectId: string
 |};
@@ -332,7 +332,7 @@ export type User = {
 
 export type Organization = {
   billingEmail?: string,
-  features: {[feature: string]: boolean},
+  features: { [feature: string]: boolean },
   hasBillingInfo?: boolean,
   id: string,
   isUsernameOrganization?: boolean,
@@ -1281,7 +1281,7 @@ export type Asset = {
   projectId: string,
   scale: string,
   sha: string,
-  url: string,
+  url: string
 };
 
 export interface CursorPromise<T> extends Promise<T> {
@@ -1322,7 +1322,9 @@ export interface AbstractInterface {
   };
 
   organizations?: {
-    info: (organizationDescriptor: OrganizationDescriptor) => Promise<Organization>,
+    info: (
+      organizationDescriptor: OrganizationDescriptor
+    ) => Promise<Organization>,
     list: () => Promise<Organization[]>
   };
 
@@ -1413,27 +1415,21 @@ export interface AbstractInterface {
       objectDescriptor?: OrganizationDescriptor,
       options?: ListOptions
     ) => CursorPromise<Notification[]>,
-    info: (notificationDescriptor: NotificationDescriptor) => Promise<Notification>
+    info: (
+      notificationDescriptor: NotificationDescriptor
+    ) => Promise<Notification>
   };
 
   users?: {
     list: (
       objectDescriptor: OrganizationDescriptor | ProjectDescriptor
     ) => Promise<User[]>,
-    info: (
-      userDescriptor: UserDescriptor
-    ) => Promise<User>
+    info: (userDescriptor: UserDescriptor) => Promise<User>
   };
 
   assets?: {
-    list: (
-      objectDescriptor: BranchDescriptor
-    ) => Promise<Asset[]>,
-    info: (
-      assetDescriptor: AssetDescriptor
-    ) => Promise<Asset>,
-    raw: (
-      assetDescriptor: AssetDescriptor
-    ) => Promise<ArrayBuffer>
-  }
+    list: (objectDescriptor: BranchDescriptor) => Promise<Asset[]>,
+    info: (assetDescriptor: AssetDescriptor) => Promise<Asset>,
+    raw: (assetDescriptor: AssetDescriptor) => Promise<ArrayBuffer>
+  };
 }
