@@ -485,6 +485,7 @@ export type Collection = {
   description: string,
   createdAt: string,
   publishedAt: string,
+  published: boolean,
   layers: string[]
 };
 
@@ -1345,7 +1346,9 @@ export interface AbstractInterface {
       ProjectDescriptor | BranchDescriptor,
       options?: Object
     ) => Promise<Collection[]>,
-    info: (CollectionDescriptor, options?: Object) => Promise<Collection>
+    info: (CollectionDescriptor, options?: Object) => Promise<Collection>,
+    create?: (ProjectDescriptor, Collection) => Promise<Collection>,
+    update?: (CollectionDescriptor, Collection) => Promise<Collection>
   };
 
   comments?: {

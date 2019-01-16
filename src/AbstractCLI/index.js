@@ -16,7 +16,8 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
-  AccessTokenOption
+  AccessTokenOption,
+  Collection
 } from "../types";
 
 const logSpawn = log.extend("AbstractCLI:spawn");
@@ -316,10 +317,59 @@ export default class AbstractCLI implements AbstractInterface {
     },
     info: (collectionDescriptor: CollectionDescriptor) => {
       return this.spawn([
-        "collection",
+        "collection load",
         collectionDescriptor.projectId,
         collectionDescriptor.collectionId
       ]);
+    },
+    create: async (
+      projectDescriptor: ProjectDescriptor,
+      collection: Collection
+    ) => {
+      const name = collection.name ? ["--name", collection.name] : [];
+      const branchId = collection.branchId
+        ? ["--branchID", collection.branchId]
+        : [];
+      const description = collection.description
+        ? ["--description", collection.description]
+        : [];
+      const published = collection.published
+        ? ["--published", String(collection.published)]
+        : [];
+
+      const data = await this.spawn([
+        "collection",
+        "create",
+        projectDescriptor.projectId,
+        ...name,
+        ...branchId,
+        ...description,
+        ...published
+      ]);
+      return data.collection;
+    },
+    update: async (
+      collectionDescriptor: CollectionDescriptor,
+      collection: Collection
+    ) => {
+      const name = collection.name ? ["--name", collection.name] : [];
+      const description = collection.description
+        ? ["--description", collection.description]
+        : [];
+      const published = collection.published
+        ? ["--published", String(collection.published)]
+        : [];
+
+      const data = await this.spawn([
+        "collection",
+        "update",
+        collectionDescriptor.projectId,
+        collectionDescriptor.collectionId,
+        ...name,
+        ...description,
+        ...published
+      ]);
+      return data.collection;
     }
   };
 

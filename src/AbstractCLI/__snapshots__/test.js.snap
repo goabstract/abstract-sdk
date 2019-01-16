@@ -69,7 +69,7 @@ Object {
 }
 `;
 
-exports[`AbstractCLI with mocked child_process.spawn collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
+exports[`AbstractCLI with mocked child_process.spawn collections.create([[Object], [Object]]) 1`] = `
 Object {
   "spawn": Array [
     Array [
@@ -80,6 +80,30 @@ Object {
         "--api-url",
         "https://api.goabstract.com",
         "collection",
+        "create",
+        "project-id",
+        "--name",
+        "foo",
+      ],
+      Object {
+        "cwd": "<PROJECT_ROOT>",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn collections.info({"branchId": "branch-id", "collectionId": "collection-id", "projectId": "project-id"}) 1`] = `
+Object {
+  "spawn": Array [
+    Array [
+      "<PROJECT_ROOT>/fixtures/abstract-cli",
+      Array [
+        "--user-token",
+        "abstract-token",
+        "--api-url",
+        "https://api.goabstract.com",
+        "collection load",
         "project-id",
         "collection-id",
       ],
@@ -126,6 +150,31 @@ Object {
         "https://api.goabstract.com",
         "collections",
         "project-id",
+      ],
+      Object {
+        "cwd": "<PROJECT_ROOT>",
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractCLI with mocked child_process.spawn collections.update([[Object], [Object]]) 1`] = `
+Object {
+  "spawn": Array [
+    Array [
+      "<PROJECT_ROOT>/fixtures/abstract-cli",
+      Array [
+        "--user-token",
+        "abstract-token",
+        "--api-url",
+        "https://api.goabstract.com",
+        "collection",
+        "update",
+        "project-id",
+        "collection-id",
+        "--name",
+        "foo",
       ],
       Object {
         "cwd": "<PROJECT_ROOT>",

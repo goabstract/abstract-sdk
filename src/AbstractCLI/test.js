@@ -147,6 +147,8 @@ describe(AbstractCLI, () => {
       ["collections.list", buildProjectDescriptor()],
       ["collections.list", buildBranchDescriptor()],
       ["collections.info", buildCollectionDescriptor()],
+      ["collections.create", [buildProjectDescriptor(), { name: "foo" }]],
+      ["collections.update", [buildCollectionDescriptor(), { name: "foo" }]],
       // commits
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
