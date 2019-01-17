@@ -38,7 +38,6 @@ import type {
 } from "../types";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
-import shareBody from "./shareBody";
 
 const minorVersion = version.split(".", 2).join(".");
 const logStatusError = log.extend("AbstractAPI:status:error");
