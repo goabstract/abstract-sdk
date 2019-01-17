@@ -439,10 +439,10 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-export type InputShare<+T: Share> = {
-  kind: $PropertyType<T, "kind">,
-  ...$PropertyType<T, "descriptor">,
-  ...$PropertyType<T, "options">,
+export type InputShare = {
+  kind: $PropertyType<Share, "kind">,
+  ...$PropertyType<Share, "descriptor">,
+  ...$PropertyType<Share, "options">,
   organizationId: string
 };
 
@@ -1345,7 +1345,7 @@ export interface AbstractInterface {
   shares?: {
     create: <T: Share>(
       organizationDescriptor: OrganizationDescriptor,
-      inputShare: InputShare<T>
+      inputShare: InputShare
     ) => Promise<T>,
     info: <T: Share>(shareDescriptor: ShareDescriptor) => Promise<T>
   };

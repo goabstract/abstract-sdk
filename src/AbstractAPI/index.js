@@ -69,6 +69,7 @@ async function unwrapEnvelope<T>(
 ): Promise<T> {
   return (await response).data;
 }
+
 export default class AbstractAPI implements AbstractInterface {
   _optionAccessToken: AccessTokenOption;
   apiUrl: string;
@@ -240,16 +241,14 @@ export default class AbstractAPI implements AbstractInterface {
     // https://github.com/babel/babylon/issues/235
     create: async function<T: Share>(
       organizationDescriptor: OrganizationDescriptor,
-      inputShare: InputShare<T>
+      inputShare: InputShare
     ): Promise<T> {
       const response = await this.fetch("share_links", {
         method: "POST",
         body: inputShare
       });
 
-      const share: T = await response.json();
-
-      return (share: T);
+      return await response.json();
     }.bind(this),
     info: async function<T: Share>(
       shareDescriptor: ShareDescriptor
