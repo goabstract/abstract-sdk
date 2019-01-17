@@ -391,8 +391,8 @@ export default class AbstractCLI implements AbstractInterface {
       return await this.spawn([
         "branch",
         "load",
-        branchDescriptor.branchId,
-        branchDescriptor.projectId
+        branchDescriptor.projectId,
+        branchDescriptor.branchId
       ]);
     }
   };

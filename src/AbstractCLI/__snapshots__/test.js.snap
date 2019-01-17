@@ -12,8 +12,8 @@ Object {
         "https://api.goabstract.com",
         "branch",
         "load",
-        "branch-id",
         "project-id",
+        "branch-id",
       ],
       Object {
         "cwd": "<PROJECT_ROOT>",
