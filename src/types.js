@@ -241,18 +241,18 @@ export type ActivityCommentCreated = ActivityBase & {
   payload: {
     reviewId?: string,
     reviewStatus?: ReviewStatus,
-    commentFileId: ?string,
-    commentFileName: ?string,
+    commentFileId: string,
+    commentFileName: string,
     commentId: string,
-    commentLayerId: ?string,
-    commentLayerName: ?string,
-    commentPageId: ?string,
-    commentPageName: ?string,
-    commentParentId: ?string,
+    commentLayerId: string,
+    commentLayerName: string,
+    commentPageId: string,
+    commentPageName: string,
+    commentParentId: string,
     commitBranchId: string,
     commitBranchName: string,
-    commitSha: ?string,
-    commitMessage: ?string
+    commitSha: string,
+    commitMessage: string
   }
 };
 
@@ -326,8 +326,8 @@ export type User = {
   updatedAt: string,
   deletedAt: string,
   username: string,
-  name: ?string,
-  avatarUrl: ?string
+  name: string,
+  avatarUrl: string
 };
 
 export type Organization = {
@@ -520,32 +520,32 @@ export type Commit = {
     | "NORMAL",
   time: string,
   title: string,
-  description: ?string,
-  userName: ?string,
-  userId: ?string,
+  description: string,
+  userName: string,
+  userId: string,
   fileIds: string[],
   parents: string[],
-  destinationBranchId: ?string,
-  destinationBranchName: ?string,
-  sourceBranchId: ?string,
-  sourceBranchName: ?string
+  destinationBranchId: string,
+  destinationBranchName: string,
+  sourceBranchId: string,
+  sourceBranchName: string
 };
 
 export type Branch = {
   id: string,
   name: string,
-  description: ?string,
-  userName: ?string,
-  userId: ?string,
+  description: string,
+  userName: string,
+  userId: string,
   createdAt: string,
   updatedAt: string,
-  status: ?string,
-  parent: ?string,
-  startedAtSha: ?string,
+  status: string,
+  parent: string,
+  startedAtSha: string,
   head: string,
-  mergeSha: ?string,
-  mergedIntoBranchId: ?string,
-  divergedFromBranchId: ?string,
+  mergeSha: string,
+  mergedIntoBranchId: string,
+  divergedFromBranchId: string,
   projectId: string,
   user: User
 };
@@ -1204,18 +1204,18 @@ export type NotificationCommentCreated = NotificationBase & {
   payload: {
     reviewId?: string,
     reviewStatus?: ReviewStatus,
-    commentFileId: ?string,
-    commentFileName: ?string,
+    commentFileId: string,
+    commentFileName: string,
     commentId: string,
-    commentLayerId: ?string,
-    commentLayerName: ?string,
-    commentPageId: ?string,
-    commentPageName: ?string,
-    commentParentId: ?string,
+    commentLayerId: string,
+    commentLayerName: string,
+    commentPageId: string,
+    commentPageName: string,
+    commentParentId: string,
     commitBranchId: string,
     commitBranchName: string,
-    commitSha: ?string,
-    commitMessage: ?string
+    commitSha: string,
+    commitMessage: string
   }
 };
 
@@ -1315,7 +1315,7 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
-export type AccessToken = ?string | ShareDescriptor;
+export type AccessToken = string | ShareDescriptor;
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
