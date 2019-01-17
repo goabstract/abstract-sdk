@@ -245,7 +245,7 @@ export default class AbstractAPI implements AbstractInterface {
     ): Promise<T> {
       const response = await this.fetch("share_links", {
         method: "POST",
-        body: shareBody<T>(inputShare)
+        body: inputShare
       });
 
       const share: T = await response.json();
