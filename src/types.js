@@ -350,62 +350,62 @@ export type Organization = {
 export type Project = {
   id: string,
   name: string,
-  about: ?string,
-  description: ?string,
-  color: ?string,
+  about: string,
+  description: string,
+  color: string,
   createdAt: string,
   updatedAt: string,
   organizationId: string,
   createdByUser: User,
-  deletedAt: ?string,
-  archivedAt: ?string,
+  deletedAt: string,
+  archivedAt: string,
   firstPushedAt: string,
-  pushedAt: ?string,
+  pushedAt: string,
   repoCreatedAt: string,
   visibility: "organization" | "project",
   sizeInBytes: number,
   userIds: [string]
 };
 
-type BaseShare = {|
+type BaseShare = {
   id: string,
   url: string,
   appUrl: string,
   userId: string,
   options: {}
-|};
+};
 
-export type ProjectShare = {|
+export type ProjectShare = {
   ...BaseShare,
   kind: "project",
   descriptor: ProjectDescriptor
-|};
+};
 
-export type CommitShare = {|
+export type CommitShare = {
   ...BaseShare,
   kind: "commit",
   descriptor: CommitDescriptor
-|};
+};
 
-export type BranchShare = {|
+export type BranchShare = {
   ...BaseShare,
   kind: "branch",
   descriptor: BranchDescriptor
-|};
+};
 
-export type FileShare = {|
+export type FileShare = {
   ...BaseShare,
   kind: "file",
   descriptor: FileDescriptor
-|};
+};
 
-export type PageShare = {|
+export type PageShare = {
   ...BaseShare,
   kind: "page",
   descriptor: PageDescriptor
-|};
+};
 
-export type LayerShare = {|
+export type LayerShare = {
   ...BaseShare,
   kind: "layer",
   descriptor: LayerDescriptor,
@@ -415,19 +415,19 @@ export type LayerShare = {|
     canShowHistory: boolean,
     mode: "design" | "compare" | "build"
   }
-|};
+};
 
-export type CommentShare = {|
+export type CommentShare = {
   ...BaseShare,
   kind: "comment",
   descriptor: CommentDescriptor
-|};
+};
 
-export type CollectionShare = {|
+export type CollectionShare = {
   ...BaseShare,
   kind: "collection",
   descriptor: CollectionDescriptor
-|};
+};
 
 export type Share =
   | ProjectShare
