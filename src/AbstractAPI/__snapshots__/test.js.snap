@@ -1203,7 +1203,7 @@ Object {
     Array [
       "https://api.goabstract.com/share_links",
       Object {
-        "body": "{\\"organizationId\\":\\"organization-id\\",\\"projectId\\":\\"project-id\\",\\"branchId\\":\\"branch-id\\",\\"fileId\\":\\"file-id\\",\\"pageId\\":\\"page-id\\",\\"layerId\\":\\"layer-id\\",\\"mode\\":\\"mode\\"}",
+        "body": "{\\"kind\\":\\"layer\\",\\"projectId\\":\\"project-id\\",\\"organizationId\\":\\"organization-id\\",\\"branchId\\":\\"branch-id\\",\\"fileId\\":\\"file-id\\",\\"pageId\\":\\"page-id\\",\\"layerId\\":\\"layer-id\\",\\"commitSha\\":\\"sha\\",\\"mode\\":\\"mode\\"}",
         "headers": Object {
           "Abstract-Api-Version": "8",
           "Accept": "application/json",
