@@ -33,7 +33,9 @@ import type {
   AccessToken,
   Activity,
   Notification,
-  Collection
+  Collection,
+  UpdatedCollection,
+  NewCollection
 } from "../types";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
@@ -570,7 +572,7 @@ export default class AbstractAPI implements AbstractInterface {
     },
     create: async (
       objectDescriptor: ProjectDescriptor,
-      collection: Collection
+      collection: NewCollection
     ) => {
       const response = await this.fetch(
         `projects/${objectDescriptor.projectId}/collections`,
@@ -584,7 +586,7 @@ export default class AbstractAPI implements AbstractInterface {
     },
     update: async (
       collectionDescriptor: CollectionDescriptor,
-      collection: Collection
+      collection: UpdatedCollection
     ) => {
       const response = await this.fetch(
         // prettier-ignore

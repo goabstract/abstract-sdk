@@ -280,7 +280,7 @@ abstract.collections.info({
 
 ### Create a collection
 
-`collections.create(ProjectDescriptor, Collection): Promise<Collection>`
+`collections.create(ProjectDescriptor, NewCollection): Promise<Collection>`
 
 Create a new collection
 
@@ -296,7 +296,7 @@ abstract.collections.create({
 
 ### Update a collection
 
-`collections.update(CollectionDescriptor, Collection): Promise<Collection>`
+`collections.update(CollectionDescriptor, UpdatedCollection): Promise<Collection>`
 
 Update an existing collection
 
