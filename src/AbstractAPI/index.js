@@ -1,8 +1,9 @@
 // @flow
-/* global fetch */
+/* global fetch URL */
 import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
+import omitBy from "lodash/omitBy";
 import { version } from "../../package.json";
 import {
   objectBranchDescriptor,
@@ -111,15 +112,19 @@ export default class AbstractAPI implements AbstractInterface {
   async fetch(input: string | URL, init: Object = {}, hostname?: ?string) {
     const tokenHeader = await this.tokenHeader();
 
-    init.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": `Abstract SDK ${minorVersion}`,
-      "X-Amzn-Trace-Id": randomTraceId(),
-      "Abstract-Api-Version": "8",
-      ...tokenHeader,
-      ...(init.headers || {})
-    };
+    init.headers = omitBy(
+      {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": `Abstract SDK ${minorVersion}`,
+        "X-Amzn-Trace-Id": randomTraceId(),
+        "Abstract-Api-Version": "8",
+        ...tokenHeader,
+        ...(init.headers || {})
+      },
+      // Omit undefined headers or fetch will String(undefined)
+      header => header === undefined
+    );
 
     if (init.body) {
       init.body = JSON.stringify(init.body);
