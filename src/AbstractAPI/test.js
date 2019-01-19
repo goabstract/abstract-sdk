@@ -260,6 +260,11 @@ describe("AbstractAPI", () => {
         buildProjectDescriptor(),
         { responses: [responses.comments.list()] }
       ],
+      [
+        "comments.info",
+        buildCommentDescriptor(),
+        { responses: [responses.comments.info()] }
+      ],
       // commits
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],

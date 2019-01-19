@@ -482,6 +482,26 @@ Object {
 }
 `;
 
+exports[`AbstractAPI with mocked global.fetch comments.info({"commentId": "comment-id"}) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/comments/comment-id",
+      Object {
+        "headers": Object {
+          "Abstract-Api-Version": "8",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+      },
+    ],
+  ],
+}
+`;
+
 exports[`AbstractAPI with mocked global.fetch comments.info({"userId": "user-id"}) 1`] = `
 Object {
   "fetch": Array [
