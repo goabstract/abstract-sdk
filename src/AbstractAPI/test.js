@@ -15,6 +15,7 @@ import {
   buildCollectionDescriptor,
   buildActivityDescriptor,
   buildNotificationDescriptor,
+  buildCommentDescriptor,
   buildUserDescriptor,
   buildAssetDescriptor
 } from "../support/factories";
