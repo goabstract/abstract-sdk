@@ -488,6 +488,19 @@ export type Collection = {
   layers: string[]
 };
 
+export type UpdatedCollection = {
+  name?: string,
+  description?: string,
+  published?: boolean
+};
+
+export type NewCollection = {
+  name: string,
+  branchId: string,
+  description?: string,
+  published?: boolean
+};
+
 export type Commit = {
   sha: string,
   projectId: string,
@@ -1345,7 +1358,9 @@ export interface AbstractInterface {
       ProjectDescriptor | BranchDescriptor,
       options?: Object
     ) => Promise<Collection[]>,
-    info: (CollectionDescriptor, options?: Object) => Promise<Collection>
+    info: (CollectionDescriptor, options?: Object) => Promise<Collection>,
+    create?: (ProjectDescriptor, NewCollection) => Promise<Collection>,
+    update?: (CollectionDescriptor, UpdatedCollection) => Promise<Collection>
   };
 
   comments?: {

@@ -198,6 +198,16 @@ describe("AbstractAPI", () => {
         buildCollectionDescriptor(),
         { responses: [responses.collections.list()] }
       ],
+      [
+        "collections.create",
+        [buildProjectDescriptor(), { body: { name: "test-collection" } }],
+        { responses: [responses.collections.info()] }
+      ],
+      [
+        "collections.update",
+        [buildCollectionDescriptor(), { body: { name: "test-collection" } }],
+        { responses: [responses.collections.info()] }
+      ],
       // comments
       [
         "comments.create",
