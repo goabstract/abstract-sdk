@@ -950,6 +950,20 @@ const branchShare = await abstract.share.info({
 const branchFiles = await abstract.files.list(branchShare.descriptor);
 ```
 
+### Create a share
+
+`shares.create(OrganizationDescriptor, InputShare): Promise<Share>`
+
+Create a layer share in your organization
+
+```js
+abstract.shares.create({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+}, {
+  kind: "layer",
+  ...descriptor // LayerDescriptor
+});
+```
 
 ## Users
 
