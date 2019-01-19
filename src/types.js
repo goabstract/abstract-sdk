@@ -442,8 +442,7 @@ export type Share =
 export type InputShare = {
   kind: $PropertyType<Share, "kind">,
   ...$PropertyType<Share, "descriptor">,
-  ...$PropertyType<Share, "options">,
-  organizationId: string
+  ...$PropertyType<Share, "options">
 };
 
 export type Annotation = {

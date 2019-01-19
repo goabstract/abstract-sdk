@@ -250,7 +250,10 @@ export default class AbstractAPI implements AbstractInterface {
     ): Promise<T> {
       const response = await this.fetch("share_links", {
         method: "POST",
-        body: inputShare
+        body: {
+          ...inputShare,
+          organizationId: organizationDescriptor.organizationId
+        }
       });
 
       return await response.json();
