@@ -439,11 +439,73 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-export type InputShare = {
-  kind: $PropertyType<Share, "kind">,
-  ...$PropertyType<Share, "descriptor">,
-  ...$PropertyType<Share, "options">
+type BaseInputShare = {
+  organizationId: string
 };
+
+export type InputProjectShare = {
+  kind: "project",
+  ...BaseInputShare,
+  ...ProjectDescriptor
+};
+
+export type InputCommitShare = {
+  kind: "commit",
+  ...BaseInputShare,
+  ...CommitDescriptor
+};
+
+export type InputBranchShare = {
+  kind: "branch",
+  ...BaseInputShare,
+  ...BranchDescriptor
+};
+
+export type InputFileShare = {
+  kind: "file",
+  ...BaseInputShare,
+  ...FileDescriptor
+};
+
+export type InputPageShare = {
+  kind: "page",
+  ...BaseInputShare,
+  ...PageDescriptor
+};
+
+export type InputLayerShare = {
+  kind: "layer",
+  ...BaseInputShare,
+  ...LayerDescriptor,
+  options: {
+    public: boolean,
+    canInspect: boolean,
+    canShowHistory: boolean,
+    mode: "design" | "compare" | "build"
+  }
+};
+
+export type InputCommentShare = {
+  kind: "comment",
+  ...BaseInputShare,
+  ...CommentDescriptor
+};
+
+export type InputCollectionShare = {
+  kind: "collection",
+  ...BaseInputShare,
+  ...CollectionDescriptor
+};
+
+export type InputShare =
+  | InputProjectShare
+  | InputCommitShare
+  | InputBranchShare
+  | InputFileShare
+  | InputPageShare
+  | InputLayerShare
+  | InputCommentShare
+  | InputCollectionShare;
 
 export type Annotation = {
   id: string,
