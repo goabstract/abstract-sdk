@@ -961,7 +961,12 @@ abstract.shares.create({
   organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
 }, {
   kind: "layer",
-  ...descriptor // LayerDescriptor
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
 });
 ```
 
