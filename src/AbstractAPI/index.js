@@ -252,7 +252,9 @@ export default class AbstractAPI implements AbstractInterface {
         method: "POST",
         body: {
           ...inputShare,
-          organizationId: organizationDescriptor.organizationId
+          organizationId: organizationDescriptor.organizationId,
+          // Mirror sha -> commitSha
+          commitSha: inputShare.sha ? inputShare.sha : undefined
         }
       });
 
