@@ -37,16 +37,14 @@ export class NotFoundError extends BaseError {
 export class RateLimitError extends BaseError {
   data: {
     ...ErrorData,
-    resetsAt: ?number,
-    retryIn: ?number
+    resetsAt: ?number
   };
 
   constructor(url: string, body: mixed, response: Response) {
     const resetSeconds = response.headers.get("ratelimit-reset");
     const resetsAt = Number(resetSeconds && Number(resetSeconds) * 1000);
-    const retryIn = resetsAt && resetsAt - Date.now();
     super("Too many requests.");
-    this.data = { url, body, resetsAt, retryIn };
+    this.data = { url, body, resetsAt };
   }
 }
 
