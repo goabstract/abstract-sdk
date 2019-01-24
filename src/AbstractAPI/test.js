@@ -460,11 +460,6 @@ describe("AbstractAPI", () => {
         "users.list",
         buildOrganizationDescriptor(),
         { responses: [responses.users.list()] }
-      ],
-      [
-        "comments.info",
-        buildUserDescriptor(),
-        { responses: [responses.users.info()] }
       ]
     ])("%s(%p)", async (property, args, options = {}) => {
       args = Array.isArray(args) ? args : [args];
