@@ -367,13 +367,13 @@ export type Project = {
   userIds: [string]
 };
 
-type BaseShare = {
+type BaseShare = {|
   id: string,
   url: string,
   appUrl: string,
   userId: string,
   options: {}
-};
+|};
 
 export type ProjectShare = {
   ...BaseShare,
@@ -439,9 +439,9 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-type BaseInputShare = {
+type BaseInputShare = {|
   organizationId: string
-};
+|};
 
 export type InputProjectShare = {
   kind: "project",
