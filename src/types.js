@@ -439,43 +439,43 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-type BaseInputShare = {|
+type BaseShareInput = {|
   organizationId: string
 |};
 
 export type InputProjectShare = {
   kind: "project",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...ProjectDescriptor
 };
 
 export type InputCommitShare = {
   kind: "commit",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...CommitDescriptor
 };
 
 export type InputBranchShare = {
   kind: "branch",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...BranchDescriptor
 };
 
 export type InputFileShare = {
   kind: "file",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...FileDescriptor
 };
 
 export type InputPageShare = {
   kind: "page",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...PageDescriptor
 };
 
 export type InputLayerShare = {
   kind: "layer",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...LayerDescriptor,
   options: {
     public: boolean,
@@ -487,17 +487,17 @@ export type InputLayerShare = {
 
 export type InputCommentShare = {
   kind: "comment",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...CommentDescriptor
 };
 
 export type InputCollectionShare = {
   kind: "collection",
-  ...BaseInputShare,
+  ...BaseShareInput,
   ...CollectionDescriptor
 };
 
-export type InputShare =
+export type ShareInput =
   | InputProjectShare
   | InputCommitShare
   | InputBranchShare
@@ -1419,7 +1419,7 @@ export interface AbstractInterface {
   shares?: {
     create: <T: Share>(
       organizationDescriptor: OrganizationDescriptor,
-      inputShare: InputShare
+      shareInput: ShareInput
     ) => Promise<T>,
     info: <T: Share>(shareDescriptor: ShareDescriptor) => Promise<T>
   };

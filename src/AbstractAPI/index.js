@@ -35,8 +35,7 @@ import type {
   AccessToken,
   Activity,
   Notification,
-  InputShare,
-  Collection,
+  ShareInput,
   UpdatedCollection,
   NewCollection
 } from "../types";
@@ -245,19 +244,19 @@ export default class AbstractAPI implements AbstractInterface {
   };
   shares = {
     // Using an anonymous function instead of a fat arrow function
-    // to avoid throwing some syntax error caused by the generics
+    // to avoid throwing some syntax error caused by the placeholder
     // https://github.com/babel/babylon/issues/235
     create: async function<T: Share>(
       organizationDescriptor: OrganizationDescriptor,
-      inputShare: InputShare
+      shareInput: ShareInput
     ): Promise<T> {
       const response = await this.fetch("share_links", {
         method: "POST",
         body: {
-          ...inputShare,
+          ...shareInput,
           organizationId: organizationDescriptor.organizationId,
           // Mirror sha -> commitSha
-          commitSha: inputShare.sha ? inputShare.sha : undefined
+          commitSha: shareInput.sha ? shareInput.sha : undefined
         }
       });
 
