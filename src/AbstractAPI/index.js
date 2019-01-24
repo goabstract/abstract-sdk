@@ -41,9 +41,9 @@ import type {
 } from "../types";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
+import { catchError } from "./errors";
 
 const minorVersion = version.split(".", 2).join(".");
-const logStatusError = log.extend("AbstractAPI:status:error");
 const logStatusSuccess = log.extend("AbstractAPI:status:success");
 const logFetch = log.extend("AbstractAPI:fetch");
 
@@ -111,7 +111,7 @@ export default class AbstractAPI implements AbstractInterface {
     }
   }
 
-  async fetch(input: string | URL, init: Object = {}, hostname?: ?string) {
+  async fetch(input: string, init: Object = {}, hostname?: ?string) {
     const tokenHeader = await this.tokenHeader();
 
     init.headers = omitBy(
@@ -142,15 +142,7 @@ export default class AbstractAPI implements AbstractInterface {
     const request = fetch(...fetchArgs);
     const response = await request;
 
-    if (!response.ok) {
-      if (logStatusError.enabled) {
-        logStatusError(
-          await response.clone().json() // Clone the response as response.body can only be used once
-        );
-      }
-
-      throw new Error(`Received status "${response.status}", expected 2XX`);
-    }
+    await catchError(response, ...fetchArgs);
 
     if (logStatusSuccess.enabled) {
       if (
@@ -165,7 +157,7 @@ export default class AbstractAPI implements AbstractInterface {
     return request;
   }
 
-  async fetchPreview(input: string | URL, init?: Object = {}) {
+  async fetchPreview(input: string, init?: Object = {}) {
     return this.fetch(
       input,
       {
