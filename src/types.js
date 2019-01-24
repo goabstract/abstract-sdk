@@ -443,37 +443,37 @@ type BaseShareInput = {|
   organizationId: string
 |};
 
-export type InputProjectShare = {
+export type ProjectShareInput = {
   kind: "project",
   ...BaseShareInput,
   ...ProjectDescriptor
 };
 
-export type InputCommitShare = {
+export type CommitShareInput = {
   kind: "commit",
   ...BaseShareInput,
   ...CommitDescriptor
 };
 
-export type InputBranchShare = {
+export type BranchShareInput = {
   kind: "branch",
   ...BaseShareInput,
   ...BranchDescriptor
 };
 
-export type InputFileShare = {
+export type FileShareInput = {
   kind: "file",
   ...BaseShareInput,
   ...FileDescriptor
 };
 
-export type InputPageShare = {
+export type PageShareInput = {
   kind: "page",
   ...BaseShareInput,
   ...PageDescriptor
 };
 
-export type InputLayerShare = {
+export type LayerShareInput = {
   kind: "layer",
   ...BaseShareInput,
   ...LayerDescriptor,
@@ -485,27 +485,27 @@ export type InputLayerShare = {
   }
 };
 
-export type InputCommentShare = {
+export type CommentShareInput = {
   kind: "comment",
   ...BaseShareInput,
   ...CommentDescriptor
 };
 
-export type InputCollectionShare = {
+export type CollectionShareInput = {
   kind: "collection",
   ...BaseShareInput,
   ...CollectionDescriptor
 };
 
 export type ShareInput =
-  | InputProjectShare
-  | InputCommitShare
-  | InputBranchShare
-  | InputFileShare
-  | InputPageShare
-  | InputLayerShare
-  | InputCommentShare
-  | InputCollectionShare;
+  | ProjectShareInput
+  | CommitShareInput
+  | BranchShareInput
+  | FileShareInput
+  | PageShareInput
+  | LayerShareInput
+  | CommentShareInput
+  | CollectionShareInput;
 
 export type Annotation = {
   id: string,
