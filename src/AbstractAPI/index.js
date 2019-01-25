@@ -39,9 +39,9 @@ import type {
   UpdatedCollection,
   NewCollection
 } from "../types";
+import { catchAPIError } from "../errors";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
-import { catchError } from "./errors";
 
 const minorVersion = version.split(".", 2).join(".");
 const logStatusSuccess = log.extend("AbstractAPI:status:success");
@@ -142,7 +142,9 @@ export default class AbstractAPI implements AbstractInterface {
     const request = fetch(...fetchArgs);
     const response = await request;
 
-    await catchError(response, ...fetchArgs);
+    if (!response.ok) {
+      await catchAPIError(response, input, init.body);
+    }
 
     if (logStatusSuccess.enabled) {
       if (
