@@ -46,8 +46,7 @@ export class RateLimitError extends BaseError {
     this.data = { path, body };
     if (response) {
       const resetSeconds = response.headers.get("ratelimit-reset");
-      const resetsAt = Number(resetSeconds && Number(resetSeconds) * 1000);
-      this.data.resetsAt = resetsAt;
+      this.data.resetsAt = Number(resetSeconds) * 1000;
     }
   }
 }
