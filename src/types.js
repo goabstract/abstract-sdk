@@ -241,18 +241,18 @@ export type ActivityCommentCreated = ActivityBase & {
   payload: {
     reviewId?: string,
     reviewStatus?: ReviewStatus,
-    commentFileId: ?string,
-    commentFileName: ?string,
+    commentFileId: string,
+    commentFileName: string,
     commentId: string,
-    commentLayerId: ?string,
-    commentLayerName: ?string,
-    commentPageId: ?string,
-    commentPageName: ?string,
-    commentParentId: ?string,
+    commentLayerId: string,
+    commentLayerName: string,
+    commentPageId: string,
+    commentPageName: string,
+    commentParentId: string,
     commitBranchId: string,
     commitBranchName: string,
-    commitSha: ?string,
-    commitMessage: ?string
+    commitSha: string,
+    commitMessage: string
   }
 };
 
@@ -326,8 +326,8 @@ export type User = {
   updatedAt: string,
   deletedAt: string,
   username: string,
-  name: ?string,
-  avatarUrl: ?string
+  name: string,
+  avatarUrl: string
 };
 
 export type Organization = {
@@ -350,29 +350,30 @@ export type Organization = {
 export type Project = {
   id: string,
   name: string,
-  about: ?string,
-  description: ?string,
-  color: ?string,
+  about: string,
+  description: string,
+  color: string,
   createdAt: string,
   updatedAt: string,
   organizationId: string,
   createdByUser: User,
-  deletedAt: ?string,
-  archivedAt: ?string,
+  deletedAt: string,
+  archivedAt: string,
   firstPushedAt: string,
-  pushedAt: ?string,
+  pushedAt: string,
   repoCreatedAt: string,
   visibility: "organization" | "project",
   sizeInBytes: number,
   userIds: [string]
 };
 
-type BaseShare = {
+type BaseShare = {|
   id: string,
   url: string,
   appUrl: string,
-  userId: string
-};
+  userId: string,
+  options: {}
+|};
 
 export type ProjectShare = {
   ...BaseShare,
@@ -407,7 +408,13 @@ export type PageShare = {
 export type LayerShare = {
   ...BaseShare,
   kind: "layer",
-  descriptor: LayerDescriptor
+  descriptor: LayerDescriptor,
+  options: {
+    public: boolean,
+    canInspect: boolean,
+    canShowHistory: boolean,
+    mode: "design" | "compare" | "build"
+  }
 };
 
 export type CommentShare = {
@@ -431,6 +438,74 @@ export type Share =
   | LayerShare
   | CommentShare
   | CollectionShare;
+
+type BaseShareInput = {|
+  organizationId: string
+|};
+
+export type ProjectShareInput = {
+  kind: "project",
+  ...BaseShareInput,
+  ...ProjectDescriptor
+};
+
+export type CommitShareInput = {
+  kind: "commit",
+  ...BaseShareInput,
+  ...CommitDescriptor
+};
+
+export type BranchShareInput = {
+  kind: "branch",
+  ...BaseShareInput,
+  ...BranchDescriptor
+};
+
+export type FileShareInput = {
+  kind: "file",
+  ...BaseShareInput,
+  ...FileDescriptor
+};
+
+export type PageShareInput = {
+  kind: "page",
+  ...BaseShareInput,
+  ...PageDescriptor
+};
+
+export type LayerShareInput = {
+  kind: "layer",
+  ...BaseShareInput,
+  ...LayerDescriptor,
+  options: {
+    public: boolean,
+    canInspect: boolean,
+    canShowHistory: boolean,
+    mode: "design" | "compare" | "build"
+  }
+};
+
+export type CommentShareInput = {
+  kind: "comment",
+  ...BaseShareInput,
+  ...CommentDescriptor
+};
+
+export type CollectionShareInput = {
+  kind: "collection",
+  ...BaseShareInput,
+  ...CollectionDescriptor
+};
+
+export type ShareInput =
+  | ProjectShareInput
+  | CommitShareInput
+  | BranchShareInput
+  | FileShareInput
+  | PageShareInput
+  | LayerShareInput
+  | CommentShareInput
+  | CollectionShareInput;
 
 export type Annotation = {
   id: string,
@@ -519,32 +594,32 @@ export type Commit = {
     | "NORMAL",
   time: string,
   title: string,
-  description: ?string,
-  userName: ?string,
-  userId: ?string,
+  description: string,
+  userName: string,
+  userId: string,
   fileIds: string[],
   parents: string[],
-  destinationBranchId: ?string,
-  destinationBranchName: ?string,
-  sourceBranchId: ?string,
-  sourceBranchName: ?string
+  destinationBranchId: string,
+  destinationBranchName: string,
+  sourceBranchId: string,
+  sourceBranchName: string
 };
 
 export type Branch = {
   id: string,
   name: string,
-  description: ?string,
-  userName: ?string,
-  userId: ?string,
+  description: string,
+  userName: string,
+  userId: string,
   createdAt: string,
   updatedAt: string,
-  status: ?string,
-  parent: ?string,
-  startedAtSha: ?string,
+  status: string,
+  parent: string,
+  startedAtSha: string,
   head: string,
-  mergeSha: ?string,
-  mergedIntoBranchId: ?string,
-  divergedFromBranchId: ?string,
+  mergeSha: string,
+  mergedIntoBranchId: string,
+  divergedFromBranchId: string,
   projectId: string,
   user: User
 };
@@ -1203,18 +1278,18 @@ export type NotificationCommentCreated = NotificationBase & {
   payload: {
     reviewId?: string,
     reviewStatus?: ReviewStatus,
-    commentFileId: ?string,
-    commentFileName: ?string,
+    commentFileId: string,
+    commentFileName: string,
     commentId: string,
-    commentLayerId: ?string,
-    commentLayerName: ?string,
-    commentPageId: ?string,
-    commentPageName: ?string,
-    commentParentId: ?string,
+    commentLayerId: string,
+    commentLayerName: string,
+    commentPageId: string,
+    commentPageName: string,
+    commentParentId: string,
     commitBranchId: string,
     commitBranchName: string,
-    commitSha: ?string,
-    commitMessage: ?string
+    commitSha: string,
+    commitMessage: string
   }
 };
 
@@ -1342,7 +1417,11 @@ export interface AbstractInterface {
   };
 
   shares?: {
-    info: (shareDescriptor: ShareDescriptor) => Promise<Share>
+    create: <T: Share>(
+      organizationDescriptor: OrganizationDescriptor,
+      shareInput: ShareInput
+    ) => Promise<T>,
+    info: <T: Share>(shareDescriptor: ShareDescriptor) => Promise<T>
   };
 
   projects?: {

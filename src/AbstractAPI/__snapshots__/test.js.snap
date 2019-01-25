@@ -140,10 +140,7 @@ Object {
       "assets",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": undefined,
-          "Accept": undefined,
           "Authorization": "Bearer abstract-token",
-          "Content-Type": undefined,
           "User-Agent": "Abstract SDK 0.0",
           "X-Amzn-Trace-Id": "random-trace-id",
         },
@@ -534,26 +531,6 @@ Object {
   "fetch": Array [
     Array [
       "https://api.goabstract.com/comments/comment-id",
-      Object {
-        "headers": Object {
-          "Abstract-Api-Version": "8",
-          "Accept": "application/json",
-          "Authorization": "Bearer abstract-token",
-          "Content-Type": "application/json",
-          "User-Agent": "Abstract SDK 0.0",
-          "X-Amzn-Trace-Id": "random-trace-id",
-        },
-      },
-    ],
-  ],
-}
-`;
-
-exports[`AbstractAPI with mocked global.fetch comments.info({"userId": "user-id"}) 1`] = `
-Object {
-  "fetch": Array [
-    Array [
-      "https://api.goabstract.com/comments/undefined",
       Object {
         "headers": Object {
           "Abstract-Api-Version": "8",
@@ -1194,10 +1171,7 @@ Object {
       "https://previews.goabstract.com/projects/project-id/commits/layer-sha/files/file-id/layers/layer-id",
       Object {
         "headers": Object {
-          "Abstract-Api-Version": undefined,
-          "Accept": undefined,
           "Authorization": "Bearer abstract-token",
-          "Content-Type": undefined,
           "User-Agent": "Abstract SDK 0.0",
           "X-Amzn-Trace-Id": "random-trace-id",
         },
@@ -1261,6 +1235,28 @@ Object {
           "User-Agent": "Abstract SDK 0.0",
           "X-Amzn-Trace-Id": "random-trace-id",
         },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`AbstractAPI with mocked global.fetch shares.create([[Object], [Object]]) 1`] = `
+Object {
+  "fetch": Array [
+    Array [
+      "https://api.goabstract.com/share_links",
+      Object {
+        "body": "{\\"kind\\":\\"layer\\",\\"projectId\\":\\"project-id\\",\\"organizationId\\":\\"organization-id\\",\\"branchId\\":\\"branch-id\\",\\"fileId\\":\\"file-id\\",\\"pageId\\":\\"page-id\\",\\"layerId\\":\\"layer-id\\",\\"mode\\":\\"mode\\"}",
+        "headers": Object {
+          "Abstract-Api-Version": "8",
+          "Accept": "application/json",
+          "Authorization": "Bearer abstract-token",
+          "Content-Type": "application/json",
+          "User-Agent": "Abstract SDK 0.0",
+          "X-Amzn-Trace-Id": "random-trace-id",
+        },
+        "method": "POST",
       },
     ],
   ],

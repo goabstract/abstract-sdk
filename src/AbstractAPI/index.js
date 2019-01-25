@@ -1,8 +1,9 @@
 // @flow
-/* global fetch */
+/* global fetch URL */
 import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
+import omitBy from "lodash/omitBy";
 import { version } from "../../package.json";
 import {
   objectBranchDescriptor,
@@ -26,6 +27,7 @@ import type {
   CommentDescriptor,
   UserDescriptor,
   AssetDescriptor,
+  Share,
   Comment,
   Layer,
   ListOptions,
@@ -33,7 +35,7 @@ import type {
   AccessToken,
   Activity,
   Notification,
-  Collection,
+  ShareInput,
   UpdatedCollection,
   NewCollection
 } from "../types";
@@ -70,6 +72,7 @@ async function unwrapEnvelope<T>(
 ): Promise<T> {
   return (await response).data;
 }
+
 export default class AbstractAPI implements AbstractInterface {
   _optionAccessToken: AccessTokenOption;
   apiUrl: string;
@@ -111,15 +114,19 @@ export default class AbstractAPI implements AbstractInterface {
   async fetch(input: string | URL, init: Object = {}, hostname?: ?string) {
     const tokenHeader = await this.tokenHeader();
 
-    init.headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": `Abstract SDK ${minorVersion}`,
-      "X-Amzn-Trace-Id": randomTraceId(),
-      "Abstract-Api-Version": "8",
-      ...tokenHeader,
-      ...(init.headers || {})
-    };
+    init.headers = omitBy(
+      {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": `Abstract SDK ${minorVersion}`,
+        "X-Amzn-Trace-Id": randomTraceId(),
+        "Abstract-Api-Version": "8",
+        ...tokenHeader,
+        ...(init.headers || {})
+      },
+      // Omit undefined headers or fetch will String(undefined)
+      header => header === undefined
+    );
 
     if (init.body) {
       init.body = JSON.stringify(init.body);
@@ -235,14 +242,35 @@ export default class AbstractAPI implements AbstractInterface {
       return unwrapEnvelope(response.json());
     }
   };
-
   shares = {
-    info: async (shareDescriptor: ShareDescriptor) => {
+    // Using an anonymous function instead of a fat arrow function
+    // to avoid throwing some syntax error caused by the placeholder
+    // https://github.com/babel/babylon/issues/235
+    create: async function<T: Share>(
+      organizationDescriptor: OrganizationDescriptor,
+      shareInput: ShareInput
+    ): Promise<T> {
+      const response = await this.fetch("share_links", {
+        method: "POST",
+        body: {
+          ...shareInput,
+          organizationId: organizationDescriptor.organizationId,
+          // Mirror sha -> commitSha
+          commitSha: shareInput.sha ? shareInput.sha : undefined
+        }
+      });
+
+      return await response.json();
+    }.bind(this),
+    info: async function<T: Share>(
+      shareDescriptor: ShareDescriptor
+    ): Promise<T> {
       const response = await this.fetch(
         `share_links/${inferShareId(shareDescriptor)}`
       );
+
       return response.json();
-    }
+    }.bind(this)
   };
 
   projects = {
@@ -278,37 +306,33 @@ export default class AbstractAPI implements AbstractInterface {
     ) => {
       objectDescriptor = await this.resolveDescriptor(objectDescriptor);
 
-      const response = await this.fetch(
-        // prettier-ignore
-        "comments",
-        {
-          method: "POST",
-          body: {
-            projectId: objectDescriptor.projectId,
-            branchId: objectDescriptor.branchId,
-            commitSha: objectDescriptor.sha,
-            fileId: objectDescriptor.layerId
-              ? objectDescriptor.fileId
-              : undefined,
-            pageId: objectDescriptor.layerId
-              ? objectDescriptor.pageId
-              : undefined,
-            layerId: objectDescriptor.layerId
-              ? objectDescriptor.layerId
-              : undefined,
-            body: comment.body,
-            annotation: comment.annotation
-              ? {
-                  x: comment.annotation.x,
-                  y: comment.annotation.y,
-                  width: comment.annotation.width,
-                  height: comment.annotation.height
-                }
-              : undefined,
-            ...(await this._denormalizeDescriptorForComment(objectDescriptor))
-          }
+      const response = await this.fetch("comments", {
+        method: "POST",
+        body: {
+          projectId: objectDescriptor.projectId,
+          branchId: objectDescriptor.branchId,
+          commitSha: objectDescriptor.sha,
+          fileId: objectDescriptor.layerId
+            ? objectDescriptor.fileId
+            : undefined,
+          pageId: objectDescriptor.layerId
+            ? objectDescriptor.pageId
+            : undefined,
+          layerId: objectDescriptor.layerId
+            ? objectDescriptor.layerId
+            : undefined,
+          body: comment.body,
+          annotation: comment.annotation
+            ? {
+                x: comment.annotation.x,
+                y: comment.annotation.y,
+                width: comment.annotation.width,
+                height: comment.annotation.height
+              }
+            : undefined,
+          ...(await this._denormalizeDescriptorForComment(objectDescriptor))
         }
-      );
+      });
 
       return response.json();
     },
