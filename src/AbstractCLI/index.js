@@ -16,7 +16,8 @@ import type {
   FileDescriptor,
   LayerDescriptor,
   CollectionDescriptor,
-  AccessTokenOption
+  AccessTokenOption,
+  File
 } from "../types";
 
 const logSpawn = log.extend("AbstractCLI:spawn");

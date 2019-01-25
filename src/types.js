@@ -551,6 +551,18 @@ export type CollectionLayer = {
   order: number
 };
 
+export type File = {
+  applicationDocumentVersion: number,
+  applicationVersion: string,
+  id: string,
+  isLibrary: boolean,
+  lastChangedAtSha: string,
+  name: string,
+  projectId: string,
+  sha: string,
+  type: string
+};
+
 export type Collection = {
   id: string,
   userId: string,
@@ -1389,6 +1401,13 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
+export type CollectionPage = {
+  collections: Collection[],
+  files: File[],
+  pages: Page[],
+  layers: Layer[]
+};
+
 export type AccessToken = ?string | ShareDescriptor;
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
@@ -1436,8 +1455,8 @@ export interface AbstractInterface {
     list: (
       ProjectDescriptor | BranchDescriptor,
       options?: Object
-    ) => Promise<Collection[]>,
-    info: (CollectionDescriptor, options?: Object) => Promise<Collection>,
+    ) => Promise<CollectionPage>,
+    info: (CollectionDescriptor, options?: Object) => Promise<CollectionPage>,
     create?: (ProjectDescriptor, NewCollection) => Promise<Collection>,
     update?: (CollectionDescriptor, UpdatedCollection) => Promise<Collection>
   };

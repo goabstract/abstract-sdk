@@ -564,7 +564,9 @@ export default class AbstractAPI implements AbstractInterface {
   collections = {
     list: async (
       projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor,
-      options?: { layersPerCollection?: number | "all" } = {}
+      options?: { layersPerCollection?: number | "all" } = {
+        layersPerCollection: 4
+      }
     ) => {
       const query = queryString.stringify({
         branch_id: projectOrBranchDescriptor.branchId
@@ -578,12 +580,13 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${projectOrBranchDescriptor.projectId}/collections?${query}`
       );
 
-      const data = await unwrapEnvelope(response.json());
-      return data.collections;
+      return await unwrapEnvelope(response.json());
     },
     info: async (
       collectionDescriptor: CollectionDescriptor,
-      options?: { layersPerCollection?: number | "all" } = {}
+      options?: { layersPerCollection?: number | "all" } = {
+        layersPerCollection: "all"
+      }
     ) => {
       const query = queryString.stringify(options);
       const response = await this.fetch(
@@ -591,8 +594,7 @@ export default class AbstractAPI implements AbstractInterface {
         `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`
       );
 
-      const data = await unwrapEnvelope(response.json());
-      return data.collections[0];
+      return await unwrapEnvelope(response.json());
     },
     create: async (
       objectDescriptor: ProjectDescriptor,

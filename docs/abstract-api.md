@@ -236,7 +236,15 @@ abstract.changesets.info({
 
 A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
 
-### The collection object
+### The collection page object
+
+| Property | Type | Description |
+| collections | Collection[] | Array of collections |
+| files | File[] | Array of files |
+| pages | Page[] | Array of pages |
+| layers | Layer[] | Array of layers |
+
+#### The collection object
 
 | Property      | Type                | Description                                                                             |
 |---------------|---------------------|-----------------------------------------------------------------------------------------|
@@ -253,7 +261,7 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ### List all collections
 
-`collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<Collection[]>`
+`collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<CollectionPage>`
 
 List all collections for a branch
 
@@ -266,7 +274,7 @@ abstract.collections.list({
 
 ### Retrieve a collection
 
-`collections.info(CollectionDescriptor): Promise<Collection>`
+`collections.info(CollectionDescriptor): Promise<CollectionPage>`
 
 Load an individual collection
 
