@@ -564,9 +564,7 @@ export default class AbstractAPI implements AbstractInterface {
   collections = {
     list: async (
       projectOrBranchDescriptor: ProjectDescriptor | BranchDescriptor,
-      options?: { layersPerCollection?: number | "all" } = {
-        layersPerCollection: 4
-      }
+      options?: { layersPerCollection?: number | "all" } = {}
     ) => {
       const query = queryString.stringify({
         branch_id: projectOrBranchDescriptor.branchId
