@@ -39,7 +39,7 @@ import type {
   UpdatedCollection,
   NewCollection
 } from "../types";
-import { catchAPIError } from "../errors";
+import { throwAPIError } from "../errors";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 
@@ -143,7 +143,7 @@ export default class AbstractAPI implements AbstractInterface {
     const response = await request;
 
     if (!response.ok) {
-      await catchAPIError(response, input, init.body);
+      await throwAPIError(response, input, init.body);
     }
 
     if (logStatusSuccess.enabled) {

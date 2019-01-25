@@ -78,7 +78,7 @@ export class ServiceUnavailableError extends BaseError {
   }
 }
 
-export async function catchAPIError(
+export async function throwAPIError(
   response: Response,
   url: string,
   body: mixed
@@ -105,11 +105,10 @@ export async function catchAPIError(
   }
 }
 
-export async function catchCLIError(
+export async function throwCLIError(
   response: { code: string, message: string },
   cliPath: string,
-  args: Object,
-  reject: (reason?: any) => void
+  args: Object
 ) {
   if (logCLIError.enabled) {
     logCLIError(response);
@@ -117,21 +116,16 @@ export async function catchCLIError(
 
   switch (response.code) {
     case "unauthorized":
-      reject(new UnauthorizedError(cliPath, args));
-      break;
+      throw new UnauthorizedError(cliPath, args);
     case "forbidden":
-      reject(new ForbiddenError(cliPath, args));
-      break;
+      throw new ForbiddenError(cliPath, args);
     case "not_found":
-      reject(new NotFoundError(cliPath, args));
-      break;
+      throw new NotFoundError(cliPath, args);
     case "too_many_requests":
-      reject(new RateLimitError(cliPath, args));
-      break;
+      throw new RateLimitError(cliPath, args);
     case "service_unavailable":
-      reject(new ServiceUnavailableError(cliPath, args));
-      break;
+      throw new ServiceUnavailableError(cliPath, args);
     default:
-      reject(new Error("An unexpected error has occurred."));
+      throw new Error("An unexpected error has occurred.");
   }
 }

@@ -18,7 +18,7 @@ import type {
   CollectionDescriptor,
   AccessTokenOption
 } from "../types";
-import { catchCLIError } from "../errors";
+import { throwCLIError } from "../errors";
 
 const logSpawn = log.extend("AbstractCLI:spawn");
 const logStdoutError = log.extend("AbstractCLI:stdout:error");
@@ -126,12 +126,11 @@ export default class AbstractCLI implements AbstractInterface {
 
         if (errorCode !== 0) {
           const response = JSON.parse(stderrBuffer.toString());
-          catchCLIError(
-            response,
-            spawnArgs[0],
-            { ...(spawnArgs[1]: any) },
-            reject
-          );
+          try {
+            throwCLIError(response, spawnArgs[0], { ...(spawnArgs[1]: any) });
+          } catch (error) {
+            reject(error);
+          }
         }
       });
     });
