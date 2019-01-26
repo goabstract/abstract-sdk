@@ -17,7 +17,18 @@ A embed can be created with an iframe at:
 
 
 ```html
-<iframe src="https://app.goabstract.com/embed/b489311c-e7e9-4984-993b-0ff7df76396f"></iframe>
+<iframe
+  src="https://app.goabstract.com/embed/b489311c-e7e9-4984-993b-0ff7df76396f"
+  width="640"
+  height="360"
+  frameborder="0"
+></iframe>
 ```
+
+## Example
+
+<iframe src="https://db8b542d.ngrok.io/embed/b489311c-e7e9-4984-993b-0ff7df76396f" width="640" height="360" frameborder="0" ></iframe>
+
+<br />
 
 For now the display options are limited be we will be exploring more themes and options like collections in the near future
