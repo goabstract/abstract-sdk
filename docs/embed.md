@@ -27,8 +27,8 @@ A embed can be created with an iframe at:
 
 ## Example
 
-<iframe src="https://db8b542d.ngrok.io/embed/b489311c-e7e9-4984-993b-0ff7df76396f" width="640" height="360" frameborder="0" ></iframe>
+<iframe src="https://bfae6d1d.ngrok.io/embed/b489311c-e7e9-4984-993b-0ff7df76396f" width="640" height="360" frameborder="0" ></iframe>
 
-<br />
+<hr />
 
-For now the display options are limited be we will be exploring more themes and options like collections in the near future
+We will be exploring more themes and options like collections in the near future
