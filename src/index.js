@@ -2,7 +2,24 @@
 import client from "./Client";
 import * as Sketch from "./sketch";
 import * as TRANSPORTS from "./transports";
+import {
+  ForbiddenError,
+  InternalServerError,
+  NotFoundError,
+  RateLimitError,
+  ServiceUnavailableError,
+  UnauthorizedError
+} from "./errors";
 
-export { client, Sketch, TRANSPORTS };
+const errors = {
+  ForbiddenError,
+  InternalServerError,
+  NotFoundError,
+  RateLimitError,
+  ServiceUnavailableError,
+  UnauthorizedError
+};
+
+export { client, errors, Sketch, TRANSPORTS };
 export { client as Client }; // Deprecated: prefer Abstract.client factory
 export type * from "./types";
