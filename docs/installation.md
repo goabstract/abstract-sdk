@@ -12,13 +12,13 @@ The SDK was designed to allow interacting with both the Abstract API and the des
 The SDK is available as an NPM package and can be installed via `yarn` or `npm`.
 
 ```
-yarn add abstract-sdk
+yarn add "abstract-sdk"
 ```
 
 or
 
 ```
-npm install abstract-sdk
+npm install "abstract-sdk"
 ```
 
 ## Next steps
