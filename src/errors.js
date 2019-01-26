@@ -84,7 +84,7 @@ export async function throwAPIError(
   body: mixed
 ) {
   if (logAPIError.enabled) {
-    logAPIError(await response.clone.json());
+    logAPIError(await response.clone().json());
   }
 
   switch (response.status) {
