@@ -11,10 +11,11 @@ Given a public share url:
 
 `https://share.goabstract.com/b489311c-e7e9-4984-993b-0ff7df76396f`
 
-A embed can be created with an iframe at:
+An embed can be created by using the following URL as the `src` of an `<iframe>`:
 
 `https://app.goabstract.com/embed/b489311c-e7e9-4984-993b-0ff7df76396f`
 
+## Example
 
 ```html
 <iframe
@@ -25,10 +26,8 @@ A embed can be created with an iframe at:
 ></iframe>
 ```
 
-## Example
-
 <iframe src="https://bfae6d1d.ngrok.io/embed/b489311c-e7e9-4984-993b-0ff7df76396f" width="640" height="360" frameborder="0" ></iframe>
 
 <hr />
 
-We will be exploring more themes and options like collections in the near future
+We will be exploring more themes and options like collections in the near future.
