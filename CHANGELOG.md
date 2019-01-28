@@ -1,4 +1,4 @@
-## v0.6.2
+## v0.7.0
 
 - Added `assets.list`, `assets.info`, and `assets.raw` to the API transport
 - Added `branches.list` and `branches.info` to the CLI transport
