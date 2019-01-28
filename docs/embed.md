@@ -3,7 +3,7 @@ id: embed
 title: Embed
 ---
 
-> Note: Embed will only work for public layer shares
+> Note: Currently only links for layers that are publicly shared can be embedded
 
 Embed can be used to display the latest preview for an Abstract layer in your document or application.
 
