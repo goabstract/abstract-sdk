@@ -9,24 +9,24 @@ Embed can be used to display the latest preview for an Abstract layer in your do
 
 Given a public share url:
 
-`https://share.goabstract.com/b489311c-e7e9-4984-993b-0ff7df76396f`
+`https://share.goabstract.com/c1182fa5-41d4-4f51-a0e2-5506264b65bd`
 
 An embed can be created by using the following URL as the `src` of an `<iframe>`:
 
-`https://app.goabstract.com/embed/b489311c-e7e9-4984-993b-0ff7df76396f`
+`https://app.goabstract.com/embed/c1182fa5-41d4-4f51-a0e2-5506264b65bd`
 
 ## Example
 
 ```html
 <iframe
-  src="https://app.goabstract.com/embed/b489311c-e7e9-4984-993b-0ff7df76396f"
+  src="https://app.goabstract.com/embed/c1182fa5-41d4-4f51-a0e2-5506264b65bd"
   width="640"
   height="360"
   frameborder="0"
 ></iframe>
 ```
 
-<iframe src="https://bfae6d1d.ngrok.io/embed/b489311c-e7e9-4984-993b-0ff7df76396f" width="640" height="360" frameborder="0" ></iframe>
+<iframe src="https://app.goabstract.com/embed/c1182fa5-41d4-4f51-a0e2-5506264b65bd" width="640" height="360" frameborder="0" ></iframe>
 
 <hr />
 
