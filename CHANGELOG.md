@@ -1,3 +1,14 @@
+## v0.6.2
+
+- Added `assets.list`, `assets.info`, and `assets.raw` to the API transport
+- Added `branches.list` and `branches.info` to the CLI transport
+- Added `comments.create` to the API transport
+- Fixed Flow typings for top-level modules
+- Added `shares.create` to the API tansport
+- Added `collections.update` and `collections.create` to the API transport
+- Added custom error handling
+- Fixed differences in collection data between the API and CLI transports
+
 ## v0.6.1
 
 - Added support for importing sdk in browser module loaders like webpack
