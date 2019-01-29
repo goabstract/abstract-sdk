@@ -4,12 +4,12 @@ import { log } from "./debug";
 const logAPIError = log.extend("AbstractAPI:status:error");
 const logCLIError = log.extend("AbstractCLI:status:error");
 
-type ErrorData = {|
+export type ErrorData = {|
   path: string,
   body: mixed
 |};
 
-class BaseError extends Error {
+export class BaseError extends Error {
   constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
