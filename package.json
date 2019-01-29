@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/goabstract/abstract-js.git"
+    "url": "git+https://github.com/goabstract/abstract-sdk.git"
   },
   "author": "Abstract <andrew@goabstract.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/goabstract/abstract-js/issues"
+    "url": "https://github.com/goabstract/abstract-sdk/issues"
   },
-  "homepage": "https://github.com/goabstract/abstract-js#readme",
+  "homepage": "https://github.com/goabstract/abstract-sdk#readme",
   "devDependencies": {
     "@babel/cli": "7.0.0",
     "@babel/core": "^7.0.0",
