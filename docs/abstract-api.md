@@ -1166,7 +1166,7 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ### AssetDescriptor
 
- ```js
+```js
 {
   assetId: string,
   projectId: string
