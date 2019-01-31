@@ -410,10 +410,10 @@ export type LayerShare = {
   kind: "layer",
   descriptor: LayerDescriptor,
   options: {
-    public: boolean,
-    canInspect: boolean,
-    canShowHistory: boolean,
-    mode: "design" | "compare" | "build"
+    mode?: "design" | "compare" | "build",
+    public?: boolean,
+    historyEnabled?: boolean,
+    inspectEnabled?: boolean
   }
 };
 
