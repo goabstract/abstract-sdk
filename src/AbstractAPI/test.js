@@ -16,7 +16,6 @@ import {
   buildActivityDescriptor,
   buildNotificationDescriptor,
   buildCommentDescriptor,
-  buildUserDescriptor,
   buildAssetDescriptor
 } from "../support/factories";
 import { log } from "../debug";

@@ -39,7 +39,7 @@ import type {
   UpdatedCollection,
   NewCollection
 } from "../types";
-import { throwAPIError, NotFoundError } from "../errors";
+import { throwAPIError } from "../errors";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 
