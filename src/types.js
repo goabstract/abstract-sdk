@@ -1506,7 +1506,7 @@ export interface AbstractInterface {
 
   pages: {
     list: FileDescriptor => Promise<Page[]>,
-    info: PageDescriptor => Promise<Page>
+    info: PageDescriptor => Promise<?Page>
   };
 
   layers: {
