@@ -39,7 +39,7 @@ import type {
   UpdatedCollection,
   NewCollection
 } from "../types";
-import { throwAPIError } from "../errors";
+import { throwAPIError, NotFoundError } from "../errors";
 import randomTraceId from "./randomTraceId";
 import Cursor from "./Cursor";
 
@@ -397,7 +397,10 @@ export default class AbstractAPI implements AbstractInterface {
           { limit: 1 }
         );
 
-        return find(commits, { sha: objectDescriptor.sha });
+        const commit = find(commits, { sha: objectDescriptor.sha });
+        if (!commit) throw new Error("Commit not found");
+
+        return commit;
       }
     }
   };
@@ -455,7 +458,11 @@ export default class AbstractAPI implements AbstractInterface {
       const files = await this.files.list(
         objectBranchDescriptor(fileDescriptor)
       );
-      return find(files, { id: fileDescriptor.fileId });
+
+      const file = find(files, { id: fileDescriptor.fileId });
+      if (!file) throw new Error("File not found");
+
+      return file;
     }
   };
 
@@ -471,7 +478,11 @@ export default class AbstractAPI implements AbstractInterface {
     },
     info: async (pageDescriptor: PageDescriptor) => {
       const pages = await this.pages.list(objectFileDescriptor(pageDescriptor));
-      return find(pages, { id: pageDescriptor.pageId });
+
+      const page = find(pages, { id: pageDescriptor.pageId });
+      if (!page) throw new Error("Page not found");
+
+      return page;
     }
   };
 
@@ -564,7 +575,7 @@ export default class AbstractAPI implements AbstractInterface {
         branch_id: projectOrBranchDescriptor.branchId
           ? projectOrBranchDescriptor.branchId
           : undefined,
-        ...options
+        layersPerCollection: options.layersPerCollection
       });
 
       const response = await this.fetch(
@@ -576,11 +587,14 @@ export default class AbstractAPI implements AbstractInterface {
     },
     info: async (
       collectionDescriptor: CollectionDescriptor,
-      options?: { layersPerCollection?: number | "all" } = {
+      options: { layersPerCollection?: number | "all" } = {
         layersPerCollection: "all"
       }
     ) => {
-      const query = queryString.stringify(options);
+      const query = queryString.stringify({
+        layersPerCollection: options.layersPerCollection
+      });
+
       const response = await this.fetch(
         // prettier-ignore
         `projects/${collectionDescriptor.projectId}/collections/${collectionDescriptor.collectionId}?${query}`
@@ -629,7 +643,9 @@ export default class AbstractAPI implements AbstractInterface {
           const query = queryString.stringify({
             limit: options.offset,
             offset: meta.nextOffset,
-            organizationId: objectDescriptor && objectDescriptor.organizationId
+            organizationId: objectDescriptor
+              ? objectDescriptor.organizationId
+              : null
           });
           const response = await this.fetch(`notifications?${query}`);
           return await response.json();
