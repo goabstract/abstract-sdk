@@ -14,6 +14,12 @@ declare module 'query-string' {
     sort?: false | <A, B>(A, B) => number,
   |}
 
+  declare type ObjectParameter = string | number | boolean | null | void;
+
+  declare type ObjectParameters = {
+    [string]: ObjectParameter | Array<ObjectParameter>
+  }
+
   declare type QueryParameters = {
     [string]: string | Array<string> | null
   }
@@ -22,6 +28,6 @@ declare module 'query-string' {
     extract(str: string): string,
     parse(str: string, opts?: ParseOptions): QueryParameters,
     parseUrl(str: string, opts?: ParseOptions): { url: string, query: QueryParameters },
-    stringify(obj: QueryParameters, opts?: StringifyOptions): string,
+    stringify(obj: ObjectParameters, opts?: StringifyOptions): string,
   }
 }
