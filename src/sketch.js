@@ -1,9 +1,9 @@
-// @flow
+/* @flow */
 /* global process NSString PROSketchBootstrap */
 import type {
-  ProjectDescriptor,
   BranchDescriptor,
-  FileDescriptor
+  FileDescriptor,
+  ProjectDescriptor
 } from "./types";
 
 export function isSketchPlugin() {

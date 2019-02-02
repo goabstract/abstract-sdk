@@ -1,9 +1,10 @@
 // @flow
-import client from "./Client";
-import * as Sketch from "./sketch";
-import * as TRANSPORTS from "./transports";
+import Client from "./Client";
+import * as sketch from "./sketch";
 import {
+  APITokenError,
   BaseError,
+  CLIPathError,
   ForbiddenError,
   InternalServerError,
   NotFoundError,
@@ -13,6 +14,8 @@ import {
 } from "./errors";
 
 const errors = {
+  APITokenError,
+  CLIPathError,
   Error: BaseError,
   ForbiddenError,
   InternalServerError,
@@ -22,6 +25,5 @@ const errors = {
   UnauthorizedError
 };
 
-export { client, errors, Sketch, TRANSPORTS };
-export { client as Client }; // Deprecated: prefer Abstract.client factory
+export { Client, errors, sketch };
 export type * from "./types";

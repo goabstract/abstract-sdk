@@ -1,8 +1,8 @@
 // @flow
 import { log } from "./debug";
 
-const logAPIError = log.extend("AbstractAPI:status:error");
-const logCLIError = log.extend("AbstractCLI:status:error");
+export const logAPIError = log.extend("AbstractAPI:error");
+export const logCLIError = log.extend("AbstractCLI:error");
 
 export type ErrorData = {|
   path: string,
@@ -14,6 +14,20 @@ export class BaseError extends Error {
     super(message);
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class CLIPathError extends BaseError {
+  constructor() {
+    super("Cannot find abstract-cli.");
+  }
+}
+
+export class APITokenError extends BaseError {
+  constructor() {
+    super(
+      "Cannot find API access token. Use options.accessToken or ABSTRACT_TOKEN. See https://sdk.goabstract.com/docs/authentication/ for more information."
+    );
   }
 }
 
@@ -83,10 +97,8 @@ export async function throwAPIError(
   url: string,
   body: mixed
 ) {
-  if (logAPIError.enabled) {
-    logAPIError(await response.clone().json());
-  }
-
+  logAPIError.enabled && logAPIError(await response.clone().json());
+  // TODO verify this works
   switch (response.status) {
     case 401:
       throw new UnauthorizedError(url, body);
@@ -105,14 +117,12 @@ export async function throwAPIError(
   }
 }
 
-export async function throwCLIError(
+export function throwCLIError(
   response: { code: string, message: string },
   cliPath: string,
   args: Object
 ) {
-  if (logCLIError.enabled) {
-    logCLIError(response);
-  }
+  logCLIError.enabled && logCLIError(response);
 
   switch (response.code) {
     case "unauthorized":
