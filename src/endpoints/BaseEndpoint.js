@@ -3,7 +3,6 @@
 import "isomorphic-fetch";
 import path from "path";
 import { spawn } from "child_process";
-import locatePath from "locate-path";
 import uuid from "uuid/v4";
 import { inferShareId } from "../utils";
 import { log } from "../debug";
@@ -41,8 +40,7 @@ export default class BaseEndpoint {
       : this._optionAccessToken;
 
   constructor(options: CommandOptions) {
-    const cliPath = locatePath.sync(options.cliPath);
-    this.cliPath = cliPath && path.resolve(cliPath);
+    this.cliPath = options.cliPath && path.resolve(options.cliPath);
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
     this.previewsUrl = options.previewsUrl;

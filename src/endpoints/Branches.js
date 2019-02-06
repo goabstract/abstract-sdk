@@ -16,8 +16,8 @@ export default class Branches extends BaseEndpoint {
         return this.cliRequest([
           "branch",
           "load",
-          descriptor.branchId,
-          descriptor.projectId
+          descriptor.projectId,
+          descriptor.branchId
         ]);
       }
     });
@@ -38,8 +38,7 @@ export default class Branches extends BaseEndpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
-          "branch",
-          "list",
+          "branches",
           descriptor.projectId,
           ...(options.filter ? ["--filter", options.filter] : [])
         ]);
