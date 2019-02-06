@@ -16,7 +16,6 @@ import {
   buildActivityDescriptor,
   buildNotificationDescriptor,
   buildCommentDescriptor,
-  buildUserDescriptor,
   buildAssetDescriptor
 } from "../support/factories";
 import { log } from "../debug";
@@ -280,7 +279,13 @@ describe("AbstractAPI", () => {
       ["commits.list", buildBranchDescriptor()],
       ["commits.list", buildFileDescriptor()],
       ["commits.list", buildLayerDescriptor()],
-      ["commits.info", buildCommitDescriptor()],
+      [
+        "commits.info",
+        buildCommitDescriptor(),
+        {
+          responses: [responses.commits.info()]
+        }
+      ],
       [
         "commits.info",
         buildBranchDescriptor({ sha: "commit-sha" }),
@@ -345,7 +350,7 @@ describe("AbstractAPI", () => {
       [
         "files.info",
         buildFileDescriptor({ sha: "latest" }),
-        { responses: [responses.commits.list()] }
+        { responses: [responses.commits.list(), responses.files.list()] }
       ],
       // changesets
       ["changesets.info", buildCommitDescriptor()],

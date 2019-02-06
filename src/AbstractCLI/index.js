@@ -261,7 +261,11 @@ export default class AbstractCLI implements AbstractInterface {
     },
     info: async (pageDescriptor: PageDescriptor) => {
       const pages = await this.pages.list(objectFileDescriptor(pageDescriptor));
-      return find(pages, { id: pageDescriptor.pageId });
+
+      const page = find(pages, { id: pageDescriptor.pageId });
+      if (!page) throw new Error("Page not found");
+
+      return page;
     }
   };
 
