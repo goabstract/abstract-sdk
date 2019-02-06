@@ -1,3 +1,8 @@
+## v0.7.2
+- Fixed flow errors for consumers of sdk using flow
+- Fixed peerDependency warning on @elasticprojects/abstract-cli
+- Updated LayerShare options to latest options
+
 ## v0.7.0
 
 - Added `assets.list`, `assets.info`, and `assets.raw` to the API transport
