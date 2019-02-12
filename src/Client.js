@@ -1,5 +1,4 @@
 // @flow
-import path from "path";
 import locatePath from "locate-path";
 import Branches from "./endpoints/Branches";
 import Projects from "./endpoints/Projects";
