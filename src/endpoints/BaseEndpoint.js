@@ -7,21 +7,21 @@ import uuid from "uuid/v4";
 import { inferShareId } from "../utils";
 import { log } from "../debug";
 import {
-  throwAPIError,
-  throwCLIError,
   APITokenError,
   CLIPathError,
   logAPIError,
-  logCLIError
+  logCLIError,
+  throwAPIError,
+  throwCLIError
 } from "../errors";
 import { version } from "../../package.json";
 import type { AccessToken, AccessTokenOption, CommandOptions } from "../types";
 
-const minorVersion = version.split(".", 2).join(".");
 const logAPIRequest = log.extend("AbstractAPI:request");
 const logAPIResponse = log.extend("AbstractAPI:response");
 const logCLIRequest = log.extend("AbstractCLI:request");
 const logCLIResponse = log.extend("AbstractCLI:response");
+const minorVersion = version.split(".", 2).join(".");
 
 export type EndpointHandler<T> = {
   api?: () => Promise<T>,
@@ -48,6 +48,7 @@ export default class BaseEndpoint {
 
   request<T>(handler: EndpointHandler<T>): Promise<T> {
     // TODO: Improve this logic (if foced, if online, cli available, api available, etc...)
+    // TODO: Improve messaging too
     if (handler.cli) {
       return handler.cli();
     }
