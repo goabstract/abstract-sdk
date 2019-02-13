@@ -9,6 +9,7 @@ import { log } from "../debug";
 import {
   APITokenError,
   CLIPathError,
+  MethodUndefinedError,
   logAPIError,
   logCLIError,
   throwAPIError,
@@ -33,6 +34,7 @@ export default class BaseEndpoint {
   apiUrl: string;
   cliPath: ?string;
   previewsUrl: string;
+  transport: string;
 
   accessToken = async (): Promise<AccessToken> =>
     typeof this._optionAccessToken === "function"
@@ -44,20 +46,29 @@ export default class BaseEndpoint {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
     this.previewsUrl = options.previewsUrl;
+    this.transport = options.transport;
   }
 
   request<T>(handler: EndpointHandler<T>): Promise<T> {
-    // TODO: Improve this logic (if foced, if online, cli available, api available, etc...)
-    // TODO: Improve messaging too
-    if (handler.cli) {
-      return handler.cli();
+    if (this.transport === "auto") {
+      // TODO: Check if CLI is available
+      if (handler.cli) {
+        return handler.cli();
+      }
+
+      // TODO: Check if API is online
+      if (handler.api) {
+        return handler.api();
+      }
+
+      throw new MethodUndefinedError();
     }
 
-    if (handler.api) {
-      return handler.api();
+    if (handler[this.transport]) {
+      return handler[this.transport]();
     }
 
-    throw new Error();
+    throw new MethodUndefinedError(this.transport);
   }
 
   async apiRequest<T>(

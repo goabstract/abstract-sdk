@@ -29,7 +29,7 @@ export default class Branches extends BaseEndpoint {
   ): Promise<Branch[]> {
     return this.request<Branch[]>({
       api: async () => {
-        const query = querystring.stringify(options);
+        const query = querystring.stringify({ ...options });
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/branches/?${query}`
         );

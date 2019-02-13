@@ -23,6 +23,14 @@ export class CLIPathError extends BaseError {
   }
 }
 
+export class MethodUndefinedError extends BaseError {
+  constructor(name?: string) {
+    super(
+      `Method undefined in ${name ? name : "all"} transport${name ? "" : "s"}.`
+    );
+  }
+}
+
 export class APITokenError extends BaseError {
   constructor() {
     super(

@@ -1,4 +1,5 @@
 // @flow
+
 declare type PROSketchBootstrapT = {
   documentKey: (*) => string
 };

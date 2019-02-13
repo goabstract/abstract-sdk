@@ -8,7 +8,8 @@
     "test": "jest",
     "build": "rm -rf lib && babel src -d lib",
     "ci": "yarn lint && yarn flow && yarn test",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "postinstall": "./definitions/install-types.sh"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@elasticprojects/eslint-config-abstract": "^4.1.0",
     "babel-eslint": "^9.0.0",
+    "babel-jest": "^24.1.0",
     "eslint": "^4.8.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",
@@ -39,6 +41,8 @@
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.80.0",
     "flow-typed": "^2.5.1",
+    "jest": "^24.1.0",
+    "nock": "^10.0.6",
     "prettier": "^1.14.2"
   },
   "dependencies": {

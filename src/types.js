@@ -1418,5 +1418,6 @@ export type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string,
   cliPath: string,
-  previewsUrl: string
+  previewsUrl: string,
+  transport: "auto" | "api" | "cli"
 };

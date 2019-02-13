@@ -1,11 +1,11 @@
 .DS_Store
-/.yarn-cache
+.yarn-cache
 /lib
 /website/build/
 /website/i18n/*
-/website/node_modules
 /website/translated_docs
-/website/yarn.lock
+flow-typed
 node_modules
 npm-debug.log
 yarn-error.log
+yarn.lock
