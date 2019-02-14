@@ -871,6 +871,25 @@ fs.writeFile(`preview.png`, Buffer.from(arrayBuffer), (err) => {
 });
 ```
 
+### Retrieve an image url
+
+> Note: The `previews.url` method requires an environments with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
+
+`previews.url(LayerDescriptor): Promise<Preview>`
+
+Load a url object for the preview
+
+```js
+abstract.previews.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
+});
+```
+
 ### Retrieve a preview
 
 `previews.info(LayerDescriptor): Promise<Preview>`
