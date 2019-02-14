@@ -1,5 +1,5 @@
 // @flow
-/* global fetch URL */
+/* global fetch URL Blob */
 import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
@@ -540,16 +540,28 @@ export default class AbstractAPI implements AbstractInterface {
         webUrl: `${this.previewsUrl}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       };
     },
-    raw: async (layerDescriptor: LayerDescriptor, options: *) => {
+    raw: async (layerDescriptor: LayerDescriptor) => {
       layerDescriptor = await this.resolveDescriptor(layerDescriptor);
 
       const response = await this.fetchPreview(
         // prettier-ignore
-        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
-        options
+        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       );
 
       return response.arrayBuffer();
+    },
+    url: async (layerDescriptor: LayerDescriptor) => {
+      if (!Blob || !URL || !DataView) {
+        throw new Error(
+          `"previews.url" requires an environment with Blob, URL and DataView`
+        );
+      }
+
+      const buffer = await this.previews.raw(layerDescriptor);
+
+      return URL.createObjectURL(
+        new Blob([new DataView(buffer)], { type: "image/png" })
+      );
     }
   };
 
