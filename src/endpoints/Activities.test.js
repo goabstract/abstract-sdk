@@ -1,5 +1,5 @@
 // @flow
-import { mockAPI, API_CLIENT } from "../../support/utils";
+import { mockAPI, API_CLIENT } from "../utils";
 
 describe("#info", () => {
   test("api", async () => {
@@ -13,10 +13,12 @@ describe("#info", () => {
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/activities?organizationId=org", { data: { activities: [] } });
+    mockAPI("/activities?organizationId=org", {
+      data: { activities: [{ id: "1337" }] }
+    });
     const response = await API_CLIENT.activities.list({
       organizationId: "org"
     });
-    expect(response).toEqual([]);
+    expect(response).toEqual([{ id: "1337" }]);
   });
 });

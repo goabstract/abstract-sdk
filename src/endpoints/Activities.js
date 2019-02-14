@@ -32,7 +32,6 @@ export default class Activities extends BaseEndpoint {
       api: () => {
         return new Cursor<Activity[]>(
           async (meta = { nextOffset: options.offset }) => {
-            console.log("1", meta);
             const query = querystring.stringify({
               ...descriptor,
               ...options,
