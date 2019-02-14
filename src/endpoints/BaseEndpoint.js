@@ -6,6 +6,7 @@ import { spawn } from "child_process";
 import uuid from "uuid/v4";
 import { inferShareId } from "../utils";
 import { log } from "../debug";
+import { version } from "../../package.json";
 import {
   APITokenError,
   CLIPathError,
@@ -15,7 +16,6 @@ import {
   throwAPIError,
   throwCLIError
 } from "../errors";
-import { version } from "../../package.json";
 import type { AccessToken, AccessTokenOption, CommandOptions } from "../types";
 
 const logAPIRequest = log.extend("AbstractAPI:request");

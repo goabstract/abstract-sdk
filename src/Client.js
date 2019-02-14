@@ -1,11 +1,13 @@
 // @flow
 import locatePath from "locate-path";
+import Activities from "./endpoints/Activities";
 import Branches from "./endpoints/Branches";
 import Organizations from "./endpoints/Organizations";
 import Projects from "./endpoints/Projects";
 import type { CommandOptions } from "./types";
 
 export default class Client {
+  activities: Activities;
   branches: Branches;
   organizations: Organizations;
   projects: Projects;
@@ -31,6 +33,7 @@ export default class Client {
       ...options
     };
 
+    this.activities = new Activities(options);
     this.branches = new Branches(options);
     this.organizations = new Organizations(options);
     this.projects = new Projects(options);
