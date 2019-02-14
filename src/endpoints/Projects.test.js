@@ -7,7 +7,7 @@ let API_CLIENT;
 beforeAll(() => {
   API_CLIENT = new Client({
     apiUrl: "http://api",
-    transport: "api"
+    transportMode: "api"
   });
 });
 

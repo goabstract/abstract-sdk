@@ -34,7 +34,7 @@ export default class BaseEndpoint {
   apiUrl: string;
   cliPath: ?string;
   previewsUrl: string;
-  transport: string;
+  transportMode: string;
 
   accessToken = async (): Promise<AccessToken> =>
     typeof this._optionAccessToken === "function"
@@ -46,11 +46,11 @@ export default class BaseEndpoint {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
     this.previewsUrl = options.previewsUrl;
-    this.transport = options.transport;
+    this.transportMode = options.transportMode;
   }
 
   request<T>(handler: EndpointHandler<T>): Promise<T> {
-    if (this.transport === "auto") {
+    if (this.transportMode === "auto") {
       // TODO: Check if CLI is available
       if (handler.cli) {
         return handler.cli();
@@ -64,11 +64,11 @@ export default class BaseEndpoint {
       throw new MethodUndefinedError();
     }
 
-    if (handler[this.transport]) {
-      return handler[this.transport]();
+    if (handler[this.transportMode]) {
+      return handler[this.transportMode]();
     }
 
-    throw new MethodUndefinedError(this.transport);
+    throw new MethodUndefinedError(this.transportMode);
   }
 
   async apiRequest<T>(
@@ -93,7 +93,7 @@ export default class BaseEndpoint {
     return data;
   }
 
-  async cliRequest<T>(args: any[]): Promise<T> {
+  async cliRequest<T>(args: string[]): Promise<T> {
     const token = await this.accessToken();
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 

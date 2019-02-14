@@ -1419,5 +1419,5 @@ export type CommandOptions = {
   apiUrl: string,
   cliPath: string,
   previewsUrl: string,
-  transport: "auto" | "api" | "cli"
+  transportMode: "auto" | "api" | "cli"
 };

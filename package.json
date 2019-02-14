@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest",
-    "build": "rm -rf lib && babel src -d lib",
+    "build": "rm -rf lib && babel src --ignore **/*.test.js -d lib",
     "ci": "yarn lint && yarn flow && yarn test",
     "prepublish": "yarn build",
     "postinstall": "./definitions/install-types.sh"
