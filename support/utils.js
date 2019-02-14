@@ -2,6 +2,7 @@
 import child_process from "child_process";
 import nock from "nock";
 import { Readable } from "readable-stream";
+import { Client } from "../src";
 
 function buildTextStream(text?: string): ReadableStream {
   const stream = new Readable();
@@ -14,6 +15,16 @@ function buildTextStream(text?: string): ReadableStream {
 
   return stream;
 }
+
+export const API_CLIENT = new Client({
+  apiUrl: "http://api",
+  transportMode: "api"
+});
+
+export const CLI_CLIENT = new Client({
+  cliPath: ".",
+  transportMode: "cli"
+});
 
 export function mockCLI(args: string[], response?: Object, error?: Object) {
   child_process.spawn.mockClear();

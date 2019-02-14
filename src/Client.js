@@ -1,11 +1,13 @@
 // @flow
 import locatePath from "locate-path";
 import Branches from "./endpoints/Branches";
+import Organizations from "./endpoints/Organizations";
 import Projects from "./endpoints/Projects";
 import type { CommandOptions } from "./types";
 
 export default class Client {
   branches: Branches;
+  organizations: Organizations;
   projects: Projects;
 
   constructor(options: $Shape<CommandOptions> = {}) {
@@ -30,6 +32,7 @@ export default class Client {
     };
 
     this.branches = new Branches(options);
+    this.organizations = new Organizations(options);
     this.projects = new Projects(options);
   }
 }

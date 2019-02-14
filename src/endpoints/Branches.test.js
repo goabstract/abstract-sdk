@@ -1,23 +1,7 @@
 // @flow
-import Client from "../Client";
-import { mockAPI, mockCLI } from "../../support/utils";
+import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../../support/utils";
 
 jest.mock("child_process");
-
-let API_CLIENT;
-let CLI_CLIENT;
-
-beforeAll(() => {
-  API_CLIENT = new Client({
-    apiUrl: "http://api",
-    transportMode: "api"
-  });
-
-  CLI_CLIENT = new Client({
-    cliPath: ".",
-    transportMode: "cli"
-  });
-});
 
 describe("#info", () => {
   test("api", async () => {

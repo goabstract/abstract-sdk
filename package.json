@@ -4,12 +4,13 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "postinstall": "./definitions/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest",
-    "build": "rm -rf lib && babel src --ignore **/*.test.js -d lib",
+    "prebuild": "rm -rf lib && flow-copy-source -i *.test.js src lib",
+    "build": "babel src -i *.test.js -d lib",
     "ci": "yarn lint && yarn flow && yarn test",
-    "prepublish": "yarn build",
-    "postinstall": "./definitions/install-types.sh"
+    "prepublish": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.80.0",
+    "flow-copy-source": "^2.0.3",
     "flow-typed": "^2.5.1",
     "jest": "^24.1.0",
     "nock": "^10.0.6",
