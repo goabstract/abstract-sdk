@@ -25,8 +25,8 @@ const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
 export type EndpointHandler<T> = {
-  api?: () => Promise<T>,
-  cli?: () => Promise<T>
+  api?: () => T,
+  cli?: () => T
 };
 
 export default class BaseEndpoint {
@@ -49,7 +49,7 @@ export default class BaseEndpoint {
     this.transportMode = options.transportMode;
   }
 
-  request<T>(handler: EndpointHandler<T>): Promise<T> {
+  request<T>(handler: EndpointHandler<T>): T {
     if (this.transportMode === "auto") {
       // TODO: Check if CLI is available
       if (handler.cli) {
@@ -71,11 +71,11 @@ export default class BaseEndpoint {
     throw new MethodUndefinedError(this.transportMode);
   }
 
-  async apiRequest<T>(
+  async apiRequest(
     input: string,
     init: Object = {},
     hostname: ?string = this.apiUrl
-  ): Promise<T> {
+  ) {
     init.body = init.body && JSON.stringify(init.body);
     init.headers = await this._getAPIHeaders(init.headers);
     const args = [
@@ -93,7 +93,7 @@ export default class BaseEndpoint {
     return data;
   }
 
-  async cliRequest<T>(args: string[]): Promise<T> {
+  async cliRequest(args: string[]) {
     const token = await this.accessToken();
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 

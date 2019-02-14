@@ -5,6 +5,7 @@ import type {
   Activity,
   ActivityDescriptor,
   BranchDescriptor,
+  CursorPromise,
   ListOptions,
   OrganizationDescriptor,
   ProjectDescriptor
@@ -13,7 +14,7 @@ import BaseEndpoint from "./BaseEndpoint";
 
 export default class Activities extends BaseEndpoint {
   info(descriptor: ActivityDescriptor): Promise<Activity> {
-    return this.request<Activity>({
+    return this.request<Promise<Activity>>({
       api: async () => {
         const response = await this.apiRequest(
           `activities/${descriptor.activityId}`
@@ -26,12 +27,17 @@ export default class Activities extends BaseEndpoint {
   list(
     descriptor: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
     options: ListOptions = {}
-  ): Promise<Activity[]> {
-    return this.request<Activity[]>({
+  ): CursorPromise<Activity[]> {
+    return this.request<CursorPromise<Activity[]>>({
       api: () => {
         return new Cursor<Activity[]>(
           async (meta = { nextOffset: options.offset }) => {
-            const query = querystring.stringify({ ...descriptor, ...options });
+            console.log("1", meta);
+            const query = querystring.stringify({
+              ...descriptor,
+              ...options,
+              offset: meta.nextOffset
+            });
             const response = await this.apiRequest(`activities?${query}`);
             return {
               data: response.data.activities,

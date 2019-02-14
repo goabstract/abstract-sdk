@@ -8,6 +8,7 @@ const abstract = new Client.default({
 
 const ABSTRACT_ORG_ID = "8a13eb62-a42f-435f-b3a3-39af939ad31b";
 const MACOS_PROJECT_ID = "ab8d54b0-502f-11e6-9379-dd323631859b";
+const COMMIT_SHA = "a5987485107345dc5db2b35bdd2b6cd9b9991607";
 
 (async () => {
   // Organizations
@@ -54,4 +55,38 @@ const MACOS_PROJECT_ID = "ab8d54b0-502f-11e6-9379-dd323631859b";
     sha: "foo"
   });
   console.log(`\n\n\n🔥  branches#info\nItem:\t${branch.id}`);
+
+  // Activities
+  const activities = await abstract.activities.list({
+    organizationId: ABSTRACT_ORG_ID
+  });
+  console.log(
+    `\n\n\n🔥  activities#list\nTotal:\t${activities.length}\nFirst:\t${
+      activities[0].id
+    }`
+  );
+
+  const activity = await abstract.activities.info({
+    activityId: activities[0].id
+  });
+  console.log(`\n\n\n🔥  activities#info\nItem:\t${activity.id}`);
+
+  // Commits
+  const commits = await abstract.commits.list({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA
+  });
+  console.log(
+    `\n\n\n🔥  commits#list\nTotal:\t${commits.length}\nFirst:\t${
+      commits[0].sha
+    }`
+  );
+
+  const commit = await abstract.commits.info({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: commits[0].sha
+  });
+  console.log(`\n\n\n🔥  commits#info\nItem:\t${commit.sha}`);
 })();

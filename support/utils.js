@@ -32,7 +32,7 @@ export function mockCLI(args: string[], response?: Object, error?: Object) {
     stdout: buildTextStream(JSON.stringify(response)),
     stderr: buildTextStream(JSON.stringify(error)),
     on: (name, cb) => {
-      const callArgs = child_process.spawn.mock.calls[0][1].slice(args.length);
+      const callArgs = child_process.spawn.mock.calls[0][1].slice(-args.length);
       expect(callArgs).toEqual(args);
       setTimeout(() => {
         name === "error" && error && cb(1);

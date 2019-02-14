@@ -2,6 +2,7 @@
 import locatePath from "locate-path";
 import Activities from "./endpoints/Activities";
 import Branches from "./endpoints/Branches";
+import Commits from "./endpoints/Commits";
 import Organizations from "./endpoints/Organizations";
 import Projects from "./endpoints/Projects";
 import type { CommandOptions } from "./types";
@@ -9,6 +10,7 @@ import type { CommandOptions } from "./types";
 export default class Client {
   activities: Activities;
   branches: Branches;
+  commits: Commits;
   organizations: Organizations;
   projects: Projects;
 
@@ -35,6 +37,7 @@ export default class Client {
 
     this.activities = new Activities(options);
     this.branches = new Branches(options);
+    this.commits = new Commits(options);
     this.organizations = new Organizations(options);
     this.projects = new Projects(options);
   }

@@ -4,7 +4,7 @@ import BaseEndpoint from "./BaseEndpoint";
 
 export default class Organizations extends BaseEndpoint {
   info(descriptor: OrganizationDescriptor): Promise<Organization> {
-    return this.request<Organization>({
+    return this.request<Promise<Organization>>({
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}`
@@ -15,7 +15,7 @@ export default class Organizations extends BaseEndpoint {
   }
 
   list(): Promise<Organization[]> {
-    return this.request<Organization[]>({
+    return this.request<Promise<Organization[]>>({
       api: async () => {
         const response = await this.apiRequest("organizations");
         return response.data;

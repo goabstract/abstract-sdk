@@ -5,7 +5,7 @@ import BaseEndpoint from "./BaseEndpoint";
 
 export default class Branches extends BaseEndpoint {
   info(descriptor: BranchDescriptor): Promise<Branch> {
-    return this.request<Branch>({
+    return this.request<Promise<Branch>>({
       api: () => {
         return this.apiRequest(
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}`
@@ -27,7 +27,7 @@ export default class Branches extends BaseEndpoint {
     descriptor: ProjectDescriptor,
     options: { filter?: "active" | "archived" | "mine" } = {}
   ): Promise<Branch[]> {
-    return this.request<Branch[]>({
+    return this.request<Promise<Branch[]>>({
       api: async () => {
         const query = querystring.stringify({ ...options });
         const response = await this.apiRequest(

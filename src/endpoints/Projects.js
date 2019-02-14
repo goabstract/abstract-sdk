@@ -9,7 +9,7 @@ import BaseEndpoint from "./BaseEndpoint";
 
 export default class Projects extends BaseEndpoint {
   info(descriptor: ProjectDescriptor): Promise<Project> {
-    return this.request<Project>({
+    return this.request<Promise<Project>>({
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}`
@@ -23,7 +23,7 @@ export default class Projects extends BaseEndpoint {
     descriptor: OrganizationDescriptor,
     options: { filter?: "active" | "archived" } = {}
   ): Promise<Project[]> {
-    return this.request<Project[]>({
+    return this.request<Promise<Project[]>>({
       api: async () => {
         const query = querystring.stringify({ ...descriptor, ...options });
         const response = await this.apiRequest(`projects?${query}`);
