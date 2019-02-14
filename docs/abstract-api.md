@@ -873,7 +873,7 @@ fs.writeFile(`preview.png`, Buffer.from(arrayBuffer), (err) => {
 
 ### Retrieve an image url
 
-> Note: The `previews.url` method requires an environments with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
+> Note: The `previews.url` method requires an environment with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
 
 `previews.url(LayerDescriptor): Promise<Preview>`
 
