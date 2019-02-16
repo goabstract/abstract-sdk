@@ -3,8 +3,7 @@
     "@babel/preset-react",
     "@babel/preset-flow",
     ["@babel/preset-env", {
-      "useBuiltIns": "usage",
-      "exclude": ["transform-regenerator"]
+      "useBuiltIns": "usage"
     }]
   ],
   "plugins": [
