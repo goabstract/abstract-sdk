@@ -4,9 +4,6 @@
     "@babel/preset-flow",
     ["@babel/preset-env", {
       "useBuiltIns": "usage",
-      "targets": {
-        "node": 8
-      },
       "exclude": ["transform-regenerator"]
     }]
   ],
