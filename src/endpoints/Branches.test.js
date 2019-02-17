@@ -1,5 +1,5 @@
 // @flow
-import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../utils";
+import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 
 jest.mock("child_process");
 

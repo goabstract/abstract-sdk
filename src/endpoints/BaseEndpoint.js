@@ -4,6 +4,7 @@ import "isomorphic-fetch";
 import path from "path";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
+import Client from "../Client";
 import { inferShareId } from "../utils";
 import { log } from "../debug";
 import { version } from "../../package.json";
@@ -33,6 +34,7 @@ export default class BaseEndpoint {
   _optionAccessToken: ?AccessTokenOption;
   apiUrl: string;
   cliPath: ?string;
+  client: Client;
   previewsUrl: string;
   transportMode: string;
 
@@ -41,10 +43,11 @@ export default class BaseEndpoint {
       ? this._optionAccessToken()
       : this._optionAccessToken;
 
-  constructor(options: CommandOptions) {
-    this.cliPath = options.cliPath && path.resolve(options.cliPath);
+  constructor(options: CommandOptions, client: Client) {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
+    this.cliPath = options.cliPath && path.resolve(options.cliPath);
+    this.client = client;
     this.previewsUrl = options.previewsUrl;
     this.transportMode = options.transportMode;
   }

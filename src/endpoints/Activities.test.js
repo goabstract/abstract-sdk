@@ -1,5 +1,5 @@
 // @flow
-import { mockAPI, API_CLIENT } from "../utils";
+import { mockAPI, API_CLIENT } from "../testing";
 
 describe("#info", () => {
   test("api", async () => {

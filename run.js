@@ -1,7 +1,7 @@
 // @flow
-const Client = require("./lib/Client");
+const Abstract = require(".");
 
-const abstract = new Client.default({
+const abstract = new Abstract.Client({
   cliPath:
     "/Users/bitpshr/Projects/abstract/projects/stable/abstract-cli/bin/abstract-cli"
 });
@@ -9,6 +9,7 @@ const abstract = new Client.default({
 const ABSTRACT_ORG_ID = "8a13eb62-a42f-435f-b3a3-39af939ad31b";
 const MACOS_PROJECT_ID = "ab8d54b0-502f-11e6-9379-dd323631859b";
 const COMMIT_SHA = "a5987485107345dc5db2b35bdd2b6cd9b9991607";
+const FILE_ID = "CA420E64-08D0-4B96-B0F7-75AA316B6A19";
 
 (async () => {
   // Organizations
@@ -89,4 +90,54 @@ const COMMIT_SHA = "a5987485107345dc5db2b35bdd2b6cd9b9991607";
     sha: commits[0].sha
   });
   console.log(`\n\n\n🔥  commits#info\nItem:\t${commit.sha}`);
+
+  // Layers
+  const layers = await abstract.layers.list({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA,
+    fileId: FILE_ID
+  });
+  console.log(
+    `\n\n\n🔥  layers#list\nTotal:\t${layers.length}\nFirst:\t${layers[0].id}`
+  );
+
+  const layer = await abstract.layers.info({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA,
+    fileId: FILE_ID,
+    layerId: layers[0].id,
+    pageId: layers[0].pageId
+  });
+  console.log(`\n\n\n🔥  layers#info\nItem:\t${layer.id}`);
+
+  // Comments
+  const comments = await abstract.comments.list({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA
+  });
+  console.log(
+    `\n\n\n🔥  comments#list\nTotal:\t${comments.length}\nFirst:\t${
+      comments[0].id
+    }`
+  );
+
+  const comment = await abstract.comments.info({
+    commentId: comments[0].id
+  });
+  console.log(`\n\n\n🔥  comments#info\nItem:\t${comment.id}`);
+
+  const newComment = await abstract.comments.create(
+    {
+      projectId: MACOS_PROJECT_ID,
+      branchId: "master",
+      sha: COMMIT_SHA
+    },
+    {
+      body: "Hello, world!"
+    }
+  );
+  console.log(`\n\n\n🔥  comments#create\nItem:\t${newComment.id}`);
 })();

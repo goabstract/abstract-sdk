@@ -539,6 +539,11 @@ export type Comment = {
   replyIds: string[]
 };
 
+export type NewComment = {
+  annotation?: Annotation,
+  body: string
+};
+
 export type CollectionLayer = {
   id: string,
   collectionId: string,
