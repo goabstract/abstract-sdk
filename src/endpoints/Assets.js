@@ -1,17 +1,15 @@
 // @flow
 import querystring from "query-string";
-import type {
-  Asset,
-  AssetDescriptor,
-  BranchDescriptor
-} from "../types";
+import type { Asset, AssetDescriptor, BranchDescriptor } from "../types";
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Assets extends BaseEndpoint {
   info(descriptor: AssetDescriptor): Promise<Asset> {
     return this.request<Promise<Asset>>({
       api: async () => {
-        return this.apiRequest(`projects/${descriptor.projectId}/assets/${descriptor.assetId}`);
+        return this.apiRequest(
+          `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
+        );
       }
     });
   }
@@ -20,7 +18,9 @@ export default class Assets extends BaseEndpoint {
     return this.request<Promise<Asset[]>>({
       api: async () => {
         const query = querystring.stringify({ sha: descriptor.sha });
-        const response = await this.apiRequest(`projects/${descriptor.projectId}/assets?${query}`);
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/assets?${query}`
+        );
         return response.data.assets;
       }
     });
@@ -30,15 +30,19 @@ export default class Assets extends BaseEndpoint {
     return this.request<Promise<ArrayBuffer>>({
       api: async () => {
         const asset = await this.info(descriptor);
-        const response = await this.apiRequest(asset.url, {
-          headers: {
-            Accept: undefined,
-            "Content-Type": undefined,
-            "Abstract-Api-Version": undefined
-          }
-        }, null);
+        const response = await this.apiRequest(
+          asset.url,
+          {
+            headers: {
+              Accept: undefined,
+              "Content-Type": undefined,
+              "Abstract-Api-Version": undefined
+            }
+          },
+          null
+        );
         return response.arrayBuffer();
       }
-    })
+    });
   }
 }
