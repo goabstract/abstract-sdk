@@ -1,6 +1,7 @@
 // @flow
 import locatePath from "locate-path";
 import Activities from "./endpoints/Activities";
+import Assets from "./endpoints/Assets";
 import Branches from "./endpoints/Branches";
 import Comments from "./endpoints/Comments";
 import Commits from "./endpoints/Commits";
@@ -13,6 +14,7 @@ import type { CommandOptions } from "./types";
 
 export default class Client {
   activities: Activities;
+  assets: Assets;
   branches: Branches;
   comments: Comments;
   commits: Commits;
@@ -44,6 +46,7 @@ export default class Client {
     };
 
     this.activities = new Activities(options, this);
+    this.assets = new Assets(options, this);
     this.branches = new Branches(options, this);
     this.comments = new Comments(options, this);
     this.commits = new Commits(options, this);
