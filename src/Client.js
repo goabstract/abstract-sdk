@@ -4,8 +4,10 @@ import Activities from "./endpoints/Activities";
 import Branches from "./endpoints/Branches";
 import Comments from "./endpoints/Comments";
 import Commits from "./endpoints/Commits";
+import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
 import Organizations from "./endpoints/Organizations";
+import Pages from "./endpoints/Pages";
 import Projects from "./endpoints/Projects";
 import type { CommandOptions } from "./types";
 
@@ -14,8 +16,10 @@ export default class Client {
   branches: Branches;
   comments: Comments;
   commits: Commits;
+  files: Files;
   layers: Layers;
   organizations: Organizations;
+  pages: Pages;
   projects: Projects;
 
   constructor(options: $Shape<CommandOptions> = {}) {
@@ -43,8 +47,10 @@ export default class Client {
     this.branches = new Branches(options, this);
     this.comments = new Comments(options, this);
     this.commits = new Commits(options, this);
+    this.files = new Files(options, this);
     this.layers = new Layers(options, this);
     this.organizations = new Organizations(options, this);
+    this.pages = new Pages(options, this);
     this.projects = new Projects(options, this);
   }
 }

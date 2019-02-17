@@ -6,6 +6,7 @@ import type {
   FileDescriptor,
   LayerDescriptor
 } from "../types";
+import { NotFoundError } from "../errors";
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Commits extends BaseEndpoint {
@@ -15,6 +16,9 @@ export default class Commits extends BaseEndpoint {
     return this.request<Promise<Commit>>({
       api: async () => {
         const commits = await this.list(descriptor, { limit: 1 });
+        if (!commits[0]) {
+          throw new NotFoundError(`commitId=${descriptor.sha}`);
+        }
         return commits[0];
       },
 

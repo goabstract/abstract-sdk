@@ -8,8 +8,8 @@ const abstract = new Abstract.Client({
 
 const ABSTRACT_ORG_ID = "8a13eb62-a42f-435f-b3a3-39af939ad31b";
 const MACOS_PROJECT_ID = "ab8d54b0-502f-11e6-9379-dd323631859b";
-const COMMIT_SHA = "a5987485107345dc5db2b35bdd2b6cd9b9991607";
-const FILE_ID = "CA420E64-08D0-4B96-B0F7-75AA316B6A19";
+const COMMIT_SHA = "cbf3bf3b6bc5f5a3f459496a606ba3fd95cf0d85";
+const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
 
 (async () => {
   // Organizations
@@ -140,4 +140,22 @@ const FILE_ID = "CA420E64-08D0-4B96-B0F7-75AA316B6A19";
     }
   );
   console.log(`\n\n\n🔥  comments#create\nItem:\t${newComment.id}`);
+
+  // Files
+  const files = await abstract.files.list({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA
+  });
+  console.log(
+    `\n\n\n🔥  files#list\nTotal:\t${files.length}\nFirst:\t${files[0].id}`
+  );
+
+  const file = await abstract.files.info({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA,
+    fileId: files[0].id
+  });
+  console.log(`\n\n\n🔥  files#info\nItem:\t${file.id}`);
 })();
