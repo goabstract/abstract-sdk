@@ -2,6 +2,7 @@
 const Abstract = require(".");
 
 const abstract = new Abstract.Client({
+  transportMode: "api",
   cliPath:
     "/Users/bitpshr/Projects/abstract/projects/stable/abstract-cli/bin/abstract-cli"
 });
@@ -91,6 +92,44 @@ const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
   });
   console.log(`\n\n\n🔥  commits#info\nItem:\t${commit.sha}`);
 
+  // Files
+  const files = await abstract.files.list({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA
+  });
+  console.log(
+    `\n\n\n🔥  files#list\nTotal:\t${files.length}\nFirst:\t${files[0].id}`
+  );
+
+  const file = await abstract.files.info({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA,
+    fileId: files[0].id
+  });
+  console.log(`\n\n\n🔥  files#info\nItem:\t${file.id}`);
+
+  // Pages
+  const pages = await abstract.pages.list({
+    branchId: "master",
+    fileId: "7E952DD7-C4E7-4DCC-8897-60947B82CAF1",
+    projectId: MACOS_PROJECT_ID,
+    sha: "6ab211cfdd5a19adc7bce4597b4267e89a928594"
+  });
+  console.log(
+    `\n\n\n🔥  pages#list\nTotal:\t${pages.length}\nFirst:\t${pages[0].id}`
+  );
+
+  const page = await abstract.pages.info({
+    branchId: "master",
+    fileId: "7E952DD7-C4E7-4DCC-8897-60947B82CAF1",
+    pageId: pages[0].id,
+    projectId: MACOS_PROJECT_ID,
+    sha: "6ab211cfdd5a19adc7bce4597b4267e89a928594"
+  });
+  console.log(`\n\n\n🔥  pages#info\nItem:\t${page.id}`);
+
   // Layers
   const layers = await abstract.layers.list({
     projectId: MACOS_PROJECT_ID,
@@ -140,22 +179,4 @@ const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
     }
   );
   console.log(`\n\n\n🔥  comments#create\nItem:\t${newComment.id}`);
-
-  // Files
-  const files = await abstract.files.list({
-    projectId: MACOS_PROJECT_ID,
-    branchId: "master",
-    sha: COMMIT_SHA
-  });
-  console.log(
-    `\n\n\n🔥  files#list\nTotal:\t${files.length}\nFirst:\t${files[0].id}`
-  );
-
-  const file = await abstract.files.info({
-    projectId: MACOS_PROJECT_ID,
-    branchId: "master",
-    sha: COMMIT_SHA,
-    fileId: files[0].id
-  });
-  console.log(`\n\n\n🔥  files#info\nItem:\t${file.id}`);
 })();

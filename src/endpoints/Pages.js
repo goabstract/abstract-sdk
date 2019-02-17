@@ -1,12 +1,7 @@
 // @flow
-import querystring from "query-string";
-import type {
-  FileDescriptor,
-  Page,
-  PageDescriptor
-} from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import type { FileDescriptor, Page, PageDescriptor } from "../types";
 import { NotFoundError } from "../errors";
+import BaseEndpoint from "./BaseEndpoint";
 
 export default class Pages extends BaseEndpoint {
   info(descriptor: PageDescriptor): Promise<Page> {
@@ -36,7 +31,11 @@ export default class Pages extends BaseEndpoint {
   list(descriptor: FileDescriptor): Promise<Page[]> {
     return this.request<Promise<Page[]>>({
       api: async () => {
-        const response = await this.apiRequest(`projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/pages`);
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/branches/${
+            descriptor.branchId
+          }/files/${descriptor.fileId}/pages`
+        );
         return response.pages;
       },
 

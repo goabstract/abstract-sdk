@@ -1,16 +1,7 @@
 // @flow
-import querystring from "query-string";
-import type {
-  BranchDescriptor,
-  File,
-  FileDescriptor,
-  Layer,
-  LayerDescriptor,
-  ListOptions,
-  PageDescriptor
-} from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import type { BranchDescriptor, File, FileDescriptor } from "../types";
 import { NotFoundError } from "../errors";
+import BaseEndpoint from "./BaseEndpoint";
 
 export default class Files extends BaseEndpoint {
   info(descriptor: FileDescriptor): Promise<File> {
@@ -44,7 +35,11 @@ export default class Files extends BaseEndpoint {
   list(descriptor: BranchDescriptor): Promise<File[]> {
     return this.request<Promise<File[]>>({
       api: async () => {
-        const response = await this.apiRequest(`projects/${descriptor.projectId}/branches/${descriptor.branchId}/files`);
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/branches/${
+            descriptor.branchId
+          }/files`
+        );
         return response.files;
       },
 
