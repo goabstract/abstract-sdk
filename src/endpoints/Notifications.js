@@ -32,11 +32,7 @@ export default class Notifications extends BaseEndpoint {
               ...options,
               offset: meta.nextOffset
             });
-            const response = await this.apiRequest(`notifications?${query}`);
-            return {
-              data: response.data.activities,
-              meta: response.meta
-            };
+            return this.apiRequest(`notifications?${query}`);
           }
         );
       }

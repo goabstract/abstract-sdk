@@ -12,6 +12,7 @@ import Notifications from "./endpoints/Notifications";
 import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
 import Projects from "./endpoints/Projects";
+import Users from "./endpoints/Users";
 import type { CommandOptions } from "./types";
 
 export default class Client {
@@ -27,6 +28,7 @@ export default class Client {
   organizations: Organizations;
   pages: Pages;
   projects: Projects;
+  users: Users;
 
   constructor(options: $Shape<CommandOptions> = {}) {
     const cliPathDefault =
@@ -61,5 +63,6 @@ export default class Client {
     this.organizations = new Organizations(options, this);
     this.pages = new Pages(options, this);
     this.projects = new Projects(options, this);
+    this.users = new Users(options, this);
   }
 }

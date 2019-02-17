@@ -179,4 +179,60 @@ const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
     }
   );
   console.log(`\n\n\n🔥  comments#create\nItem:\t${newComment.id}`);
+
+  // Assets
+  const assets = await abstract.assets.list({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "f2adc0b4-e247-4823-a861-8e7a52111d85",
+    sha: "2092d0ba7ae4814ceeb686914c5da8cc6c6378f1"
+  });
+  console.log(
+    `\n\n\n🔥  assets#list\nTotal:\t${assets.length}\nFirst:\t${
+      assets[0].id
+    }`
+  );
+
+  const asset = await abstract.assets.info({
+    assetId: assets[0].id,
+    projectId: MACOS_PROJECT_ID
+  });
+  console.log(`\n\n\n🔥  assets#info\nItem:\t${asset.id}`);
+
+  // Changesets
+  const changeset = await abstract.changesets.info({
+    projectId: MACOS_PROJECT_ID,
+    branchId: "master",
+    sha: COMMIT_SHA
+  });
+  console.log(`\n\n\n🔥  changesets#info\nItem:\t${asset.id}`);
+
+  // Notifications
+  const notifications = await abstract.notifications.list({
+    organizationId: ABSTRACT_ORG_ID
+  });
+  console.log(
+    `\n\n\n🔥  notifications#list\nTotal:\t${notifications.length}\nFirst:\t${
+      notifications[0].id
+    }`
+  );
+
+  const notification = await abstract.notifications.info({
+    notificationId: notifications[0].id
+  });
+  console.log(`\n\n\n🔥  notifications#info\nItem:\t${notification.id}`);
+
+  // Users
+  const users = await abstract.users.list({
+    organizationId: ABSTRACT_ORG_ID
+  });
+  console.log(
+    `\n\n\n🔥  users#list\nTotal:\t${users.length}\nFirst:\t${
+      users[0].id
+    }`
+  );
+
+  const user = await abstract.users.info({
+    userId: users[0].id
+  });
+  console.log(`\n\n\n🔥  users#info\nItem:\t${user.id}`);
 })();
