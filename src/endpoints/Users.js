@@ -1,5 +1,4 @@
 // @flow
-import querystring from "query-string";
 import type {
   OrganizationDescriptor,
   ProjectDescriptor,
@@ -17,7 +16,9 @@ export default class Users extends BaseEndpoint {
     });
   }
 
-  list(descriptor: OrganizationDescriptor | ProjectDescriptor): Promise<User[]> {
+  list(
+    descriptor: OrganizationDescriptor | ProjectDescriptor
+  ): Promise<User[]> {
     return this.request<Promise<User[]>>({
       api: async () => {
         let url = "";

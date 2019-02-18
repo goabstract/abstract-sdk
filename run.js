@@ -187,9 +187,7 @@ const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
     sha: "2092d0ba7ae4814ceeb686914c5da8cc6c6378f1"
   });
   console.log(
-    `\n\n\n🔥  assets#list\nTotal:\t${assets.length}\nFirst:\t${
-      assets[0].id
-    }`
+    `\n\n\n🔥  assets#list\nTotal:\t${assets.length}\nFirst:\t${assets[0].id}`
   );
 
   const asset = await abstract.assets.info({
@@ -204,7 +202,7 @@ const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
     branchId: "master",
     sha: COMMIT_SHA
   });
-  console.log(`\n\n\n🔥  changesets#info\nItem:\t${asset.id}`);
+  console.log(`\n\n\n🔥  changesets#info\nItem:\t${changeset.id}`);
 
   // Notifications
   const notifications = await abstract.notifications.list({
@@ -226,9 +224,7 @@ const FILE_ID = "CD894480-2E6B-48C5-89D2-9132D6F147E0";
     organizationId: ABSTRACT_ORG_ID
   });
   console.log(
-    `\n\n\n🔥  users#list\nTotal:\t${users.length}\nFirst:\t${
-      users[0].id
-    }`
+    `\n\n\n🔥  users#list\nTotal:\t${users.length}\nFirst:\t${users[0].id}`
   );
 
   const user = await abstract.users.info({

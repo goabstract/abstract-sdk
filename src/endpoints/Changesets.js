@@ -1,5 +1,4 @@
 // @flow
-import querystring from "query-string";
 import type { Changeset, CommitDescriptor } from "../types";
 import BaseEndpoint from "./BaseEndpoint";
 
