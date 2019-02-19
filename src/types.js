@@ -1406,8 +1406,15 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
-export type CollectionPage = {
+export type CollectionMetaList = {
   collections: Collection[],
+  files: File[],
+  pages: Page[],
+  layers: Layer[]
+};
+
+export type CollectionMeta = {
+  collection: Collection,
   files: File[],
   pages: Page[],
   layers: Layer[]

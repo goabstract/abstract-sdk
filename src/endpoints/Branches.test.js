@@ -1,8 +1,6 @@
 // @flow
 import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 
-jest.mock("child_process");
-
 describe("#info", () => {
   test("api", async () => {
     mockAPI("/projects/project/branches/branch", { id: "1337" });

@@ -48,6 +48,7 @@
     "prettier": "^1.14.2"
   },
   "dependencies": {
+    "caller-id": "^0.1.0",
     "debug": "^4.0.1",
     "isomorphic-fetch": "^2.2.1",
     "locate-path": "^3.0.0",

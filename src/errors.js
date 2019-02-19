@@ -23,10 +23,12 @@ export class CLIPathError extends BaseError {
   }
 }
 
-export class MethodUndefinedError extends BaseError {
-  constructor(name?: string) {
+export class EndpointUndefinedError extends BaseError {
+  constructor(endpoint: ?string, transport: string) {
     super(
-      `Method undefined in ${name ? name : "all"} transport${name ? "" : "s"}.`
+      `Endpoint ${endpoint ? `"${endpoint}" ` : ""}not defined in ${
+        transport ? `"${transport}"` : "any"
+      } transport${transport ? "" : "s"}.`
     );
   }
 }

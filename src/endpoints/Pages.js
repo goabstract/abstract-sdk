@@ -14,16 +14,6 @@ export default class Pages extends BaseEndpoint {
           throw new NotFoundError(`pageId=${descriptor.pageId}`);
         }
         return page;
-      },
-
-      cli: async () => {
-        const { pageId, ...fileDescriptor } = descriptor;
-        const pages = await this.list(fileDescriptor);
-        const page = pages.find(page => page.id === descriptor.pageId);
-        if (!page) {
-          throw new NotFoundError(`pageId=${descriptor.pageId}`);
-        }
-        return page;
       }
     });
   }
@@ -37,11 +27,6 @@ export default class Pages extends BaseEndpoint {
           }/files/${descriptor.fileId}/pages`
         );
         return response.pages;
-      },
-
-      cli: async () => {
-        const file: any = await this.client.files.info(descriptor);
-        return file._pages;
       }
     });
   }

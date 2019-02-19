@@ -4,6 +4,8 @@ import nock from "nock";
 import { Readable } from "readable-stream";
 import Client from "./Client";
 
+jest.mock("child_process");
+
 function buildTextStream(text?: string): ReadableStream {
   const stream = new Readable();
   stream._read = () => {};
@@ -26,7 +28,11 @@ export const CLI_CLIENT = new Client({
   transportMode: "cli"
 });
 
-export function mockCLI(args: string[], response?: Object, error?: Object) {
+export function mockCLI(
+  args: string[],
+  response?: Object | Array<Object>,
+  error?: Object
+) {
   child_process.spawn.mockClear();
   child_process.spawn.mockReturnValueOnce({
     stdout: buildTextStream(JSON.stringify(response)),

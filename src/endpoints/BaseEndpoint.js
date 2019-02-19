@@ -11,7 +11,7 @@ import { version } from "../../package.json";
 import {
   APITokenError,
   CLIPathError,
-  MethodUndefinedError,
+  EndpointUndefinedError,
   logAPIError,
   logCLIError,
   throwAPIError,
@@ -35,6 +35,7 @@ export default class BaseEndpoint {
   apiUrl: string;
   cliPath: ?string;
   client: Client;
+  lastCalledEndpoint: ?string;
   previewsUrl: string;
   transportMode: string;
 
@@ -64,14 +65,20 @@ export default class BaseEndpoint {
         return handler.api();
       }
 
-      throw new MethodUndefinedError();
+      throw new EndpointUndefinedError(
+        this.lastCalledEndpoint,
+        this.transportMode
+      );
     }
 
     if (handler[this.transportMode]) {
       return handler[this.transportMode]();
     }
 
-    throw new MethodUndefinedError(this.transportMode);
+    throw new EndpointUndefinedError(
+      this.lastCalledEndpoint,
+      this.transportMode
+    );
   }
 
   async apiRequest(

@@ -23,11 +23,7 @@ export default class Files extends BaseEndpoint {
           descriptor.sha,
           descriptor.fileId
         ]);
-        return {
-          ...response.file,
-          // Cache this for calls to abstract.pages
-          _pages: response.pages
-        };
+        return response.file;
       }
     });
   }

@@ -2,8 +2,10 @@
 import locatePath from "locate-path";
 import Activities from "./endpoints/Activities";
 import Assets from "./endpoints/Assets";
+import BaseEndpoint from "./endpoints/BaseEndpoint";
 import Branches from "./endpoints/Branches";
 import Changesets from "./endpoints/Changesets";
+import Collections from "./endpoints/Collections";
 import Comments from "./endpoints/Comments";
 import Commits from "./endpoints/Commits";
 import Files from "./endpoints/Files";
@@ -20,6 +22,7 @@ export default class Client {
   assets: Assets;
   branches: Branches;
   changesets: Changesets;
+  collections: Collections;
   comments: Comments;
   commits: Commits;
   files: Files;
@@ -55,6 +58,7 @@ export default class Client {
     this.assets = new Assets(options, this);
     this.branches = new Branches(options, this);
     this.changesets = new Changesets(options, this);
+    this.collections = new Collections(options, this);
     this.comments = new Comments(options, this);
     this.commits = new Commits(options, this);
     this.files = new Files(options, this);
@@ -64,5 +68,21 @@ export default class Client {
     this.pages = new Pages(options, this);
     this.projects = new Projects(options, this);
     this.users = new Users(options, this);
+
+    return new Proxy(this, {
+      get(target: Object, endpoint: string) {
+        if (typeof target[endpoint] === "object" && target[endpoint]) {
+          return new Proxy(target[endpoint], {
+            get(target: Object, key: string) {
+              if (typeof target[key] === "function" && !BaseEndpoint.prototype.hasOwnProperty(key)) {
+                target.lastCalledEndpoint = `${endpoint}.${key}`;
+              }
+              return target[key];
+            }
+          });
+        }
+        return target[endpoint];
+      }
+    });
   }
 }
