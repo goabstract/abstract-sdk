@@ -16,6 +16,7 @@ import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
 import Previews from "./endpoints/Previews";
 import Projects from "./endpoints/Projects";
+import Shares from "./endpoints/Shares";
 import Users from "./endpoints/Users";
 import type { CommandOptions } from "./types";
 
@@ -35,6 +36,7 @@ export default class Client {
   pages: Pages;
   previews: Previews;
   projects: Projects;
+  shares: Shares;
   users: Users;
 
   constructor(options: $Shape<CommandOptions> = {}) {
@@ -73,6 +75,7 @@ export default class Client {
     this.pages = new Pages(options, this);
     this.previews = new Previews(options, this);
     this.projects = new Projects(options, this);
+    this.shares = new Shares(options, this);
     this.users = new Users(options, this);
 
     return new Proxy(this, {
