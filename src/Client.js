@@ -7,12 +7,14 @@ import Branches from "./endpoints/Branches";
 import Changesets from "./endpoints/Changesets";
 import Collections from "./endpoints/Collections";
 import Comments from "./endpoints/Comments";
+import Data from "./endpoints/Data";
 import Commits from "./endpoints/Commits";
 import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
 import Notifications from "./endpoints/Notifications";
 import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
+import Previews from "./endpoints/Previews";
 import Projects from "./endpoints/Projects";
 import Users from "./endpoints/Users";
 import type { CommandOptions } from "./types";
@@ -25,11 +27,13 @@ export default class Client {
   collections: Collections;
   comments: Comments;
   commits: Commits;
+  data: Data;
   files: Files;
   layers: Layers;
   notifications: Notifications;
   organizations: Organizations;
   pages: Pages;
+  previews: Previews;
   projects: Projects;
   users: Users;
 
@@ -61,11 +65,13 @@ export default class Client {
     this.collections = new Collections(options, this);
     this.comments = new Comments(options, this);
     this.commits = new Commits(options, this);
+    this.data = new Data(options, this);
     this.files = new Files(options, this);
     this.layers = new Layers(options, this);
     this.notifications = new Notifications(options, this);
     this.organizations = new Organizations(options, this);
     this.pages = new Pages(options, this);
+    this.previews = new Previews(options, this);
     this.projects = new Projects(options, this);
     this.users = new Users(options, this);
 
@@ -74,7 +80,10 @@ export default class Client {
         if (typeof target[endpoint] === "object" && target[endpoint]) {
           return new Proxy(target[endpoint], {
             get(target: Object, key: string) {
-              if (typeof target[key] === "function" && !BaseEndpoint.prototype.hasOwnProperty(key)) {
+              if (
+                typeof target[key] === "function" &&
+                !BaseEndpoint.prototype.hasOwnProperty(key)
+              ) {
                 target.lastCalledEndpoint = `${endpoint}.${key}`;
               }
               return target[key];

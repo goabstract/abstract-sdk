@@ -1092,8 +1092,12 @@ export type LayerDataProperties = {
   overrides?: LayerOverrideData
 };
 
+export type PreviewMeta = {
+  webUrl: string
+};
+
 export type LayerData = {
-  id: string,
+  layerId: string,
   symbolId?: string,
   parentId?: string,
   childIds: string[],

@@ -30,7 +30,7 @@ export default class Assets extends BaseEndpoint {
     return this.request<Promise<ArrayBuffer>>({
       api: async () => {
         const asset = await this.info(descriptor);
-        const response = await this.apiRequest(
+        return this.apiRawRequest(
           asset.url,
           {
             headers: {
@@ -41,7 +41,6 @@ export default class Assets extends BaseEndpoint {
           },
           null
         );
-        return response.arrayBuffer();
       }
     });
   }

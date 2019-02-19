@@ -1,6 +1,6 @@
 /* @flow */
 /* global fetch */
-import "isomorphic-fetch";
+import "cross-fetch/polyfill";
 import path from "path";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
@@ -86,21 +86,22 @@ export default class BaseEndpoint {
     init: Object = {},
     hostname: ?string = this.apiUrl
   ) {
-    init.body = init.body && JSON.stringify(init.body);
-    init.headers = await this._getAPIHeaders(init.headers);
-    const args = [
-      hostname === null ? input : `${hostname || ""}/${input}`,
-      init
-    ];
-    logAPIRequest.enabled && logAPIRequest(args);
-
-    const request = fetch(...args);
-    const response = await request;
-    !response.ok && (await throwAPIError(response, input, init.body));
-
+    const response = await this._fetch(input, init, hostname);
     const data = await response.json();
     logAPIResponse.enabled && logAPIResponse(data);
     return data;
+  }
+
+  async apiRawRequest(
+    input: string,
+    init: Object = {},
+    hostname: ?string = this.apiUrl
+  ) {
+    console.log('1', init.headers);
+    const response = await this._fetch(input, init, hostname);
+    const buffer = response.arrayBuffer();
+    logAPIResponse.enabled && logAPIResponse(buffer.toString());
+    return buffer;
   }
 
   async cliRequest(args: string[]) {
@@ -152,6 +153,27 @@ export default class BaseEndpoint {
     });
   }
 
+  async _fetch(
+    input: string,
+    init: Object = {},
+    hostname: ?string = this.apiUrl
+  ) {
+    init.body = init.body && JSON.stringify(init.body);
+    console.log('2', init.headers);
+    init.headers = await this._getAPIHeaders(init.headers);
+    console.log('3', init.headers);
+    const args = [
+      hostname === null ? input : `${hostname || ""}/${input}`,
+      init
+    ];
+    logAPIRequest.enabled && logAPIRequest(args);
+
+    const request = fetch(...args);
+    const response = await request;
+    !response.ok && (await throwAPIError(response, input, init.body));
+    return response;
+  }
+
   async _getAPIHeaders(headers?: Object) {
     let tokenHeader = {};
     const token = await this.accessToken();
@@ -169,8 +191,7 @@ export default class BaseEndpoint {
           : { "Abstract-Share-Id": inferShareId(token) };
     }
 
-    const definedHeaders = {};
-    headers = {
+    return {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
@@ -179,10 +200,5 @@ export default class BaseEndpoint {
       ...tokenHeader,
       ...headers
     };
-    for (const key in headers) {
-      headers[key] !== undefined && (definedHeaders[key] = headers[key]);
-    }
-
-    return definedHeaders;
   }
 }
