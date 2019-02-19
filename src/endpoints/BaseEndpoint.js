@@ -97,7 +97,6 @@ export default class BaseEndpoint {
     init: Object = {},
     hostname: ?string = this.apiUrl
   ) {
-    console.log('1', init.headers);
     const response = await this._fetch(input, init, hostname);
     const buffer = response.arrayBuffer();
     logAPIResponse.enabled && logAPIResponse(buffer.toString());
@@ -159,9 +158,7 @@ export default class BaseEndpoint {
     hostname: ?string = this.apiUrl
   ) {
     init.body = init.body && JSON.stringify(init.body);
-    console.log('2', init.headers);
     init.headers = await this._getAPIHeaders(init.headers);
-    console.log('3', init.headers);
     const args = [
       hostname === null ? input : `${hostname || ""}/${input}`,
       init

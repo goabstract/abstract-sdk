@@ -20,6 +20,7 @@ function buildTextStream(text?: string): ReadableStream {
 
 export const API_CLIENT = new Client({
   apiUrl: "http://api",
+  previewsUrl: "http://previews",
   transportMode: "api"
 });
 

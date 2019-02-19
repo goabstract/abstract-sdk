@@ -17,14 +17,17 @@ export default class Previews extends BaseEndpoint {
     return this.request<Promise<ArrayBuffer>>({
       api: () => {
         return this.apiRawRequest(
-          `projects/${descriptor.projectId}/commits/${descriptor.sha}/files/${descriptor.fileId}/layers/${descriptor.layerId}`,
+          `projects/${descriptor.projectId}/commits/${descriptor.sha}/files/${
+            descriptor.fileId
+          }/layers/${descriptor.layerId}`,
           {
             headers: {
               Accept: undefined,
               "Content-Type": undefined,
               "Abstract-Api-Version": undefined
             }
-          }
+          },
+          this.previewsUrl
         );
       }
     });
