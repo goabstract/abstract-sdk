@@ -28,6 +28,7 @@ jest.mock("../../package.json", () => ({
 }));
 
 global.fetch = fetch;
+global.URL.createObjectURL = jest.fn();
 
 const logTest = log.extend("AbstractAPI:test");
 const buffer = fs.readFileSync(
@@ -405,6 +406,21 @@ describe("AbstractAPI", () => {
       ],
       [
         "previews.raw",
+        buildLayerDescriptor({ sha: "latest" }),
+        {
+          responses: [
+            responses.commits.list(),
+            responses.previews.arrayBuffer()
+          ]
+        }
+      ],
+      [
+        "previews.url",
+        buildLayerDescriptor(),
+        { responses: [responses.previews.arrayBuffer()] }
+      ],
+      [
+        "previews.url",
         buildLayerDescriptor({ sha: "latest" }),
         {
           responses: [
