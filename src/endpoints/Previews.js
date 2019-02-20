@@ -3,7 +3,8 @@ import type { LayerDescriptor, PreviewMeta } from "../types";
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Previews extends BaseEndpoint {
-  info(descriptor: LayerDescriptor): Promise<PreviewMeta> {
+  async info(descriptor: LayerDescriptor): Promise<PreviewMeta> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<PreviewMeta>>({
       api: async () => ({
         webUrl: `${this.previewsUrl}/projects/${descriptor.projectId}/commits/${
@@ -13,7 +14,8 @@ export default class Previews extends BaseEndpoint {
     });
   }
 
-  raw(descriptor: LayerDescriptor): Promise<ArrayBuffer> {
+  async raw(descriptor: LayerDescriptor): Promise<ArrayBuffer> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<ArrayBuffer>>({
       api: () => {
         return this.apiRawRequest(

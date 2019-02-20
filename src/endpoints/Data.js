@@ -3,7 +3,8 @@ import type { LayerData, LayerDescriptor } from "../types";
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Data extends BaseEndpoint {
-  info(descriptor: LayerDescriptor): Promise<LayerData> {
+  async info(descriptor: LayerDescriptor): Promise<LayerData> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<LayerData>>({
       api: () => {
         return this.apiRequest(

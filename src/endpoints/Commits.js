@@ -1,8 +1,9 @@
 // @flow
 import querystring from "query-string";
 import type {
-  CommitDescriptor,
+  BaseCommitDescriptor,
   Commit,
+  CommitDescriptor,
   FileDescriptor,
   LayerDescriptor
 } from "../types";
@@ -64,5 +65,17 @@ export default class Commits extends BaseEndpoint {
         return response.commits;
       }
     });
+  }
+
+  async getLatestDescriptor<T: BaseCommitDescriptor>(
+    descriptor: T
+  ): Promise<T> {
+    if (descriptor.sha !== "latest") return descriptor;
+    const [commit] = await this.list((descriptor: any));
+    return {
+      ...descriptor,
+      commitSha: commit.sha,
+      sha: commit.sha
+    };
   }
 }

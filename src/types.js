@@ -26,10 +26,16 @@ export type NotificationDescriptor = {|
   notificationId: string
 |};
 
-export type CommitDescriptor = {|
+export type BaseCommitDescriptor = {
+  sha: string,
   projectId: string,
-  branchId: string | "master",
-  sha: string
+  branchId: string | "master"
+};
+
+export type CommitDescriptor = {|
+  sha: string,
+  projectId: string,
+  branchId: string | "master"
 |};
 
 export type BranchDescriptor = {|

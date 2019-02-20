@@ -16,7 +16,7 @@ import type {
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Comments extends BaseEndpoint {
-  create(
+  async create(
     descriptor:
       | BranchDescriptor
       | CommitDescriptor
@@ -24,6 +24,9 @@ export default class Comments extends BaseEndpoint {
       | PageDescriptor,
     comment: NewComment
   ): Promise<Comment> {
+    if (descriptor.sha) {
+      descriptor = await this.client.commits.getLatestDescriptor(descriptor);
+    }
     return this.request<Promise<Comment>>({
       api: async () => {
         const branch = await this.client.branches.info({
@@ -88,12 +91,18 @@ export default class Comments extends BaseEndpoint {
       | PageDescriptor,
     options: ListOptions = {}
   ): CursorPromise<Comment[]> {
+    let newDescriptor;
     return this.request<CursorPromise<Comment[]>>({
       api: () => {
         return new Cursor<Comment[]>(
           async (meta = { nextOffset: options.offset }) => {
+            if (!newDescriptor && descriptor.sha) {
+              newDescriptor = await this.client.commits.getLatestDescriptor(
+                descriptor
+              );
+            }
             const query = querystring.stringify({
-              ...descriptor,
+              ...newDescriptor,
               ...options,
               offset: meta.nextOffset
             });

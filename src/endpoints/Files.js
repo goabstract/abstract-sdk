@@ -4,7 +4,8 @@ import { NotFoundError } from "../errors";
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Files extends BaseEndpoint {
-  info(descriptor: FileDescriptor): Promise<File> {
+  async info(descriptor: FileDescriptor): Promise<File> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<File>>({
       api: async () => {
         const { fileId, ...branchDescriptor } = descriptor;
@@ -28,7 +29,8 @@ export default class Files extends BaseEndpoint {
     });
   }
 
-  list(descriptor: CommitDescriptor): Promise<File[]> {
+  async list(descriptor: CommitDescriptor): Promise<File[]> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<File[]>>({
       api: async () => {
         const response = await this.apiRequest(

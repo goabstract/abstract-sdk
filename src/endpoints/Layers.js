@@ -10,7 +10,8 @@ import type {
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Layers extends BaseEndpoint {
-  info(descriptor: LayerDescriptor): Promise<Layer> {
+  async info(descriptor: LayerDescriptor): Promise<Layer> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<Layer>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -41,10 +42,11 @@ export default class Layers extends BaseEndpoint {
     });
   }
 
-  list(
+  async list(
     descriptor: FileDescriptor | PageDescriptor,
     options: ListOptions = {}
   ): Promise<Layer[]> {
+    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<Layer[]>>({
       api: async () => {
         const query = querystring.stringify({ ...options, ...descriptor });
