@@ -1,6 +1,6 @@
 {
-  "name": "abstract-sdk",
-  "version": "0.7.1",
+  "name": "abs-test-sdk",
+  "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",
   "files": [
