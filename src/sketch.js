@@ -35,8 +35,7 @@ export function branch(context: *): BranchDescriptor {
 
   return {
     projectId: projectId(key),
-    branchId: branchId(key),
-    sha: "latest"
+    branchId: branchId(key)
   };
 }
 

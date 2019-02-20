@@ -1,5 +1,5 @@
 // @flow
-import type { BranchDescriptor, File, FileDescriptor } from "../types";
+import type { CommitDescriptor, File, FileDescriptor } from "../types";
 import { NotFoundError } from "../errors";
 import BaseEndpoint from "./BaseEndpoint";
 
@@ -28,7 +28,7 @@ export default class Files extends BaseEndpoint {
     });
   }
 
-  list(descriptor: BranchDescriptor): Promise<File[]> {
+  list(descriptor: CommitDescriptor): Promise<File[]> {
     return this.request<Promise<File[]>>({
       api: async () => {
         const response = await this.apiRequest(

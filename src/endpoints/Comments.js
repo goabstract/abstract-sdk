@@ -7,6 +7,7 @@ import type {
   CommentDescriptor,
   CommitDescriptor,
   CursorPromise,
+  FileDescriptor,
   LayerDescriptor,
   ListOptions,
   NewComment,
@@ -16,27 +17,44 @@ import BaseEndpoint from "./BaseEndpoint";
 
 export default class Comments extends BaseEndpoint {
   create(
-    descriptor: BranchDescriptor | LayerDescriptor,
+    descriptor:
+      | BranchDescriptor
+      | CommitDescriptor
+      | LayerDescriptor
+      | PageDescriptor,
     comment: NewComment
   ): Promise<Comment> {
     return this.request<Promise<Comment>>({
       api: async () => {
-        let commentData;
         const branch = await this.client.branches.info({
           branchId: descriptor.branchId,
-          projectId: descriptor.projectId,
-          sha: descriptor.sha
+          projectId: descriptor.projectId
         });
-        if (!descriptor.layerId) {
-          commentData = { branchName: branch.name };
-        } else {
+        let commentData = {
+          branchName: branch.name
+        };
+        if (descriptor.layerId) {
           const layer: any = await this.client.layers.info(descriptor);
           commentData = {
-            branchName: branch.name,
-            fileName: layer._file.name,
-            layerName: layer.name,
-            pageId: layer._page.id,
-            pageName: layer._page.name
+            ...commentData,
+            layerId: layer.id,
+            layerName: layer.name
+          };
+        }
+        if (descriptor.pageId) {
+          const page = await this.client.pages.info(
+            ((descriptor: any): PageDescriptor)
+          );
+          const file = await this.client.files.info(
+            ((descriptor: any): FileDescriptor)
+          );
+          commentData = {
+            ...commentData,
+            fileId: file.id,
+            fileName: file.name,
+            fileType: file.type,
+            pageId: page.id,
+            pageName: page.name
           };
         }
 
@@ -45,6 +63,7 @@ export default class Comments extends BaseEndpoint {
           body: {
             ...commentData,
             ...descriptor,
+            commitSha: descriptor.sha || undefined,
             annotation: comment.annotation,
             body: comment.body
           }
@@ -55,7 +74,7 @@ export default class Comments extends BaseEndpoint {
 
   info(descriptor: CommentDescriptor): Promise<Comment> {
     return this.request<Promise<Comment>>({
-      api: async () => {
+      api: () => {
         return this.apiRequest(`comments/${descriptor.commentId}`);
       }
     });

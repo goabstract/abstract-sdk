@@ -12,7 +12,7 @@ import type {
 } from "../types";
 import BaseEndpoint from "./BaseEndpoint";
 
-export default class Comments extends BaseEndpoint {
+export default class Collections extends BaseEndpoint {
   create(
     descriptor: ProjectDescriptor,
     collection: NewCollection

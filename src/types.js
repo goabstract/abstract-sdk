@@ -26,38 +26,29 @@ export type NotificationDescriptor = {|
   notificationId: string
 |};
 
-type ObjectDescriptor = {|
+export type CommitDescriptor = {|
   projectId: string,
   branchId: string | "master",
   sha: string
 |};
 
-export type CommitDescriptor = {|
-  ...ObjectDescriptor
-|};
-
 export type BranchDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha">
+  projectId: string,
+  branchId: string | "master"
 |};
 
 export type FileDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha">,
+  ...CommitDescriptor,
   fileId: string
 |};
 
 export type PageDescriptor = {|
-  ...ObjectDescriptor,
-  fileId: string,
+  ...FileDescriptor,
   pageId: string
 |};
 
 export type LayerDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha">,
-  fileId: string,
-  pageId: string,
+  ...PageDescriptor,
   layerId: string
 |};
 

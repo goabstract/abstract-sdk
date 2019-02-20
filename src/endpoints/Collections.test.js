@@ -71,8 +71,7 @@ describe("#list", () => {
     });
     const response = await CLI_CLIENT.collections.list({
       projectId: "project",
-      branchId: "branch",
-      sha: "sha"
+      branchId: "branch"
     });
 
     expect(response).toEqual({ collections: [{ id: "1337" }] });

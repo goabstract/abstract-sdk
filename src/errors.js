@@ -50,6 +50,12 @@ export class InternalServerError extends BaseError {
   }
 }
 
+export class LatestCommitNotFound extends BaseError {
+  constructor() {
+    super("Could not resolve latest commit using provided descriptor.");
+  }
+}
+
 export class NotFoundError extends BaseError {
   data: ErrorData;
 

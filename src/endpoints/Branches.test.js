@@ -6,8 +6,7 @@ describe("#info", () => {
     mockAPI("/projects/project/branches/branch", { id: "1337" });
     const response = await API_CLIENT.branches.info({
       branchId: "branch",
-      projectId: "project",
-      sha: "sha"
+      projectId: "project"
     });
 
     expect(response).toEqual({ id: "1337" });
@@ -17,8 +16,7 @@ describe("#info", () => {
     mockCLI(["branch", "load", "project", "branch"], { id: "1337" });
     const response = await CLI_CLIENT.branches.info({
       branchId: "branch",
-      projectId: "project",
-      sha: "sha"
+      projectId: "project"
     });
 
     expect(response).toEqual({ id: "1337" });

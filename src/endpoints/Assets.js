@@ -1,6 +1,6 @@
 // @flow
 import querystring from "query-string";
-import type { Asset, AssetDescriptor, BranchDescriptor } from "../types";
+import type { Asset, AssetDescriptor, CommitDescriptor } from "../types";
 import BaseEndpoint from "./BaseEndpoint";
 
 export default class Assets extends BaseEndpoint {
@@ -14,7 +14,7 @@ export default class Assets extends BaseEndpoint {
     });
   }
 
-  list(descriptor: BranchDescriptor): Promise<Asset[]> {
+  list(descriptor: CommitDescriptor): Promise<Asset[]> {
     return this.request<Promise<Asset[]>>({
       api: async () => {
         const query = querystring.stringify({ sha: descriptor.sha });

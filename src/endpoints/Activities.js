@@ -15,11 +15,8 @@ import BaseEndpoint from "./BaseEndpoint";
 export default class Activities extends BaseEndpoint {
   info(descriptor: ActivityDescriptor): Promise<Activity> {
     return this.request<Promise<Activity>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `activities/${descriptor.activityId}`
-        );
-        return response;
+      api: () => {
+        return this.apiRequest(`activities/${descriptor.activityId}`);
       }
     });
   }
