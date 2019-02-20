@@ -557,7 +557,7 @@ export default class AbstractAPI implements AbstractInterface {
     url: async (layerDescriptor: LayerDescriptor) => {
       if (!Blob || !URL || !DataView) {
         throw new Error(
-          `"previews.url" requires an environment with Blob, URL and DataView`
+          `The "previews.url" method requires an environment with URL.createObjectURL. If you are using node, you will need to save the image to a file with "previews.raw"`
         );
       }
 

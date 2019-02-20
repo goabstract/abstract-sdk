@@ -875,9 +875,9 @@ fs.writeFile(`preview.png`, Buffer.from(arrayBuffer), (err) => {
 
 > Note: The `previews.url` method requires an environment with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
 
-`previews.url(LayerDescriptor): Promise<Preview>`
+`previews.url(LayerDescriptor): Promise<string>`
 
-Load a url object for the preview
+> Get an image as a _temporary_ blob url which can be displayed directly in an image tag or downloaded. The url exists only as long as the current browser session and should not be saved to a database directly.
 
 ```js
 abstract.previews.info({
