@@ -3,6 +3,11 @@
   "version": "0.7.1",
   "description": "",
   "main": "lib/index.js",
+  "files": [
+    "/lib",
+    "/definitions",
+    ".flowconfig"
+  ],
   "scripts": {
     "postinstall": "./definitions/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
@@ -48,10 +53,8 @@
     "prettier": "^1.14.2"
   },
   "dependencies": {
-    "caller-id": "^0.1.0",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
-    "isomorphic-fetch": "^2.2.1",
     "locate-path": "^3.0.0",
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
