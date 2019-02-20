@@ -1,15 +1,16 @@
 {
   "name": "abs-test-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "lib/index.js",
   "files": [
-    "/lib",
+    ".flowconfig",
     "/definitions",
-    ".flowconfig"
+    "/lib",
+    "/scripts"
   ],
   "scripts": {
-    "postinstall": "./install-types.sh",
+    "postinstall": "./scripts/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest",
     "prebuild": "rm -rf lib && flow-copy-source -i *.test.js src lib",
