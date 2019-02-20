@@ -401,7 +401,9 @@ describe("AbstractAPI", () => {
       [
         "previews.raw",
         buildLayerDescriptor(),
-        { responses: [responses.previews.arrayBuffer()] },
+        { responses: [responses.previews.arrayBuffer()] }
+      ],
+      [
         "previews.raw",
         buildLayerDescriptor({ sha: "latest" }),
         {
