@@ -1,6 +1,7 @@
 [ignore]
-./lib/.*
-**/*.test.js
+<PROJECT_ROOT>/lib/*
+<PROJECT_ROOT>/src/testing.js
+.*/*.test.js
 
 [include]
 
