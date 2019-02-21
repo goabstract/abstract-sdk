@@ -19,13 +19,17 @@ function buildTextStream(text?: string): ReadableStream {
 }
 
 export const API_CLIENT = new Client({
+  accessToken: "token",
   apiUrl: "http://api",
   previewsUrl: "http://previews",
   transportMode: "api"
 });
 
 export const CLI_CLIENT = new Client({
+  accessToken: "token",
+  apiUrl: "http://api",
   cliPath: ".",
+  previewsUrl: "http://previews",
   transportMode: "cli"
 });
 
