@@ -71,7 +71,7 @@ export default class Commits extends BaseEndpoint {
     descriptor: T
   ): Promise<T> {
     if (descriptor.sha !== "latest") return descriptor;
-    const [commit] = await this.list((descriptor: any));
+    const [commit] = await this.list((descriptor: any), { limit: 1 });
     return {
       ...descriptor,
       commitSha: commit.sha,

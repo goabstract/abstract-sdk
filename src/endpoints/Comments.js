@@ -96,10 +96,13 @@ export default class Comments extends BaseEndpoint {
       api: () => {
         return new Cursor<Comment[]>(
           async (meta = { nextOffset: options.offset }) => {
-            if (!newDescriptor && descriptor.sha) {
-              newDescriptor = await this.client.commits.getLatestDescriptor(
-                descriptor
-              );
+            if (!newDescriptor) {
+              newDescriptor = descriptor;
+              if (newDescriptor.sha) {
+                newDescriptor = await this.client.commits.getLatestDescriptor(
+                  newDescriptor
+                );
+              }
             }
             const query = querystring.stringify({
               ...newDescriptor,

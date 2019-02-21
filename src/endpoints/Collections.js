@@ -69,9 +69,13 @@ export default class Collections extends BaseEndpoint {
   ): Promise<CollectionMetaList> {
     return this.request<Promise<CollectionMetaList>>({
       api: async () => {
-        const query = querystring.stringify({ ...descriptor, ...options });
+        const { projectId, ...sanitizedDescriptor } = descriptor;
+        const query = querystring.stringify({
+          ...sanitizedDescriptor,
+          ...options
+        });
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections?${query}`
+          `projects/${projectId}/collections?${query}`
         );
         return response.data;
       },

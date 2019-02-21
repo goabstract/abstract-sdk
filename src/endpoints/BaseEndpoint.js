@@ -3,6 +3,7 @@
 import "cross-fetch/polyfill";
 import path from "path";
 import { spawn } from "child_process";
+import { existsSync } from "fs";
 import uuid from "uuid/v4";
 import Client from "../Client";
 import { inferShareId } from "../utils";
@@ -107,7 +108,7 @@ export default class BaseEndpoint {
     const token = await this.accessToken();
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 
-    if (!this.cliPath) {
+    if (!this.cliPath || !existsSync(this.cliPath)) {
       const error = new CLIPathError();
       logCLIError.enabled && logCLIError(error);
       throw error;
@@ -157,7 +158,9 @@ export default class BaseEndpoint {
     init: Object = {},
     hostname: ?string = this.apiUrl
   ) {
-    init.body = init.body && JSON.stringify(init.body);
+    if (init.body) {
+      init.body = JSON.stringify(init.body);
+    }
     init.headers = await this._getAPIHeaders(init.headers);
     const args = [
       hostname === null ? input : `${hostname || ""}/${input}`,
@@ -188,7 +191,7 @@ export default class BaseEndpoint {
           : { "Abstract-Share-Id": inferShareId(token) };
     }
 
-    return {
+    const tokens = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
@@ -197,5 +200,9 @@ export default class BaseEndpoint {
       ...tokenHeader,
       ...headers
     };
+    Object.keys(tokens).forEach(key => {
+      tokens[key] === undefined && delete tokens[key];
+    });
+    return tokens;
   }
 }
