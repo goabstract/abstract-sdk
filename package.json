@@ -13,6 +13,7 @@
     "postinstall": "./scripts/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest",
+    "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "prebuild": "rm -rf lib && flow-copy-source -i *.test.js src lib",
     "build": "babel src -i *.test.js -d lib",
     "ci": "yarn lint && yarn flow --flowconfig-name=.flowconfig-ci && yarn test",

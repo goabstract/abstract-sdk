@@ -10,9 +10,9 @@ import type {
   OrganizationDescriptor,
   ProjectDescriptor
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Activities extends BaseEndpoint {
+export default class Activities extends Endpoint {
   info(descriptor: ActivityDescriptor): Promise<Activity> {
     return this.request<Promise<Activity>>({
       api: () => {

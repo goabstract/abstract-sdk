@@ -8,9 +8,9 @@ import type {
   LayerDescriptor
 } from "../types";
 import { NotFoundError } from "../errors";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Commits extends BaseEndpoint {
+export default class Commits extends Endpoint {
   info(
     descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor
   ): Promise<Commit> {

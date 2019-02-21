@@ -6,9 +6,9 @@ import type {
   ShareDescriptor,
   ShareInput
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Activities extends BaseEndpoint {
+export default class Activities extends Endpoint {
   create<T: Share>(
     descriptor: OrganizationDescriptor,
     shareInput: ShareInput

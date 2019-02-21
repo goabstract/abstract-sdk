@@ -1,9 +1,9 @@
 // @flow
 import querystring from "query-string";
 import type { Asset, AssetDescriptor, CommitDescriptor } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Assets extends BaseEndpoint {
+export default class Assets extends Endpoint {
   info(descriptor: AssetDescriptor): Promise<Asset> {
     return this.request<Promise<Asset>>({
       api: async () => {

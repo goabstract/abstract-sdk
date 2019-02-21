@@ -8,9 +8,9 @@ import type {
   NotificationDescriptor,
   OrganizationDescriptor
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Notifications extends BaseEndpoint {
+export default class Notifications extends Endpoint {
   info(descriptor: NotificationDescriptor): Promise<Notification> {
     return this.request<Promise<Notification>>({
       api: () => {

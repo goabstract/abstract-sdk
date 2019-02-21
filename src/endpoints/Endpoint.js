@@ -31,7 +31,7 @@ export type EndpointHandler<T> = {
   cli?: () => T
 };
 
-export default class BaseEndpoint {
+export default class Endpoint {
   _optionAccessToken: ?AccessTokenOption;
   apiUrl: string;
   cliPath: ?string;
@@ -45,7 +45,7 @@ export default class BaseEndpoint {
       ? this._optionAccessToken()
       : this._optionAccessToken;
 
-  constructor(options: CommandOptions, client: Client) {
+  constructor(client: Client, options: CommandOptions) {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
     this.cliPath = options.cliPath && path.resolve(options.cliPath);

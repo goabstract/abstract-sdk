@@ -5,9 +5,9 @@ import type {
   Project,
   ProjectDescriptor
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Projects extends BaseEndpoint {
+export default class Projects extends Endpoint {
   info(descriptor: ProjectDescriptor): Promise<Project> {
     return this.request<Promise<Project>>({
       api: async () => {

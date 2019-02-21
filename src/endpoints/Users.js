@@ -5,9 +5,9 @@ import type {
   User,
   UserDescriptor
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Users extends BaseEndpoint {
+export default class Users extends Endpoint {
   info(descriptor: UserDescriptor): Promise<User> {
     return this.request<Promise<User>>({
       api: async () => {

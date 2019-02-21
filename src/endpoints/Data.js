@@ -1,8 +1,8 @@
 // @flow
 import type { LayerData, LayerDescriptor } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Data extends BaseEndpoint {
+export default class Data extends Endpoint {
   async info(descriptor: LayerDescriptor): Promise<LayerData> {
     descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<LayerData>>({

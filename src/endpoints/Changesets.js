@@ -1,8 +1,8 @@
 // @flow
 import type { Changeset, CommitDescriptor } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Changesets extends BaseEndpoint {
+export default class Changesets extends Endpoint {
   async info(descriptor: CommitDescriptor): Promise<Changeset> {
     descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<Changeset>>({

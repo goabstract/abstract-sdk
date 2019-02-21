@@ -1,9 +1,9 @@
 // @flow
 import type { FileDescriptor, Page, PageDescriptor } from "../types";
 import { NotFoundError } from "../errors";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Pages extends BaseEndpoint {
+export default class Pages extends Endpoint {
   info(descriptor: PageDescriptor): Promise<Page> {
     return this.request<Promise<Page>>({
       api: async () => {

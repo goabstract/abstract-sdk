@@ -1,9 +1,9 @@
 // @flow
 import type { CommitDescriptor, File, FileDescriptor } from "../types";
 import { NotFoundError } from "../errors";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Files extends BaseEndpoint {
+export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor): Promise<File> {
     descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<File>>({

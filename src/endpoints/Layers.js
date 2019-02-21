@@ -7,9 +7,9 @@ import type {
   ListOptions,
   PageDescriptor
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Layers extends BaseEndpoint {
+export default class Layers extends Endpoint {
   async info(descriptor: LayerDescriptor): Promise<Layer> {
     descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<Layer>>({

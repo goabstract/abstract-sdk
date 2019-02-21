@@ -1,8 +1,8 @@
 // @flow
 import type { OrganizationDescriptor, Organization } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Organizations extends BaseEndpoint {
+export default class Organizations extends Endpoint {
   info(descriptor: OrganizationDescriptor): Promise<Organization> {
     return this.request<Promise<Organization>>({
       api: async () => {

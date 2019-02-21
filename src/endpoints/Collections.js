@@ -10,9 +10,9 @@ import type {
   ProjectDescriptor,
   UpdatedCollection
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Collections extends BaseEndpoint {
+export default class Collections extends Endpoint {
   create(
     descriptor: ProjectDescriptor,
     collection: NewCollection

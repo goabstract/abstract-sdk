@@ -13,9 +13,9 @@ import type {
   NewComment,
   PageDescriptor
 } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Comments extends BaseEndpoint {
+export default class Comments extends Endpoint {
   async create(
     descriptor:
       | BranchDescriptor

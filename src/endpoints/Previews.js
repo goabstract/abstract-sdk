@@ -1,8 +1,8 @@
 // @flow
 import type { LayerDescriptor, PreviewMeta } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Previews extends BaseEndpoint {
+export default class Previews extends Endpoint {
   async info(descriptor: LayerDescriptor): Promise<PreviewMeta> {
     descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<PreviewMeta>>({

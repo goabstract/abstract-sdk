@@ -1,9 +1,9 @@
 // @flow
 import querystring from "query-string";
 import type { Branch, BranchDescriptor, ProjectDescriptor } from "../types";
-import BaseEndpoint from "./BaseEndpoint";
+import Endpoint from "./Endpoint";
 
-export default class Branches extends BaseEndpoint {
+export default class Branches extends Endpoint {
   info(descriptor: BranchDescriptor): Promise<Branch> {
     return this.request<Promise<Branch>>({
       api: () => {

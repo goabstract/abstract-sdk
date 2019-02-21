@@ -2,7 +2,7 @@
 import locatePath from "locate-path";
 import Activities from "./endpoints/Activities";
 import Assets from "./endpoints/Assets";
-import BaseEndpoint from "./endpoints/BaseEndpoint";
+import Endpoint from "./endpoints/Endpoint";
 import Branches from "./endpoints/Branches";
 import Changesets from "./endpoints/Changesets";
 import Collections from "./endpoints/Collections";
@@ -60,23 +60,23 @@ export default class Client {
       ...options
     };
 
-    this.activities = new Activities(options, this);
-    this.assets = new Assets(options, this);
-    this.branches = new Branches(options, this);
-    this.changesets = new Changesets(options, this);
-    this.collections = new Collections(options, this);
-    this.comments = new Comments(options, this);
-    this.commits = new Commits(options, this);
-    this.data = new Data(options, this);
-    this.files = new Files(options, this);
-    this.layers = new Layers(options, this);
-    this.notifications = new Notifications(options, this);
-    this.organizations = new Organizations(options, this);
-    this.pages = new Pages(options, this);
-    this.previews = new Previews(options, this);
-    this.projects = new Projects(options, this);
-    this.shares = new Shares(options, this);
-    this.users = new Users(options, this);
+    this.activities = new Activities(this, options);
+    this.assets = new Assets(this, options);
+    this.branches = new Branches(this, options);
+    this.changesets = new Changesets(this, options);
+    this.collections = new Collections(this, options);
+    this.comments = new Comments(this, options);
+    this.commits = new Commits(this, options);
+    this.data = new Data(this, options);
+    this.files = new Files(this, options);
+    this.layers = new Layers(this, options);
+    this.notifications = new Notifications(this, options);
+    this.organizations = new Organizations(this, options);
+    this.pages = new Pages(this, options);
+    this.previews = new Previews(this, options);
+    this.projects = new Projects(this, options);
+    this.shares = new Shares(this, options);
+    this.users = new Users(this, options);
 
     // This only for informative errors; we proxy each method
     // on each endpoint so we can cache the last method name called.
@@ -90,7 +90,7 @@ export default class Client {
             get(target: Object, key: string) {
               if (
                 typeof target[key] === "function" &&
-                !BaseEndpoint.prototype.hasOwnProperty(key)
+                !Endpoint.prototype.hasOwnProperty(key)
               ) {
                 target.lastCalledEndpoint = `${endpoint}.${key}`;
               }
