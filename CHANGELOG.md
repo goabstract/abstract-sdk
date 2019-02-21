@@ -1,3 +1,9 @@
+## v1.0.0
+- Fixed downstream `flow-typed` issues
+- Changed `transport` configuration option to `transportMode`, which now takes a string:  "api", "cli", or "auto"
+- `BranchDescriptor` no longer requires a `sha` property
+- Some APIs that exected or returned `BranchDescriptor` now use `CommitDescriptor`
+
 ## v0.7.0
 
 - Added `assets.list`, `assets.info`, and `assets.raw` to the API transport
