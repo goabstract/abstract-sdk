@@ -54,3 +54,17 @@ The following example demonstrates how to work with pages of results.
     projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
   }, { limit: 10 }));
   ```
+
+4. The SDK also offers a convenience `paginate` function to wrap any `CursorPromise` with an `AsyncIterable` interface. This allows all cursor-paginated methods to also be used with [`for-await-of` asynchronous iteration](https://github.com/tc39/proposal-async-iteration).
+
+  ```js
+  const iterable = paginate(abstract.activities.list({
+    projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
+  }, { limit: 10 }));
+
+  (async () => {
+    for await (const page of iterable) {
+        console.log('Items: ', page.length);
+    }
+  })();
+  ```

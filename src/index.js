@@ -1,5 +1,6 @@
 // @flow
 import Client from "./Client";
+import paginate from "./paginate";
 import * as sketch from "./sketch";
 import {
   APITokenError,
@@ -29,5 +30,5 @@ const errors = {
   UnauthorizedError
 };
 
-export { Client, errors, sketch };
+export { Client, errors, paginate, sketch };
 export type * from "./types";
