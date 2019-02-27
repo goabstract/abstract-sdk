@@ -3,6 +3,7 @@
 import "cross-fetch/polyfill";
 import path from "path";
 import { existsSync } from "fs";
+import { spawn } from "child_process";
 import uuid from "uuid/v4";
 import Client from "../Client";
 import { inferShareId } from "../utils";
@@ -121,7 +122,7 @@ export default class Endpoint {
     ];
 
     logCLIRequest.enabled && logCLIRequest(spawnArgs);
-    const request = require("child_process").spawn(...spawnArgs);
+    const request = spawn(...spawnArgs);
 
     return new Promise((resolve, reject) => {
       let errBuffer = Buffer.from("");
