@@ -23,6 +23,14 @@ export class CLIPathError extends BaseError {
   }
 }
 
+export class FileAPIError extends BaseError {
+  constructor() {
+    super(
+      "This method requires an environment that supports the File API. See https://www.w3.org/TR/FileAPI/ for more information."
+    );
+  }
+}
+
 export class EndpointUndefinedError extends BaseError {
   constructor(endpoint: ?string, transport: string) {
     super(

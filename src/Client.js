@@ -56,7 +56,8 @@ export default class Client {
       apiUrl: "https://api.goabstract.com",
       cliPath: cliPathDefault,
       previewsUrl: "https://previews.goabstract.com",
-      transportMode: "auto",
+      transportMode: "api",
+      webUrl: "https://app.goabstract.com",
       ...options
     };
 

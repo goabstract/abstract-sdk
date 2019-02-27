@@ -39,6 +39,7 @@ export default class Endpoint {
   lastCalledEndpoint: ?string;
   previewsUrl: string;
   transportMode: string;
+  webUrl: string;
 
   accessToken = async (): Promise<AccessToken> =>
     typeof this._optionAccessToken === "function"
@@ -52,6 +53,7 @@ export default class Endpoint {
     this.client = client;
     this.previewsUrl = options.previewsUrl;
     this.transportMode = options.transportMode;
+    this.webUrl = options.webUrl;
   }
 
   request<T>(handler: EndpointHandler<T>): T {

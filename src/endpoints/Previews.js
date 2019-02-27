@@ -1,4 +1,6 @@
-// @flow
+/* @flow */
+/* global Blob */
+import { FileAPIError } from "../errors";
 import type { LayerDescriptor, PreviewMeta } from "../types";
 import Endpoint from "./Endpoint";
 
@@ -7,7 +9,7 @@ export default class Previews extends Endpoint {
     descriptor = await this.client.commits.getLatestDescriptor(descriptor);
     return this.request<Promise<PreviewMeta>>({
       api: async () => ({
-        webUrl: `${this.previewsUrl}/projects/${descriptor.projectId}/commits/${
+        webUrl: `${this.webUrl}/projects/${descriptor.projectId}/commits/${
           descriptor.sha
         }/files/${descriptor.fileId}/layers/${descriptor.layerId}`
       })
@@ -33,5 +35,17 @@ export default class Previews extends Endpoint {
         );
       }
     });
+  }
+
+  async url(descriptor: LayerDescriptor): Promise<string> {
+    if (typeof Blob === "undefined") {
+      throw new FileAPIError();
+    }
+
+    const buffer = await this.raw(descriptor);
+
+    return URL.createObjectURL(
+      new Blob([new DataView(buffer)], { type: "image/png" })
+    );
   }
 }
