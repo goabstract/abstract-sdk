@@ -13,7 +13,7 @@ describe("#info", () => {
     });
     expect(response).toEqual({
       webUrl:
-        "http://previews/projects/project/commits/sha/files/file/layers/layer"
+        "https://app.goabstract.com/projects/project/commits/sha/files/file/layers/layer"
     });
   });
 });
