@@ -1,5 +1,5 @@
 // @flow
-/* global fetch URL */
+/* global fetch URL Blob */
 import "cross-fetch/polyfill";
 import queryString from "query-string";
 import find from "lodash/find";
@@ -50,7 +50,8 @@ const logFetch = log.extend("AbstractAPI:fetch");
 export type Options = {
   accessToken: AccessTokenOption,
   apiUrl?: string,
-  previewsUrl?: string
+  previewsUrl?: string,
+  webUrl?: string
 };
 
 type BranchNames = {
@@ -77,11 +78,13 @@ export default class AbstractAPI implements AbstractInterface {
   _optionAccessToken: AccessTokenOption;
   apiUrl: string;
   previewsUrl: string;
+  webUrl: string;
 
   constructor({
     accessToken,
     apiUrl = "https://api.goabstract.com",
-    previewsUrl = "https://previews.goabstract.com"
+    previewsUrl = "https://previews.goabstract.com",
+    webUrl = "https://app.goabstract.com"
   }: Options = {}) {
     if (!accessToken) {
       throw new Error(
@@ -92,6 +95,7 @@ export default class AbstractAPI implements AbstractInterface {
     this._optionAccessToken = accessToken;
     this.apiUrl = apiUrl;
     this.previewsUrl = previewsUrl;
+    this.webUrl = webUrl;
   }
 
   accessToken = async (): Promise<AccessToken> =>
@@ -537,19 +541,31 @@ export default class AbstractAPI implements AbstractInterface {
 
       // prettier-ignore
       return {
-        webUrl: `${this.previewsUrl}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
+        webUrl: `${this.webUrl}/projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       };
     },
-    raw: async (layerDescriptor: LayerDescriptor, options: *) => {
+    raw: async (layerDescriptor: LayerDescriptor) => {
       layerDescriptor = await this.resolveDescriptor(layerDescriptor);
 
       const response = await this.fetchPreview(
         // prettier-ignore
-        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`,
-        options
+        `projects/${layerDescriptor.projectId}/commits/${layerDescriptor.sha}/files/${layerDescriptor.fileId}/layers/${layerDescriptor.layerId}`
       );
 
       return response.arrayBuffer();
+    },
+    url: async (layerDescriptor: LayerDescriptor) => {
+      if (!Blob || !URL || !DataView) {
+        throw new Error(
+          `The "previews.url" method requires an environment with URL.createObjectURL. If you are using node, you will need to save the image to a file with "previews.raw"`
+        );
+      }
+
+      const buffer = await this.previews.raw(layerDescriptor);
+
+      return URL.createObjectURL(
+        new Blob([new DataView(buffer)], { type: "image/png" })
+      );
     }
   };
 
