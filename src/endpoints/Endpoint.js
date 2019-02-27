@@ -2,7 +2,6 @@
 /* global fetch */
 import "cross-fetch/polyfill";
 import path from "path";
-import { spawn } from "child_process";
 import { existsSync } from "fs";
 import uuid from "uuid/v4";
 import Client from "../Client";
@@ -122,7 +121,7 @@ export default class Endpoint {
     ];
 
     logCLIRequest.enabled && logCLIRequest(spawnArgs);
-    const request = spawn(...spawnArgs);
+    const request = require("child_process").spawn(...spawnArgs);
 
     return new Promise((resolve, reject) => {
       let errBuffer = Buffer.from("");
