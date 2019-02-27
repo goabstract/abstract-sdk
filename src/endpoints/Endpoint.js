@@ -1,7 +1,6 @@
 /* @flow */
 /* global fetch */
 import "cross-fetch/polyfill";
-import path from "path";
 import { existsSync } from "fs";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
@@ -49,7 +48,7 @@ export default class Endpoint {
   constructor(client: Client, options: CommandOptions) {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
-    this.cliPath = options.cliPath && path.resolve(options.cliPath);
+    this.cliPath = options.cliPath;
     this.client = client;
     this.previewsUrl = options.previewsUrl;
     this.transportMode = options.transportMode;

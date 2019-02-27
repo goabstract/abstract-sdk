@@ -3,6 +3,10 @@
   "version": "1.0.0-beta.6",
   "description": "",
   "main": "lib/index.js",
+  "browser": {
+    "child_process": false,
+    "fs": false
+  },
   "files": [
     ".flowconfig",
     "/definitions",
