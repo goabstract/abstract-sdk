@@ -4,8 +4,8 @@ import type {
   BranchDescriptor,
   Collection,
   CollectionDescriptor,
-  CollectionMeta,
-  CollectionMetaList,
+  CollectionResponse,
+  CollectionsResponse,
   NewCollection,
   ProjectDescriptor,
   UpdatedCollection
@@ -36,8 +36,8 @@ export default class Collections extends Endpoint {
     options: { layersPerCollection?: number | "all" } = {
       layersPerCollection: "all"
     }
-  ): Promise<CollectionMeta> {
-    return this.request<Promise<CollectionMeta>>({
+  ): Promise<CollectionResponse> {
+    return this.request<Promise<CollectionResponse>>({
       api: async () => {
         const query = querystring.stringify({ ...options });
         const response = await this.apiRequest(
@@ -66,8 +66,8 @@ export default class Collections extends Endpoint {
   list(
     descriptor: ProjectDescriptor | BranchDescriptor,
     options?: { layersPerCollection?: number | "all" } = {}
-  ): Promise<CollectionMetaList> {
-    return this.request<Promise<CollectionMetaList>>({
+  ): Promise<CollectionsResponse> {
+    return this.request<Promise<CollectionsResponse>>({
       api: async () => {
         const { projectId, ...sanitizedDescriptor } = descriptor;
         const query = querystring.stringify({

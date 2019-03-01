@@ -13,5 +13,5 @@ types=(
 
 for i in "${types[@]}"
 do
-  yarn flow-typed install $i
+  npx flow-typed install $i
 done

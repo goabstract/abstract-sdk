@@ -1407,14 +1407,14 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
-export type CollectionMetaList = {
+export type CollectionsResponse = {
   collections: Collection[],
   files: File[],
   pages: Page[],
   layers: Layer[]
 };
 
-export type CollectionMeta = {
+export type CollectionResponse = {
   collection: Collection,
   files: File[],
   pages: Page[],

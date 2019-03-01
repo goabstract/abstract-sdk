@@ -3,38 +3,49 @@ import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 
 describe("#info", () => {
   test("api", async () => {
-    mockAPI("/projects/project/branches/branch/commits?fileId=file&limit=1", {
-      commits: [{ id: "1337" }]
-    });
+    mockAPI(
+      "/projects/project-id/branches/branch-id/commits?fileId=file-id&limit=1",
+      {
+        commits: [{ id: "commit-id" }]
+      }
+    );
     const response = await API_CLIENT.commits.info({
-      projectId: "project",
-      branchId: "branch",
-      fileId: "file",
+      projectId: "project-id",
+      branchId: "branch-id",
+      fileId: "file-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "commit-id" });
   });
 
   test("cli", async () => {
-    mockCLI(["commit", "project", "sha"], { commit: { id: "1337" } });
+    mockCLI(["commit", "project-id", "sha"], { commit: { id: "commit-id" } });
     const response = await CLI_CLIENT.commits.info({
-      projectId: "project",
-      branchId: "branch",
+      projectId: "project-id",
+      branchId: "branch-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "commit-id" });
   });
 });
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/projects/project/branches/branch/commits?fileId=file&limit=10", {
-      commits: []
-    });
+    mockAPI(
+      "/projects/project-id/branches/branch-id/commits?fileId=file-id&limit=10",
+      {
+        commits: []
+      }
+    );
     const response = await API_CLIENT.commits.list(
-      { projectId: "project", branchId: "branch", fileId: "file", sha: "sha" },
+      {
+        projectId: "project-id",
+        branchId: "branch-id",
+        fileId: "file-id",
+        sha: "sha"
+      },
       { limit: 10 }
     );
 
@@ -43,11 +54,24 @@ describe("#list", () => {
 
   test("cli", async () => {
     mockCLI(
-      ["commits", "project", "branch", "--file-id", "file", "--limit", "10"],
+      [
+        "commits",
+        "project-id",
+        "branch-id",
+        "--file-id",
+        "file-id",
+        "--limit",
+        "10"
+      ],
       { commits: [] }
     );
     const response = await CLI_CLIENT.commits.list(
-      { projectId: "project", branchId: "branch", fileId: "file", sha: "sha" },
+      {
+        projectId: "project-id",
+        branchId: "branch-id",
+        fileId: "file-id",
+        sha: "sha"
+      },
       { limit: 10 }
     );
 

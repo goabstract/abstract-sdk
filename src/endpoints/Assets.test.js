@@ -3,27 +3,27 @@ import { mockAPI, API_CLIENT } from "../testing";
 
 describe("#info", () => {
   test("api", async () => {
-    mockAPI("/projects/project/assets/asset", { id: "1337" });
+    mockAPI("/projects/project-id/assets/asset-id", { id: "asset-id" });
     const response = await API_CLIENT.assets.info({
-      assetId: "asset",
-      projectId: "project"
+      assetId: "asset-id",
+      projectId: "project-id"
     });
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "asset-id" });
   });
 });
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/projects/project/assets?sha=sha", {
+    mockAPI("/projects/project-id/assets?sha=sha", {
       data: {
-        assets: [{ id: "1337" }]
+        assets: [{ id: "asset-id" }]
       }
     });
     const response = await API_CLIENT.assets.list({
-      branchId: "master",
-      projectId: "project",
+      branchId: "branch-id",
+      projectId: "project-id",
       sha: "sha"
     });
-    expect(response).toEqual([{ id: "1337" }]);
+    expect(response).toEqual([{ id: "asset-id" }]);
   });
 });

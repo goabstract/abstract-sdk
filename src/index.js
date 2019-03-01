@@ -17,11 +17,14 @@ import {
   UnauthorizedError
 } from "./errors";
 
-const errors = {
+export {
+  // Core API
+  Client,
+  // Custom errors
   APITokenError,
+  BaseError,
   CLIPathError,
   EndpointUndefinedError,
-  Error: BaseError,
   FileAPIError,
   ForbiddenError,
   InternalServerError,
@@ -29,8 +32,10 @@ const errors = {
   NotFoundError,
   RateLimitError,
   ServiceUnavailableError,
-  UnauthorizedError
+  UnauthorizedError,
+  // Utilities
+  paginate,
+  sketch
 };
 
-export { Client, errors, paginate, sketch };
 export type * from "./types";

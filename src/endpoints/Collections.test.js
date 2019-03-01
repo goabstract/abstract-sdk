@@ -4,76 +4,76 @@ import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 describe("#create", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project/collections",
-      { data: { id: "1337" } },
+      "/projects/project-id/collections",
+      { data: { id: "collection-id" } },
       201,
       "post"
     );
     const response = await API_CLIENT.collections.create(
-      { projectId: "project" },
+      { projectId: "project-id" },
       {
         branchId: "branch",
         name: "collection"
       }
     );
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "collection-id" });
   });
 });
 
 describe("#info", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project/collections/collection?layersPerCollection=all",
+      "/projects/project-id/collections/collection-id?layersPerCollection=all",
       {
         data: {
-          collections: [{ id: "1337" }]
+          collections: [{ id: "collection-id" }]
         }
       }
     );
     const response = await API_CLIENT.collections.info({
-      branchId: "branch",
-      collectionId: "collection",
-      projectId: "project"
+      branchId: "branch-id",
+      collectionId: "collection-id",
+      projectId: "project-id"
     });
-    expect(response).toEqual({ collection: { id: "1337" } });
+    expect(response).toEqual({ collection: { id: "collection-id" } });
   });
 
   test("cli", async () => {
-    mockCLI(["collection", "load", "project", "collection"], {
-      collection: { id: "1337" }
+    mockCLI(["collection", "load", "project-id", "collection-id"], {
+      collection: { id: "collection-id" }
     });
     const response = await CLI_CLIENT.collections.info({
-      projectId: "project",
-      branchId: "branch",
-      collectionId: "collection"
+      projectId: "project-id",
+      branchId: "branch-id",
+      collectionId: "collection-id"
     });
 
-    expect(response).toEqual({ collection: { id: "1337" } });
+    expect(response).toEqual({ collection: { id: "collection-id" } });
   });
 });
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/comments?branchId=branch&projectId=project&sha=sha", {
-      data: { collections: [{ id: "1337" }] }
+    mockAPI("/comments?branchId=branch-id&projectId=project-id&sha=sha", {
+      data: { collections: [{ id: "collection-id" }] }
     });
     const response = await API_CLIENT.comments.list({
-      projectId: "project",
-      branchId: "branch",
+      projectId: "project-id",
+      branchId: "branch-id",
       sha: "sha"
     });
-    expect(response).toEqual({ collections: [{ id: "1337" }] });
+    expect(response).toEqual({ collections: [{ id: "collection-id" }] });
   });
 
   test("cli", async () => {
-    mockCLI(["collections", "project", "--branch", "branch"], {
-      collections: [{ id: "1337" }]
+    mockCLI(["collections", "project-id", "--branch", "branch-id"], {
+      collections: [{ id: "collection-id" }]
     });
     const response = await CLI_CLIENT.collections.list({
-      projectId: "project",
-      branchId: "branch"
+      projectId: "project-id",
+      branchId: "branch-id"
     });
 
-    expect(response).toEqual({ collections: [{ id: "1337" }] });
+    expect(response).toEqual({ collections: [{ id: "collection-id" }] });
   });
 });

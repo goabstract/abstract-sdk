@@ -3,56 +3,56 @@ import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 
 describe("#info", () => {
   test("api", async () => {
-    mockAPI("/projects/project/branches/branch/files", {
-      files: [{ id: "1337" }]
+    mockAPI("/projects/project-id/branches/branch-id/files", {
+      files: [{ id: "file-id" }]
     });
     const response = await API_CLIENT.files.info({
-      branchId: "branch",
-      fileId: "1337",
-      projectId: "project",
+      branchId: "branch-id",
+      fileId: "file-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "file-id" });
   });
 
   test("cli", async () => {
-    mockCLI(["file", "project", "sha", "1337"], {
-      file: { id: "1337" }
+    mockCLI(["file", "project-id", "sha", "file-id"], {
+      file: { id: "file-id" }
     });
     const response = await CLI_CLIENT.files.info({
-      branchId: "branch",
-      fileId: "1337",
-      projectId: "project",
+      branchId: "branch-id",
+      fileId: "file-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "file-id" });
   });
 });
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/projects/project/branches/branch/files", {
-      files: [{ id: "1337" }]
+    mockAPI("/projects/project-id/branches/branch-id/files", {
+      files: [{ id: "file-id" }]
     });
     const response = await API_CLIENT.files.list({
-      branchId: "branch",
-      projectId: "project",
+      branchId: "branch-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual([{ id: "1337" }]);
+    expect(response).toEqual([{ id: "file-id" }]);
   });
 
   test("cli", async () => {
-    mockCLI(["files", "project", "sha"], { files: [{ id: "1337" }] });
+    mockCLI(["files", "project-id", "sha"], { files: [{ id: "file-id" }] });
     const response = await CLI_CLIENT.files.list({
-      branchId: "branch",
-      projectId: "project",
+      branchId: "branch-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual([{ id: "1337" }]);
+    expect(response).toEqual([{ id: "file-id" }]);
   });
 });

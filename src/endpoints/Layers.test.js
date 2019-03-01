@@ -4,69 +4,71 @@ import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 describe("#info", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project/branches/branch/commits/sha/files/file/layers/layer",
+      "/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-id",
       {
-        layer: { id: "1337" }
+        layer: { id: "layer-id" }
       }
     );
     const response = await API_CLIENT.layers.info({
-      branchId: "branch",
-      fileId: "file",
-      layerId: "layer",
-      pageId: "page",
-      projectId: "project",
+      branchId: "branch-id",
+      fileId: "file-id",
+      layerId: "layer-id",
+      pageId: "page-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "layer-id" });
   });
 
   test("cli", async () => {
-    mockCLI(["layer", "meta", "project", "sha", "file", "layer"], {
-      layer: { id: "1337" }
+    mockCLI(["layer", "meta", "project-id", "sha", "file-id", "layer-id"], {
+      layer: { id: "layer-id" }
     });
     const response = await CLI_CLIENT.layers.info({
-      branchId: "branch",
-      fileId: "file",
-      layerId: "layer",
-      pageId: "page",
-      projectId: "project",
+      branchId: "branch-id",
+      fileId: "file-id",
+      layerId: "layer-id",
+      pageId: "page-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "layer-id" });
   });
 });
 
 describe("#list", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project/branches/branch/files/file/layers?branchId=branch&fileId=file&pageId=page&projectId=project&sha=sha",
+      "/projects/project-id/branches/branch-id/files/file-id/layers?branchId=branch-id&fileId=file-id&pageId=page-id&projectId=project-id&sha=sha",
       {
-        layers: [{ id: "1337" }]
+        layers: [{ id: "layer-id" }]
       }
     );
     const response = await API_CLIENT.layers.list({
-      branchId: "branch",
-      fileId: "file",
-      pageId: "page",
-      projectId: "project",
+      branchId: "branch-id",
+      fileId: "file-id",
+      pageId: "page-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual([{ id: "1337" }]);
+    expect(response).toEqual([{ id: "layer-id" }]);
   });
 
   test("cli", async () => {
-    mockCLI(["layers", "project", "sha", "file"], { layers: [{ id: "1337" }] });
+    mockCLI(["layers", "project-id", "sha", "file-id"], {
+      layers: [{ id: "layer-id" }]
+    });
     const response = await CLI_CLIENT.layers.list({
-      branchId: "branch",
-      fileId: "file",
-      pageId: "page",
-      projectId: "project",
+      branchId: "branch-id",
+      fileId: "file-id",
+      pageId: "page-id",
+      projectId: "project-id",
       sha: "sha"
     });
 
-    expect(response).toEqual([{ id: "1337" }]);
+    expect(response).toEqual([{ id: "layer-id" }]);
   });
 });

@@ -3,22 +3,22 @@ import { mockAPI, API_CLIENT } from "../testing";
 
 describe("#info", () => {
   test("api", async () => {
-    mockAPI("/activities/activity", { id: "1337" });
+    mockAPI("/activities/activity-id", { id: "activity-id" });
     const response = await API_CLIENT.activities.info({
-      activityId: "activity"
+      activityId: "activity-id"
     });
-    expect(response).toEqual({ id: "1337" });
+    expect(response).toEqual({ id: "activity-id" });
   });
 });
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/activities?organizationId=org", {
-      data: { activities: [{ id: "1337" }] }
+    mockAPI("/activities?organizationId=org-id", {
+      data: { activities: [{ id: "activity-id" }] }
     });
     const response = await API_CLIENT.activities.list({
-      organizationId: "org"
+      organizationId: "org-id"
     });
-    expect(response).toEqual([{ id: "1337" }]);
+    expect(response).toEqual([{ id: "activity-id" }]);
   });
 });
