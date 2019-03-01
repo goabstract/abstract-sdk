@@ -3,6 +3,7 @@
 - Changed `transport` configuration option to `transportMode`, which now takes a string:  "api", "cli", or "auto"
 - `BranchDescriptor` no longer requires a `sha` property
 - Some APIs that exected or returned `BranchDescriptor` now use `CommitDescriptor`
+- `Abstract.errors.*` modules were moved to the top level `Abstract` namespace
 
 ## v0.7.0
 
