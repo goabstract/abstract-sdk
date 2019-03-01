@@ -67,7 +67,7 @@ export default class Client {
     this.shares = new Shares(this, options);
     this.users = new Users(this, options);
 
-    // This only for informative errors; we proxy each method
+    // This is only for informative errors; we proxy each method
     // on each endpoint so we can cache the last method name called.
     // This allows errors to explicitly state which method is undefined
     // in a given transport, and avoids using Function.caller which
