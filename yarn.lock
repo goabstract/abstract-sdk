@@ -651,6 +651,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@elasticprojects/abstract-cli@^1.0.0":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@elasticprojects/abstract-cli/-/abstract-cli-1.5.2.tgz#5ce4496cab1a2399fcc093ca51f58adba5707702"
+  integrity sha512-azvhDh1CyYf0UWcu/9xhsu9wwpkvLb0SOgLmGA8sqvLX5j6v1FHui1+6zr8OCOAthIk0od69zJF1BJ/abR7DnA==
+
 "@elasticprojects/eslint-config-abstract@^4.1.0":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@elasticprojects/eslint-config-abstract/-/eslint-config-abstract-4.1.0.tgz#879707dde84d05126c7eb452eda51def433c5e25"
