@@ -14,7 +14,7 @@
     "/scripts"
   ],
   "scripts": {
-    "postinstall": "./scripts/install-types.sh",
+    "prepare": "./scripts/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
