@@ -1,4 +1,5 @@
 ## v1.0.0
+- Clients are classes that are instantiated using `new Abstract.Client({ ... })`
 - Fixed downstream `flow-typed` issues
 - Changed `transport` configuration option to `transportMode`, which now takes a string:  "api", "cli", or "auto"
 - `BranchDescriptor` no longer requires a `sha` property
