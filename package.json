@@ -68,7 +68,7 @@
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "@elasticprojects/abstract-cli": "^1.0.0"
   }
 }

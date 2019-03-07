@@ -25,7 +25,7 @@ jobs:
           keys:
             - v4-dependencies-{{ checksum "yarn.lock" }}
             - v4-dependencies- # fallback to latest cache if no exact match is found
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --ignore-optional --frozen-lockfile
       - save_cache:
           key: v4-dependencies-{{ checksum "yarn.lock" }}
           paths:
