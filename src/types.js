@@ -14,7 +14,7 @@ export type CommentDescriptor = {|
 
 export type CollectionDescriptor = {|
   projectId: string,
-  branchId: string,
+  branchId?: string,
   collectionId: string
 |};
 
