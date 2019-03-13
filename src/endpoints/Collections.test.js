@@ -31,7 +31,6 @@ describe("#info", () => {
       }
     );
     const response = await API_CLIENT.collections.info({
-      branchId: "branch-id",
       collectionId: "collection-id",
       projectId: "project-id"
     });
@@ -44,7 +43,6 @@ describe("#info", () => {
     });
     const response = await CLI_CLIENT.collections.info({
       projectId: "project-id",
-      branchId: "branch-id",
       collectionId: "collection-id"
     });
 
