@@ -29,7 +29,9 @@ export default class Comments extends Endpoint {
     comment: NewComment
   ): Promise<Comment> {
     if (descriptor.sha) {
-      descriptor = await this.client.commits.getLatestDescriptor(descriptor);
+      descriptor = await this.client.descriptors.getLatestDescriptor(
+        descriptor
+      );
     }
     return this.request<Promise<Comment>>({
       api: async () => {
@@ -133,7 +135,7 @@ export default class Comments extends Endpoint {
             if (!newDescriptor) {
               newDescriptor = descriptor;
               if (newDescriptor.sha) {
-                newDescriptor = await this.client.commits.getLatestDescriptor(
+                newDescriptor = await this.client.descriptors.getLatestDescriptor(
                   newDescriptor
                 );
               }

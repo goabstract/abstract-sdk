@@ -5,7 +5,7 @@ import Endpoint from "./Endpoint";
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor): Promise<File> {
-    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
+    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
     return this.request<Promise<File>>({
       api: async () => {
         const { fileId, ...branchDescriptor } = descriptor;
@@ -30,7 +30,7 @@ export default class Files extends Endpoint {
   }
 
   async list(descriptor: CommitDescriptor): Promise<File[]> {
-    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
+    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
     return this.request<Promise<File[]>>({
       api: async () => {
         const response = await this.apiRequest(

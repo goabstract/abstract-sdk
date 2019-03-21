@@ -4,7 +4,7 @@ import Endpoint from "./Endpoint";
 
 export default class Changesets extends Endpoint {
   async info(descriptor: CommitDescriptor): Promise<Changeset> {
-    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
+    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
     return this.request<Promise<Changeset>>({
       api: async () => {
         const response = await this.apiRequest(
