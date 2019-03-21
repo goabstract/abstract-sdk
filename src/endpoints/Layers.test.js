@@ -13,7 +13,6 @@ describe("#info", () => {
       branchId: "branch-id",
       fileId: "file-id",
       layerId: "layer-id",
-      pageId: "page-id",
       projectId: "project-id",
       sha: "sha"
     });
@@ -29,7 +28,6 @@ describe("#info", () => {
       branchId: "branch-id",
       fileId: "file-id",
       layerId: "layer-id",
-      pageId: "page-id",
       projectId: "project-id",
       sha: "sha"
     });

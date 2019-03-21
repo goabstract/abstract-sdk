@@ -56,7 +56,6 @@ export type PageDescriptor = {|
 export type LayerDescriptor = {|
   ...$Exact<ObjectDescriptor>,
   fileId: string,
-  pageId: string,
   layerId: string
 |};
 

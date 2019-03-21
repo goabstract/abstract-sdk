@@ -1,5 +1,51 @@
 // @flow
-import type { ShareDescriptor } from "./types";
+import type {
+  CommitDescriptor,
+  BranchDescriptor,
+  FileDescriptor,
+  PageDescriptor,
+  LayerDescriptor,
+  ShareDescriptor,
+  Layer
+} from "./types";
+
+export function objectBranchDescriptor(
+  objectDescriptor:
+    | CommitDescriptor
+    | BranchDescriptor
+    | FileDescriptor
+    | PageDescriptor
+    | LayerDescriptor
+): BranchDescriptor {
+  return {
+    projectId: objectDescriptor.projectId,
+    branchId: objectDescriptor.branchId
+  };
+}
+
+export function objectFileDescriptor(
+  objectDescriptor: FileDescriptor | PageDescriptor | LayerDescriptor
+): FileDescriptor {
+  return {
+    projectId: objectDescriptor.projectId,
+    branchId: objectDescriptor.branchId,
+    fileId: objectDescriptor.fileId,
+    sha: objectDescriptor.sha
+  };
+}
+
+export function layerPageDescriptor(
+  layer: Layer,
+  branchId: string
+): PageDescriptor {
+  return {
+    projectId: layer.projectId,
+    branchId: branchId, // TODO: Expose branchId on Layer
+    fileId: layer.fileId,
+    pageId: layer.pageId,
+    sha: layer.sha
+  };
+}
 
 export default function parseShareURL(url: string): ?string {
   return url.split("share.goabstract.com/")[1];
