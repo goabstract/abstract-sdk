@@ -15,7 +15,7 @@ export default class Assets extends Endpoint {
   }
 
   async list(descriptor: CommitDescriptor): Promise<Asset[]> {
-    descriptor = await this.client.commits.getLatestDescriptor(descriptor);
+    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
     return this.request<Promise<Asset[]>>({
       api: async () => {
         const query = querystring.stringify({ sha: descriptor.sha });

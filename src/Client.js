@@ -1,13 +1,14 @@
 // @flow
 import Activities from "./endpoints/Activities";
 import Assets from "./endpoints/Assets";
-import Endpoint from "./endpoints/Endpoint";
 import Branches from "./endpoints/Branches";
 import Changesets from "./endpoints/Changesets";
 import Collections from "./endpoints/Collections";
 import Comments from "./endpoints/Comments";
-import Data from "./endpoints/Data";
 import Commits from "./endpoints/Commits";
+import Data from "./endpoints/Data";
+import Descriptors from "./endpoints/Descriptors";
+import Endpoint from "./endpoints/Endpoint";
 import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
 import Notifications from "./endpoints/Notifications";
@@ -28,6 +29,7 @@ export default class Client {
   comments: Comments;
   commits: Commits;
   data: Data;
+  descriptors: Descriptors;
   files: Files;
   layers: Layers;
   notifications: Notifications;
@@ -57,6 +59,7 @@ export default class Client {
     this.comments = new Comments(this, options);
     this.commits = new Commits(this, options);
     this.data = new Data(this, options);
+    this.descriptors = new Descriptors(this, options);
     this.files = new Files(this, options);
     this.layers = new Layers(this, options);
     this.notifications = new Notifications(this, options);
