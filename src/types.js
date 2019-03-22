@@ -25,8 +25,8 @@ export type NotificationDescriptor = {|
   notificationId: string
 |};
 
-export type BaseCommitDescriptor = {
-  sha: string,
+export type ObjectDescriptor = {
+  sha: "latest" | string,
   projectId: string,
   branchId: string | "master"
 };
@@ -43,17 +43,19 @@ export type BranchDescriptor = {|
 |};
 
 export type FileDescriptor = {|
-  ...CommitDescriptor,
+  ...$Exact<ObjectDescriptor>,
   fileId: string
 |};
 
 export type PageDescriptor = {|
-  ...FileDescriptor,
+  ...$Exact<ObjectDescriptor>,
+  fileId: string,
   pageId: string
 |};
 
 export type LayerDescriptor = {|
-  ...PageDescriptor,
+  ...$Exact<ObjectDescriptor>,
+  fileId: string,
   layerId: string
 |};
 

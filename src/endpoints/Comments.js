@@ -1,5 +1,10 @@
 // @flow
 import querystring from "query-string";
+import {
+  objectBranchDescriptor,
+  objectFileDescriptor,
+  layerPageDescriptor
+} from "../utils";
 import Cursor from "../Cursor";
 import type {
   BranchDescriptor,
@@ -7,8 +12,6 @@ import type {
   CommentDescriptor,
   CommitDescriptor,
   CursorPromise,
-  FileDescriptor,
-  Layer,
   LayerDescriptor,
   ListOptions,
   NewComment,
@@ -32,47 +35,77 @@ export default class Comments extends Endpoint {
     }
     return this.request<Promise<Comment>>({
       api: async () => {
-        const branch = await this.client.branches.info({
-          branchId: descriptor.branchId,
-          projectId: descriptor.projectId
-        });
-        let commentData = {
-          branchName: branch.name
+        const branch = await this.client.branches.info(
+          objectBranchDescriptor(descriptor)
+        );
+
+        const body = {
+          ...descriptor,
+          commitSha: descriptor.sha || undefined,
+          branchName: branch.name,
+          annotation: comment.annotation,
+          body: comment.body
         };
+
         if (descriptor.layerId) {
-          const layer: Layer = await this.client.layers.info(descriptor);
-          commentData = {
-            ...commentData,
-            layerId: layer.id,
-            layerName: layer.name
-          };
-        }
-        if (descriptor.pageId) {
+          const layer = await this.client.layers.info(descriptor);
           const page = await this.client.pages.info(
-            ((descriptor: any): PageDescriptor)
+            layerPageDescriptor(layer, descriptor.branchId)
           );
+
           const file = await this.client.files.info(
-            ((descriptor: any): FileDescriptor)
+            objectFileDescriptor(descriptor)
           );
-          commentData = {
-            ...commentData,
-            fileId: file.id,
-            fileName: file.name,
-            fileType: file.type,
-            pageId: page.id,
-            pageName: page.name
-          };
+
+          return this.apiRequest("comments", {
+            method: "POST",
+            body: {
+              ...body,
+              fileName: file.name,
+              fileType: file.type,
+              pageId: page.id,
+              pageName: page.name,
+              layerName: layer.name
+            }
+          });
+        }
+
+        if (descriptor.pageId) {
+          const page = await this.client.pages.info(descriptor);
+          const file = await this.client.files.info(
+            objectFileDescriptor(descriptor)
+          );
+
+          return this.apiRequest("comments", {
+            method: "POST",
+            body: {
+              ...body,
+              fileName: file.name,
+              fileType: file.type,
+              pageId: page.id,
+              pageName: page.name
+            }
+          });
+        }
+
+        if (descriptor.fileId) {
+          const file = await this.client.files.info(
+            objectFileDescriptor(descriptor)
+          );
+
+          return this.apiRequest("comments", {
+            method: "POST",
+            body: {
+              ...body,
+              fileName: file.name,
+              fileType: file.type
+            }
+          });
         }
 
         return this.apiRequest("comments", {
           method: "POST",
-          body: {
-            ...commentData,
-            ...descriptor,
-            commitSha: descriptor.sha || undefined,
-            annotation: comment.annotation,
-            body: comment.body
-          }
+          body
         });
       }
     });
