@@ -1,7 +1,6 @@
 // @flow
 import querystring from "query-string";
 import type {
-  ObjectDescriptor,
   Commit,
   CommitDescriptor,
   FileDescriptor,
