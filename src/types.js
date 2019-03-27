@@ -14,7 +14,6 @@ export type CommentDescriptor = {|
 
 export type CollectionDescriptor = {|
   projectId: string,
-  branchId: string,
   collectionId: string
 |};
 
@@ -26,38 +25,37 @@ export type NotificationDescriptor = {|
   notificationId: string
 |};
 
-type ObjectDescriptor = {|
+export type ObjectDescriptor = {
+  sha: "latest" | string,
   projectId: string,
-  branchId: string | "master",
-  sha: string
-|};
+  branchId: string | "master"
+};
 
 export type CommitDescriptor = {|
-  ...ObjectDescriptor
+  sha: string,
+  projectId: string,
+  branchId: string | "master"
 |};
 
 export type BranchDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha">
+  projectId: string,
+  branchId: string | "master"
 |};
 
 export type FileDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha">,
+  ...$Exact<ObjectDescriptor>,
   fileId: string
 |};
 
 export type PageDescriptor = {|
-  ...ObjectDescriptor,
+  ...$Exact<ObjectDescriptor>,
   fileId: string,
   pageId: string
 |};
 
 export type LayerDescriptor = {|
-  ...ObjectDescriptor,
-  sha: $PropertyType<ObjectDescriptor, "sha">,
+  ...$Exact<ObjectDescriptor>,
   fileId: string,
-  pageId: string,
   layerId: string
 |};
 
@@ -537,6 +535,11 @@ export type Comment = {
   reviewId?: string,
   reviewStatus?: ReviewStatus,
   replyIds: string[]
+};
+
+export type NewComment = {
+  annotation?: Annotation,
+  body: string
 };
 
 export type CollectionLayer = {
@@ -1087,8 +1090,12 @@ export type LayerDataProperties = {
   overrides?: LayerOverrideData
 };
 
+export type PreviewMeta = {
+  webUrl: string
+};
+
 export type LayerData = {
-  id: string,
+  layerId: string,
   symbolId?: string,
   parentId?: string,
   childIds: string[],
@@ -1401,8 +1408,15 @@ export type CursorResponse<T> = {
   meta: CursorMeta
 };
 
-export type CollectionPage = {
+export type CollectionsResponse = {
   collections: Collection[],
+  files: File[],
+  pages: Page[],
+  layers: Layer[]
+};
+
+export type CollectionResponse = {
+  collection: Collection,
   files: File[],
   pages: Page[],
   layers: Layer[]
@@ -1414,135 +1428,11 @@ export type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
-export interface AbstractInterface {
-  accessToken: () => Promise<AccessToken>;
-
-  activities?: {
-    list: (
-      objectDescriptor?:
-        | BranchDescriptor
-        | OrganizationDescriptor
-        | ProjectDescriptor,
-      options?: ListOptions
-    ) => CursorPromise<Activity[]>,
-    info: (activityDescriptor: ActivityDescriptor) => Promise<Activity>
-  };
-
-  organizations?: {
-    info: (
-      organizationDescriptor: OrganizationDescriptor
-    ) => Promise<Organization>,
-    list: () => Promise<Organization[]>
-  };
-
-  shares?: {
-    create: <T: Share>(
-      organizationDescriptor: OrganizationDescriptor,
-      shareInput: ShareInput
-    ) => Promise<T>,
-    info: <T: Share>(shareDescriptor: ShareDescriptor) => Promise<T>
-  };
-
-  projects?: {
-    list: (
-      organizationDescriptor?: OrganizationDescriptor,
-      options: { filter?: "active" | "archived" }
-    ) => Promise<Project[]>,
-    info: (projectDescriptor: ProjectDescriptor) => Promise<Project>
-  };
-
-  collections: {
-    list: (
-      ProjectDescriptor | BranchDescriptor,
-      options?: Object
-    ) => Promise<CollectionPage>,
-    info: (CollectionDescriptor, options?: Object) => Promise<CollectionPage>,
-    create?: (ProjectDescriptor, NewCollection) => Promise<Collection>,
-    update?: (CollectionDescriptor, UpdatedCollection) => Promise<Collection>
-  };
-
-  comments?: {
-    create: (
-      BranchDescriptor | LayerDescriptor,
-      comment: Comment
-    ) => Promise<Comment>,
-    list: (
-      {
-        projectId: $PropertyType<ProjectDescriptor, "projectId">
-      } & $Shape<
-        BranchDescriptor & CommitDescriptor & PageDescriptor & LayerDescriptor
-      >,
-      options?: ListOptions
-    ) => CursorPromise<Comment[]>,
-    info: (commentDescriptor: CommentDescriptor) => Promise<Comment>
-  };
-
-  commits: {
-    list: (
-      BranchDescriptor | FileDescriptor | LayerDescriptor,
-      options?: { limit?: number }
-    ) => Promise<Commit[]>,
-    info: (
-      BranchDescriptor | FileDescriptor | CommitDescriptor | LayerDescriptor
-    ) => Promise<Commit>
-  };
-
-  branches?: {
-    list: (
-      ProjectDescriptor,
-      options?: { filter?: "active" | "archived" | "mine" }
-    ) => Promise<Branch[]>,
-    info: BranchDescriptor => Promise<Branch>
-  };
-
-  changesets: {
-    info: CommitDescriptor => Promise<Changeset>
-  };
-
-  files: {
-    list: BranchDescriptor => Promise<File[]>,
-    info: FileDescriptor => Promise<File>
-  };
-
-  pages: {
-    list: FileDescriptor => Promise<Page[]>,
-    info: PageDescriptor => Promise<Page>
-  };
-
-  layers: {
-    list: (FileDescriptor, ListOptions) => Promise<Layer[]>,
-    info: LayerDescriptor => Promise<Layer>
-  };
-
-  previews?: {
-    raw: LayerDescriptor => Promise<ArrayBuffer>,
-    info: LayerDescriptor => *
-  };
-
-  data: {
-    info: LayerDescriptor => Promise<LayerData>
-  };
-
-  notifications?: {
-    list: (
-      objectDescriptor?: OrganizationDescriptor,
-      options?: ListOptions
-    ) => CursorPromise<Notification[]>,
-    info: (
-      notificationDescriptor: NotificationDescriptor
-    ) => Promise<Notification>
-  };
-
-  users?: {
-    list: (
-      objectDescriptor: OrganizationDescriptor | ProjectDescriptor
-    ) => Promise<User[]>,
-    info: (userDescriptor: UserDescriptor) => Promise<User>
-  };
-
-  assets?: {
-    list: (objectDescriptor: BranchDescriptor) => Promise<Asset[]>,
-    info: (assetDescriptor: AssetDescriptor) => Promise<Asset>,
-    raw: (assetDescriptor: AssetDescriptor) => Promise<ArrayBuffer>
-  };
-}
+export type CommandOptions = {
+  accessToken: AccessTokenOption,
+  apiUrl: string,
+  cliPath: string,
+  previewsUrl: string,
+  transportMode: "auto" | "api" | "cli",
+  webUrl: string
+};

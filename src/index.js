@@ -1,27 +1,41 @@
 // @flow
-import client from "./Client";
-import * as Sketch from "./sketch";
-import * as TRANSPORTS from "./transports";
+import Client from "./Client";
+import paginate from "./paginate";
+import * as sketch from "./sketch";
 import {
+  APITokenError,
   BaseError,
+  CLIPathError,
+  EndpointUndefinedError,
+  FileAPIError,
   ForbiddenError,
   InternalServerError,
+  LatestCommitNotFound,
   NotFoundError,
   RateLimitError,
   ServiceUnavailableError,
   UnauthorizedError
 } from "./errors";
 
-const errors = {
-  Error: BaseError,
+export {
+  // Core API
+  Client,
+  // Custom errors
+  APITokenError,
+  BaseError,
+  CLIPathError,
+  EndpointUndefinedError,
+  FileAPIError,
   ForbiddenError,
   InternalServerError,
+  LatestCommitNotFound,
   NotFoundError,
   RateLimitError,
   ServiceUnavailableError,
-  UnauthorizedError
+  UnauthorizedError,
+  // Utilities
+  paginate,
+  sketch
 };
 
-export { client, errors, Sketch, TRANSPORTS };
-export { client as Client }; // Deprecated: prefer Abstract.client factory
 export type * from "./types";

@@ -39,4 +39,5 @@ Changes and additions to the SDK should include tests and documentation updates 
 ```bash
 $ yarn version
 $ git push --follow-tags
+$ npm publish
 ```
