@@ -1,8 +1,8 @@
 // @flow
 import { log } from "./debug";
 
-const logAPIError = log.extend("AbstractAPI:status:error");
-const logCLIError = log.extend("AbstractCLI:status:error");
+export const logAPIError = log.extend("AbstractAPI:error");
+export const logCLIError = log.extend("AbstractCLI:error");
 
 export type ErrorData = {|
   path: string,
@@ -17,12 +17,50 @@ export class BaseError extends Error {
   }
 }
 
+export class CLIPathError extends BaseError {
+  constructor() {
+    super("Cannot find abstract-cli.");
+  }
+}
+
+export class FileAPIError extends BaseError {
+  constructor() {
+    super(
+      "This method requires an environment that supports the File API. See https://www.w3.org/TR/FileAPI/ for more information."
+    );
+  }
+}
+
+export class EndpointUndefinedError extends BaseError {
+  constructor(endpoint: ?string, transport: string) {
+    super(
+      `Endpoint ${endpoint ? `"${endpoint}" ` : ""}not defined in ${
+        transport ? `"${transport}"` : "any"
+      } transport${transport ? "" : "s"}.`
+    );
+  }
+}
+
+export class APITokenError extends BaseError {
+  constructor() {
+    super(
+      "Cannot find API access token. Use options.accessToken or ABSTRACT_TOKEN. See https://sdk.goabstract.com/docs/authentication/ for more information."
+    );
+  }
+}
+
 export class InternalServerError extends BaseError {
   data: ErrorData;
 
   constructor(path: string, body: mixed) {
     super("Internal server error.");
     this.data = { path, body };
+  }
+}
+
+export class LatestCommitNotFound extends BaseError {
+  constructor() {
+    super("Could not resolve latest commit using provided descriptor.");
   }
 }
 
@@ -83,10 +121,8 @@ export async function throwAPIError(
   url: string,
   body: mixed
 ) {
-  if (logAPIError.enabled) {
-    logAPIError(await response.clone().json());
-  }
-
+  logAPIError.enabled && logAPIError(await response.clone().json());
+  // TODO verify this works
   switch (response.status) {
     case 401:
       throw new UnauthorizedError(url, body);
@@ -105,14 +141,12 @@ export async function throwAPIError(
   }
 }
 
-export async function throwCLIError(
+export function throwCLIError(
   response: { code: string, message: string },
   cliPath: string,
   args: Object
 ) {
-  if (logCLIError.enabled) {
-    logCLIError(response);
-  }
+  logCLIError.enabled && logCLIError(response);
 
   switch (response.code) {
     case "unauthorized":

@@ -12,7 +12,7 @@ When an SDK client is created, it will automatically look for a token using the 
 ```js
 import * as Abstract from "abstract-sdk";
 
-const abstract = Abstract.Client();
+const abstract = new Abstract.Client();
 ```
 
 It's also possible to pass in a token directly if necessary.
@@ -20,7 +20,7 @@ It's also possible to pass in a token directly if necessary.
 ```js
 import * as Abstract from "abstract-sdk";
 
-const abstract = Abstract.Client({
+const abstract = new Abstract.Client({
   accessToken: process.env.ABSTRACT_API_TOKEN
 });
 ```
@@ -30,7 +30,7 @@ You can pass a function that returns a token.
 ```js
 import * as Abstract from "abstract-sdk";
 
-const abstract = Abstract.Client({
+const abstract = new Abstract.Client({
   accessToken: () => Cookies.get("abstractToken")
 });
 ```
@@ -40,7 +40,7 @@ And you can pass a function that returns a promise to a token.
 ```js
 import * as Abstract from "abstract-sdk";
 
-const abstract = Abstract.Client({
+const abstract = new Abstract.Client({
   accessToken: () => {
     return new Promise(resolve => resolve(Cookies.get("abstractToken")));
   }
@@ -54,7 +54,7 @@ If you want to ensure that the SDK only ever loads data from the API or the CLI 
 ```js
 import * as Abstract from "abstract-sdk";
 
-const abstract = Abstract.Client({
-  transport: Abstract.TRANSPORTS.CLI // or Abstract.TRANSPORTS.API
+const abstract = new Abstract.Client({
+  transportMode: "cli" // or "api"
 });
 ```

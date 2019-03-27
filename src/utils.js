@@ -2,34 +2,48 @@
 import type {
   CommitDescriptor,
   BranchDescriptor,
-  PageDescriptor,
   FileDescriptor,
+  PageDescriptor,
   LayerDescriptor,
-  ShareDescriptor
+  ShareDescriptor,
+  Layer
 } from "./types";
 
 export function objectBranchDescriptor(
   objectDescriptor:
+    | CommitDescriptor
     | BranchDescriptor
     | FileDescriptor
-    | CommitDescriptor
+    | PageDescriptor
     | LayerDescriptor
 ): BranchDescriptor {
   return {
     projectId: objectDescriptor.projectId,
-    branchId: objectDescriptor.branchId,
-    sha: objectDescriptor.sha
+    branchId: objectDescriptor.branchId
   };
 }
 
 export function objectFileDescriptor(
-  objectDescriptor: PageDescriptor | FileDescriptor
+  objectDescriptor: FileDescriptor | PageDescriptor | LayerDescriptor
 ): FileDescriptor {
   return {
     projectId: objectDescriptor.projectId,
     branchId: objectDescriptor.branchId,
     fileId: objectDescriptor.fileId,
     sha: objectDescriptor.sha
+  };
+}
+
+export function layerPageDescriptor(
+  layer: Layer,
+  branchId: string
+): PageDescriptor {
+  return {
+    projectId: layer.projectId,
+    branchId: branchId, // TODO: Expose branchId on Layer
+    fileId: layer.fileId,
+    pageId: layer.pageId,
+    sha: layer.sha
   };
 }
 

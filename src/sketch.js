@@ -1,10 +1,17 @@
-// @flow
-/* global process NSString PROSketchBootstrap */
+/* @flow */
+/* global process */
 import type {
-  ProjectDescriptor,
   BranchDescriptor,
-  FileDescriptor
+  FileDescriptor,
+  ProjectDescriptor
 } from "./types";
+
+declare type PROSketchBootstrapT = {
+  documentKey: (*) => string
+};
+
+declare var NSString: Object;
+declare var PROSketchBootstrap: PROSketchBootstrapT;
 
 export function isSketchPlugin() {
   // New versions of skpm set process type to "sketch". For older
@@ -35,8 +42,7 @@ export function branch(context: *): BranchDescriptor {
 
   return {
     projectId: projectId(key),
-    branchId: branchId(key),
-    sha: "latest"
+    branchId: branchId(key)
   };
 }
 

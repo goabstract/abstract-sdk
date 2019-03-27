@@ -1,5 +1,5 @@
-// flow-typed signature: 9096718d5c8abc7d9ae9aadbe0ce565a
-// flow-typed version: 6d8676cf5a/query-string_v6.x.x/flow_>=v0.32.x
+// flow-typed signature: 838b7a060376a8e2a352539b8e8767c0
+// flow-typed version: 5a27c71dcd/query-string_v6.x.x/flow_>=v0.32.x
 
 declare module 'query-string' {
   declare type ArrayFormat = 'none' | 'bracket' | 'index'
@@ -16,9 +16,9 @@ declare module 'query-string' {
 
   declare type ObjectParameter = string | number | boolean | null | void;
 
-  declare type ObjectParameters = {
+  declare type ObjectParameters = $ReadOnly<{
     [string]: ObjectParameter | $ReadOnlyArray<ObjectParameter>
-  }
+  }>
 
   declare type QueryParameters = {
     [string]: string | Array<string> | null

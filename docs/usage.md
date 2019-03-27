@@ -29,7 +29,7 @@ import * as Abstract from "abstract-sdk";
 const abstract = new Abstract.Client({
     // Specify a specific transport for demo purposes only; if
     // no transport is specified, the SDK chooses automatically.
-    transport: Abstract.TRANSPORTS.CLI
+    transportMode: "cli"
 });
 
 async function run() {
