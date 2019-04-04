@@ -102,7 +102,7 @@ workflows:
             - test
           filters:
             branches:
-              only: master
+              only: docs
       - publish:
           <<: *tagged
           requires:
