@@ -1,4 +1,5 @@
 // @flow
+import locatePath from "locate-path";
 import Activities from "./endpoints/Activities";
 import Assets from "./endpoints/Assets";
 import Branches from "./endpoints/Branches";
@@ -44,7 +45,10 @@ export default class Client {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
-      cliPath: "node_modules/@elasticprojects/abstract-cli/bin/abstract-cli",
+      cliPath: locatePath.sync([
+        "node_modules/@elasticprojects/abstract-cli/bin/abstract-cli",
+        "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
+      ]),
       previewsUrl: "https://previews.goabstract.com",
       transportMode: "api",
       webUrl: "https://app.goabstract.com",
