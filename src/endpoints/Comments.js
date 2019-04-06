@@ -1,10 +1,5 @@
 // @flow
 import querystring from "query-string";
-import {
-  objectBranchDescriptor,
-  objectFileDescriptor,
-  layerPageDescriptor
-} from "../utils";
 import Cursor from "../Cursor";
 import type {
   BranchDescriptor,
@@ -24,8 +19,11 @@ export default class Comments extends Endpoint {
     descriptor:
       | BranchDescriptor
       | CommitDescriptor
-      | LayerDescriptor
-      | PageDescriptor,
+      | PageDescriptor
+      | {|
+          ...$Exact<LayerDescriptor>,
+          pageId: string
+        |},
     comment: NewComment
   ): Promise<Comment> {
     if (descriptor.sha) {
@@ -35,73 +33,11 @@ export default class Comments extends Endpoint {
     }
     return this.request<Promise<Comment>>({
       api: async () => {
-        const branch = await this.client.branches.info(
-          objectBranchDescriptor(descriptor)
-        );
-
         const body = {
+          ...comment,
           ...descriptor,
-          commitSha: descriptor.sha || undefined,
-          branchName: branch.name,
-          annotation: comment.annotation,
-          body: comment.body
+          commitSha: descriptor.sha || undefined
         };
-
-        if (descriptor.layerId) {
-          const layer = await this.client.layers.info(descriptor);
-          const page = await this.client.pages.info(
-            layerPageDescriptor(layer, descriptor.branchId)
-          );
-
-          const file = await this.client.files.info(
-            objectFileDescriptor(descriptor)
-          );
-
-          return this.apiRequest("comments", {
-            method: "POST",
-            body: {
-              ...body,
-              fileName: file.name,
-              fileType: file.type,
-              pageId: page.id,
-              pageName: page.name,
-              layerName: layer.name
-            }
-          });
-        }
-
-        if (descriptor.pageId) {
-          const page = await this.client.pages.info(descriptor);
-          const file = await this.client.files.info(
-            objectFileDescriptor(descriptor)
-          );
-
-          return this.apiRequest("comments", {
-            method: "POST",
-            body: {
-              ...body,
-              fileName: file.name,
-              fileType: file.type,
-              pageId: page.id,
-              pageName: page.name
-            }
-          });
-        }
-
-        if (descriptor.fileId) {
-          const file = await this.client.files.info(
-            objectFileDescriptor(descriptor)
-          );
-
-          return this.apiRequest("comments", {
-            method: "POST",
-            body: {
-              ...body,
-              fileName: file.name,
-              fileType: file.type
-            }
-          });
-        }
 
         return this.apiRequest("comments", {
           method: "POST",
@@ -134,17 +70,20 @@ export default class Comments extends Endpoint {
           async (meta = { nextOffset: options.offset }) => {
             if (!newDescriptor) {
               newDescriptor = descriptor;
+
               if (newDescriptor.sha) {
                 newDescriptor = await this.client.descriptors.getLatestDescriptor(
                   newDescriptor
                 );
               }
             }
+
             const query = querystring.stringify({
               ...newDescriptor,
               ...options,
               offset: meta.nextOffset
             });
+
             return this.apiRequest(`comments?${query}`);
           }
         );
