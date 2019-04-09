@@ -115,7 +115,7 @@ abstract.assets.info({
 Load given asset file based on its ID. The resulting `ArrayBuffer` can be used with node `fs` APIs. For example, it's possible to write the image to disk:
 
 ```js
-const arrayBuffer = abstract.assets.raw({
+const arrayBuffer = await abstract.assets.raw({
   assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
   projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
 });
