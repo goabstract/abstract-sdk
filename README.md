@@ -1,44 +1,38 @@
-[![npm version](https://badge.fury.io/js/abstract-sdk.svg)](https://badge.fury.io/js/abstract-sdk) [![CircleCI](https://circleci.com/gh/goabstract/abstract-sdk.svg?style=svg)](https://circleci.com/gh/goabstract/abstract-sdk)
+<img src="https://www.abstract.com/wp-content/uploads/abstract-black-wordmark-rgb.png" width="136" height="auto" />
 
-# Abstract SDK
+The Abstract SDK provides universal JavaScript bindings for both the Abstract API and the Abstract CLI.
 
-This library provides a universal javascript binding for the Abstract API and CLI.
+[![build status](https://img.shields.io/circleci/project/github/goabstract/abstract-sdk.svg)](https://circleci.com/gh/goabstract/abstract-sdk)
+[![npm version](https://badge.fury.io/js/abstract-sdk.svg)](https://www.npmjs.com/package/abstract-sdk)
+
+## Installation
+
+The SDK is available as a Node.js module available via the public NPM registry. An underlying Node.js version of `8.0.0` or higher is required.
+
+```sh
+npm install abstract-sdk
+```
+
+Please see the [installation guide](https://sdk.goabstract.com/docs/installation/) for more information.
 
 ## Documentation
 
-Check out the [Getting Started](https://sdk.goabstract.com/docs/installation/) page for a quick overview.
+Complete SDK documentation can be found at [https://sdk.goabstract.com](https://sdk.goabstract.com).
 
-For full documentation please visit:
+The following community resources are available to help you get started quickly with the SDK:
 
-https://sdk.goabstract.com
-
-Help improve documentation by clicking the "Edit" button on any page or by creating as pull request.
-
-## Development
-
-Start the test runner with the `--watch` option. The SDK uses jest's snapshot testing to document calls to the api and cli.
-
-```bash
-$ yarn test --watch
-```
-
-*In the event of a snapshot change, jest will guide you through comparing and updating the snapshot.*
+- [Documentation website](https://sdk.goabstract.com)
+- [Spectrum chat](https://spectrum.chat/abstract)
+- [Abstract help center](https://www.abstract.com/help/)
+- [Abstract support](https://www.abstract.com/help/contact/)
+- Still stuck? [File an issue!](https://github.com/goabstract/abstract-sdk/issues/new)
 
 ## Contributing
 
-This project is maintained by a team at [Abstract](https://www.goabstract.com). We are very willing to accept contributions, first please ensure there is a relavant [issue in the tracker](https://github.com/goabstract/abstract-sdk/issues) and an approach has been discussed before beginning to write code – this makes it more likely we will be able to accept your contribution and ensure nobody's time (especially yours!) is wasted.
+This project is maintained by a team at [Abstract](https://www.abstract.com). Outside contributions are highly encouraged, but please ensure that a relevant [issue](https://github.com/goabstract/abstract-sdk/issues) exists and that an approach has been discussed before beginning to write code. This makes it more likely that your contribution will be accepted and ensures that your time is not wasted.
 
-Changes and additions to the SDK should include tests and documentation updates as part of the pull request.
+Please see the [contributors guide](/blob/master/CONTRIBUTING.md) for more information.
 
-### Tests
+## License
 
-
-
-## Publishing
-
-```bash
-$ git rebase docs
-$ yarn version
-$ git push --follow-tags
-$ npm publish
-```
+[MIT](/blob/master/LICENSE.md)
