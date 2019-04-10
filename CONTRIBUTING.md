@@ -52,7 +52,7 @@ yarn build
 
 ### Linting
 
-Lint an format all code using Prettier via ESLint:
+Lint and format all code using Prettier via ESLint:
 
 ```sh
 yarn lint --fix

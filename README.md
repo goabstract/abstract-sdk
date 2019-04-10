@@ -29,7 +29,7 @@ The following community resources are available to help you get started quickly 
 
 ## Contributing
 
-This project is maintained by a team at [Abstract](https://www.abstract.com). Outside contributions are highly encouraged, but please ensure that a relevant [issue](https://github.com/goabstract/abstract-sdk/issues) exists and that an approach has been discussed before begining to write code. This makes it more likely that your contribution will be accepted and ensures that your time is not wasted.
+This project is maintained by a team at [Abstract](https://www.abstract.com). Outside contributions are highly encouraged, but please ensure that a relevant [issue](https://github.com/goabstract/abstract-sdk/issues) exists and that an approach has been discussed before beginning to write code. This makes it more likely that your contribution will be accepted and ensures that your time is not wasted.
 
 Please see the [contributors guide](/blob/master/CONTRIBUTING.md) for more information.
 
