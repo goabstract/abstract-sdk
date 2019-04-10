@@ -60,7 +60,7 @@ abstract.activities.info({
 
 An asset represents a resource exported from a design file. Assets are automatically updated and available for new commits.
 
-> Note: Assets are currently in beta. These endpoints will not return any data unless the feature has been turned on for your team during this time.
+> Note: Assets are only supported when using a Business or Enterprise plan. More information on Abstract plan types can be found [here](https://www.abstract.com/pricing/).
 
 ### The asset object
 
