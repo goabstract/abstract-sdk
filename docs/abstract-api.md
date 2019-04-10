@@ -750,7 +750,6 @@ Organizations contain users and projects.
 
 | Property                   | Type       | Description                                                                              |
 |----------------------------|------------|------------------------------------------------------------------------------------------|
-| `billingEmail`             | `string`   | Billing email associated with this organization                                          |
 | `features`                 | `{[feature: string]: boolean}` | Map of feature flags enabled for this organization                   |
 | `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
 | `id`                       | `string`   | UUID                                                                                     |
@@ -1041,7 +1040,6 @@ A user contains information specific to an individual account. Users are global 
 | `avatarUrl`       | `string` | URL of the avatar for this user                              |
 | `createdAt`       |  `string`| Timestamp indicating when this account was created           |
 | `deletedAt`       | `string` | Timestamp indicating when this account was deleted           |
-| `email`           | `string` | Email associated with this user account                      |
 | `id`              | `string` | UUID identifier for the user                                 |
 | `name`            | `string` | The name of the page                                         |
 | `primaryEmailId`  | `string` | ID of the primary email for this user                        |

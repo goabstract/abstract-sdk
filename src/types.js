@@ -318,7 +318,6 @@ export type Activity =
 
 export type User = {
   id: string,
-  email: string,
   primaryEmailId: string,
   createdAt: string,
   updatedAt: string,
@@ -329,7 +328,6 @@ export type User = {
 };
 
 export type Organization = {
-  billingEmail?: string,
   features: { [feature: string]: boolean },
   hasBillingInfo?: boolean,
   id: string,
