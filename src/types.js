@@ -328,6 +328,31 @@ export type User = {
   avatarUrl: string
 };
 
+export type MembershipDescriptorBase = {| userId: string |};
+
+export type ProjectMembershipDescriptor = {|
+  ...$Exact<MembershipDescriptorBase>,
+  projectId: string
+|};
+
+export type OrganizationMembershipDescriptor = {|
+  ...$Exact<MembershipDescriptorBase>,
+  organizationId: string
+|};
+
+export type MembershipDescriptor =
+  | ProjectMembershipDescriptor
+  | OrganizationMembershipDescriptor;
+
+export type Membership = {
+  createdAt: string,
+  organizationId?: string,
+  projectId?: string,
+  role: string,
+  user: User,
+  userId: string
+};
+
 export type Organization = {
   billingEmail?: string,
   features: { [feature: string]: boolean },
