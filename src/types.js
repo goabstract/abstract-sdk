@@ -340,10 +340,6 @@ export type OrganizationMembershipDescriptor = {|
   organizationId: string
 |};
 
-export type MembershipDescriptor =
-  | ProjectMembershipDescriptor
-  | OrganizationMembershipDescriptor;
-
 export type Membership = {
   createdAt: string,
   organizationId?: string,

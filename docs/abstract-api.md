@@ -722,7 +722,7 @@ abstract.memberships.list({
 
 ### Retrieve a membership
 
-`memberships.info(MembershipDescriptor): Promise<Membership>`
+`memberships.info(OrganizationMembershipDescriptor | ProjectMembershipDescriptor): Promise<Membership>`
 
 Load the info for a specific member
 
@@ -1235,12 +1235,20 @@ Reference for the parameters required to load resources with Abstract SDK.
 }
 ```
 
-### MembershipDescriptor
+### OrganizationProjectDescriptor
+
+```js
+{
+  projectId?: string,
+  userId: string
+}
+```
+
+### ProjectMembershipDescriptor
 
 ```js
 {
   organizationId?: string,
-  projectId?: string,
   userId: string
 }
 ```

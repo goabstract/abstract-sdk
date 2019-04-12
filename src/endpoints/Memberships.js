@@ -1,14 +1,17 @@
 // @flow
 import type {
   Membership,
-  MembershipDescriptor,
   OrganizationDescriptor,
-  ProjectDescriptor
+  OrganizationMembershipDescriptor,
+  ProjectDescriptor,
+  ProjectMembershipDescriptor
 } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Users extends Endpoint {
-  info(descriptor: MembershipDescriptor): Promise<Membership> {
+  info(
+    descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor
+  ): Promise<Membership> {
     return this.request<Promise<Membership>>({
       api: async () => {
         let url = "";
