@@ -328,6 +328,25 @@ export type User = {
   avatarUrl: string
 };
 
+export type ProjectMembershipDescriptor = {|
+  userId: string,
+  projectId: string
+|};
+
+export type OrganizationMembershipDescriptor = {|
+  userId: string,
+  organizationId: string
+|};
+
+export type Membership = {
+  createdAt: string,
+  organizationId: string,
+  projectId?: string,
+  role: string,
+  user: User,
+  userId: string
+};
+
 export type Organization = {
   billingEmail?: string,
   features: { [feature: string]: boolean },
