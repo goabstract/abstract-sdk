@@ -1239,7 +1239,7 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ```js
 {
-  projectId?: string,
+  projectId: string,
   userId: string
 }
 ```
@@ -1248,7 +1248,7 @@ Reference for the parameters required to load resources with Abstract SDK.
 
 ```js
 {
-  organizationId?: string,
+  organizationId: string,
   userId: string
 }
 ```
