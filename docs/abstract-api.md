@@ -691,6 +691,49 @@ abstract.layers.info({
 ```
 
 
+## Memberships
+
+A membership contains information about a user's role within an organization or a project. A membership is created when a user joins an organization or is given access to a project.
+
+![API][api-icon]
+
+### The membership object
+
+| Property          | Type     | Description                                                  |
+|-------------------|----------|--------------------------------------------------------------|
+| `createdAt`       | `string` | Timestamp indicating when this membership was created        |
+| `organizationId`  | `string` | UUID of the organization this membership belongs to          |
+| `projectId`       | `string` | UUID of the project this membership belongs to               |
+| `role`            | `string` | Type of this membership                                      |
+| `userId`          | `string` | UUID of the user that this membership represents             |
+| `user`            | `User`   | The user that this membership represents                     |
+
+### List all memberships
+
+`memberships.list(OrganizationDescriptor | ProjectDescriptor): Promise<Membership[]>`
+
+List the members of an organization
+
+```js
+abstract.memberships.list({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+### Retrieve a membership
+
+`memberships.info(OrganizationMembershipDescriptor | ProjectMembershipDescriptor): Promise<Membership>`
+
+Load the info for a specific member
+
+```js
+abstract.memberships.info({
+  userId: "48b5d670-2002-45ea-929d-4b00863778e4",
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+
 ## Notifications
 
 ![API][api-icon]
@@ -1204,5 +1247,23 @@ Reference for the parameters required to load resources with Abstract SDK.
 {
   assetId: string,
   projectId: string
+}
+```
+
+### OrganizationProjectDescriptor
+
+```js
+{
+  projectId: string,
+  userId: string
+}
+```
+
+### ProjectMembershipDescriptor
+
+```js
+{
+  organizationId: string,
+  userId: string
 }
 ```

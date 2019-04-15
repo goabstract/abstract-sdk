@@ -11,6 +11,7 @@ import Descriptors from "./endpoints/Descriptors";
 import Endpoint from "./endpoints/Endpoint";
 import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
+import Memberships from "./endpoints/Memberships";
 import Notifications from "./endpoints/Notifications";
 import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
@@ -32,6 +33,7 @@ export default class Client {
   descriptors: Descriptors;
   files: Files;
   layers: Layers;
+  memberships: Memberships;
   notifications: Notifications;
   organizations: Organizations;
   pages: Pages;
@@ -63,6 +65,7 @@ export default class Client {
     this.descriptors = new Descriptors(this, options);
     this.files = new Files(this, options);
     this.layers = new Layers(this, options);
+    this.memberships = new Memberships(this, options);
     this.notifications = new Notifications(this, options);
     this.organizations = new Organizations(this, options);
     this.pages = new Pages(this, options);
