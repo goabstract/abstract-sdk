@@ -937,7 +937,7 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 
 ### List all projects
 
-`projects.list(OrganizationDescriptor?): Promise<Project[]>`
+`projects.list(OrganizationDescriptor?, { filter?: "active" | "archived" }): Promise<Project[]>`
 
 List all projects accessible through the current authentication
 
@@ -953,8 +953,25 @@ abstract.projects.list({
 });
 ```
 
+or, get a list of active projects for a specific organization…
+
+```js
+abstract.projects.list({
+  organizationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+}, { filter: "active" });
+```
+
 ### Retrieve a project
-> Not yet implemented
+
+`projects.info(ProjectDescriptor): Promise<Project>`
+
+Load the info for a project
+
+```js
+abstract.projects.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
 
 
 
