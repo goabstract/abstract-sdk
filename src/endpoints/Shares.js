@@ -28,9 +28,20 @@ export default class Activities extends Endpoint {
   }
 
   info<T: Share>(descriptor: ShareDescriptor): Promise<T> {
+    let cacheKey = "";
+    if (descriptor.url) {
+      cacheKey = `share:${descriptor.url}`;
+    }
+    if (descriptor.shareId) {
+      cacheKey = `share:${descriptor.shareId}`;
+    }
     return this.request<Promise<T>>({
       api: () => {
         return this.apiRequest(`share_links/${inferShareId(descriptor)}`);
+      },
+
+      cache: {
+        key: cacheKey
       }
     });
   }

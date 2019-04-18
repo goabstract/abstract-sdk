@@ -17,6 +17,10 @@ export default class Activities extends Endpoint {
     return this.request<Promise<Activity>>({
       api: () => {
         return this.apiRequest(`activities/${descriptor.activityId}`);
+      },
+
+      cache: {
+        key: `activity:${descriptor.activityId}`
       }
     });
   }

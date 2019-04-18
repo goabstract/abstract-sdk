@@ -25,9 +25,15 @@ const logCLIRequest = log.extend("AbstractCLI:request");
 const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
+export type CacheConfiguration = {
+  disable?: boolean,
+  key: string
+};
+
 export type EndpointHandler<T> = {
   api?: () => T,
-  cli?: () => T
+  cli?: () => T,
+  cache?: CacheConfiguration
 };
 
 export default class Endpoint {
@@ -56,31 +62,40 @@ export default class Endpoint {
   }
 
   request<T>(handler: EndpointHandler<T>): T {
+    let response;
+
+    if (handler.cache) {
+      const existingEntity = this.client.cache.get(handler.cache.key);
+      if (existingEntity) {
+        return existingEntity;
+      }
+    }
+
     if (this.transportMode === "auto") {
-      // TODO: Check if CLI is available
       if (handler.cli) {
-        return handler.cli();
+        response = handler.cli();
+      } else if (handler.api) {
+        response = handler.api();
+      } else {
+        throw new EndpointUndefinedError(
+          this.lastCalledEndpoint,
+          this.transportMode
+        );
       }
-
-      // TODO: Check if API is online
-      if (handler.api) {
-        return handler.api();
-      }
-
+    } else if (handler[this.transportMode]) {
+      response = handler[this.transportMode]();
+    } else {
       throw new EndpointUndefinedError(
         this.lastCalledEndpoint,
         this.transportMode
       );
     }
 
-    if (handler[this.transportMode]) {
-      return handler[this.transportMode]();
+    if (handler.cache && !handler.cache.disable) {
+      this.client.cache.set(handler.cache.key, response);
     }
 
-    throw new EndpointUndefinedError(
-      this.lastCalledEndpoint,
-      this.transportMode
-    );
+    return response;
   }
 
   async apiRequest(
