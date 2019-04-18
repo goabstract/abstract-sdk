@@ -20,6 +20,9 @@ export default class Branches extends Endpoint {
           descriptor.branchId
         ]);
       }
+    }, {
+      cacheKey: descriptor.branchId,
+      entityType: 'branch'
     });
   }
 

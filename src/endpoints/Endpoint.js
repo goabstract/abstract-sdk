@@ -30,6 +30,11 @@ export type EndpointHandler<T> = {
   cli?: () => T
 };
 
+export type CacheConfiguration = {
+  prefix: string,
+  cacheKey: string
+};
+
 export default class Endpoint {
   _optionAccessToken: ?AccessTokenOption;
   apiUrl: string;
@@ -55,32 +60,43 @@ export default class Endpoint {
     this.webUrl = options.webUrl;
   }
 
-  request<T>(handler: EndpointHandler<T>): T {
+  request<T>(handler: EndpointHandler<T>, cacheConfiguration: CacheConfiguration): T {
+    let response;
+
+    if (cacheConfiguration) {
+      const cacheId = `${cacheConfiguration.entityType}:${cacheConfiguration.cacheKey}`;
+      const existingEntity = this.client.cache.get(cacheId);
+      if (existingEntity) {
+        return existingEntity;
+      }
+    }
+
     if (this.transportMode === "auto") {
-      // TODO: Check if CLI is available
       if (handler.cli) {
-        return handler.cli();
+        response = handler.cli();
+      } else if (handler.api) {
+        response = handler.api();
+      } else {
+        throw new EndpointUndefinedError(
+          this.lastCalledEndpoint,
+          this.transportMode
+        );
       }
-
-      // TODO: Check if API is online
-      if (handler.api) {
-        return handler.api();
-      }
-
+    } else if (handler[this.transportMode]) {
+      response = handler[this.transportMode]();
+    } else {
       throw new EndpointUndefinedError(
         this.lastCalledEndpoint,
         this.transportMode
       );
     }
 
-    if (handler[this.transportMode]) {
-      return handler[this.transportMode]();
+    if (cacheConfiguration) {
+      const cacheId = `${cacheConfiguration.entityType}:${cacheConfiguration.cacheKey}`;
+      this.client.cache.set(cacheId, response);
     }
 
-    throw new EndpointUndefinedError(
-      this.lastCalledEndpoint,
-      this.transportMode
-    );
+    return response;
   }
 
   async apiRequest(

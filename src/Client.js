@@ -43,6 +43,8 @@ export default class Client {
   shares: Shares;
   users: Users;
 
+  cache = new Map<string, any>();
+
   constructor(options: $Shape<CommandOptions> = {}) {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
