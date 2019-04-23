@@ -42,6 +42,7 @@ export default class Endpoint {
   cliPath: ?string;
   client: Client;
   lastCalledEndpoint: ?string;
+  maxCacheSize: number;
   previewsUrl: string;
   transportMode: string;
   webUrl: string;
@@ -56,6 +57,7 @@ export default class Endpoint {
     this.apiUrl = options.apiUrl;
     this.cliPath = options.cliPath;
     this.client = client;
+    this.maxCacheSize = options.maxCacheSize;
     this.previewsUrl = options.previewsUrl;
     this.transportMode = options.transportMode;
     this.webUrl = options.webUrl;
@@ -91,8 +93,13 @@ export default class Endpoint {
       );
     }
 
-    if (handler.cache && !handler.cache.disable) {
+    if (handler.cache && this.maxCacheSize > 0 && !handler.cache.disable) {
       this.client.cache.set(handler.cache.key, response);
+
+      if (this.client.cache.size > this.maxCacheSize) {
+        const oldestEntity = this.client.cache.keys().next().value;
+        oldestEntity && this.client.cache.delete(oldestEntity);
+      }
     }
 
     return response;

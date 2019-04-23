@@ -1,4 +1,5 @@
 // @flow
+import Client from "./Client";
 import { mockAPI, API_CLIENT } from "./testing";
 
 describe("cache", () => {
@@ -77,5 +78,37 @@ describe("cache", () => {
     expect(response1).toEqual([{ id: "foo" }]);
     expect(response2).toEqual([{ id: "foo" }]);
     expect(global.fetch).toBeCalledTimes(2);
+  });
+
+  test("respects maxCacheSize", async () => {
+    const client = new Client({
+      accessToken: "token",
+      apiUrl: "http://api",
+      maxCacheSize: 0,
+      previewsUrl: "http://previews",
+      transportMode: "api"
+    });
+
+    mockAPI("/activities/foo", { id: "foo" });
+    mockAPI("/activities/foo", { id: "foo" });
+    mockAPI("/activities/bar", { id: "bar" });
+    mockAPI("/activities/bar", { id: "bar" });
+    mockAPI("/activities/baz", { id: "baz" });
+    mockAPI("/activities/baz", { id: "baz" });
+
+    const response1 = await client.activities.info({ activityId: "foo" });
+    const response2 = await client.activities.info({ activityId: "foo" });
+    const response3 = await client.activities.info({ activityId: "bar" });
+    const response4 = await client.activities.info({ activityId: "bar" });
+    const response5 = await client.activities.info({ activityId: "baz" });
+    const response6 = await client.activities.info({ activityId: "baz" });
+
+    expect(response1).toEqual({ id: "foo" });
+    expect(response2).toEqual({ id: "foo" });
+    expect(response3).toEqual({ id: "bar" });
+    expect(response4).toEqual({ id: "bar" });
+    expect(response5).toEqual({ id: "baz" });
+    expect(response6).toEqual({ id: "baz" });
+    expect(global.fetch).toBeCalledTimes(6);
   });
 });
