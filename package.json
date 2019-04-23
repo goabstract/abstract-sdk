@@ -62,7 +62,6 @@
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
     "flow-typed": "^2.5.1",
-    "locate-path": "^3.0.0",
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
   },

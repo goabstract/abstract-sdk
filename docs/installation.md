@@ -3,19 +3,13 @@ id: installation
 title: Installation
 ---
 
-> Important Note: This SDK is a beta – we are expecting to make major revisions to the methods and responses that are available before a wider public launch.
+The Abstract SDK was designed to allow easy interaction with Abstract data from any environment that supports JavaScript. The SDK should work well inside desktop design tools such as Sketch, on servers, or in CI environments.
 
-The SDK was designed to allow interacting with both the Abstract API and the desktop CLI from a unified interface in any environment that supports JavaScript. The SDK should work well inside desktop design tools such as Sketch, on servers, or CI environments.
+> This SDK is a beta – major revisions to available methods and their responses are still possible before a wider public launch.
 
 ## Installation
 
-The SDK is available as an NPM package and can be installed via `yarn` or `npm`.
-
-```
-yarn add "abstract-sdk"
-```
-
-or
+The SDK is available as an NPM package and can be installed using a package manager like NPM or Yarn.
 
 ```
 npm install "abstract-sdk"

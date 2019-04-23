@@ -3,58 +3,54 @@ id: configuration
 title: Configuration
 ---
 
-In order to use the SDK you'll need to instantiate a client and give it an [authentication](/docs/authentication) token. We recommend storing the token in your environment as `ABSTRACT_TOKEN` and it will be automatically loaded – don't commit it with your code!
-
-## Passing a token
-
-When an SDK client is created, it will automatically look for a token using the `ABSTRACT_TOKEN` environment variable. This means that no token has to be specified during instantiation.
+To use the SDK in an application, a client must be imported from the `abstract-sdk` NPM package and instantiated with configuration options.
 
 ```js
-import * as Abstract from "abstract-sdk";
-
-const abstract = new Abstract.Client();
-```
-
-It's also possible to pass in a token directly if necessary.
-
-```js
-import * as Abstract from "abstract-sdk";
-
-const abstract = new Abstract.Client({
-  accessToken: process.env.ABSTRACT_API_TOKEN
+const client = new Abstract.Client({
+  // Configuration options...
 });
 ```
 
-You can pass a function that returns a token.
+## Configuration options
 
-```js
-import * as Abstract from "abstract-sdk";
+The following options are available when configuring an SDK client.
 
-const abstract = new Abstract.Client({
-  accessToken: () => Cookies.get("abstractToken")
-});
-```
+### `accessToken`
 
-And you can pass a function that returns a promise to a token.
+_Default value: `undefined`_
 
-```js
-import * as Abstract from "abstract-sdk";
+After [generating an access token](/docs/authentication), this option can be used to pass that token to the SDK. This option accepts strings and both synchronous and asynchronous functions that return strings. Note that the SDK will automatically use an access token saved as an `ABSTRACT_TOKEN` environment variable without any additional configuration; this means that the `accessToken` option is only required when `ABSTRACT_TOKEN` is not set.
 
-const abstract = new Abstract.Client({
-  accessToken: () => {
-    return new Promise(resolve => resolve(Cookies.get("abstractToken")));
-  }
-});
-```
+See [Authentication](/docs/authentication) for more information.
 
-## Transports
+### `apiUrl`
 
-If you want to ensure that the SDK only ever loads data from the API or the CLI then you can achieve this by specifying a transport. This is useful when running in an environment without the Mac application installed or alternatively when you want to ensure you're only dealing with local data:
+_Default value: `https://api.goabstract.com`_
 
-```js
-import * as Abstract from "abstract-sdk";
+This option can be used to specify a custom URL that points to an instance of the Abstract HTTP API. This is used when building the request URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
 
-const abstract = new Abstract.Client({
-  transportMode: "cli" // or "api"
-});
-```
+### `cliPath`
+
+_Default value: `/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli`_
+
+This option can be used to specify a custom file location that points to the Abstract CLI included with the Abstract desktop application. This option is useful if the Abstract desktop application exists at a non-default application path outside of `/Applications`.
+
+### `previewsUrl`
+
+_Default value: `https://previews.goabstract.com`_
+
+This option can be used to specify a custom URL that points to an instance of the Abstract preview service. This is used when building preview image URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
+
+### `transportMode`
+
+_Default value: `"api"`_
+
+The SDK can be configured to use different data sources - known as "transports" - that each have unique advantages. The `transportMode` option can be used to tell an SDK client to use a specific transport.
+
+See [Transports](/docs/transports) for more information.
+
+### `webUrl`
+
+_Default value: `https://app.goabstract.com`_
+
+This option can be used to specify a custom URL for the Abstract web application. This is used by the [API transport](/docs/transports) when generating URLs that link to specific parts of the web application.
