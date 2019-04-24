@@ -9,11 +9,11 @@ The SDK can be configured to use different data sources - known as "transports" 
 
 ## API
 
-The Abstract API is a transport mode that uses HTTP to interact with Abstract's own hosted servers. This transport is especially useful in remote execution environments since it requires no backing data infrastructure to be installed locally. This transport requires [authentication](/docs/authentication) and requests are subject to [rate limits](/docs/rate-limits).
+The Abstract API is a transport mode that uses HTTP to interact with Abstract's own hosted servers. This transport is especially useful in remote execution environments since it does not require the Abstract desktop application or data on the local disk. This transport requires [authentication](/docs/authentication) and requests are subject to [rate limits](/docs/rate-limits).
 
 ## CLI
 
-The Abstract CLI is a transport mode that uses the Abstract desktop application to interact with data stored locally on a given machine. This transport does not require internet connectivity or authentication, and requests are not subject to rate limits. This transport does require access to the Abstract desktop application and its underlying data.
+The Abstract CLI is a transport mode that uses the Abstract desktop application to interact with data stored locally on a given machine. This transport does not require internet connectivity or authentication, and requests are not subject to rate limits. This transport does require access to the Abstract desktop application and its underlying data, as such it can only be used on macOS currently.
 
 
 ## Auto
