@@ -1,3 +1,12 @@
+## v1.2.0
+- Updated type interfaces to no longer include email addresses
+- Added `memberships.list` and `memberships.info` to the API transport
+
+## v1.1.0
+- Updated client startup to check `peerDependencies` and the macOS app folder for the CLI
+- Updated comment creation to no longer pass names to the API
+- Updated documentation deployment to happen on `docs` branch pushes
+
 ## v1.0.0
 - Clients are classes that are instantiated using `new Abstract.Client({ ... })`
 - Fixed downstream `flow-typed` issues
