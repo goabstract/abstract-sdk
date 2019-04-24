@@ -20,7 +20,7 @@ The following example demonstrates how to work with pages of results.
 1. Use an SDK client instance to fetch the first ten activities for a project.
 
   ```js
-  const firstPage = abstract.activities.list({
+  const firstPage = client.activities.list({
     projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
   }, { limit: 10 });
   ```
@@ -28,7 +28,7 @@ The following example demonstrates how to work with pages of results.
 2. Since `firstPage` is a `CursorPromise`, it will resolve to the first ten activities. Its `next` method can be used to fetch the next page of activities.
 
   ```js
-  const firstPage = abstract.activities.list({
+  const firstPage = client.activities.list({
     projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
   }, { limit: 10 });
 
@@ -50,7 +50,7 @@ The following example demonstrates how to work with pages of results.
       fetchActivities(request.next());
   }
 
-  fetchActivities(abstract.activities.list({
+  fetchActivities(client.activities.list({
     projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
   }, { limit: 10 }));
   ```
@@ -60,7 +60,7 @@ The following example demonstrates how to work with pages of results.
 > Note: This `paginate` utility function and the asynchronous iteration support it provides are currently experimental and may not work as expected.
 
   ```js
-  const iterable = paginate(abstract.activities.list({
+  const iterable = paginate(client.activities.list({
     projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
   }, { limit: 10 }));
 

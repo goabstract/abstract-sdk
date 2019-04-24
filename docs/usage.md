@@ -3,45 +3,46 @@ id: usage
 title: Usage
 ---
 
-The SDK exposes different namespaces for different types of resources, like `abstract.projects` or `abstract.comments`. Each of these namespaces expose various query methods, like `abstract.projects.list()` or `abstract.projects.info()`.
+An SDK client instance exposes different namespaces for different types of resources, like `client.projects` or `client.comments`. Each of these namespaces exposes various query methods, like `client.projects.list()` or `client.projects.info()`.
+
+See the [API reference](/docs/abstract-api) for all available namespaces and their methods.
 
 ## Basic usage
 
-Lets load a list of accessible projects from the API. All of the methods in the SDK return a `Promise` – you may use traditional `Promise` syntax, or `async` / `await` if your JS runtime supports ES8.
+The following example demonstrates how to query all available projects. All SDK methods are asynchronous and return a `Promise`.
 
 ```js
-const projects = await abstract.projects.list();
+const projects = await client.projects.list();
 
 projects.map(project => {
   console.log(`${project.name}: ${project.id}`);
 });
 ```
 
-## Putting it all together
+## Complete example
 
-The following example demonstrates how to authenticate, configure, and use the SDK.
+The following example demonstrates how to authenticate, configure, then use the SDK to query all available projects.
 
 ```js
 // Import the SDK client
 import * as Abstract from "abstract-sdk";
 
 // Create a client
-const abstract = new Abstract.Client({
-    // Specify a specific transport for demo purposes only; if
-    // no transport is specified, the SDK chooses automatically.
-    transportMode: "cli"
+const client = new Abstract.Client({
+  // Specify a specific transport for demo purposes
+  transportMode: "api"
 });
 
 async function run() {
-    // Query all projects
-    const projects = await abstract.projects.list();
+  // Query all projects
+  const projects = await client.projects.list();
 
-    // Iterate through each project
-    for (const project of projects) {
-        // Log the number of branches
-        const branches = await abstract.branches.list({ projectId: project.id });
-        console.log(`${project.name}: ${branches.length} branches`);
-    }
+  // Iterate through each project
+  for (const project of projects) {
+    // Log the number of branches
+    const branches = await client.branches.list({ projectId: project.id });
+    console.log(`${project.name}: ${branches.length} branches`);
+  }
 }
 
 run();
@@ -49,4 +50,4 @@ run();
 
 ## Going further
 
-Hopefully the above example demonstrated basic SDK usage and you were able to view a list of projects and their branch counts. From here you can use the [API reference](/docs/abstract-api) to dig deeper – try loading branches, commits, comments, artboard data, and more.
+The example above demonstrates basic SDK authentication, configuration, and usage. From here, it's  possible to use the [API reference](/docs/abstract-api) to dig deeper. Try loading branches, commits, comments, artboard data, and more.

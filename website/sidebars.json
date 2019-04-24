@@ -7,6 +7,8 @@
       "usage"
     ],
     "Concepts": [
+      "rate-limits",
+      "transports",
       "pagination",
       "latest"
     ],
