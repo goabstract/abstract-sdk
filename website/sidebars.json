@@ -10,6 +10,7 @@
       "rate-limits",
       "transports",
       "pagination",
+      "continuous-integration",
       "latest"
     ],
     "API Reference": [
