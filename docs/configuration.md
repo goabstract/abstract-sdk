@@ -35,6 +35,12 @@ _Default value: `/Applications/Abstract.app/Contents/Resources/app.asar.unpacked
 
 This option can be used to specify a custom file location that points to the Abstract CLI included with the Abstract desktop application. This option is useful if the Abstract desktop application exists at a non-default application path outside of `/Applications`.
 
+### `maxCacheSize`
+
+_Default value: `0`_
+
+Requests for individual assets within the Abstract platform can be cached since their responses are static and don't change over time. For example, a `Commit` retrieved by its `sha` can be safely cached since that `sha` will always point to the same `Commit`.  This option can be used to increase or decrease the size of the internal entity cache. Setting this option to `0` disables caching entirely.
+
 ### `previewsUrl`
 
 _Default value: `https://previews.goabstract.com`_

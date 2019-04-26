@@ -33,6 +33,23 @@ export const CLI_CLIENT = new Client({
   transportMode: "cli"
 });
 
+export const API_CLIENT_CACHED = new Client({
+  accessToken: "token",
+  apiUrl: "http://api",
+  maxCacheSize: 1337,
+  previewsUrl: "http://previews",
+  transportMode: "api"
+});
+
+export const CLI_CLIENT_CACHED = new Client({
+  accessToken: "token",
+  apiUrl: "http://api",
+  cliPath: ".",
+  maxCacheSize: 1337,
+  previewsUrl: "http://previews",
+  transportMode: "cli"
+});
+
 export function mockCLI(
   args: string[],
   response?: Object | Array<Object>,

@@ -1,6 +1,5 @@
 // @flow
-import Client from "./Client";
-import { mockAPI, API_CLIENT } from "./testing";
+import { mockAPI, API_CLIENT, API_CLIENT_CACHED } from "./testing";
 
 describe("cache", () => {
   beforeAll(() => {
@@ -21,12 +20,24 @@ describe("cache", () => {
     mockAPI("/activities/bar", { id: "bar" });
     mockAPI("/activities/baz", { id: "baz" });
 
-    const response1 = await API_CLIENT.activities.info({ activityId: "foo" });
-    const response2 = await API_CLIENT.activities.info({ activityId: "foo" });
-    const response3 = await API_CLIENT.activities.info({ activityId: "bar" });
-    const response4 = await API_CLIENT.activities.info({ activityId: "bar" });
-    const response5 = await API_CLIENT.activities.info({ activityId: "baz" });
-    const response6 = await API_CLIENT.activities.info({ activityId: "baz" });
+    const response1 = await API_CLIENT_CACHED.activities.info({
+      activityId: "foo"
+    });
+    const response2 = await API_CLIENT_CACHED.activities.info({
+      activityId: "foo"
+    });
+    const response3 = await API_CLIENT_CACHED.activities.info({
+      activityId: "bar"
+    });
+    const response4 = await API_CLIENT_CACHED.activities.info({
+      activityId: "bar"
+    });
+    const response5 = await API_CLIENT_CACHED.activities.info({
+      activityId: "baz"
+    });
+    const response6 = await API_CLIENT_CACHED.activities.info({
+      activityId: "baz"
+    });
 
     expect(response1).toEqual({ id: "foo" });
     expect(response2).toEqual({ id: "foo" });
@@ -56,8 +67,8 @@ describe("cache", () => {
       mockAPI("/projects/project-id/branches/branch-id/files", { files });
     }
 
-    const response1 = await API_CLIENT.files.info(descriptor);
-    const response2 = await API_CLIENT.files.info(descriptor);
+    const response1 = await API_CLIENT_CACHED.files.info(descriptor);
+    const response2 = await API_CLIENT_CACHED.files.info(descriptor);
 
     expect(response1).toEqual({ id: "file-id" });
     expect(response2).toEqual({ id: "file-id" });
@@ -72,8 +83,12 @@ describe("cache", () => {
       data: [{ id: "foo" }]
     });
 
-    const response1 = await API_CLIENT.projects.list({ organizationId: "foo" });
-    const response2 = await API_CLIENT.projects.list({ organizationId: "foo" });
+    const response1 = await API_CLIENT_CACHED.projects.list({
+      organizationId: "foo"
+    });
+    const response2 = await API_CLIENT_CACHED.projects.list({
+      organizationId: "foo"
+    });
 
     expect(response1).toEqual([{ id: "foo" }]);
     expect(response2).toEqual([{ id: "foo" }]);
@@ -81,14 +96,6 @@ describe("cache", () => {
   });
 
   test("respects maxCacheSize", async () => {
-    const client = new Client({
-      accessToken: "token",
-      apiUrl: "http://api",
-      maxCacheSize: 0,
-      previewsUrl: "http://previews",
-      transportMode: "api"
-    });
-
     mockAPI("/activities/foo", { id: "foo" });
     mockAPI("/activities/foo", { id: "foo" });
     mockAPI("/activities/bar", { id: "bar" });
@@ -96,12 +103,12 @@ describe("cache", () => {
     mockAPI("/activities/baz", { id: "baz" });
     mockAPI("/activities/baz", { id: "baz" });
 
-    const response1 = await client.activities.info({ activityId: "foo" });
-    const response2 = await client.activities.info({ activityId: "foo" });
-    const response3 = await client.activities.info({ activityId: "bar" });
-    const response4 = await client.activities.info({ activityId: "bar" });
-    const response5 = await client.activities.info({ activityId: "baz" });
-    const response6 = await client.activities.info({ activityId: "baz" });
+    const response1 = await API_CLIENT.activities.info({ activityId: "foo" });
+    const response2 = await API_CLIENT.activities.info({ activityId: "foo" });
+    const response3 = await API_CLIENT.activities.info({ activityId: "bar" });
+    const response4 = await API_CLIENT.activities.info({ activityId: "bar" });
+    const response5 = await API_CLIENT.activities.info({ activityId: "baz" });
+    const response6 = await API_CLIENT.activities.info({ activityId: "baz" });
 
     expect(response1).toEqual({ id: "foo" });
     expect(response2).toEqual({ id: "foo" });
