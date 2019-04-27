@@ -6,24 +6,32 @@ import Endpoint from "./Endpoint";
 
 export default class Previews extends Endpoint {
   async info(descriptor: LayerDescriptor): Promise<PreviewMeta> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<PreviewMeta>>({
       api: async () => ({
-        webUrl: `${this.webUrl}/projects/${descriptor.projectId}/commits/${
-          descriptor.sha
-        }/files/${descriptor.fileId}/layers/${descriptor.layerId}`
+        webUrl: `${this.webUrl}/projects/${
+          latestDescriptor.projectId
+        }/commits/${latestDescriptor.sha}/files/${
+          latestDescriptor.fileId
+        }/layers/${latestDescriptor.layerId}`
       })
     });
   }
 
   async raw(descriptor: LayerDescriptor): Promise<ArrayBuffer> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<ArrayBuffer>>({
       api: () => {
         return this.apiRawRequest(
-          `projects/${descriptor.projectId}/commits/${descriptor.sha}/files/${
-            descriptor.fileId
-          }/layers/${descriptor.layerId}`,
+          `projects/${latestDescriptor.projectId}/commits/${
+            latestDescriptor.sha
+          }/files/${latestDescriptor.fileId}/layers/${
+            latestDescriptor.layerId
+          }`,
           {
             headers: {
               Accept: undefined,
@@ -33,6 +41,11 @@ export default class Previews extends Endpoint {
           },
           this.previewsUrl
         );
+      },
+
+      cache: {
+        key: `preview-raw:${descriptor.layerId}`,
+        disable: descriptor.sha === "latest"
       }
     });
   }

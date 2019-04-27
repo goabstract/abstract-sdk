@@ -12,6 +12,10 @@ export default class Users extends Endpoint {
     return this.request<Promise<User>>({
       api: async () => {
         return this.apiRequest(`users/${descriptor.userId}`);
+      },
+
+      cache: {
+        key: `user:${descriptor.userId}`
       }
     });
   }

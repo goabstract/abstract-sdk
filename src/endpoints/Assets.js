@@ -10,17 +10,23 @@ export default class Assets extends Endpoint {
         return this.apiRequest(
           `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
         );
+      },
+
+      cache: {
+        key: `asset:${descriptor.assetId}`
       }
     });
   }
 
   async list(descriptor: CommitDescriptor): Promise<Asset[]> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<Asset[]>>({
       api: async () => {
-        const query = querystring.stringify({ sha: descriptor.sha });
+        const query = querystring.stringify({ sha: latestDescriptor.sha });
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/assets?${query}`
+          `projects/${latestDescriptor.projectId}/assets?${query}`
         );
         return response.data.assets;
       }
@@ -42,6 +48,10 @@ export default class Assets extends Endpoint {
           },
           null
         );
+      },
+
+      cache: {
+        key: `asset-raw:${descriptor.assetId}`
       }
     });
   }

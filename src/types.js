@@ -1449,6 +1449,7 @@ export type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string,
   cliPath: string,
+  maxCacheSize: number,
   previewsUrl: string,
   transportMode: "auto" | "api" | "cli",
   webUrl: string

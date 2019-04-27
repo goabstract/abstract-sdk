@@ -19,17 +19,34 @@ function buildTextStream(text?: string): ReadableStream {
 }
 
 export const API_CLIENT = new Client({
-  accessToken: "token",
-  apiUrl: "http://api",
-  previewsUrl: "http://previews",
+  accessToken: "accessToken",
+  apiUrl: "http://apiUrl",
+  previewsUrl: "http://previewsUrl",
   transportMode: "api"
 });
 
 export const CLI_CLIENT = new Client({
-  accessToken: "token",
-  apiUrl: "http://api",
+  accessToken: "accessToken",
+  apiUrl: "http://apiUrl",
   cliPath: ".",
-  previewsUrl: "http://previews",
+  previewsUrl: "http://previewsUrl",
+  transportMode: "cli"
+});
+
+export const API_CLIENT_CACHED = new Client({
+  accessToken: "accessToken",
+  apiUrl: "http://apiUrl",
+  maxCacheSize: 10,
+  previewsUrl: "http://previewsUrl",
+  transportMode: "api"
+});
+
+export const CLI_CLIENT_CACHED = new Client({
+  accessToken: "accessToken",
+  apiUrl: "http://apiUrl",
+  cliPath: ".",
+  maxCacheSize: 10,
+  previewsUrl: "http://previewsUrl",
   transportMode: "cli"
 });
 
@@ -59,5 +76,5 @@ export function mockAPI(
   code: number = 200,
   method: string = "get"
 ) {
-  (nock("http://api"): any)[method](url).reply(code, response);
+  (nock("http://apiUrl"): any)[method](url).reply(code, response);
 }

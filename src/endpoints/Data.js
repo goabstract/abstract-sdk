@@ -4,15 +4,17 @@ import Endpoint from "./Endpoint";
 
 export default class Data extends Endpoint {
   async info(descriptor: LayerDescriptor): Promise<LayerData> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<LayerData>>({
       api: () => {
         return this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/commits/${descriptor.sha}/files/${descriptor.fileId}/layers/${
-            descriptor.layerId
-          }/data`
+          `projects/${latestDescriptor.projectId}/branches/${
+            latestDescriptor.branchId
+          }/commits/${latestDescriptor.sha}/files/${
+            latestDescriptor.fileId
+          }/layers/${latestDescriptor.layerId}/data`
         );
       },
 
@@ -20,11 +22,16 @@ export default class Data extends Endpoint {
         return this.cliRequest([
           "layer",
           "data",
-          descriptor.projectId,
-          descriptor.sha,
-          descriptor.fileId,
-          descriptor.layerId
+          latestDescriptor.projectId,
+          latestDescriptor.sha,
+          latestDescriptor.fileId,
+          latestDescriptor.layerId
         ]);
+      },
+
+      cache: {
+        key: `layer-data:${descriptor.layerId}`,
+        disable: descriptor.sha === "latest"
       }
     });
   }

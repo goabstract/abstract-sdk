@@ -25,9 +25,15 @@ const logCLIRequest = log.extend("AbstractCLI:request");
 const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
-export type EndpointHandler<T> = {
+export type CacheConfiguration = {
+  disable?: boolean,
+  key: string
+};
+
+export type EndpointRequest<T> = {
   api?: () => T,
-  cli?: () => T
+  cli?: () => T,
+  cache?: CacheConfiguration
 };
 
 export default class Endpoint {
@@ -36,6 +42,7 @@ export default class Endpoint {
   cliPath: ?string;
   client: Client;
   lastCalledEndpoint: ?string;
+  maxCacheSize: number;
   previewsUrl: string;
   transportMode: string;
   webUrl: string;
@@ -50,37 +57,53 @@ export default class Endpoint {
     this.apiUrl = options.apiUrl;
     this.cliPath = options.cliPath;
     this.client = client;
+    this.maxCacheSize = options.maxCacheSize;
     this.previewsUrl = options.previewsUrl;
     this.transportMode = options.transportMode;
     this.webUrl = options.webUrl;
   }
 
-  request<T>(handler: EndpointHandler<T>): T {
+  request<T>(request: EndpointRequest<T>): T {
+    let response;
+
+    if (request.cache) {
+      const existingEntity = this.client.cache.get(request.cache.key);
+      if (existingEntity) {
+        return existingEntity;
+      }
+    }
+
     if (this.transportMode === "auto") {
-      // TODO: Check if CLI is available
-      if (handler.cli) {
-        return handler.cli();
+      if (request.cli) {
+        response = request.cli();
+      } else if (request.api) {
+        response = request.api();
+      } else {
+        throw new EndpointUndefinedError(
+          this.lastCalledEndpoint,
+          this.transportMode
+        );
       }
-
-      // TODO: Check if API is online
-      if (handler.api) {
-        return handler.api();
-      }
-
+    } else if (request[this.transportMode]) {
+      const handler = request[this.transportMode];
+      response = handler();
+    } else {
       throw new EndpointUndefinedError(
         this.lastCalledEndpoint,
         this.transportMode
       );
     }
 
-    if (handler[this.transportMode]) {
-      return handler[this.transportMode]();
+    if (request.cache && this.maxCacheSize > 0 && !request.cache.disable) {
+      this.client.cache.set(request.cache.key, response);
+
+      if (this.client.cache.size > this.maxCacheSize) {
+        const oldestEntity = this.client.cache.keys().next().value;
+        oldestEntity && this.client.cache.delete(oldestEntity);
+      }
     }
 
-    throw new EndpointUndefinedError(
-      this.lastCalledEndpoint,
-      this.transportMode
-    );
+    return response;
   }
 
   async apiRequest(

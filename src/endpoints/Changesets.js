@@ -4,13 +4,15 @@ import Endpoint from "./Endpoint";
 
 export default class Changesets extends Endpoint {
   async info(descriptor: CommitDescriptor): Promise<Changeset> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<Changeset>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/commits/${descriptor.sha}/changeset`
+          `projects/${latestDescriptor.projectId}/branches/${
+            latestDescriptor.branchId
+          }/commits/${latestDescriptor.sha}/changeset`
         );
         return response.changeset;
       },
@@ -18,12 +20,17 @@ export default class Changesets extends Endpoint {
       cli: () => {
         return this.cliRequest([
           "changeset",
-          descriptor.projectId,
+          latestDescriptor.projectId,
           "--commit",
-          descriptor.sha,
+          latestDescriptor.sha,
           "--branch",
-          descriptor.branchId
+          latestDescriptor.branchId
         ]);
+      },
+
+      cache: {
+        key: `changeset:${descriptor.sha}`,
+        disabled: descriptor.sha === "latest"
       }
     });
   }

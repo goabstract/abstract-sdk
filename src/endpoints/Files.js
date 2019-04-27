@@ -5,14 +5,16 @@ import Endpoint from "./Endpoint";
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor): Promise<File> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<File>>({
       api: async () => {
-        const { fileId, ...branchDescriptor } = descriptor;
+        const { fileId, ...branchDescriptor } = latestDescriptor;
         const files = await this.list(branchDescriptor);
-        const file = files.find(file => file.id === descriptor.fileId);
+        const file = files.find(file => file.id === latestDescriptor.fileId);
         if (!file) {
-          throw new NotFoundError(`pageId=${descriptor.fileId}`);
+          throw new NotFoundError(`pageId=${latestDescriptor.fileId}`);
         }
         return file;
       },
@@ -20,22 +22,29 @@ export default class Files extends Endpoint {
       cli: async () => {
         const response = await this.cliRequest([
           "file",
-          descriptor.projectId,
-          descriptor.sha,
-          descriptor.fileId
+          latestDescriptor.projectId,
+          latestDescriptor.sha,
+          latestDescriptor.fileId
         ]);
         return response.file;
+      },
+
+      cache: {
+        key: `file:${descriptor.fileId}`,
+        disable: descriptor.sha === "latest"
       }
     });
   }
 
   async list(descriptor: CommitDescriptor): Promise<File[]> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<File[]>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
+          `projects/${latestDescriptor.projectId}/branches/${
+            latestDescriptor.branchId
           }/files`
         );
         return response.files;
@@ -44,8 +53,8 @@ export default class Files extends Endpoint {
       cli: async () => {
         const response = await this.cliRequest([
           "files",
-          descriptor.projectId,
-          descriptor.sha
+          latestDescriptor.projectId,
+          latestDescriptor.sha
         ]);
         return response.files;
       }
