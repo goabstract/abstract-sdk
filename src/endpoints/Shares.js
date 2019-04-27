@@ -31,6 +31,10 @@ export default class Activities extends Endpoint {
     return this.request<Promise<T>>({
       api: () => {
         return this.apiRequest(`share_links/${inferShareId(descriptor)}`);
+      },
+
+      cache: {
+        key: `share:${inferShareId(descriptor)}`
       }
     });
   }

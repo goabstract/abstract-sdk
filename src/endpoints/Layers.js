@@ -11,15 +11,17 @@ import Endpoint from "./Endpoint";
 
 export default class Layers extends Endpoint {
   async info(descriptor: LayerDescriptor): Promise<Layer> {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<Layer>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/commits/${descriptor.sha}/files/${descriptor.fileId}/layers/${
-            descriptor.layerId
-          }`
+          `projects/${latestDescriptor.projectId}/branches/${
+            latestDescriptor.branchId
+          }/commits/${latestDescriptor.sha}/files/${
+            latestDescriptor.fileId
+          }/layers/${latestDescriptor.layerId}`
         );
         return {
           ...response.layer,
@@ -32,12 +34,17 @@ export default class Layers extends Endpoint {
         const response = await this.cliRequest([
           "layer",
           "meta",
-          descriptor.projectId,
-          descriptor.sha,
-          descriptor.fileId,
-          descriptor.layerId
+          latestDescriptor.projectId,
+          latestDescriptor.sha,
+          latestDescriptor.fileId,
+          latestDescriptor.layerId
         ]);
         return response.layer;
+      },
+
+      cache: {
+        key: `layer:${descriptor.layerId}`,
+        disable: descriptor.sha === "latest"
       }
     });
   }

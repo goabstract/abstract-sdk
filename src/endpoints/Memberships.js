@@ -26,6 +26,10 @@ export default class Users extends Endpoint {
         }
         const response = await this.apiRequest(url);
         return response.data.projectMembership || response.data;
+      },
+
+      cache: {
+        key: `membership:${descriptor.userId}`
       }
     });
   }

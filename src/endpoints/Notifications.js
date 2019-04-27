@@ -15,6 +15,10 @@ export default class Notifications extends Endpoint {
     return this.request<Promise<Notification>>({
       api: () => {
         return this.apiRequest(`notifications/${descriptor.notificationId}`);
+      },
+
+      cache: {
+        key: `notification:${descriptor.notificationId}`
       }
     });
   }

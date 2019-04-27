@@ -10,6 +10,10 @@ export default class Organizations extends Endpoint {
           `organizations/${descriptor.organizationId}`
         );
         return response.data;
+      },
+
+      cache: {
+        key: `organization:${descriptor.organizationId}`
       }
     });
   }
