@@ -29,6 +29,10 @@ export default class Commits extends Endpoint {
           descriptor.sha
         ]);
         return response.commit;
+      },
+
+      cache: {
+        key: `commit:${descriptor.sha}`
       }
     });
   }

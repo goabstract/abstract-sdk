@@ -42,12 +42,15 @@ export default class Client {
   shares: Shares;
   users: Users;
 
+  cache = new Map<string, any>();
+
   constructor(options: $Shape<CommandOptions> = {}) {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
       cliPath:
         "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli",
+      maxCacheSize: 0,
       previewsUrl: "https://previews.goabstract.com",
       transportMode: "api",
       webUrl: "https://app.goabstract.com",
