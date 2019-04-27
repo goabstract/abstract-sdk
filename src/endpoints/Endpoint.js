@@ -30,7 +30,7 @@ export type CacheConfiguration = {
   key: string
 };
 
-export type EndpointHandler<T> = {
+export type EndpointRequest<T> = {
   api?: () => T,
   cli?: () => T,
   cache?: CacheConfiguration
@@ -63,29 +63,30 @@ export default class Endpoint {
     this.webUrl = options.webUrl;
   }
 
-  request<T>(handler: EndpointHandler<T>): T {
+  request<T>(request: EndpointRequest<T>): T {
     let response;
 
-    if (handler.cache) {
-      const existingEntity = this.client.cache.get(handler.cache.key);
+    if (request.cache) {
+      const existingEntity = this.client.cache.get(request.cache.key);
       if (existingEntity) {
         return existingEntity;
       }
     }
 
     if (this.transportMode === "auto") {
-      if (handler.cli) {
-        response = handler.cli();
-      } else if (handler.api) {
-        response = handler.api();
+      if (request.cli) {
+        response = request.cli();
+      } else if (request.api) {
+        response = request.api();
       } else {
         throw new EndpointUndefinedError(
           this.lastCalledEndpoint,
           this.transportMode
         );
       }
-    } else if (handler[this.transportMode]) {
-      response = handler[this.transportMode]();
+    } else if (request[this.transportMode]) {
+      const handler = request[this.transportMode];
+      response = handler();
     } else {
       throw new EndpointUndefinedError(
         this.lastCalledEndpoint,
@@ -93,8 +94,8 @@ export default class Endpoint {
       );
     }
 
-    if (handler.cache && this.maxCacheSize > 0 && !handler.cache.disable) {
-      this.client.cache.set(handler.cache.key, response);
+    if (request.cache && this.maxCacheSize > 0 && !request.cache.disable) {
+      this.client.cache.set(request.cache.key, response);
 
       if (this.client.cache.size > this.maxCacheSize) {
         const oldestEntity = this.client.cache.keys().next().value;
