@@ -64,8 +64,5 @@
     "flow-typed": "^2.5.1",
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
-  },
-  "peerDependencies": {
-    "@elasticprojects/abstract-cli": "^1.0.0"
   }
 }
