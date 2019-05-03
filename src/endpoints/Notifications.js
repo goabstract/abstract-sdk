@@ -11,7 +11,7 @@ import type {
 import Endpoint from "./Endpoint";
 
 export default class Notifications extends Endpoint {
-  info(descriptor: NotificationDescriptor): Promise<Notification> {
+  info(descriptor: NotificationDescriptor) {
     return this.request<Promise<Notification>>({
       api: () => {
         return this.apiRequest(`notifications/${descriptor.notificationId}`);
@@ -23,10 +23,7 @@ export default class Notifications extends Endpoint {
     });
   }
 
-  list(
-    descriptor: OrganizationDescriptor,
-    options: ListOptions = {}
-  ): CursorPromise<Notification[]> {
+  list(descriptor: OrganizationDescriptor, options: ListOptions = {}) {
     return this.request<CursorPromise<Notification[]>>({
       api: () => {
         return new Cursor<Notification[]>(

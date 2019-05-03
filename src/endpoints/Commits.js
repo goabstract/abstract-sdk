@@ -10,9 +10,7 @@ import { NotFoundError } from "../errors";
 import Endpoint from "./Endpoint";
 
 export default class Commits extends Endpoint {
-  info(
-    descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor
-  ): Promise<Commit> {
+  info(descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor) {
     return this.request<Promise<Commit>>({
       api: async () => {
         const commits = await this.list(descriptor, { limit: 1 });
@@ -40,7 +38,7 @@ export default class Commits extends Endpoint {
   list(
     descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor,
     options: { limit?: number } = {}
-  ): Promise<Commit[]> {
+  ) {
     return this.request<Promise<Commit[]>>({
       api: async () => {
         const query = querystring.stringify({

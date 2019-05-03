@@ -3,7 +3,7 @@ import type { OrganizationDescriptor, Organization } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Organizations extends Endpoint {
-  info(descriptor: OrganizationDescriptor): Promise<Organization> {
+  info(descriptor: OrganizationDescriptor) {
     return this.request<Promise<Organization>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -18,7 +18,7 @@ export default class Organizations extends Endpoint {
     });
   }
 
-  list(): Promise<Organization[]> {
+  list() {
     return this.request<Promise<Organization[]>>({
       api: async () => {
         const response = await this.apiRequest("organizations");

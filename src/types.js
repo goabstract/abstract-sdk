@@ -75,6 +75,11 @@ export type ListOptions = {
   offset?: number
 };
 
+export type RawOptions = {
+  disableWrite?: boolean,
+  filename?: string
+};
+
 export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
 
 type ActivityBase = {

@@ -25,7 +25,7 @@ export default class Comments extends Endpoint {
           pageId: string
         |},
     comment: NewComment
-  ): Promise<Comment> {
+  ) {
     if (descriptor.sha) {
       descriptor = await this.client.descriptors.getLatestDescriptor(
         descriptor
@@ -47,7 +47,7 @@ export default class Comments extends Endpoint {
     });
   }
 
-  info(descriptor: CommentDescriptor): Promise<Comment> {
+  info(descriptor: CommentDescriptor) {
     return this.request<Promise<Comment>>({
       api: () => {
         return this.apiRequest(`comments/${descriptor.commentId}`);
@@ -66,7 +66,7 @@ export default class Comments extends Endpoint {
       | LayerDescriptor
       | PageDescriptor,
     options: ListOptions = {}
-  ): CursorPromise<Comment[]> {
+  ) {
     let newDescriptor;
     return this.request<CursorPromise<Comment[]>>({
       api: () => {

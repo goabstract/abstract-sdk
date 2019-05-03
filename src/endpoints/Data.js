@@ -3,7 +3,7 @@ import type { LayerDataset, LayerDescriptor } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Data extends Endpoint {
-  async info(descriptor: LayerDescriptor): Promise<LayerDataset> {
+  async info(descriptor: LayerDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );

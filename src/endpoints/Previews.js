@@ -1,11 +1,12 @@
 /* @flow */
 /* global Blob */
+import { promises as fs } from "fs";
 import { FileAPIError } from "../errors";
-import type { LayerDescriptor, PreviewMeta } from "../types";
+import type { LayerDescriptor, PreviewMeta, RawOptions } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Previews extends Endpoint {
-  async info(descriptor: LayerDescriptor): Promise<PreviewMeta> {
+  async info(descriptor: LayerDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -20,13 +21,13 @@ export default class Previews extends Endpoint {
     });
   }
 
-  async raw(descriptor: LayerDescriptor): Promise<ArrayBuffer> {
+  async raw(descriptor: LayerDescriptor, options: RawOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
     return this.request<Promise<ArrayBuffer>>({
-      api: () => {
-        return this.apiRawRequest(
+      api: async () => {
+        const arrayBuffer = await this.apiRawRequest(
           `projects/${latestDescriptor.projectId}/commits/${
             latestDescriptor.sha
           }/files/${latestDescriptor.fileId}/layers/${
@@ -41,6 +42,14 @@ export default class Previews extends Endpoint {
           },
           this.previewsUrl
         );
+
+        if (!options.disableWrite) {
+          const filename =
+            options.filename || `${latestDescriptor.layerId}.png`;
+          fs.writeFile(filename, Buffer.from(arrayBuffer));
+        }
+
+        return arrayBuffer;
       },
 
       cache: {
@@ -50,12 +59,12 @@ export default class Previews extends Endpoint {
     });
   }
 
-  async url(descriptor: LayerDescriptor): Promise<string> {
+  async url(descriptor: LayerDescriptor) {
     if (typeof Blob === "undefined") {
       throw new FileAPIError();
     }
 
-    const buffer = await this.raw(descriptor);
+    const buffer = await this.raw(descriptor, { buffer: true });
 
     return URL.createObjectURL(
       new Blob([new DataView(buffer)], { type: "image/png" })

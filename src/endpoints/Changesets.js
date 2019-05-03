@@ -3,7 +3,7 @@ import type { Changeset, CommitDescriptor } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Changesets extends Endpoint {
-  async info(descriptor: CommitDescriptor): Promise<Changeset> {
+  async info(descriptor: CommitDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );

@@ -11,7 +11,7 @@ import Endpoint from "./Endpoint";
 export default class Users extends Endpoint {
   info(
     descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor
-  ): Promise<Membership> {
+  ) {
     return this.request<Promise<Membership>>({
       api: async () => {
         let url = "";
@@ -34,9 +34,7 @@ export default class Users extends Endpoint {
     });
   }
 
-  list(
-    descriptor: OrganizationDescriptor | ProjectDescriptor
-  ): Promise<Membership[]> {
+  list(descriptor: OrganizationDescriptor | ProjectDescriptor) {
     return this.request<Promise<Membership[]>>({
       api: async () => {
         let url = "";
