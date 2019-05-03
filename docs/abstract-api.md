@@ -110,17 +110,30 @@ abstract.assets.info({
 
 ### Retrieve an asset file
 
-`asset.raw(AssetDescriptor): Promise<ArrayBuffer>`
+`asset.raw(AssetDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
-Load given asset file based on its ID. The resulting `ArrayBuffer` can be used with node `fs` APIs. For example, it's possible to write the image to disk:
+Retrieve a given asset file based on its ID and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
+
+```js
+abstract.assets.raw({
+  assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
+});
+```
+
+The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. For example, it's possible to write the image to disk manually after post-processing it:
 
 ```js
 const arrayBuffer = await abstract.assets.raw({
   assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
   projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
+}, {
+  disableWrite: true
 });
 
-fs.writeFile("asset.png", Buffer.from(arrayBuffer), (err) => {
+processedBuffer = postProcess(arrayBuffer);
+
+fs.writeFile("asset.png", Buffer.from(processedBuffer), (err) => {
   if (err) throw err;
   console.log("Asset image written!");
 });
@@ -604,6 +617,21 @@ abstract.files.info({
 });
 ```
 
+### Retrieve an Sketch file
+
+`files.raw(FileDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
+
+Retrieve a Sketch file from Abstract based on its file ID and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
+
+```js
+abstract.files.raw({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  sha: "latest"
+});
+```
+
 You can also load the file info at any commit on the branch…
 
 ```js
@@ -893,9 +921,9 @@ only available in PNG format.
 
 ### Retrieve an image file
 
-`previews.raw(LayerDescriptor): Promise<ArrayBuffer>`
+`previews.raw(LayerDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
-Load the preview image for a layer at a commit. The resulting `ArrayBuffer` can be used with node `fs` API's – for example you can write the image to disk:
+Retrieve a preview image for a layer at a specific commit and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
 
 ```js
 const arrayBuffer = await abstract.previews.raw({
@@ -906,8 +934,25 @@ const arrayBuffer = await abstract.previews.raw({
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
 });
+```
 
-fs.writeFile(`preview.png`, Buffer.from(arrayBuffer), (err) => {
+The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. For example, it's possible to write the file to disk manually after post-processing it:
+
+```js
+const arrayBuffer = await abstract.previews.raw({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
+}, {
+  disableWrite: true
+});
+
+processedBuffer = postProcess(arrayBuffer);
+
+fs.writeFile(`preview.png`, Buffer.from(processedBuffer), (err) => {
   if (err) throw err;
   console.log("Preview image written!");
 });
