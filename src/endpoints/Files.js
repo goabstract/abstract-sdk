@@ -1,5 +1,10 @@
 // @flow
-import type { CommitDescriptor, File, FileDescriptor, RawOptions } from "../types";
+import type {
+  CommitDescriptor,
+  File,
+  FileDescriptor,
+  RawOptions
+} from "../types";
 import { NotFoundError } from "../errors";
 import Endpoint from "./Endpoint";
 
@@ -60,7 +65,6 @@ export default class Files extends Endpoint {
       }
     });
   }
-
 
   async raw(descriptor: FileDescriptor, options: RawOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(

@@ -9,8 +9,6 @@ title: Client
 
 ## Activities
 
-![API][api-icon]
-
 An activity represents a designated type of event within a project. These events can be specific to the project itself, or they can be specific to a collection, a branch, a commit, or a review within the project.
 
 ### The activity object
@@ -26,6 +24,8 @@ An activity represents a designated type of event within a project. These events
 
 ### List all activities
 
+![API][api-icon]
+
 `activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): Promise<Activity[]>`
 
 List the first two activities for a given project on a specific branch
@@ -38,6 +38,8 @@ abstract.activities.list({
 ```
 
 ### Retrieve an activity
+
+![API][api-icon]
 
 `activities.info(ActivityDescriptor): Promise<Activity>`
 
@@ -55,8 +57,6 @@ abstract.activities.info({
 
 
 ## Assets
-
-![API][api-icon]
 
 An asset represents a resource exported from a design file. Assets are automatically updated and available for new commits.
 
@@ -83,6 +83,8 @@ An asset represents a resource exported from a design file. Assets are automatic
 
 ### List all assets
 
+![API][api-icon]
+
 `assets.list(BranchDescriptor): Promise<Asset[]>`
 
 List all assets for a commit on a given branch of a project
@@ -97,6 +99,8 @@ abstract.assets.list({
 
 ### Retrieve an asset
 
+![API][api-icon]
+
 `asset.info(AssetDescriptor): Promise<Asset>`
 
 Load the info for an asset
@@ -109,6 +113,8 @@ abstract.assets.info({
 ```
 
 ### Retrieve an asset file
+
+![API][api-icon]
 
 `asset.raw(AssetDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
@@ -142,8 +148,6 @@ fs.writeFile("asset.png", Buffer.from(processedBuffer), (err) => {
 
 ## Branches
 
-![CLI][cli-icon] ![API][api-icon]
-
 A branch is where design work and commits happen. A branch acts as a personal workspace for contributors, we encourage branches
 to be created for logical chunks of work – for example designing a new feature.
 
@@ -169,6 +173,8 @@ to be created for logical chunks of work – for example designing a new feature
 
 ### List all branches
 
+![CLI][cli-icon] ![API][api-icon]
+
 `branches.list(ProjectDescriptor, { filter?: "active" | "archived" | "mine" }): Promise<Branch[]>`
 
 List the active branches for a project
@@ -183,6 +189,8 @@ abstract.branches.list({
 
 ### Retrieve a branch
 
+![CLI][cli-icon] ![API][api-icon]
+
 `branches.info(BranchDescriptor): Promise<Branch>`
 
 Load the info for a specific branch in a project
@@ -196,8 +204,6 @@ abstract.branches.info({
 
 
 ## Changesets
-
-![CLI][cli-icon] ![API][api-icon]
 
 A changeset is a group of changes that together form a single, indivisible modification to a project. Changesets include data on all visual and nonvisual changes and provide insight into the differences between two versions of a project.
 
@@ -230,6 +236,8 @@ A changeset is a group of changes that together form a single, indivisible modif
 
 ### Retrieve a changeset
 
+![CLI][cli-icon] ![API][api-icon]
+
 `changesets.info(CommitDescriptor): Promise<Changeset>`
 
 Load an individual changeset
@@ -244,8 +252,6 @@ abstract.changesets.info({
 
 
 ## Collections
-
-![CLI][cli-icon] ![API][api-icon]
 
 A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
 
@@ -274,6 +280,8 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ### List all collections
 
+![CLI][cli-icon] ![API][api-icon]
+
 `collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<CollectionPage>`
 
 List all collections for a branch
@@ -286,6 +294,8 @@ abstract.collections.list({
 ```
 
 ### Retrieve a collection
+
+![CLI][cli-icon] ![API][api-icon]
 
 `collections.info(CollectionDescriptor): Promise<CollectionPage>`
 
@@ -300,6 +310,8 @@ abstract.collections.info({
 ```
 
 ### Create a collection
+
+![CLI][cli-icon] ![API][api-icon]
 
 `collections.create(ProjectDescriptor, NewCollection): Promise<Collection>`
 
@@ -317,6 +329,8 @@ abstract.collections.create({
 
 ### Update a collection
 
+![CLI][cli-icon] ![API][api-icon]
+
 `collections.update(CollectionDescriptor, UpdatedCollection): Promise<Collection>`
 
 Update an existing collection
@@ -332,8 +346,6 @@ abstract.collections.update({
 
 
 ## Comments
-
-![API][api-icon]
 
 A comment in Abstract can be left on a branch, commit, or layer. Comments on layers can also include an optional annotation that
 represents a bounding area ontop of the layer, this can be used to leave comments about specific areas.
@@ -363,6 +375,8 @@ represents a bounding area ontop of the layer, this can be used to leave comment
 
 ### List all comments
 
+![API][api-icon]
+
 `comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerDescriptor): Promise<Comment[]>`
 
 List the comments for a specific project
@@ -386,6 +400,8 @@ abstract.comments.list({
 
 ### Retrieve a comment
 
+![API][api-icon]
+
 `comments.info(CommentDescriptor): Promise<Comment>`
 
 Load the info for a comment
@@ -397,6 +413,8 @@ abstract.comments.info({
 ```
 
 ### Create a comment
+
+![API][api-icon]
 
 `comments.create(BranchDescriptor | CommitDescriptor | LayerDescriptor, Comment): Promise<Comment>`
 
@@ -436,8 +454,6 @@ abstract.comments.create({
 
 
 ## Commits
-
-![CLI][cli-icon] ![API][api-icon]
 
 A commit represents a point in time – contributors can create commits in the desktop app to save their work at different stages. When loading data from the Abstract SDK you will almost always need to provide a commit `SHA`
 to identify which version of the object you would like.
@@ -484,6 +500,8 @@ to identify which version of the object you would like.
 
 ### List all commits
 
+![CLI][cli-icon] ![API][api-icon]
+
 `commits.list(BranchDescriptor | LayerDescriptor): Promise<Commit[]>`
 
 List the commits for a specific branch
@@ -510,6 +528,8 @@ abstract.commits.list({
 
 ### Retrieve a commit
 
+![CLI][cli-icon] ![API][api-icon]
+
 `commits.info (FileDescriptor | LayerDescriptor | CommitDescriptor): Promise<Commit>`
 
 Load the commit info for a specific commit SHA on a branch
@@ -524,8 +544,6 @@ abstract.commits.info({
 
 
 ## Data
-
-![CLI][cli-icon] ![API][api-icon]
 
 ### The LayerDataset object
 
@@ -554,6 +572,8 @@ abstract.commits.info({
 
 ### Retrieve layer data
 
+![CLI][cli-icon] ![API][api-icon]
+
 `data.info(LayerDescriptor): Promise<LayerDataset>`
 
 ```js
@@ -572,8 +592,6 @@ abstract.data.info({
 
 A file represents a standard file – in Abstract a file is always loaded from a specific commit `SHA`, or point in time.
 
-![CLI][cli-icon] ![API][api-icon]
-
 ### The file object
 
 | Property                     | Type      | Description                                                     |
@@ -590,6 +608,8 @@ A file represents a standard file – in Abstract a file is always loaded from a
 
 ### List all files
 
+![CLI][cli-icon] ![API][api-icon]
+
 `files.list(BranchDescriptor): Promise<File[]>`
 
 List the files for a branch at the latest commit
@@ -603,6 +623,8 @@ abstract.files.list({
 ```
 
 ### Retrieve a file
+
+![CLI][cli-icon] ![API][api-icon]
 
 `files.info(FileDescriptor): Promise<File>`
 
@@ -618,6 +640,8 @@ abstract.files.info({
 ```
 
 ### Retrieve an Sketch file
+
+![CLI][cli-icon]
 
 `files.raw(FileDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
@@ -646,8 +670,6 @@ abstract.files.info({
 
 ## Layers
 
-![CLI][cli-icon] ![API][api-icon]
-
 A layer is a container for designs. In Sketch a layer usually represents an artboard however it can also be a non-contained layer floating on the page.
 
 ### The layer object
@@ -672,6 +694,7 @@ A layer is a container for designs. In Sketch a layer usually represents an artb
 
 ### List all layers
 
+![CLI][cli-icon] ![API][api-icon]
 
 `layers.list(FileDescriptor | PageDescriptor, { limit?: number, offset?: number }): Promise<Layer[]>`
 
@@ -703,6 +726,8 @@ abstract.layers.list({
 
 ### Retrieve a layer
 
+![CLI][cli-icon] ![API][api-icon]
+
 `layers.info(LayerDescriptor): Promise<Layer>`
 
 Load the info for a layer in a file at the latest commit on a branch
@@ -723,8 +748,6 @@ abstract.layers.info({
 
 A membership contains information about a user's role within an organization or a project. A membership is created when a user joins an organization or is given access to a project.
 
-![API][api-icon]
-
 ### The membership object
 
 | Property          | Type     | Description                                                  |
@@ -738,6 +761,8 @@ A membership contains information about a user's role within an organization or 
 
 ### List all memberships
 
+![API][api-icon]
+
 `memberships.list(OrganizationDescriptor | ProjectDescriptor): Promise<Membership[]>`
 
 List the members of an organization
@@ -749,6 +774,8 @@ abstract.memberships.list({
 ```
 
 ### Retrieve a membership
+
+![API][api-icon]
 
 `memberships.info(OrganizationMembershipDescriptor | ProjectMembershipDescriptor): Promise<Membership>`
 
@@ -763,8 +790,6 @@ abstract.memberships.info({
 
 
 ## Notifications
-
-![API][api-icon]
 
 A notification is a user-facing message triggered by an underlying activity. Notifications are both viewable and dismissable in the desktop application.
 
@@ -788,6 +813,8 @@ A notification is a user-facing message triggered by an underlying activity. Not
 
 ### List notifications
 
+![API][api-icon]
+
 `notifications.list(OrganizationDescriptor, { limit?: number, offset?: number }): Promise<Notification[]>`
 
 List the first two notifications for a given organization
@@ -799,6 +826,8 @@ abstract.notifications.list({
 ```
 
 ### Retrieve a notification
+
+![API][api-icon]
 
 `notifications.info(NotificationDescriptor): Promise<Notification>`
 
@@ -812,8 +841,6 @@ abstract.notifications.info({
 
 
 ## Organizations
-
-![API][api-icon]
 
 Organizations contain users and projects.
 
@@ -836,6 +863,8 @@ Organizations contain users and projects.
 
 ### List all organizations
 
+![API][api-icon]
+
 `organizations.list(): Promise<Organization[]>`
 
 Load the organizations accessible by the current access token
@@ -845,6 +874,8 @@ abstract.organizations.list();
 ```
 
 ### Retrieve an organization
+
+![API][api-icon]
 
 `organizations.info(OrganizationDescriptor): Promise<Organization>`
 
@@ -861,8 +892,6 @@ abstract.organizations.info({
 
 A page is a container for layers, often a file will have several pages to organize design work.
 
-![CLI][cli-icon] ![API][api-icon]
-
 ### The page object
 
 | Property    | Type     | Description                                                  |
@@ -876,6 +905,8 @@ A page is a container for layers, often a file will have several pages to organi
 | `type`      | `string` | This field has the value "library" for virtual library pages |
 
 ### List all pages
+
+![CLI][cli-icon] ![API][api-icon]
 
 `pages.list(FileDescriptor): Promise<Page[]>`
 
@@ -891,6 +922,8 @@ abstract.pages.list({
 ```
 
 ### Retrieve a page
+
+![CLI][cli-icon] ![API][api-icon]
 
 `pages.info(PageDescriptor): Promise<Page>`
 
@@ -908,8 +941,6 @@ abstract.pages.info({
 
 ## Previews
 
-![API][api-icon]
-
 A preview is an image file that represents the rendered version of a layer. In Abstract all previews are currently
 only available in PNG format.
 
@@ -920,6 +951,8 @@ only available in PNG format.
 | `webUrl` | `string` | A url to where this preview can be loaded in the Abstract web app |
 
 ### Retrieve an image file
+
+![API][api-icon]
 
 `previews.raw(LayerDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
@@ -960,6 +993,8 @@ fs.writeFile(`preview.png`, Buffer.from(processedBuffer), (err) => {
 
 ### Retrieve a preview image url
 
+![API][api-icon]
+
 > Note: The `previews.url` method requires an environment with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
 
 `previews.url(LayerDescriptor): Promise<string>`
@@ -979,6 +1014,8 @@ abstract.previews.url({
 
 ### Retrieve a preview
 
+![API][api-icon]
+
 `previews.info(LayerDescriptor): Promise<Preview>`
 
 Load the info for a layer preview
@@ -996,8 +1033,6 @@ abstract.previews.info({
 
 
 ## Projects
-
-![API][api-icon]
 
 A project is a container for files, it belongs to an organization. Teams use projects to logically separate their files
 for example for a project, a platform (e.g. Web / iOS), or by client.
@@ -1025,6 +1060,8 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 
 ### List all projects
 
+![API][api-icon]
+
 `projects.list(OrganizationDescriptor?, { filter?: "active" | "archived" }): Promise<Project[]>`
 
 List all projects accessible through the current authentication
@@ -1051,6 +1088,8 @@ abstract.projects.list({
 
 ### Retrieve a project
 
+![API][api-icon]
+
 `projects.info(ProjectDescriptor): Promise<Project>`
 
 Load the info for a project
@@ -1064,8 +1103,6 @@ abstract.projects.info({
 
 
 ## Shares
-
-![API][api-icon]
 
 A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
 
@@ -1083,6 +1120,8 @@ A share is a shareable url to an object in Abstract. You can use the desktop or 
 > Note: The `descriptor` property can be used as the first argument for many of the SDK methods
 
 ### Load info for a share
+
+![API][api-icon]
 
 `shares.info(ShareDescriptor): Promise<Share>`
 
@@ -1102,6 +1141,8 @@ abstract.shares.info({
 
 ### Using share.descriptor
 
+![API][api-icon]
+
 List all files for branch's share url
 
 ```js
@@ -1113,6 +1154,8 @@ const branchFiles = await abstract.files.list(branchShare.descriptor);
 ```
 
 ### Create a share
+
+![API][api-icon]
 
 `shares.create(OrganizationDescriptor, InputShare): Promise<Share>`
 
@@ -1136,8 +1179,6 @@ abstract.shares.create({
 
 A user contains information specific to an individual account. Users are global to Abstract and are not specific to organizations. A user is created in the application by creating a new account.
 
-![API][api-icon]
-
 ### The user object
 
 | Property          | Type     | Description                                                  |
@@ -1153,6 +1194,8 @@ A user contains information specific to an individual account. Users are global 
 
 ### List all users
 
+![API][api-icon]
+
 `users.list(OrganizationDescriptor | ProjectDescriptor): Promise<User[]>`
 
 List the users in an organization
@@ -1164,6 +1207,8 @@ abstract.users.list({
 ```
 
 ### Retrieve a user
+
+![API][api-icon]
 
 `users.info(UserDescriptor): Promise<User>`
 
