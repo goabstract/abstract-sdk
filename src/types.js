@@ -1112,7 +1112,7 @@ export type PreviewMeta = {
 };
 
 export type LayerData = {
-  layerId: string,
+  id: string,
   symbolId?: string,
   parentId?: string,
   childIds: string[],
