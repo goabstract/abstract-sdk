@@ -1,13 +1,13 @@
 // @flow
-import type { LayerData, LayerDescriptor } from "../types";
+import type { LayerDataset, LayerDescriptor } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Data extends Endpoint {
-  async info(descriptor: LayerDescriptor): Promise<LayerData> {
+  async info(descriptor: LayerDescriptor): Promise<LayerDataset> {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
-    return this.request<Promise<LayerData>>({
+    return this.request<Promise<LayerDataset>>({
       api: () => {
         return this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${
