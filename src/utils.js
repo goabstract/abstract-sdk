@@ -72,3 +72,11 @@ export function inferShareId(shareDescriptor: ShareDescriptor): string {
 
   return shareId;
 }
+
+export function isNodeEnvironment(): boolean {
+  return (
+    typeof process !== "undefined" &&
+    process.versions &&
+    process.versions.node !== undefined
+  );
+}

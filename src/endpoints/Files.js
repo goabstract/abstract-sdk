@@ -6,6 +6,7 @@ import type {
   RawOptions
 } from "../types";
 import { NotFoundError } from "../errors";
+import { isNodeEnvironment } from "../utils";
 import Endpoint from "./Endpoint";
 
 export default class Files extends Endpoint {
@@ -72,7 +73,7 @@ export default class Files extends Endpoint {
     );
     return this.request<Promise<void>>({
       cli: async () => {
-        if (options.disableWrite) {
+        if (!isNodeEnvironment() || options.disableWrite) {
           return;
         }
         this.cliRequest([

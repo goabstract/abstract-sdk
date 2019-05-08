@@ -3,6 +3,7 @@
 import { promises as fs } from "fs";
 import { FileAPIError } from "../errors";
 import type { LayerDescriptor, PreviewMeta, RawOptions } from "../types";
+import { isNodeEnvironment } from "../utils";
 import Endpoint from "./Endpoint";
 
 export default class Previews extends Endpoint {
@@ -43,7 +44,7 @@ export default class Previews extends Endpoint {
           this.previewsUrl
         );
 
-        if (!options.disableWrite) {
+        if (isNodeEnvironment() && !options.disableWrite) {
           const filename =
             options.filename || `${latestDescriptor.layerId}.png`;
           fs.writeFile(filename, Buffer.from(arrayBuffer));

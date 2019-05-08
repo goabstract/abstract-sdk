@@ -7,6 +7,7 @@ import type {
   CommitDescriptor,
   RawOptions
 } from "../types";
+import { isNodeEnvironment } from "../utils";
 import Endpoint from "./Endpoint";
 
 export default class Assets extends Endpoint {
@@ -55,7 +56,7 @@ export default class Assets extends Endpoint {
           null
         );
 
-        if (!options.disableWrite) {
+        if (isNodeEnvironment() && !options.disableWrite) {
           const filename =
             options.filename || `${asset.layerName}.${asset.fileFormat}`;
           fs.writeFile(filename, Buffer.from(arrayBuffer));
