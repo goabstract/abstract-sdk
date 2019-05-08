@@ -531,6 +531,8 @@ abstract.commits.info({
 |---------------|-------------------|-------------------------------------------------|
 | `childIds`    | `string[]`        | Array of UUID's for the layers children, if any |
 | `id`          | `string`          | UUID of the chid layer                          |
+| `libraryId`   | `string`          | UUID of the library file this layer is from     |
+| `libraryName` | `string`          | The name of the library file this layer is from |
 | `parentId`    | `string`          | UUID of the parent layer, if any                |
 | `properties`  | `LayerProperties` | Layer properties (to be documented)             |
 | `symbolId`    | `string`          | UUID of the parent symbol, if any               |

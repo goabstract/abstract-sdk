@@ -1123,6 +1123,8 @@ export type PreviewMeta = {
 
 export type LayerData = {
   id: string,
+  libraryName: string,
+  libraryId: string,
   symbolId?: string,
   parentId?: string,
   childIds: string[],
