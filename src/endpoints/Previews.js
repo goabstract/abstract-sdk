@@ -65,7 +65,7 @@ export default class Previews extends Endpoint {
       throw new FileAPIError();
     }
 
-    const buffer = await this.raw(descriptor, { buffer: true });
+    const buffer = await this.raw(descriptor);
 
     return URL.createObjectURL(
       new Blob([new DataView(buffer)], { type: "image/png" })
