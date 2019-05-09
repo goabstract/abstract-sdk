@@ -1080,10 +1080,18 @@ export type LayerOverrideData = {
   [layerId: string]: LayerOverrideData
 };
 
+export type LayerDataAsset = {
+  fileFormat: string,
+  formatName: string,
+  namingScheme: string,
+  scale: string
+};
+
 export type LayerDataProperties = {
   styleName?: string,
   name: string,
   isVisible: boolean,
+  isLocked: boolean,
   width: number,
   height: number,
   x: number,
@@ -1095,6 +1103,7 @@ export type LayerDataProperties = {
   textStyleIndex: LayerTextStyle[],
   colorIndex: LayerColor[],
   blendMode: LayerBlendMode,
+  hasClickThrough?: boolean,
   imageId?: string,
   textContent?: string,
   backgroundColor?: LayerColor,
@@ -1104,7 +1113,8 @@ export type LayerDataProperties = {
   borders?: LayerBorder[],
   shadows?: LayerShadows,
   resizingConstraint?: LayerResizingConstraint,
-  overrides?: LayerOverrideData
+  overrides?: LayerOverrideData,
+  assets?: LayerDataAsset[]
 };
 
 export type PreviewMeta = {
@@ -1113,6 +1123,8 @@ export type PreviewMeta = {
 
 export type LayerData = {
   id: string,
+  libraryName: string,
+  libraryId: string,
   symbolId?: string,
   parentId?: string,
   childIds: string[],
