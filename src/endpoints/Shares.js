@@ -8,6 +8,10 @@ import type {
 } from "../types";
 import Endpoint from "./Endpoint";
 
+const headers = {
+  "Abstract-Api-Version": "13"
+};
+
 export default class Activities extends Endpoint {
   create<T: Share>(
     descriptor: OrganizationDescriptor,
@@ -21,7 +25,8 @@ export default class Activities extends Endpoint {
             ...descriptor,
             ...shareInput,
             commitSha: (shareInput: any).sha
-          }
+          },
+          headers
         });
       }
     });
@@ -30,7 +35,9 @@ export default class Activities extends Endpoint {
   info<T: Share>(descriptor: ShareDescriptor): Promise<T> {
     return this.request<Promise<T>>({
       api: () => {
-        return this.apiRequest(`share_links/${inferShareId(descriptor)}`);
+        return this.apiRequest(`share_links/${inferShareId(descriptor)}`, {
+          headers
+        });
       },
 
       cache: {
