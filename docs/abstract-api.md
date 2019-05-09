@@ -514,7 +514,7 @@ abstract.commits.info({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-### The data object
+### The LayerDataset object
 
 | Property    | Type        | Description                                                         |
 |-------------|-------------|---------------------------------------------------------------------|
@@ -541,7 +541,7 @@ abstract.commits.info({
 
 ### Retrieve layer data
 
-`data.info(LayerDescriptor): Promise<Data>`
+`data.info(LayerDescriptor): Promise<LayerDataset>`
 
 ```js
 abstract.data.info({
