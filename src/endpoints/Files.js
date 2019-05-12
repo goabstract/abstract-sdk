@@ -1,10 +1,16 @@
 // @flow
-import type { CommitDescriptor, File, FileDescriptor } from "../types";
+import type {
+  CommitDescriptor,
+  File,
+  FileDescriptor,
+  RawOptions
+} from "../types";
 import { NotFoundError } from "../errors";
+import { isNodeEnvironment } from "../utils";
 import Endpoint from "./Endpoint";
 
 export default class Files extends Endpoint {
-  async info(descriptor: FileDescriptor): Promise<File> {
+  async info(descriptor: FileDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -36,7 +42,7 @@ export default class Files extends Endpoint {
     });
   }
 
-  async list(descriptor: CommitDescriptor): Promise<File[]> {
+  async list(descriptor: CommitDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -57,6 +63,28 @@ export default class Files extends Endpoint {
           latestDescriptor.sha
         ]);
         return response.files;
+      }
+    });
+  }
+
+  async raw(descriptor: FileDescriptor, options: RawOptions = {}) {
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
+    return this.request<Promise<void>>({
+      cli: async () => {
+        if (!isNodeEnvironment() || options.disableWrite) {
+          return;
+        }
+        this.cliRequest([
+          "file",
+          "export",
+          latestDescriptor.fileId,
+          options.filename || process.cwd(),
+          `--project-id=${latestDescriptor.projectId}`,
+          `--branch-id=${latestDescriptor.branchId}`,
+          `--sha=${latestDescriptor.sha}`
+        ]);
       }
     });
   }

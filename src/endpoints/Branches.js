@@ -4,7 +4,7 @@ import type { Branch, BranchDescriptor, ProjectDescriptor } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Branches extends Endpoint {
-  info(descriptor: BranchDescriptor): Promise<Branch> {
+  info(descriptor: BranchDescriptor) {
     return this.request<Promise<Branch>>({
       api: () => {
         return this.apiRequest(
@@ -30,7 +30,7 @@ export default class Branches extends Endpoint {
   list(
     descriptor: ProjectDescriptor,
     options: { filter?: "active" | "archived" | "mine" } = {}
-  ): Promise<Branch[]> {
+  ) {
     return this.request<Promise<Branch[]>>({
       api: async () => {
         const query = querystring.stringify({ ...options });

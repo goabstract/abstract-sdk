@@ -8,7 +8,7 @@ import type {
 import Endpoint from "./Endpoint";
 
 export default class Projects extends Endpoint {
-  info(descriptor: ProjectDescriptor): Promise<Project> {
+  info(descriptor: ProjectDescriptor) {
     return this.request<Promise<Project>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -26,7 +26,7 @@ export default class Projects extends Endpoint {
   list(
     descriptor: OrganizationDescriptor,
     options: { filter?: "active" | "archived" } = {}
-  ): Promise<Project[]> {
+  ) {
     return this.request<Promise<Project[]>>({
       api: async () => {
         const query = querystring.stringify({ ...descriptor, ...options });

@@ -13,10 +13,7 @@ import type {
 import Endpoint from "./Endpoint";
 
 export default class Collections extends Endpoint {
-  create(
-    descriptor: ProjectDescriptor,
-    collection: NewCollection
-  ): Promise<Collection> {
+  create(descriptor: ProjectDescriptor, collection: NewCollection) {
     return this.request<Promise<Collection>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -36,7 +33,7 @@ export default class Collections extends Endpoint {
     options: { layersPerCollection?: number | "all" } = {
       layersPerCollection: "all"
     }
-  ): Promise<CollectionResponse> {
+  ) {
     return this.request<Promise<CollectionResponse>>({
       api: async () => {
         const query = querystring.stringify({ ...options });
@@ -70,7 +67,7 @@ export default class Collections extends Endpoint {
   list(
     descriptor: ProjectDescriptor | BranchDescriptor,
     options?: { layersPerCollection?: number | "all" } = {}
-  ): Promise<CollectionsResponse> {
+  ) {
     return this.request<Promise<CollectionsResponse>>({
       api: async () => {
         const { projectId, ...sanitizedDescriptor } = descriptor;
@@ -94,10 +91,7 @@ export default class Collections extends Endpoint {
     });
   }
 
-  update(
-    descriptor: CollectionDescriptor,
-    collection: UpdatedCollection
-  ): Promise<Collection> {
+  update(descriptor: CollectionDescriptor, collection: UpdatedCollection) {
     return this.request<Promise<Collection>>({
       api: async () => {
         const response = await this.apiRequest(

@@ -10,7 +10,7 @@ import type {
 import Endpoint from "./Endpoint";
 
 export default class Layers extends Endpoint {
-  async info(descriptor: LayerDescriptor): Promise<Layer> {
+  async info(descriptor: LayerDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -52,7 +52,7 @@ export default class Layers extends Endpoint {
   async list(
     descriptor: FileDescriptor | PageDescriptor,
     options: ListOptions = {}
-  ): Promise<Layer[]> {
+  ) {
     descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
     return this.request<Promise<Layer[]>>({
       api: async () => {

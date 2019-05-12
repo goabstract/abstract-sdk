@@ -4,7 +4,7 @@ import { NotFoundError } from "../errors";
 import Endpoint from "./Endpoint";
 
 export default class Pages extends Endpoint {
-  info(descriptor: PageDescriptor): Promise<Page> {
+  info(descriptor: PageDescriptor) {
     return this.request<Promise<Page>>({
       api: async () => {
         const { pageId, ...fileDescriptor } = descriptor;
@@ -22,7 +22,7 @@ export default class Pages extends Endpoint {
     });
   }
 
-  list(descriptor: FileDescriptor): Promise<Page[]> {
+  list(descriptor: FileDescriptor) {
     return this.request<Promise<Page[]>>({
       api: async () => {
         const response = await this.apiRequest(

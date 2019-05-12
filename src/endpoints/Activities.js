@@ -13,7 +13,7 @@ import type {
 import Endpoint from "./Endpoint";
 
 export default class Activities extends Endpoint {
-  info(descriptor: ActivityDescriptor): Promise<Activity> {
+  info(descriptor: ActivityDescriptor) {
     return this.request<Promise<Activity>>({
       api: () => {
         return this.apiRequest(`activities/${descriptor.activityId}`);
@@ -28,7 +28,7 @@ export default class Activities extends Endpoint {
   list(
     descriptor: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
     options: ListOptions = {}
-  ): CursorPromise<Activity[]> {
+  ) {
     return this.request<CursorPromise<Activity[]>>({
       api: () => {
         return new Cursor<Activity[]>(

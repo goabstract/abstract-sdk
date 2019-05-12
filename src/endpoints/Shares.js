@@ -13,10 +13,7 @@ const headers = {
 };
 
 export default class Activities extends Endpoint {
-  create<T: Share>(
-    descriptor: OrganizationDescriptor,
-    shareInput: ShareInput
-  ): Promise<T> {
+  create<T: Share>(descriptor: OrganizationDescriptor, shareInput: ShareInput) {
     return this.request<Promise<T>>({
       api: async () => {
         return this.apiRequest("share_links", {
@@ -32,7 +29,7 @@ export default class Activities extends Endpoint {
     });
   }
 
-  info<T: Share>(descriptor: ShareDescriptor): Promise<T> {
+  info<T: Share>(descriptor: ShareDescriptor) {
     return this.request<Promise<T>>({
       api: () => {
         return this.apiRequest(`share_links/${inferShareId(descriptor)}`, {

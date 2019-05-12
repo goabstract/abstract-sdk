@@ -1,3 +1,12 @@
+## v1.4.0
+- Added missing `LayerDataset` type
+- Upgraded shares endpoint to API v13 with native `latest` resolution
+
+## v1.3.0
+- Updated CI documentation
+- Added entity cache
+- Removed `abstract-cli` dependency
+
 ## v1.2.0
 - Updated type interfaces to no longer include email addresses
 - Added `memberships.list` and `memberships.info` to the API transport

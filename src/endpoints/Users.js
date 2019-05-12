@@ -8,7 +8,7 @@ import type {
 import Endpoint from "./Endpoint";
 
 export default class Users extends Endpoint {
-  info(descriptor: UserDescriptor): Promise<User> {
+  info(descriptor: UserDescriptor) {
     return this.request<Promise<User>>({
       api: async () => {
         return this.apiRequest(`users/${descriptor.userId}`);
@@ -20,9 +20,7 @@ export default class Users extends Endpoint {
     });
   }
 
-  list(
-    descriptor: OrganizationDescriptor | ProjectDescriptor
-  ): Promise<User[]> {
+  list(descriptor: OrganizationDescriptor | ProjectDescriptor) {
     return this.request<Promise<User[]>>({
       api: async () => {
         let url = "";
