@@ -592,7 +592,7 @@ export type Collection = {
   description: string,
   createdAt: string,
   publishedAt: string,
-  layers: string[]
+  layers: CollectionLayer[]
 };
 
 export type UpdatedCollection = {
