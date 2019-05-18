@@ -35,4 +35,4 @@ Please see the [contributors guide](CONTRIBUTING.md) for more information.
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)
