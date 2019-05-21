@@ -13,12 +13,10 @@ export default class Commits extends Endpoint {
   info(descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor) {
     return this.request<Promise<Commit>>({
       api: async () => {
-        const infoDescriptor = {
-          ...descriptor,
-          startSHA: descriptor.sha
-        };
-
-        const [commit] = await this.list(infoDescriptor, { limit: 1 });
+        const [commit] = await this.list(descriptor, {
+          limit: 1,
+          startSha: descriptor.sha
+        });
 
         if (!commit) {
           throw new NotFoundError(`sha=${descriptor.sha}`);
