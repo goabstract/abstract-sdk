@@ -4,19 +4,18 @@ import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "../testing";
 describe("#info", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project-id/branches/branch-id/commits?fileId=file-id&limit=1",
+      "/projects/project-id/branches/branch-id/commits?limit=1&startSha=sha",
       {
-        commits: [{ id: "commit-id" }]
+        commits: [{ sha: "sha" }]
       }
     );
     const response = await API_CLIENT.commits.info({
       projectId: "project-id",
       branchId: "branch-id",
-      fileId: "file-id",
       sha: "sha"
     });
 
-    expect(response).toEqual({ id: "commit-id" });
+    expect(response).toEqual({ sha: "sha" });
   });
 
   test("cli", async () => {
