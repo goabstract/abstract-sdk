@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@babel/runtime-corejs2": "^7.3.4",
+    "auto-changelog": "^1.13.0",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
     "flow-typed": "^2.5.1",

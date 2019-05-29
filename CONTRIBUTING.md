@@ -88,15 +88,10 @@ yarn start
 
 ## Cutting releases
 
-New package versions of `abstract-sdk` are automatically published to the public NPM registry whenever new tags are pushed to the repository. Be sure to rebase `master` on top of `docs` to pick up any documentation hotfixes made between versions.
+New package versions of `abstract-sdk` are automatically published to the public NPM registry whenever new tags are pushed to the repository. An interactive convenience script is included to assist with new releases:
 
 ```sh
-$ git checkout docs
-$ git pull --rebase origin docs
-$ git checkout master
-$ git rebase docs
-$ yarn version
-$ git push --follow-tags
+$ ./bin/release
 ```
 
 <br />
