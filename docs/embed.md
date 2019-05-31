@@ -3,9 +3,9 @@ id: embed
 title: Embeds
 ---
 
-Embeds can be used to display interactive, up-to-date previews for layers and collections in any environment that supports HTML. To use an embed, create an `<iframe>` with special URL derived from public share URLs.
+Embeds can be used to display interactive, up-to-date previews for layers and collections in any environment that supports HTML. To use an embed, create an `<iframe>` with a special URL derived from public share URLs.
 
-> Note: Only links for layers that are publicly shared can be embedded.
+> Note: Only links for layers or collections that are publicly shared can be embedded.
 
 ## Creating an embed
 
