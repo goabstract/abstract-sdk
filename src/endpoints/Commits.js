@@ -6,22 +6,17 @@ import type {
   FileDescriptor,
   LayerDescriptor
 } from "../types";
-import { NotFoundError } from "../errors";
 import Endpoint from "./Endpoint";
 
 export default class Commits extends Endpoint {
   info(descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor) {
     return this.request<Promise<Commit>>({
-      api: async () => {
-        const [commit] = await this.list(descriptor, {
-          limit: 1,
-          startSha: descriptor.sha
-        });
-
-        if (!commit) {
-          throw new NotFoundError(`sha=${descriptor.sha}`);
-        }
-        return commit;
+      api: () => {
+        return this.apiRequest(
+          `projects/${descriptor.projectId}/branches/${
+            descriptor.branchId
+          }/commits/${descriptor.sha}`
+        );
       },
 
       cli: async () => {
