@@ -11,7 +11,8 @@
       "transports",
       "pagination",
       "continuous-integration",
-      "latest"
+      "latest",
+      "embed"
     ],
     "API Reference": [
       "abstract-api",

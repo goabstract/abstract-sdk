@@ -1,11 +1,13 @@
 ---
 id: embed
-title: Embed
+title: Embeds
 ---
 
-> Note: Currently only links for layers that are publicly shared can be embedded
+Embeds can be used to display interactive, up-to-date previews for layers and collections in any environment that supports HTML. To use an embed, create an `<iframe>` with special URL derived from public share URLs.
 
-Embed can be used to display the latest preview for an Abstract layer in your document or application.
+> Note: Only links for layers that are publicly shared can be embedded.
+
+## Creating an embed
 
 Given a public share url:
 
@@ -26,8 +28,4 @@ An embed can be created by using the following URL as the `src` of an `<iframe>`
 ></iframe>
 ```
 
-<iframe src="https://app.goabstract.com/embed/c1182fa5-41d4-4f51-a0e2-5506264b65bd" width="640" height="360" frameborder="0" ></iframe>
-
-<hr />
-
-We will be exploring more themes and options like collections in the near future.
+<iframe src="https://app.goabstract.com/embed/c1182fa5-41d4-4f51-a0e2-5506264b65bd" width="640" height="360" frameborder="0"></iframe>

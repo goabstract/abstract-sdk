@@ -4,14 +4,28 @@ import { NotFoundError } from "../errors";
 import Endpoint from "./Endpoint";
 
 export default class Pages extends Endpoint {
-  info(descriptor: PageDescriptor) {
+  async info(descriptor: PageDescriptor) {
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
+
     return this.request<Promise<Page>>({
       api: async () => {
-        const { pageId, ...fileDescriptor } = descriptor;
+        const { pageId, ...fileDescriptor } = latestDescriptor;
         const pages = await this.list(fileDescriptor);
-        const page = pages.find(page => page.id === descriptor.pageId);
+        const page = pages.find(page => page.id === latestDescriptor.pageId);
         if (!page) {
-          throw new NotFoundError(`pageId=${descriptor.pageId}`);
+          throw new NotFoundError(`pageId=${latestDescriptor.pageId}`);
+        }
+        return page;
+      },
+
+      cli: async () => {
+        const { pageId, ...fileDescriptor } = latestDescriptor;
+        const pages = await this.list(fileDescriptor);
+        const page = pages.find(page => page.id === latestDescriptor.pageId);
+        if (!page) {
+          throw new NotFoundError(`pageId=${latestDescriptor.pageId}`);
         }
         return page;
       },
@@ -22,14 +36,26 @@ export default class Pages extends Endpoint {
     });
   }
 
-  list(descriptor: FileDescriptor) {
+  async list(descriptor: FileDescriptor) {
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
     return this.request<Promise<Page[]>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/files/${descriptor.fileId}/pages`
+          `projects/${latestDescriptor.projectId}/branches/${
+            latestDescriptor.branchId
+          }/files/${latestDescriptor.fileId}/pages`
         );
+        return response.pages;
+      },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "files",
+          latestDescriptor.projectId,
+          latestDescriptor.sha
+        ]);
         return response.pages;
       }
     });
