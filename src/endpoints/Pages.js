@@ -15,7 +15,7 @@ export default class Pages extends Endpoint {
         const pages = await this.list(fileDescriptor);
         const page = pages.find(page => page.id === pageId);
         if (!page) {
-          throw new NotFoundError(`pageId=${latestDescriptor.pageId}`);
+          throw new NotFoundError(`pageId=${pageId}`);
         }
         return page;
       },
