@@ -26,7 +26,9 @@ export default class Users extends Endpoint {
         let url = "";
         if (descriptor.organizationId) {
           url = `organizations/${descriptor.organizationId}/memberships`;
-        } else if (descriptor.projectId) {
+        }
+
+        if (descriptor.projectId) {
           url = `projects/${descriptor.projectId}/memberships`;
         }
         const response = await this.apiRequest(url);

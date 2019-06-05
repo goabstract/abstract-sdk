@@ -43,9 +43,7 @@ export default class Pages extends Endpoint {
     return this.request<Promise<Page[]>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${
-            latestDescriptor.branchId
-          }/files/${latestDescriptor.fileId}/pages`
+          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/pages`
         );
         return response.pages;
       },

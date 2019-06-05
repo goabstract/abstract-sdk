@@ -52,13 +52,12 @@ describe("#info", () => {
 
 describe("#list", () => {
   test("api", async () => {
-    mockAPI("/comments?branchId=branch-id&projectId=project-id&sha=sha", {
+    mockAPI("/projects/project-id/collections?branchId=branch-id", {
       data: { collections: [{ id: "collection-id" }] }
     });
-    const response = await API_CLIENT.comments.list({
+    const response = await API_CLIENT.collections.list({
       projectId: "project-id",
-      branchId: "branch-id",
-      sha: "sha"
+      branchId: "branch-id"
     });
     expect(response).toEqual({ collections: [{ id: "collection-id" }] });
   });
@@ -73,5 +72,39 @@ describe("#list", () => {
     });
 
     expect(response).toEqual({ collections: [{ id: "collection-id" }] });
+  });
+
+  test("cli - no branch id", async () => {
+    mockCLI(["collections", "project-id"], {
+      collections: [{ id: "collection-id" }]
+    });
+
+    const response = await CLI_CLIENT.collections.list({
+      projectId: "project-id"
+    });
+
+    expect(response).toEqual({ collections: [{ id: "collection-id" }] });
+  });
+});
+
+describe("#update", () => {
+  test("api", async () => {
+    mockAPI(
+      "/projects/project-id/collections/collection-id",
+      { data: { id: "collection-id" } },
+      204,
+      "put"
+    );
+    const response = await API_CLIENT.collections.update(
+      {
+        collectionId: "collection-id",
+        projectId: "project-id"
+      },
+      {
+        branchId: "branch",
+        name: "collection"
+      }
+    );
+    expect(response).toEqual({ id: "collection-id" });
   });
 });

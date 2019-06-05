@@ -119,3 +119,9 @@ describe("cache", () => {
     expect(global.fetch).toBeCalledTimes(6);
   });
 });
+
+describe("proxy", () => {
+  test("bypasses proxy for non-endpoint members", () => {
+    expect((API_CLIENT: any).foo).toEqual(undefined);
+  });
+});

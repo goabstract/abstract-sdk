@@ -38,9 +38,7 @@ export default class Collections extends Endpoint {
       api: async () => {
         const query = querystring.stringify({ ...options });
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections/${
-            descriptor.collectionId
-          }?${query}`
+          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
         );
         const { collections, ...meta } = response.data;
         return {
@@ -95,9 +93,7 @@ export default class Collections extends Endpoint {
     return this.request<Promise<Collection>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections/${
-            descriptor.collectionId
-          }`,
+          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}`,
           {
             method: "PUT",
             body: collection

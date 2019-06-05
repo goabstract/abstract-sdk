@@ -17,6 +17,21 @@ describe("#create", () => {
     );
     expect(response).toEqual({ id: "comment-id" });
   });
+
+  test("api - branch", async () => {
+    mockAPI("/projects/project-id/branches/branch-id", { name: "branch" });
+    mockAPI("/comments", { id: "comment-id" }, 201, "post");
+    const response = await API_CLIENT.comments.create(
+      {
+        projectId: "project-id",
+        branchId: "branch-id"
+      },
+      {
+        body: "foo"
+      }
+    );
+    expect(response).toEqual({ id: "comment-id" });
+  });
 });
 
 describe("#info", () => {

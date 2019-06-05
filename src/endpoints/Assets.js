@@ -56,6 +56,7 @@ export default class Assets extends Endpoint {
           null
         );
 
+        /* istanbul ignore if */
         if (isNodeEnvironment() && !options.disableWrite) {
           const filename =
             options.filename || `${asset.layerName}.${asset.fileFormat}`;

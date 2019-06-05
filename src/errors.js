@@ -34,9 +34,16 @@ export class FileAPIError extends BaseError {
 export class EndpointUndefinedError extends BaseError {
   constructor(endpoint: ?string, transport: string) {
     super(
-      `Endpoint ${endpoint ? `"${endpoint}" ` : ""}not defined in ${
+      `Endpoint ${
+        /* istanbul ignore next */
+        endpoint ? `"${endpoint}" ` : ""
+      }not defined in ${
+        /* istanbul ignore next */
         transport ? `"${transport}"` : "any"
-      } transport${transport ? "" : "s"}.`
+      } transport${
+        /* istanbul ignore next */
+        transport ? "" : "s"
+      }.`
     );
   }
 }
@@ -55,12 +62,6 @@ export class InternalServerError extends BaseError {
   constructor(path: string, body: mixed) {
     super("Internal server error.");
     this.data = { path, body };
-  }
-}
-
-export class LatestCommitNotFound extends BaseError {
-  constructor() {
-    super("Could not resolve latest commit using provided descriptor.");
   }
 }
 
@@ -121,8 +122,9 @@ export async function throwAPIError(
   url: string,
   body: mixed
 ) {
+  /* istanbul ignore next */
   logAPIError.enabled && logAPIError(await response.clone().json());
-  // TODO verify this works
+
   switch (response.status) {
     case 401:
       throw new UnauthorizedError(url, body);
@@ -146,6 +148,7 @@ export function throwCLIError(
   cliPath: string,
   args: Object
 ) {
+  /* istanbul ignore next */
   logCLIError.enabled && logCLIError(response);
 
   switch (response.code) {

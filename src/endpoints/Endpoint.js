@@ -1,5 +1,6 @@
 /* @flow */
 /* global fetch */
+/* istanbul ignore file */
 import "cross-fetch/polyfill";
 import { existsSync } from "fs";
 import { spawn } from "child_process";
@@ -113,6 +114,7 @@ export default class Endpoint {
   ) {
     const response = await this._fetch(input, init, hostname);
     const data = await response.json();
+    /* istanbul ignore next */
     logAPIResponse.enabled && logAPIResponse(data);
     return data;
   }
@@ -124,6 +126,7 @@ export default class Endpoint {
   ) {
     const response = await this._fetch(input, init, hostname);
     const buffer = response.arrayBuffer();
+    /* istanbul ignore next */
     logAPIResponse.enabled && logAPIResponse(buffer.toString());
     return buffer;
   }
@@ -134,6 +137,7 @@ export default class Endpoint {
 
     if (!this.cliPath || !existsSync(this.cliPath)) {
       const error = new CLIPathError();
+      /* istanbul ignore next */
       logCLIError.enabled && logCLIError(error);
       throw error;
     }
@@ -143,6 +147,7 @@ export default class Endpoint {
       [...tokenArgs, "--api-url", this.apiUrl, ...args]
     ];
 
+    /* istanbul ignore next */
     logCLIRequest.enabled && logCLIRequest(spawnArgs);
     const request = spawn(...spawnArgs);
 
@@ -171,6 +176,7 @@ export default class Endpoint {
         }
 
         const response = JSON.parse(outBuffer.toString());
+        /* istanbul ignore next */
         logCLIResponse.enabled && logCLIResponse(response);
         resolve(response);
       });
@@ -190,6 +196,7 @@ export default class Endpoint {
       hostname === null ? input : `${hostname || ""}/${input}`,
       init
     ];
+    /* istanbul ignore next */
     logAPIRequest.enabled && logAPIRequest(args);
 
     const request = fetch(...args);
@@ -204,6 +211,7 @@ export default class Endpoint {
 
     if (!token) {
       const error = new APITokenError();
+      /* istanbul ignore next */
       logAPIError.enabled && logAPIError(error);
       throw error;
     }

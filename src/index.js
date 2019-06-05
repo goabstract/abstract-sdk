@@ -1,4 +1,5 @@
 // @flow
+/* istanbul ignore file */
 import Client from "./Client";
 import paginate from "./paginate";
 import * as sketch from "./sketch";
@@ -10,7 +11,6 @@ import {
   FileAPIError,
   ForbiddenError,
   InternalServerError,
-  LatestCommitNotFound,
   NotFoundError,
   RateLimitError,
   ServiceUnavailableError,
@@ -28,7 +28,6 @@ export {
   FileAPIError,
   ForbiddenError,
   InternalServerError,
-  LatestCommitNotFound,
   NotFoundError,
   RateLimitError,
   ServiceUnavailableError,

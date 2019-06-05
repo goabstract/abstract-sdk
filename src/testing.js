@@ -1,4 +1,5 @@
 // @flow
+/* istanbul ignore file */
 import child_process from "child_process";
 import nock from "nock";
 import { Readable } from "readable-stream";
@@ -17,6 +18,8 @@ function buildTextStream(text?: string): ReadableStream {
 
   return stream;
 }
+
+export const DEFAULT_CLIENT = new Client();
 
 export const API_CLIENT = new Client({
   accessToken: "accessToken",
@@ -77,4 +80,13 @@ export function mockAPI(
   method: string = "get"
 ) {
   (nock("http://apiUrl"): any)[method](url).reply(code, response);
+}
+
+export function mockPreviewAPI(
+  url: string,
+  response: Object,
+  code: number = 200,
+  method: string = "get"
+) {
+  (nock("http://previewsurl"): any)[method](url).reply(code, response);
 }

@@ -16,7 +16,7 @@
   "scripts": {
     "prepare": "./scripts/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
-    "test": "jest",
+    "test": "jest --coverage",
     "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "prebuild": "rm -rf lib && flow-copy-source -i *.test.js src lib",
     "build": "babel src -i *.test.js -d lib",

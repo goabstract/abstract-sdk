@@ -13,9 +13,7 @@ export default class Commits extends Endpoint {
     return this.request<Promise<Commit>>({
       api: () => {
         return this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/commits/${descriptor.sha}`
+          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits/${descriptor.sha}`
         );
       },
 
@@ -46,9 +44,7 @@ export default class Commits extends Endpoint {
           layerId: descriptor.layerId && descriptor.layerId
         });
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/commits?${query}`
+          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits?${query}`
         );
         return response.commits;
       },

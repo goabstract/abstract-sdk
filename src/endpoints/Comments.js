@@ -72,9 +72,11 @@ export default class Comments extends Endpoint {
       api: () => {
         return new Cursor<Comment[]>(
           async (meta = { nextOffset: options.offset }) => {
+            /* istanbul ignore else */
             if (!newDescriptor) {
               newDescriptor = descriptor;
 
+              /* istanbul ignore else */
               if (newDescriptor.sha) {
                 newDescriptor = await this.client.descriptors.getLatestDescriptor(
                   newDescriptor

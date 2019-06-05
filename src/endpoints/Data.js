@@ -10,11 +10,7 @@ export default class Data extends Endpoint {
     return this.request<Promise<LayerDataset>>({
       api: () => {
         return this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${
-            latestDescriptor.branchId
-          }/commits/${latestDescriptor.sha}/files/${
-            latestDescriptor.fileId
-          }/layers/${latestDescriptor.layerId}/data`
+          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}/data`
         );
       },
 

@@ -10,9 +10,7 @@ export default class Changesets extends Endpoint {
     return this.request<Promise<Changeset>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${
-            latestDescriptor.branchId
-          }/commits/${latestDescriptor.sha}/changeset`
+          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`
         );
         return response.changeset;
       },

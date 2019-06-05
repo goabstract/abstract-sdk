@@ -13,11 +13,7 @@ export default class Previews extends Endpoint {
     );
     return this.request<Promise<PreviewMeta>>({
       api: async () => ({
-        webUrl: `${this.webUrl}/projects/${
-          latestDescriptor.projectId
-        }/commits/${latestDescriptor.sha}/files/${
-          latestDescriptor.fileId
-        }/layers/${latestDescriptor.layerId}`
+        webUrl: `${this.webUrl}/projects/${latestDescriptor.projectId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
       })
     });
   }
@@ -29,11 +25,7 @@ export default class Previews extends Endpoint {
     return this.request<Promise<ArrayBuffer>>({
       api: async () => {
         const arrayBuffer = await this.apiRawRequest(
-          `projects/${latestDescriptor.projectId}/commits/${
-            latestDescriptor.sha
-          }/files/${latestDescriptor.fileId}/layers/${
-            latestDescriptor.layerId
-          }`,
+          `projects/${latestDescriptor.projectId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`,
           {
             headers: {
               Accept: undefined,
@@ -44,6 +36,7 @@ export default class Previews extends Endpoint {
           this.previewsUrl
         );
 
+        /* istanbul ignore if */
         if (isNodeEnvironment() && !options.disableWrite) {
           const filename =
             options.filename || `${latestDescriptor.layerId}.png`;

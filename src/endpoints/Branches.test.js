@@ -25,6 +25,16 @@ describe("#info", () => {
 
 describe("#list", () => {
   test("api", async () => {
+    mockAPI("/projects/project-id/branches/?", {
+      data: { branches: [{ id: "branch-id" }] }
+    });
+    const response = await API_CLIENT.branches.list({
+      projectId: "project-id"
+    });
+    expect(response).toEqual([{ id: "branch-id" }]);
+  });
+
+  test("api - filter", async () => {
     mockAPI("/projects/project-id/branches/?filter=mine", {
       data: { branches: [{ id: "branch-id" }] }
     });
@@ -32,11 +42,21 @@ describe("#list", () => {
       { projectId: "project-id" },
       { filter: "mine" }
     );
-
     expect(response).toEqual([{ id: "branch-id" }]);
   });
 
   test("cli", async () => {
+    mockCLI(["branches", "project-id"], {
+      branches: [{ id: "branch-id" }]
+    });
+    const response = await CLI_CLIENT.branches.list({
+      projectId: "project-id"
+    });
+
+    expect(response).toEqual([{ id: "branch-id" }]);
+  });
+
+  test("cli - filter", async () => {
     mockCLI(["branches", "project-id", "--filter", "mine"], {
       branches: [{ id: "branch-id" }]
     });

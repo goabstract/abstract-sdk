@@ -49,9 +49,7 @@ export default class Files extends Endpoint {
     return this.request<Promise<File[]>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${
-            latestDescriptor.branchId
-          }/files`
+          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files`
         );
         return response.files;
       },
@@ -73,6 +71,7 @@ export default class Files extends Endpoint {
     );
     return this.request<Promise<void>>({
       cli: async () => {
+        /* istanbul ignore if */
         if (!isNodeEnvironment() || options.disableWrite) {
           return;
         }

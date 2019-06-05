@@ -16,13 +16,11 @@ export default class Users extends Endpoint {
       api: async () => {
         let url = "";
         if (descriptor.organizationId) {
-          url = `organizations/${descriptor.organizationId}/memberships/${
-            descriptor.userId
-          }`;
-        } else if (descriptor.projectId) {
-          url = `projects/${descriptor.projectId}/memberships/${
-            descriptor.userId
-          }`;
+          url = `organizations/${descriptor.organizationId}/memberships/${descriptor.userId}`;
+        }
+
+        if (descriptor.projectId) {
+          url = `projects/${descriptor.projectId}/memberships/${descriptor.userId}`;
         }
         const response = await this.apiRequest(url);
         return response.data.projectMembership || response.data;
@@ -40,7 +38,9 @@ export default class Users extends Endpoint {
         let url = "";
         if (descriptor.organizationId) {
           url = `organizations/${descriptor.organizationId}/memberships`;
-        } else if (descriptor.projectId) {
+        }
+
+        if (descriptor.projectId) {
           url = `projects/${descriptor.projectId}/memberships`;
         }
         const response = await this.apiRequest(url);

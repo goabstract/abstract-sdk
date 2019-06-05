@@ -30,7 +30,7 @@ describe("#info", () => {
 describe("#list", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project-id/branches/branch-id/commits?fileId=file-id&limit=10",
+      "/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id&limit=10",
       {
         commits: []
       }
@@ -40,6 +40,7 @@ describe("#list", () => {
         projectId: "project-id",
         branchId: "branch-id",
         fileId: "file-id",
+        layerId: "layer-id",
         sha: "sha"
       },
       { limit: 10 }
@@ -48,7 +49,7 @@ describe("#list", () => {
     expect(response).toEqual([]);
   });
 
-  test("cli", async () => {
+  test("cli - file id", async () => {
     mockCLI(
       [
         "commits",
@@ -68,6 +69,32 @@ describe("#list", () => {
         fileId: "file-id",
         sha: "sha"
       },
+      { limit: 10 }
+    );
+
+    expect(response).toEqual([]);
+  });
+
+  test("cli - layer id", async () => {
+    mockCLI(
+      [
+        "commits",
+        "project-id",
+        "branch-id",
+        "--layer-id",
+        "layer-id",
+        "--limit",
+        "10"
+      ],
+      { commits: [] }
+    );
+    const response = await CLI_CLIENT.commits.list(
+      ({
+        projectId: "project-id",
+        branchId: "branch-id",
+        layerId: "layer-id",
+        sha: "sha"
+      }: any),
       { limit: 10 }
     );
 

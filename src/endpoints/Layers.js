@@ -17,11 +17,7 @@ export default class Layers extends Endpoint {
     return this.request<Promise<Layer>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${
-            latestDescriptor.branchId
-          }/commits/${latestDescriptor.sha}/files/${
-            latestDescriptor.fileId
-          }/layers/${latestDescriptor.layerId}`
+          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
         );
         return {
           ...response.layer,
@@ -58,9 +54,7 @@ export default class Layers extends Endpoint {
       api: async () => {
         const query = querystring.stringify({ ...options, ...descriptor });
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${
-            descriptor.branchId
-          }/files/${descriptor.fileId}/layers?${query}`
+          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/layers?${query}`
         );
         return response.layers;
       },
