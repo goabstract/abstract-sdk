@@ -39,14 +39,14 @@ export type EndpointRequest<T> = {
 
 export default class Endpoint {
   _optionAccessToken: ?AccessTokenOption;
-  apiUrl: string;
-  cliPath: ?string;
+  apiUrl: string | Promise<string>;
+  cliPath: ?string | Promise<?string>;
   client: Client;
   lastCalledEndpoint: ?string;
   maxCacheSize: number;
-  previewsUrl: string;
+  previewsUrl: string | Promise<string>;
   transportMode: string;
-  webUrl: string;
+  webUrl: string | Promise<string>;
 
   accessToken = async (): Promise<AccessToken> =>
     typeof this._optionAccessToken === "function"
@@ -110,8 +110,10 @@ export default class Endpoint {
   async apiRequest(
     input: string,
     init: Object = {},
-    hostname: ?string = this.apiUrl
+    overrideHostname?: ?string
   ) {
+    const hostname =
+      overrideHostname !== undefined ? overrideHostname : await this.apiUrl;
     const response = await this._fetch(input, init, hostname);
     const data = await response.json();
     /* istanbul ignore next */
@@ -122,8 +124,10 @@ export default class Endpoint {
   async apiRawRequest(
     input: string,
     init: Object = {},
-    hostname: ?string = this.apiUrl
+    overrideHostname?: ?string
   ) {
+    const hostname =
+      overrideHostname !== undefined ? overrideHostname : await this.apiUrl;
     const response = await this._fetch(input, init, hostname);
     const buffer = response.arrayBuffer();
     /* istanbul ignore next */
@@ -133,9 +137,10 @@ export default class Endpoint {
 
   async cliRequest(args: string[]) {
     const token = await this.accessToken();
+    const cliPath = await this.cliPath;
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 
-    if (!this.cliPath || !existsSync(this.cliPath)) {
+    if (!cliPath || !existsSync(cliPath)) {
       const error = new CLIPathError();
       /* istanbul ignore next */
       logCLIError.enabled && logCLIError(error);
@@ -143,8 +148,8 @@ export default class Endpoint {
     }
 
     const spawnArgs = [
-      this.cliPath,
-      [...tokenArgs, "--api-url", this.apiUrl, ...args]
+      cliPath,
+      [...tokenArgs, "--api-url", await this.apiUrl, ...args]
     ];
 
     /* istanbul ignore next */
@@ -183,11 +188,7 @@ export default class Endpoint {
     });
   }
 
-  async _fetch(
-    input: string,
-    init: Object = {},
-    hostname: ?string = this.apiUrl
-  ) {
+  async _fetch(input: string, init: Object = {}, hostname: ?string) {
     if (init.body) {
       init.body = JSON.stringify(init.body);
     }
@@ -205,7 +206,7 @@ export default class Endpoint {
     return response;
   }
 
-  async _getAPIHeaders(headers?: Object) {
+  async _getAPIHeaders(headers?: {}) {
     let tokenHeader = {};
     const token = await this.accessToken();
 

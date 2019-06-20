@@ -1464,10 +1464,10 @@ export type AccessTokenOption =
 
 export type CommandOptions = {
   accessToken: AccessTokenOption,
-  apiUrl: string,
-  cliPath: string,
+  apiUrl: string | Promise<string>,
+  cliPath: string | Promise<string>,
   maxCacheSize: number,
-  previewsUrl: string,
+  previewsUrl: string | Promise<string>,
   transportMode: "auto" | "api" | "cli",
-  webUrl: string
+  webUrl: string | Promise<string>
 };
