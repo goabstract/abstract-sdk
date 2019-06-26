@@ -54,6 +54,7 @@ export default class Client {
       previewsUrl: "https://previews.goabstract.com",
       transportMode: "api",
       webUrl: "https://app.goabstract.com",
+      // $FlowFixMe https://github.com/facebook/flow/pull/7298
       ...options
     };
 

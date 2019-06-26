@@ -13,7 +13,11 @@ export default class Previews extends Endpoint {
     );
     return this.request<Promise<PreviewMeta>>({
       api: async () => ({
-        webUrl: `${this.webUrl}/projects/${latestDescriptor.projectId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
+        webUrl: `${await this.webUrl}/projects/${
+          latestDescriptor.projectId
+        }/commits/${latestDescriptor.sha}/files/${
+          latestDescriptor.fileId
+        }/layers/${latestDescriptor.layerId}`
       })
     });
   }
@@ -33,7 +37,7 @@ export default class Previews extends Endpoint {
               "Abstract-Api-Version": undefined
             }
           },
-          this.previewsUrl
+          await this.previewsUrl
         );
 
         /* istanbul ignore if */

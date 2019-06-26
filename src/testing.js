@@ -58,12 +58,15 @@ export function mockCLI(
   response?: Object | Array<Object>,
   error?: Object
 ) {
-  child_process.spawn.mockClear();
-  child_process.spawn.mockReturnValueOnce({
+  (child_process.spawn: any).mockClear();
+  (child_process.spawn: any).mockReturnValueOnce({
     stdout: buildTextStream(JSON.stringify(response)),
     stderr: buildTextStream(JSON.stringify(error)),
     on: (name, cb) => {
-      const callArgs = child_process.spawn.mock.calls[0][1].slice(-args.length);
+      const callArgs = (child_process.spawn: any).mock.calls[0][1].slice(
+        -args.length
+      );
+
       expect(callArgs).toEqual(args);
       setTimeout(() => {
         name === "error" && error && cb(1);
