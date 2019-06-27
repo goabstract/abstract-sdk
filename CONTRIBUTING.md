@@ -88,10 +88,10 @@ yarn start
 
 ## Cutting releases
 
-New package versions of `abstract-sdk` are automatically published to the public NPM registry whenever new tags are pushed to the repository. An interactive convenience script is included to assist with new releases:
+New package versions of `abstract-sdk` are automatically published to the public NPM registry whenever new tags are pushed to the repository. This repository uses [`standard-version`](https://github.com/conventional-changelog/standard-version) as convention to automate versioning, tagging, and changelog generation:
 
 ```sh
-$ ./bin/release
+$ npm run release
 ```
 
 <br />
