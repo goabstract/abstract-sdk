@@ -39,7 +39,7 @@ $ cd abstract-sdk && yarn
 Type-check all code using Flow:
 
 ```sh
-yarn flow
+$ yarn flow
 ```
 
 ### Building
@@ -47,7 +47,7 @@ yarn flow
 Transpile the `src` directory into a `lib` directory using Babel:
 
 ```sh
-yarn build
+$ yarn build
 ```
 
 ### Linting
@@ -55,7 +55,7 @@ yarn build
 Lint and format all code using Prettier via ESLint:
 
 ```sh
-yarn lint --fix
+$ yarn lint --fix
 ```
 
 ### Testing
@@ -63,7 +63,7 @@ yarn lint --fix
 Run unit tests using Jest:
 
 ```sh
-yarn test
+$ yarn test
 ```
 
 ## Documentation
@@ -75,7 +75,7 @@ Both the documentation content and its static website code live inside this repo
 Install dependencies from the `/website` folder using Yarn:
 
 ```sh
-cd website && yarn
+$ cd website && yarn
 ```
 
 ### Running
@@ -83,7 +83,7 @@ cd website && yarn
 Serve the documentation site at [http://localhost:3000](http://localhost:3000):
 
 ```sh
-yarn start
+$ yarn start
 ```
 
 ## Cutting releases
@@ -91,7 +91,15 @@ yarn start
 New package versions of `abstract-sdk` are automatically published to the public NPM registry whenever new tags are pushed to the repository. This repository uses [`standard-version`](https://github.com/conventional-changelog/standard-version) as convention to automate versioning, tagging, and changelog generation:
 
 ```sh
-$ npm run release
+$ yarn release
+$ git push origin master --follow-tags
+```
+
+Or cut a pre-release:
+
+```sh
+$ yarn release --prerelease alpha
+$ git push origin master --follow-tags
 ```
 
 <br />
