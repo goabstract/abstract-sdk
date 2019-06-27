@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# This script can be used to install all required flow types used internally
-# within this package. This is intended to be run as a postinstall NPM script,
-# but can be run at any time to refresh types and bring them up to date.
+# This script can be used to install all required flow types that are used
+# internally within this package. This is intended to be run as a postinstall
+# NPM script, but it can be run at any time to refresh and update definitions.
 
 types=(
   "jest@^23.x.x"

@@ -1,38 +1,37 @@
 {
   "name": "abstract-sdk",
-  "version": "1.7.0-beta.1",
-  "description": "",
-  "main": "lib/index.js",
-  "browser": {
-    "child_process": false,
-    "fs": false
+  "version": "1.6.0",
+  "description": "Universal JavaScript bindings for the Abstract API and CLI",
+  "keywords": [
+    "abstract",
+    "design",
+    "version control"
+  ],
+  "homepage": "https://sdk.goabstract.com/",
+  "bugs": {
+    "email": "support@abstract.com",
+    "url": "https://github.com/goabstract/abstract-sdk/issues"
   },
+  "license": "MIT",
+  "author": "Abstract <support@abstract.com> (http://abstract.com)",
   "files": [
     ".flowconfig",
     "/definitions",
     "/lib",
     "/scripts"
   ],
+  "main": "lib/index.js",
+  "repository": "github:goabstract/abstract-sdk",
   "scripts": {
     "prepare": "./scripts/install-types.sh",
+    "commitlint": "commitlint --edit",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest --coverage",
-    "test-inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "prebuild": "rm -rf lib && flow-copy-source -i *.test.js src lib",
     "build": "babel src -i *.test.js -d lib",
-    "ci": "yarn lint && yarn flow --flowconfig-name=.flowconfig-ci && yarn test",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "release": "standard-version"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/goabstract/abstract-sdk.git"
-  },
-  "author": "Abstract <andrew@goabstract.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/goabstract/abstract-sdk/issues"
-  },
-  "homepage": "https://github.com/goabstract/abstract-sdk#readme",
   "devDependencies": {
     "@babel/cli": "7.0.0",
     "@babel/core": "^7.0.0",
@@ -40,6 +39,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
     "@elasticprojects/eslint-config-abstract": "^4.1.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^24.1.0",
@@ -55,15 +56,60 @@
     "flow-copy-source": "^2.0.3",
     "jest": "^24.1.0",
     "nock": "^10.0.6",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "standard-version": "^6.0.1"
   },
   "dependencies": {
     "@babel/runtime-corejs2": "^7.3.4",
-    "auto-changelog": "^1.13.0",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
     "flow-typed": "^2.5.1",
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "@elasticprojects/eslint-config-abstract",
+    "env": {
+      "jest": true
+    }
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/lib"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-flow",
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "targets": {
+            "node": 8
+          },
+          "exclude": [
+            "transform-regenerator"
+          ]
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-proposal-class-properties"
+    ]
   }
 }

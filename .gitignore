@@ -2,12 +2,10 @@
 .yarn-cache
 /lib
 /website/build/
-/website/i18n/*
-/website/translated_docs
+/website/i18n/
+coverage
 flow-typed
 node_modules
 npm-debug.log
+package-lock.json
 yarn-error.log
-yarn.lock
-run.js
-coverage
