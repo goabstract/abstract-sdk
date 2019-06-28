@@ -21,6 +21,10 @@
     "/scripts"
   ],
   "main": "lib/index.js",
+  "browser": {
+    "child_process": false,
+    "fs": false
+  },
   "repository": "github:goabstract/abstract-sdk",
   "scripts": {
     "prepare": "./scripts/install-types.sh",
