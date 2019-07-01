@@ -39,7 +39,9 @@ describe("#info", () => {
 
   test("cli", async () => {
     mockCLI(["collection", "load", "project-id", "collection-id"], {
-      collection: { id: "collection-id" }
+      data: {
+        collections: [{ id: "collection-id" }]
+      }
     });
     const response = await CLI_CLIENT.collections.info({
       projectId: "project-id",
@@ -64,7 +66,7 @@ describe("#list", () => {
 
   test("cli", async () => {
     mockCLI(["collections", "project-id", "--branch", "branch-id"], {
-      collections: [{ id: "collection-id" }]
+      data: { collections: [{ id: "collection-id" }] }
     });
     const response = await CLI_CLIENT.collections.list({
       projectId: "project-id",
@@ -76,7 +78,7 @@ describe("#list", () => {
 
   test("cli - no branch id", async () => {
     mockCLI(["collections", "project-id"], {
-      collections: [{ id: "collection-id" }]
+      data: { collections: [{ id: "collection-id" }] }
     });
 
     const response = await CLI_CLIENT.collections.list({
