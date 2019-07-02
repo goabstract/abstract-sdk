@@ -47,13 +47,18 @@ export default class Collections extends Endpoint {
         };
       },
 
-      cli: () => {
-        return this.cliRequest([
+      cli: async () => {
+        const response = await this.cliRequest([
           "collection",
           "load",
           descriptor.projectId,
           descriptor.collectionId
         ]);
+        const { collections, ...meta } = response.data;
+        return {
+          collection: collections[0],
+          ...meta
+        };
       },
 
       cache: {
@@ -79,12 +84,13 @@ export default class Collections extends Endpoint {
         return response.data;
       },
 
-      cli: () => {
-        return this.cliRequest([
+      cli: async () => {
+        const response = await this.cliRequest([
           "collections",
           descriptor.projectId,
           ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
         ]);
+        return response.data;
       }
     });
   }
