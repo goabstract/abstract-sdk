@@ -9,40 +9,40 @@ This package contains a selection of utilities for dealing with documents inside
 
 ## isSketchPlugin
 
-`Abstract.Sketch.isSketchPlugin(): boolean`
+`Abstract.sketch.isSketchPlugin(): boolean`
 
 Use this method to check whether the current environment is a Sketch plugin. This is probably only useful if you're writing your own module that depends on the SDK and can run in a plugin OR node and can be used as a guard in this case.
 
 ## isAbstractPluginInstalled
 
-`Abstract.Sketch.isAbstractPluginInstalled(): boolean`
+`Abstract.sketch.isAbstractPluginInstalled(): boolean`
 
 Detect whether the official Abstract plugin is currently installed and enabled in Sketch.
 
 
 ## isAbstractDocument
 
-`Abstract.Sketch.isAbstractDocument(context: SketchContext): boolean`
+`Abstract.sketch.isAbstractDocument(context: SketchContext): boolean`
 
 Detect whether the current selected document was opened from Abstract, either tracked or untracked.
 
 
 ## project
 
-`Abstract.Sketch.project(context: SketchContext): ProjectDescriptor`
+`Abstract.sketch.project(context: SketchContext): ProjectDescriptor`
 
 Get a descriptor of the project from which the current document was opened.
 
 
 ## branch
 
-`Abstract.Sketch.branch(context: SketchContext): BranchDescriptor`
+`Abstract.sketch.branch(context: SketchContext): BranchDescriptor`
 
 Get a descriptor of the branch from which the current document was opened.
 
 
 ## file
 
-`Abstract.Sketch.file(context: SketchContext): FileDescriptor`
+`Abstract.sketch.file(context: SketchContext): FileDescriptor`
 
 Get a descriptor for the currently open document.
