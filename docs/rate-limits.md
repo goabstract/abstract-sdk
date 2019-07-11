@@ -22,7 +22,7 @@ try {
       const projects = await client.projects.list();
     },
     // Wait until the rate limit resets
-    error.resetsAt);
+    error.data.resetsAt - Date.now());
   }
 }
 ```
