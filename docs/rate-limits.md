@@ -9,7 +9,7 @@ When using the SDK with the [API transport](/docs/transports), requests are subj
 
 ## Managing rate limits
 
-If an SDK client issues too many requests over a given time period, an `Abstract.RateLimitError` will be thrown that contains information that can be used to safely resume requests. The `resetsAt` property indicates the number of milliseconds until the rate limit resets.
+If an SDK client issues too many requests over a given time period, an `Abstract.RateLimitError` will be thrown that contains information that can be used to safely resume requests. The `resetsAt` property is an epoch timestamp indicating when the rate limit resets.
 
 ```js
 try {
