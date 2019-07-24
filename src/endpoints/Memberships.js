@@ -8,7 +8,7 @@ import type {
 } from "../types";
 import Endpoint from "./Endpoint";
 
-export default class Users extends Endpoint {
+export default class Memberships extends Endpoint {
   info(
     descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor
   ) {
