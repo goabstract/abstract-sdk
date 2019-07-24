@@ -639,7 +639,7 @@ abstract.files.info({
 });
 ```
 
-### Retrieve an Sketch file
+### Retrieve a Sketch file
 
 ![CLI][cli-icon]
 
