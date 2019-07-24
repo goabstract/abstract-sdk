@@ -75,7 +75,7 @@ export default class Files extends Endpoint {
         if (!isNodeEnvironment() || options.disableWrite) {
           return;
         }
-        this.cliRequest([
+        await this.cliRequest([
           "file",
           "export",
           latestDescriptor.fileId,
