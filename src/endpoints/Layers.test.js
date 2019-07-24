@@ -39,7 +39,7 @@ describe("#info", () => {
 describe("#list", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project-id/branches/branch-id/files/file-id/layers?branchId=branch-id&fileId=file-id&pageId=page-id&projectId=project-id&sha=sha",
+      "/projects/project-id/branches/branch-id/files/file-id/layers?branchId=branch-id&fileId=file-id&projectId=project-id&sha=sha",
       {
         layers: [{ id: "layer-id" }]
       }
@@ -47,7 +47,6 @@ describe("#list", () => {
     const response = await API_CLIENT.layers.list({
       branchId: "branch-id",
       fileId: "file-id",
-      pageId: "page-id",
       projectId: "project-id",
       sha: "sha"
     });
@@ -62,7 +61,6 @@ describe("#list", () => {
     const response = await CLI_CLIENT.layers.list({
       branchId: "branch-id",
       fileId: "file-id",
-      pageId: "page-id",
       projectId: "project-id",
       sha: "sha"
     });

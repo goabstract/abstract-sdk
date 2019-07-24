@@ -20,7 +20,7 @@ export default class Files extends Endpoint {
         const files = await this.list(branchDescriptor);
         const file = files.find(file => file.id === latestDescriptor.fileId);
         if (!file) {
-          throw new NotFoundError(`pageId=${latestDescriptor.fileId}`);
+          throw new NotFoundError(`fileId=${latestDescriptor.fileId}`);
         }
         return file;
       },

@@ -1293,7 +1293,6 @@ Reference for the parameters required to load resources with Abstract SDK.
   projectId: string,
   branchId: string | "master",
   fileId: string,
-  pageId: string,
   layerId: string,
   sha: string | "latest"
 }
