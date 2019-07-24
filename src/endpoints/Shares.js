@@ -12,7 +12,7 @@ const headers = {
   "Abstract-Api-Version": "13"
 };
 
-export default class Activities extends Endpoint {
+export default class Shares extends Endpoint {
   create<T: Share>(descriptor: OrganizationDescriptor, shareInput: ShareInput) {
     return this.request<Promise<T>>({
       api: async () => {

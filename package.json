@@ -18,9 +18,11 @@
     ".flowconfig",
     "/definitions",
     "/lib",
-    "/scripts"
+    "/scripts",
+    "abstract-sdk.d.ts"
   ],
   "main": "lib/index.js",
+  "types": "abstract-sdk.d.ts",
   "browser": {
     "child_process": false,
     "fs": false
