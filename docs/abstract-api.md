@@ -605,6 +605,7 @@ A file represents a standard file – in Abstract a file is always loaded from a
 | `projectId`                  | `string`  | UUID of the project this file belongs to                        |
 | `sha`                        | `string`  | SHA that this file was loaded at                                |
 | `type`                       | `string`  | The application that the file was created in                    |
+| `updatedAt`                  | `string`  | The timestamp of the last change to the file                    |
 
 ### List all files
 
