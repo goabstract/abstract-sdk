@@ -34,15 +34,23 @@ export default class Commits extends Endpoint {
   }
 
   list(
-    descriptor: BranchDescriptor | LayerDescriptor,
-    options: { limit?: number } = {}
+    descriptor: BranchDescriptor,
+    options: {
+      fileId?: string,
+      layerId?: string,
+      startSHA?: string,
+      endSHA?: string,
+      limit?: number
+    } = {}
   ) {
     return this.request<Promise<Commit[]>>({
       api: async () => {
         const query = querystring.stringify({
-          ...options,
-          fileId: descriptor.fileId && descriptor.fileId,
-          layerId: descriptor.layerId && descriptor.layerId
+          fileId: options.fileId,
+          layerId: options.layerId,
+          startSHA: options.startSHA,
+          endSHA: options.endSHA,
+          limit: options.limit
         });
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits?${query}`
@@ -55,8 +63,10 @@ export default class Commits extends Endpoint {
           "commits",
           descriptor.projectId,
           descriptor.branchId,
-          ...(descriptor.fileId ? ["--file-id", descriptor.fileId] : []),
-          ...(descriptor.layerId ? ["--layer-id", descriptor.layerId] : []),
+          ...(options.fileId ? ["--file-id", options.fileId] : []),
+          ...(options.layerId ? ["--layer-id", options.layerId] : []),
+          ...(options.startSHA ? ["--file-id", options.startSHA] : []),
+          ...(options.endSHA ? ["--layer-id", options.endSHA] : []),
           ...(options.limit ? ["--limit", options.limit.toString()] : [])
         ]);
         return response.commits;

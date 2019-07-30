@@ -38,12 +38,13 @@ describe("#list", () => {
     const response = await API_CLIENT.commits.list(
       {
         projectId: "project-id",
-        branchId: "branch-id",
+        branchId: "branch-id"
+      },
+      {
         fileId: "file-id",
         layerId: "layer-id",
-        sha: "sha"
-      },
-      { limit: 10 }
+        limit: 10
+      }
     );
 
     expect(response).toEqual([]);
@@ -57,6 +58,8 @@ describe("#list", () => {
         "branch-id",
         "--file-id",
         "file-id",
+        "--layer-id",
+        "layer-id",
         "--limit",
         "10"
       ],
@@ -65,11 +68,13 @@ describe("#list", () => {
     const response = await CLI_CLIENT.commits.list(
       {
         projectId: "project-id",
-        branchId: "branch-id",
-        fileId: "file-id",
-        sha: "sha"
+        branchId: "branch-id"
       },
-      { limit: 10 }
+      {
+        fileId: "file-id",
+        layerId: "layer-id",
+        limit: 10
+      }
     );
 
     expect(response).toEqual([]);
@@ -81,6 +86,8 @@ describe("#list", () => {
         "commits",
         "project-id",
         "branch-id",
+        "--file-id",
+        "file-id",
         "--layer-id",
         "layer-id",
         "--limit",
@@ -89,13 +96,15 @@ describe("#list", () => {
       { commits: [] }
     );
     const response = await CLI_CLIENT.commits.list(
-      ({
+      {
         projectId: "project-id",
-        branchId: "branch-id",
+        branchId: "branch-id"
+      },
+      {
+        fileId: "file-id",
         layerId: "layer-id",
-        sha: "sha"
-      }: any),
-      { limit: 10 }
+        limit: 10
+      }
     );
 
     expect(response).toEqual([]);

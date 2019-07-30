@@ -42,12 +42,16 @@ describe("errors", () => {
     });
 
     try {
-      await client.commits.list({
-        projectId: "project-id",
-        branchId: "branch-id",
-        fileId: "file-id",
-        sha: "sha"
-      });
+      await client.commits.list(
+        {
+          projectId: "project-id",
+          branchId: "branch-id"
+        },
+        {
+          fileId: "file-id",
+          layerId: "layer-id"
+        }
+      );
     } catch (error) {
       expect(error).toBeInstanceOf(CLIPathError);
     }

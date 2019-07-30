@@ -58,12 +58,9 @@ describe("cache", () => {
     };
 
     for (let i = 0; i < 2; i++) {
-      mockAPI(
-        "/projects/project-id/branches/branch-id/commits?fileId=file-id&limit=1",
-        {
-          commits: [{ id: "commit-id" }]
-        }
-      );
+      mockAPI("/projects/project-id/branches/branch-id/commits?limit=1", {
+        commits: [{ id: "commit-id" }]
+      });
       mockAPI("/projects/project-id/branches/branch-id/files", { files });
     }
 

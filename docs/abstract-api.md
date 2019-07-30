@@ -502,7 +502,7 @@ to identify which version of the object you would like.
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`commits.list(BranchDescriptor | LayerDescriptor): Promise<Commit[]>`
+`commits.list(BranchDescriptor, options): Promise<Commit[]>`
 
 List the commits for a specific branch
 
@@ -513,14 +513,18 @@ abstract.commits.list({
 });
 ```
 
-or, get a list of commits for a layer – this query will only return commits where the referenced layer was changed…
+or, filter the list of branch commits to a single layer by providing a file id and layer id. This will only return commits where the referenced layer was changed…
 
 ```js
-abstract.commits.list({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+abstract.commits.list(
+  {
+    projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+    branchId: "master",
+  },
+  {
+    fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+    layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
+  }
 });
 ```
 
