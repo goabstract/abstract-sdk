@@ -33,7 +33,7 @@
     "commitlint": "commitlint --edit",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest --coverage",
-    "prebuild": "rm -rf lib && flow-copy-source -i *.test.js src lib",
+    "prebuild": "rm -rf lib && flow-copy-source -i *.test.js -i endpoints/*.test.js -i testing.js src lib",
     "build": "babel src -d lib --ignore **/*.test.js",
     "prepublish": "yarn build",
     "release": "standard-version"
