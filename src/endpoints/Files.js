@@ -16,8 +16,8 @@ export default class Files extends Endpoint {
     );
     return this.request<Promise<File>>({
       api: async () => {
-        const { fileId, ...branchDescriptor } = latestDescriptor;
-        const files = await this.list(branchDescriptor);
+        const { fileId, ...commitDescriptor } = latestDescriptor;
+        const files = await this.list(commitDescriptor);
         const file = files.find(file => file.id === latestDescriptor.fileId);
         if (!file) {
           throw new NotFoundError(`fileId=${latestDescriptor.fileId}`);

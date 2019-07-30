@@ -28,85 +28,89 @@ describe("#info", () => {
 });
 
 describe("#list", () => {
-  test("api", async () => {
-    mockAPI(
-      "/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id&limit=10",
-      {
+  describe("api", () => {
+    test("no options", async () => {
+      mockAPI("/projects/project-id/branches/branch-id/commits", {
         commits: []
-      }
-    );
-    const response = await API_CLIENT.commits.list(
-      {
+      });
+      const response = await API_CLIENT.commits.list({
         projectId: "project-id",
         branchId: "branch-id"
-      },
-      {
-        fileId: "file-id",
-        layerId: "layer-id",
-        limit: 10
-      }
-    );
+      });
 
-    expect(response).toEqual([]);
+      expect(response).toEqual([]);
+    });
+
+    test("all options", async () => {
+      mockAPI(
+        "/projects/project-id/branches/branch-id/commits?endSHA=end-sha&fileId=file-id&layerId=layer-id&limit=10&startSHA=start-sha",
+        {
+          commits: []
+        }
+      );
+      const response = await API_CLIENT.commits.list(
+        {
+          projectId: "project-id",
+          branchId: "branch-id"
+        },
+        {
+          fileId: "file-id",
+          layerId: "layer-id",
+          limit: 10,
+          startSHA: "start-sha",
+          endSHA: "end-sha"
+        }
+      );
+
+      expect(response).toEqual([]);
+    });
   });
 
-  test("cli - file id", async () => {
-    mockCLI(
-      [
-        "commits",
-        "project-id",
-        "branch-id",
-        "--file-id",
-        "file-id",
-        "--layer-id",
-        "layer-id",
-        "--limit",
-        "10"
-      ],
-      { commits: [] }
-    );
-    const response = await CLI_CLIENT.commits.list(
-      {
+  describe("cli", () => {
+    test("no options", async () => {
+      mockCLI(["commits", "project-id", "branch-id"], { commits: [] });
+      const response = await CLI_CLIENT.commits.list({
         projectId: "project-id",
         branchId: "branch-id"
-      },
-      {
-        fileId: "file-id",
-        layerId: "layer-id",
-        limit: 10
-      }
-    );
+      });
 
-    expect(response).toEqual([]);
-  });
+      expect(response).toEqual([]);
+    });
 
-  test("cli - layer id", async () => {
-    mockCLI(
-      [
-        "commits",
-        "project-id",
-        "branch-id",
-        "--file-id",
-        "file-id",
-        "--layer-id",
-        "layer-id",
-        "--limit",
-        "10"
-      ],
-      { commits: [] }
-    );
-    const response = await CLI_CLIENT.commits.list(
-      {
-        projectId: "project-id",
-        branchId: "branch-id"
-      },
-      {
-        fileId: "file-id",
-        layerId: "layer-id",
-        limit: 10
-      }
-    );
+    test("all options", async () => {
+      mockCLI(
+        [
+          "commits",
+          "project-id",
+          "branch-id",
+          "--file-id",
+          "file-id",
+          "--layer-id",
+          "layer-id",
+          "--start-sha",
+          "start-sha",
+          "--end-sha",
+          "end-sha",
+          "--limit",
+          "10"
+        ],
+        { commits: [] }
+      );
+      const response = await CLI_CLIENT.commits.list(
+        {
+          projectId: "project-id",
+          branchId: "branch-id"
+        },
+        {
+          fileId: "file-id",
+          layerId: "layer-id",
+          limit: 10,
+          startSHA: "start-sha",
+          endSHA: "end-sha"
+        }
+      );
 
-    expect(response).toEqual([]);
+      expect(response).toEqual([]);
+    });
   });
 });
