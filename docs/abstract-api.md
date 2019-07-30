@@ -520,9 +520,7 @@ abstract.commits.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "latest"
 });
 ```
 
