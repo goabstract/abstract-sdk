@@ -1,6 +1,7 @@
 // @flow
 import querystring from "query-string";
 import type {
+  BranchDescriptor,
   Commit,
   CommitDescriptor,
   FileDescriptor,
@@ -33,7 +34,7 @@ export default class Commits extends Endpoint {
   }
 
   list(
-    descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor,
+    descriptor: BranchDescriptor | LayerDescriptor,
     options: { limit?: number } = {}
   ) {
     return this.request<Promise<Commit[]>>({
