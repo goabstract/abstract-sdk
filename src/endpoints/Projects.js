@@ -15,10 +15,6 @@ export default class Projects extends Endpoint {
           `projects/${descriptor.projectId}`
         );
         return response.data;
-      },
-
-      cache: {
-        key: `project:${descriptor.projectId}`
       }
     });
   }

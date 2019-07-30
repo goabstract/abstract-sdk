@@ -59,10 +59,6 @@ export default class Collections extends Endpoint {
           collection: collections[0],
           ...meta
         };
-      },
-
-      cache: {
-        key: `collection:${descriptor.collectionId}`
       }
     });
   }

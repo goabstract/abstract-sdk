@@ -51,10 +51,6 @@ export default class Comments extends Endpoint {
     return this.request<Promise<Comment>>({
       api: () => {
         return this.apiRequest(`comments/${descriptor.commentId}`);
-      },
-
-      cache: {
-        key: `comment:${descriptor.commentId}`
       }
     });
   }

@@ -19,10 +19,6 @@ export default class Branches extends Endpoint {
           descriptor.projectId,
           descriptor.branchId
         ]);
-      },
-
-      cache: {
-        key: `branch:${descriptor.branchId}`
       }
     });
   }
