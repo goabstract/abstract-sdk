@@ -28,10 +28,6 @@ export default class Pages extends Endpoint {
           throw new NotFoundError(`pageId=${pageId}`);
         }
         return page;
-      },
-
-      cache: {
-        key: `page:${descriptor.pageId}`
       }
     });
   }
