@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/goabstract/abstract-sdk/compare/v1.8.0...v1.9.0) (2019-08-08)
+
+
+### Bug Fixes
+
+* disable caching of non-static entities ([#151](https://github.com/goabstract/abstract-sdk/issues/151)) ([98ad004](https://github.com/goabstract/abstract-sdk/commit/98ad004))
+* ignore test files when generating typings ([#150](https://github.com/goabstract/abstract-sdk/issues/150)) ([27af92c](https://github.com/goabstract/abstract-sdk/commit/27af92c))
+
+
+### Features
+
+* embed code generator ([467fcb3](https://github.com/goabstract/abstract-sdk/commit/467fcb3))
+
+
+
 ## [1.8.0](https://github.com/goabstract/abstract-sdk/compare/v1.7.1...v1.8.0) (2019-07-24)
 
 
