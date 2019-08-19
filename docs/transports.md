@@ -15,7 +15,6 @@ The Abstract API is a transport mode that uses HTTP to interact with Abstract's 
 
 The Abstract CLI is a transport mode that uses the Abstract desktop application to interact with data stored locally on a given machine. This transport does not require internet connectivity or authentication, and requests are not subject to rate limits. This transport does require access to the Abstract desktop application and its underlying data, as such it can only be used on macOS currently.
 
-
 ## Auto
 
 The SDK provides an "auto" transport that can be used in environments where both the API and the CLI transports are available. Any time an SDK method is called, the auto transport will first check the CLI, then the API, for an available implementation. This allows transport-specific SDK methods to be called without worrying about which transport is being used. This transport also helps to reduce rate limit errors since the CLI transport will be favored in most cases.

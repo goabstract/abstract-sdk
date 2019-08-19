@@ -31,7 +31,6 @@ export const API_CLIENT = new Client({
 export const CLI_CLIENT = new Client({
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
-  cliPath: ".",
   previewsUrl: "http://previewsUrl",
   transportMode: "cli"
 });
@@ -47,7 +46,6 @@ export const API_CLIENT_CACHED = new Client({
 export const CLI_CLIENT_CACHED = new Client({
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
-  cliPath: ".",
   maxCacheSize: 10,
   previewsUrl: "http://previewsUrl",
   transportMode: "cli"

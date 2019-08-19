@@ -3,7 +3,6 @@ import { CLI_CLIENT } from "./testing";
 import Client from "./Client";
 import {
   APITokenError,
-  CLIPathError,
   EndpointUndefinedError,
   FileAPIError,
   ForbiddenError,
@@ -33,24 +32,6 @@ describe("errors", () => {
 
   afterAll(() => {
     global.Blob = globalBlob;
-  });
-
-  test("CLIPathError", async () => {
-    const client = new Client({
-      cliPath: "./nonexistent",
-      transportMode: "cli"
-    });
-
-    try {
-      await client.commits.list({
-        projectId: "project-id",
-        branchId: "branch-id",
-        fileId: "file-id",
-        sha: "sha"
-      });
-    } catch (error) {
-      expect(error).toBeInstanceOf(CLIPathError);
-    }
   });
 
   test("FileAPIError", async () => {

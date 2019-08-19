@@ -29,12 +29,6 @@ _Default value: `https://api.goabstract.com`_
 
 This option can be used to specify a custom URL that points to an instance of the Abstract HTTP API. This is used when building the request URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
 
-### `cliPath`
-
-_Default value: `/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli`_
-
-This option can be used to specify a custom file location that points to the Abstract CLI included with the Abstract desktop application. This option is useful if the Abstract desktop application exists at a non-default application path outside of `/Applications`.
-
 ### `maxCacheSize`
 
 _Default value: `0`_

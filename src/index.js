@@ -6,7 +6,6 @@ import * as sketch from "./sketch";
 import {
   APITokenError,
   BaseError,
-  CLIPathError,
   EndpointUndefinedError,
   FileAPIError,
   ForbiddenError,
@@ -23,7 +22,6 @@ export {
   // Custom errors
   APITokenError,
   BaseError,
-  CLIPathError,
   EndpointUndefinedError,
   FileAPIError,
   ForbiddenError,

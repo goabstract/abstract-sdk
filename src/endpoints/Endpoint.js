@@ -2,7 +2,7 @@
 /* global fetch */
 /* istanbul ignore file */
 import "cross-fetch/polyfill";
-import { existsSync } from "fs";
+import { join } from "path";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
 import Client from "../Client";
@@ -11,10 +11,8 @@ import { log } from "../debug";
 import { version } from "../../package.json";
 import {
   APITokenError,
-  CLIPathError,
   EndpointUndefinedError,
   logAPIError,
-  logCLIError,
   throwAPIError,
   throwCLIError
 } from "../errors";
@@ -40,7 +38,6 @@ export type EndpointRequest<T> = {
 export default class Endpoint {
   _optionAccessToken: ?AccessTokenOption;
   apiUrl: string | Promise<string>;
-  cliPath: ?string | Promise<?string>;
   client: Client;
   lastCalledEndpoint: ?string;
   maxCacheSize: number;
@@ -56,7 +53,6 @@ export default class Endpoint {
   constructor(client: Client, options: CommandOptions) {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
-    this.cliPath = options.cliPath;
     this.client = client;
     this.maxCacheSize = options.maxCacheSize;
     this.previewsUrl = options.previewsUrl;
@@ -137,16 +133,11 @@ export default class Endpoint {
 
   async cliRequest(args: string[]) {
     const token = await this.accessToken();
-    const cliPath = await this.cliPath;
+    const cliPath = join(
+      __dirname,
+      "../../node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
+    );
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
-
-    if (!cliPath || !existsSync(cliPath)) {
-      const error = new CLIPathError();
-      /* istanbul ignore next */
-      logCLIError.enabled && logCLIError(error);
-      throw error;
-    }
-
     const spawnArgs = [
       cliPath,
       [...tokenArgs, "--api-url", await this.apiUrl, ...args]

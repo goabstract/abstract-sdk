@@ -48,8 +48,6 @@ export default class Client {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
-      cliPath:
-        "/Applications/Abstract.app/Contents/Resources/app.asar.unpacked/node_modules/@elasticprojects/abstract-cli/bin/abstract-cli",
       maxCacheSize: 0,
       previewsUrl: "https://previews.goabstract.com",
       transportMode: "api",

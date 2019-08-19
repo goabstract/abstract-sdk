@@ -17,12 +17,6 @@ export class BaseError extends Error {
   }
 }
 
-export class CLIPathError extends BaseError {
-  constructor() {
-    super("Cannot find abstract-cli.");
-  }
-}
-
 export class FileAPIError extends BaseError {
   constructor() {
     super(

@@ -6,7 +6,6 @@ interface ErrorData {
 
 export class APITokenError extends BaseError {}
 export class BaseError extends Error {}
-export class CLIPathError extends BaseError {}
 export class FileAPIError extends BaseError {}
 
 export class EndpointUndefinedError extends BaseError {
@@ -96,7 +95,6 @@ interface EndpointRequest<T> {
 
 interface Endpoint {
   apiUrl: string | Promise<string>;
-  cliPath?: string | Promise<string>;
   client: Client;
   lastCalledEndpoint?: string;
   maxCacheSize: number;
@@ -1717,7 +1715,6 @@ type AccessTokenOption =
 type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
-  cliPath: string | Promise<string>,
   maxCacheSize: number,
   previewsUrl: string | Promise<string>,
   transportMode: "auto" | "api" | "cli",

@@ -50,27 +50,15 @@ describe("#list", () => {
   });
 
   test("cli - file id", async () => {
-    mockCLI(
-      [
-        "commits",
-        "project-id",
-        "branch-id",
-        "--file-id",
-        "file-id",
-        "--limit",
-        "10"
-      ],
-      { commits: [] }
-    );
-    const response = await CLI_CLIENT.commits.list(
-      {
-        projectId: "project-id",
-        branchId: "branch-id",
-        fileId: "file-id",
-        sha: "sha"
-      },
-      { limit: 10 }
-    );
+    mockCLI(["commits", "project-id", "branch-id", "--file-id", "file-id"], {
+      commits: []
+    });
+    const response = await CLI_CLIENT.commits.list({
+      projectId: "project-id",
+      branchId: "branch-id",
+      fileId: "file-id",
+      sha: "sha"
+    });
 
     expect(response).toEqual([]);
   });
