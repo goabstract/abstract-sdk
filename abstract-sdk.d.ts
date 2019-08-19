@@ -104,7 +104,7 @@ interface Endpoint {
   transportMode: string;
   webUrl: string | Promise<string>;
 
-  constructor(client: Client, options: CommandOptions);
+  constructor(client: Client, options: CommandOptions): any;
   accessToken: () => Promise<AccessToken>;
   cliRequest(args: string[]): Promise<any>;
   request<T>(request: EndpointRequest<T>): T;
@@ -198,7 +198,7 @@ interface Commits extends Endpoint {
 
   list(
     descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor,
-    options: { limit?: number } = {}
+    options: { limit?: number }
   ): Promise<Commit[]>;
 }
 
@@ -1332,7 +1332,7 @@ type LayerTextStyle = {
 };
 
 type LayerOverrideData = {
-  symbolId?: string,
+  symbolId?: any,
   properties?: any,
   [layerId: string]: LayerOverrideData
 };
