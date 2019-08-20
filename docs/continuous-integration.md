@@ -9,7 +9,7 @@ Many powerful SDK use cases rely on the ability to execute logic in response to 
 - Automatic icon generation
 - Static preview generation
 
-> We're hard at work implementing **web hooks**, a robust solution that will allow efficient event subscription across the Abstract platform. The approach described below relies on polling and can be used until web hooks are released.
+> We're hard at work implementing **webhooks**, a robust solution that allows efficient event subscription across the Abstract platform. You can [request beta access](https://docs.google.com/forms/d/e/1FAIpQLSevRBz_upT8p2YrieDRrlIKyAUAOHQ5A1xZFn2AMLlrae2rOA/viewform) now, or use the approach below that relies on polling until webhooks officially launch.
 
 ## Polling for activities
 
