@@ -258,6 +258,7 @@ A collection is a set of layers at the same or different commits on a branch, th
 ### The collection page object
 
 | Property | Type | Description |
+|----------|------|-------------|
 | collections | Collection[] | Array of collections |
 | files | File[] | Array of files |
 | pages | Page[] | Array of pages |
