@@ -10,7 +10,7 @@
       "rate-limits",
       "transports",
       "pagination",
-      "continuous-integration",
+      "webhooks",
       "latest",
       "embed"
     ],

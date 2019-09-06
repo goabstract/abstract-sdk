@@ -1,98 +1,109 @@
 ---
-id: continuous-integration
-title: Continuous integration
+id: webhooks
+title: Webhooks
 ---
 
-Many powerful SDK use cases rely on the ability to execute logic in response to an event inside the Abstract platform. This is especially useful when configuring a continuous integration flow where an action is taken any time new events occur within a given project. Possible Abstract integrations include:
+Webhooks make it easy to efficiently subscribe to events across the Abstract platform. Whenever one of these events is triggered by some action in either the web or desktop Abstract application, an HTTP `POST` request will be sent to a user-configured URL.
+
+Many powerful SDK use cases rely on this ability to execute logic in response to a specific Abstract event. This is especially useful when configuring a continuous integration flow where an action is taken any time new events occur within a given project or branch. Possible Abstract integrations include:
 
 - Slack integration
 - Automatic icon generation
 - Static preview generation
 
-> We're hard at work implementing **webhooks**, a robust solution that allows efficient event subscription across the Abstract platform. You can [request beta access](https://docs.google.com/forms/d/e/1FAIpQLSevRBz_upT8p2YrieDRrlIKyAUAOHQ5A1xZFn2AMLlrae2rOA/viewform) now, or use the approach below that relies on polling until webhooks officially launch.
+> **Webhooks are currently in beta.** Please note that payloads, event names, and other related functionality could change before launching publicly.
+>
+> [**Request beta access now**](https://docs.google.com/forms/d/e/1FAIpQLSevRBz_upT8p2YrieDRrlIKyAUAOHQ5A1xZFn2AMLlrae2rOA/viewform)
 
-## Polling for activities
+## Creating a webhook
 
-An activity in the Abstract platform represents a designated type of event within a project. These events can be specific to the project itself, or they can be specific to a collection, a branch, a commit, or a review within a project.
+Webhooks are specific to an organization and can be created via its integration settings. The following process outlines how to create a new webhook.
 
-While web hooks are still in development, one way to mimic their behavior is to check for new Abstract activities on a set interval. The following code demonstrates this approach.
+1. Go to the **Integrations** settings page.
+2. Click the  **Add Webhook** button.
+3. Configure a receiving HTTPS endpoint URL.
+4. Configure events that should trigger deliveries.
+5. Click the **Add Webhook** button.
 
-### 1. Fetch activities
+![Create a webhook](/img/create-webhook-animated.gif)
 
-Fetch the latest activities for a given project.
+## Managing a webhook
 
-```js
-const activities = await client.activities.list({ projectId: "..." });
-```
+Existing webhooks can be managed via an organization's integration settings. Webhooks can be tested, updated, and deleted, and their successful and unsuccessful delivery attempts can be viewed and inspected.
 
-### 2. Filter activities by type
+1. Go to the **Integrations** settings page.
+2. Select an existing webhook.
+3. Test, update, or delete the webhook.
 
-Iterate through each activity and check its `type`. Note that while only `"COMMIT"` is used in this example, many other activity types are supported. Check out the [SDK type interfaces](https://github.com/goabstract/abstract-sdk/blob/master/src/types.js#L88-L292) for all activity types within the Abstract platform.
+![Manage a webhook](/img/manage-webhook-animated.gif)
 
-```js
-activities.forEach(activity => {
-  if (activity.type === "COMMIT") {
-    // Commit occurred, do something with activity.payload
-  }
-});
-```
+## Supported events
 
-### 3. Repeat on an interval
+When setting up a new webhook, it's necessary to select the events that should trigger deliveries. It's recommended to only select the specific events that your application needs. This both limits the number of requests that your server receives and also simplifies the logic necessary to filter multiple event types.
 
-Now that activities are fetched and filtered, this logic should be repeated on a set interval. In this example, new activities are checked every 60 seconds, but any interval can be used as long as it does not exhaust the client [rate limit](/docs/rate-limits).
+| Name | Description |
+|-|-|
+| `project.created` | Triggered when a new project is created. |
+| `project.updated` | Triggered when an existing project is updated. |
+| `project.deleted` | Triggered when a project is deleted. |
+| `branch.created` | Triggered when a new branch is created. |
+| `branch.updated` | Triggered when an existing branch is updated. |
+| `branch.status.changed` | Triggered when a branch's status changes. |
+| `branch.commits.added` | Triggered when new commits are pushed to a branch. |
 
-```js
-async function poll() {
-  const activities = await client.activities.list({ projectId: "..." });
+## Delivery payloads
 
-  activities.forEach(activity => {
-    if (activity.type === "COMMIT") {
-      // Commit occurred, do something with activity.payload
+When any of a webhook's events are triggered by some action in the Abstract application, an HTTP `POST` request will be sent to the webhook's configured URL. These requests will include both Abstract-specific headers and JSON data payloads that are specific to each event type.
+
+### Abstract-specific headers
+
+Webhook delivery requests will include the Abstract-specific headers detailed below.
+
+| Header | Description |
+|-|-|
+| `User-Agent` | The user agent for webhook delivery requests will be `Abstract-Webhooks`. |
+
+### Example payload
+
+```sh
+POST /example-webhook HTTP/1.1
+Accept-Encoding: gzip
+Connection: close
+Content-Length: 812
+Content-Type: application/json
+Host: localhost:1337
+User-Agent: Abstract-Webhooks
+{
+  "createdAt": "2019-09-06T19:23:56Z",
+  "event": "project.updated",
+  "data": {
+    "object": {
+      "about": null,
+      "archivedAt": null,
+      "color": "#000",
+      "createdAt": "2019-07-12T14:40:32Z",
+      "createdByUser": {
+        "avatarUrl": "https://avatars.goabstract.com/avatars/4010bed7-9ada-4eb4-9d9a-09c8b095d0a2.",
+        "createdAt": "2018-11-04T18:28:19Z",
+        "email": "paul@abstract.com",
+        "id": "e5954a04-26ea-4600-a41b-1f74350be974",
+        "name": "Paul",
+        "objectType": "user",
+        "updatedAt": "2019-06-17T16:12:47Z",
+        "username": "bitpshr"
+      },
+      "deletedAt": null,
+      "description": null,
+      "firstPushedAt": "2019-07-12T14:40:36Z",
+      "id": "003a1ae0-a4b3-11e9-807c-a35b74e69da5",
+      "name": "SDK Examples (edited)",
+      "objectType": "project",
+      "organizationId": "4ed01dff-4bc7-47cd-8b51-9ea3ec9e5de4",
+      "pushedAt": "2019-08-26T14:10:46Z",
+      "sectionId": null,
+      "updatedAt": "2019-09-06T19:23:56Z",
+      "visibility": "organization"
     }
-  });
+  }
 }
-
-setInterval(poll, 60000);
-```
-
-## Example: Slack integration
-
-The following code is a complete, working example of a polling-based continuous integration script that checks for new commits in Abstract and posts them to Slack.
-
-```js
-import * as Abstract from "abstract-sdk";
-import slack from "slack";
-
-const client = new Abstract.Client();
-
-let lastActivityId;
-
-async function poll() {
-    // Fetch activities for a given project
-    const activities = await client.activities.list({ projectId: "..." });
-
-    // Filter out activities that were processed during the last poll
-    const newActivities = activities.slice(0, activities.findIndex(({ id }) => id === lastActivityId));
-
-    // Iterate over each activity
-    newActivities.forEach(activity => {
-        // Only worry about commits
-        if (activity.type === "COMMIT") {
-            const { branchName, sha } = activity.payload;
-
-            // Post a message to Slack for each commit
-            slack.chat.postMessage({
-                token: "...",
-                channel: "...",
-                text: `A new commit was pushed to the *${branchName}* branch: \`${sha}\`.`
-            });
-        }
-    });
-
-    // Cache the last activity that was processed
-    lastActivityId = activities[0] && activities[0].id;
-}
-
-// Poll every 10 seconds
-setInterval(poll, 10000);
 ```
