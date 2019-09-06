@@ -104,7 +104,7 @@ interface Endpoint {
   transportMode: string;
   webUrl: string | Promise<string>;
 
-  constructor(client: Client, options: CommandOptions): any;
+  constructor(client: Client, options: CommandOptions): Endpoint;
   accessToken: () => Promise<AccessToken>;
   cliRequest(args: string[]): Promise<any>;
   request<T>(request: EndpointRequest<T>): T;
@@ -1332,9 +1332,9 @@ type LayerTextStyle = {
 };
 
 type LayerOverrideData = {
-  symbolId?: any,
+  symbolId?: string,
   properties?: any,
-  [layerId: string]: LayerOverrideData
+  [layerId: string]: string | undefined
 };
 
 type LayerDataAsset = {
