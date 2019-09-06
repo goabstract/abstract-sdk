@@ -198,7 +198,7 @@ interface Commits extends Endpoint {
 
   list(
     descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor,
-    options: { limit?: number }
+    options?: { limit?: number }
   ): Promise<Commit[]>;
 }
 
