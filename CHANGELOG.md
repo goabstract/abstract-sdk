@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/goabstract/abstract-sdk/compare/v2.0.0...v3.0.0) (2019-09-09)
+
+
+### Features
+
+* externalize asset URL configuration ([9b53624](https://github.com/goabstract/abstract-sdk/commit/9b53624))
+
+
+### BREAKING CHANGES
+
+* `previewsUrl` was changed to `previewUrl`
+
+
+
 ## [2.0.0](https://github.com/goabstract/abstract-sdk/compare/v1.9.0...v2.0.0) (2019-08-19)
 
 
