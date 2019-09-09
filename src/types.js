@@ -1465,8 +1465,9 @@ export type AccessTokenOption =
 export type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
+  assetUrl: string | Promise<string>,
   maxCacheSize: number,
-  previewsUrl: string | Promise<string>,
+  previewUrl: string | Promise<string>,
   transportMode: "auto" | "api" | "cli",
   webUrl: string | Promise<string>
 };

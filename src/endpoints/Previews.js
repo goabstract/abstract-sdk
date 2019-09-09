@@ -37,7 +37,7 @@ export default class Previews extends Endpoint {
               "Abstract-Api-Version": undefined
             }
           },
-          await this.previewsUrl
+          await this.previewUrl
         );
 
         /* istanbul ignore if */

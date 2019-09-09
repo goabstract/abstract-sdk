@@ -1,5 +1,5 @@
 // @flow
-import { mockAPI, API_CLIENT } from "../testing";
+import { mockAPI, mockAssetAPI, API_CLIENT } from "../testing";
 
 describe("#info", () => {
   test("api", async () => {
@@ -25,9 +25,9 @@ describe("#raw", () => {
 
   test("api", async () => {
     mockAPI("/projects/project-id/assets/asset-id", {
-      url: "http://apiUrl/asset"
+      url: "https://objects.goabstract.com/foo"
     });
-    mockAPI("/asset", { id: "asset-id" });
+    mockAssetAPI("/foo", { id: "asset-id" });
     const response = await API_CLIENT.assets.raw(
       {
         assetId: "asset-id",
@@ -44,9 +44,9 @@ describe("#raw", () => {
       versions: undefined
     };
     mockAPI("/projects/project-id/assets/asset-id", {
-      url: "http://apiUrl/asset"
+      url: "https://objects.goabstract.com/foo"
     });
-    mockAPI("/asset", { id: "asset-id" });
+    mockAssetAPI("/foo", { id: "asset-id" });
     const response = await API_CLIENT.assets.raw({
       assetId: "asset-id",
       projectId: "project-id"

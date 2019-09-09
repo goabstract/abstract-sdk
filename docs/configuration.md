@@ -29,13 +29,19 @@ _Default value: `https://api.goabstract.com`_
 
 This option can be used to specify a custom URL that points to an instance of the Abstract HTTP API. This is used when building the request URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
 
+### `assetUrl`
+
+_Default value: `https://objects.goabstract.com`_
+
+This option can be used to specify a custom URL that points to an instance of the Abstract asset retrieval service. This is used when building asset file URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
+
 ### `maxCacheSize`
 
 _Default value: `0`_
 
 Requests for individual assets within the Abstract platform can be cached since their responses are static and don't change over time. For example, a `Commit` retrieved by its `sha` can be safely cached since that `sha` will always point to the same `Commit`.  This option can be used to increase or decrease the size of the internal entity cache. Setting this option to `0` disables caching entirely.
 
-### `previewsUrl`
+### `previewUrl`
 
 _Default value: `https://previews.goabstract.com`_
 

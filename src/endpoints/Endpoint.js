@@ -38,10 +38,11 @@ export type EndpointRequest<T> = {
 export default class Endpoint {
   _optionAccessToken: ?AccessTokenOption;
   apiUrl: string | Promise<string>;
+  assetUrl: string | Promise<string>;
   client: Client;
   lastCalledEndpoint: ?string;
   maxCacheSize: number;
-  previewsUrl: string | Promise<string>;
+  previewUrl: string | Promise<string>;
   transportMode: string;
   webUrl: string | Promise<string>;
 
@@ -53,9 +54,10 @@ export default class Endpoint {
   constructor(client: Client, options: CommandOptions) {
     this._optionAccessToken = options.accessToken;
     this.apiUrl = options.apiUrl;
+    this.assetUrl = options.assetUrl;
     this.client = client;
     this.maxCacheSize = options.maxCacheSize;
-    this.previewsUrl = options.previewsUrl;
+    this.previewUrl = options.previewUrl;
     this.transportMode = options.transportMode;
     this.webUrl = options.webUrl;
   }

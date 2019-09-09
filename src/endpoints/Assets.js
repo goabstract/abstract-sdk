@@ -44,8 +44,13 @@ export default class Assets extends Endpoint {
     return this.request<Promise<ArrayBuffer>>({
       api: async () => {
         const asset = await this.info(descriptor);
+        const urlRoot = await this.assetUrl;
+        const urlPath = asset.url.replace(
+          /^https:\/\/objects.goabstract.com/,
+          ""
+        );
         const arrayBuffer = await this.apiRawRequest(
-          asset.url,
+          `${urlRoot}${urlPath}`,
           {
             headers: {
               Accept: undefined,

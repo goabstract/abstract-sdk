@@ -95,14 +95,15 @@ interface EndpointRequest<T> {
 
 interface Endpoint {
   apiUrl: string | Promise<string>;
+  assetUrl: string | Promise<string>;
   client: Client;
   lastCalledEndpoint?: string;
   maxCacheSize: number;
-  previewsUrl: string | Promise<string>;
+  previewUrl: string | Promise<string>;
   transportMode: string;
   webUrl: string | Promise<string>;
 
-  constructor(client: Client, options: CommandOptions);
+  constructor(client: Client, options: CommandOptions): Endpoint;
   accessToken: () => Promise<AccessToken>;
   cliRequest(args: string[]): Promise<any>;
   request<T>(request: EndpointRequest<T>): T;
@@ -196,7 +197,7 @@ interface Commits extends Endpoint {
 
   list(
     descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor,
-    options: { limit?: number } = {}
+    options?: { limit?: number }
   ): Promise<Commit[]>;
 }
 
@@ -1330,9 +1331,9 @@ type LayerTextStyle = {
 };
 
 type LayerOverrideData = {
-  symbolId?: string,
-  properties?: any,
-  [layerId: string]: LayerOverrideData
+  symbolId: string,
+  properties: Object,
+  [layerId: string]: string | Object | LayerOverrideData
 };
 
 type LayerDataAsset = {
@@ -1715,8 +1716,9 @@ type AccessTokenOption =
 type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
+  assetUrl: string | Promise<string>,
   maxCacheSize: number,
-  previewsUrl: string | Promise<string>,
+  previewUrl: string | Promise<string>,
   transportMode: "auto" | "api" | "cli",
   webUrl: string | Promise<string>
 };

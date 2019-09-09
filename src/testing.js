@@ -24,30 +24,34 @@ export const DEFAULT_CLIENT = new Client();
 export const API_CLIENT = new Client({
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
-  previewsUrl: "http://previewsUrl",
+  assetUrl: "http://assetUrl",
+  previewUrl: "http://previewUrl",
   transportMode: "api"
 });
 
 export const CLI_CLIENT = new Client({
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
-  previewsUrl: "http://previewsUrl",
+  assetUrl: "http://assetUrl",
+  previewUrl: "http://previewUrl",
   transportMode: "cli"
 });
 
 export const API_CLIENT_CACHED = new Client({
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
+  assetUrl: "http://assetUrl",
   maxCacheSize: 10,
-  previewsUrl: "http://previewsUrl",
+  previewUrl: "http://previewUrl",
   transportMode: "api"
 });
 
 export const CLI_CLIENT_CACHED = new Client({
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
+  assetUrl: "http://assetUrl",
   maxCacheSize: 10,
-  previewsUrl: "http://previewsUrl",
+  previewUrl: "http://previewUrl",
   transportMode: "cli"
 });
 
@@ -80,7 +84,7 @@ export function mockAPI(
   code: number = 200,
   method: string = "get"
 ) {
-  (nock("http://apiUrl"): any)[method](url).reply(code, response);
+  (nock("http://apiurl"): any)[method](url).reply(code, response);
 }
 
 export function mockPreviewAPI(
@@ -89,5 +93,14 @@ export function mockPreviewAPI(
   code: number = 200,
   method: string = "get"
 ) {
-  (nock("http://previewsurl"): any)[method](url).reply(code, response);
+  (nock("http://previewurl"): any)[method](url).reply(code, response);
+}
+
+export function mockAssetAPI(
+  url: string,
+  response: Object,
+  code: number = 200,
+  method: string = "get"
+) {
+  (nock("http://asseturl"): any)[method](url).reply(code, response);
 }
