@@ -72,6 +72,12 @@ An embed can be created by using the following URL as the `src` of an `<iframe>`
 
 `https://app.goabstract.com/embed/c53e8159-2e24-4118-b02b-6fe4b3a3afee`
 
+## Chrome-less embeds
+
+Sometimes it's preferable to hide Abstract-specific UI components within an embed until the embed is hovered. This can provide a more-seamless visual look and feel when using embeds in certain contexts. To achieve this, a `chromeless` URL parameter can be added to an embed's URL:
+
+`https://app.goabstract.com/embed/c53e8159-2e24-4118-b02b-6fe4b3a3afee&chromeless`
+
 ## Examples
 
 The following examples demonstrate both layer and collection embeds created from the above share link.
