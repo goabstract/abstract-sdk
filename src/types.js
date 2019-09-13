@@ -363,8 +363,7 @@ export type Organization = {
   publicSharingEnabled?: boolean,
   restrictedToDomains: string[],
   trialEndsAt?: string,
-  userId: string,
-  userIds: string[]
+  userId: string
 };
 
 export type Project = {
@@ -383,8 +382,7 @@ export type Project = {
   pushedAt: string,
   repoCreatedAt: string,
   visibility: "organization" | "project",
-  sizeInBytes: number,
-  userIds: [string]
+  sizeInBytes: number
 };
 
 type BaseShare = {|
