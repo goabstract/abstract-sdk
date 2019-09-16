@@ -77,10 +77,14 @@ describe("cache", () => {
 
   test("does not cache uncached entity requests", async () => {
     mockAPI("/projects?organizationId=foo", {
-      data: [{ id: "foo" }]
+      data: {
+        projects: [{ id: "foo" }]
+      }
     });
     mockAPI("/projects?organizationId=foo", {
-      data: [{ id: "foo" }]
+      data: {
+        projects: [{ id: "foo" }]
+      }
     });
 
     const response1 = await API_CLIENT_CACHED.projects.list({

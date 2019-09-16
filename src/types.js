@@ -1469,3 +1469,9 @@ export type CommandOptions = {
   transportMode: "auto" | "api" | "cli",
   webUrl: string | Promise<string>
 };
+
+export type Section = {
+  id: string,
+  name: string,
+  organizationId: string
+};

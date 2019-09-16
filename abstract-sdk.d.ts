@@ -261,8 +261,15 @@ interface Projects extends Endpoint {
   info(descriptor: ProjectDescriptor): Promise<Project>;
   list(
     descriptor: OrganizationDescriptor,
-    options?: { filter?: "active" | "archived" }
+    options?: {
+      filter?: "active" | "archived",
+      sectionId?: string
+    }
   ): Promise<Project[]>;
+}
+
+interface Sections extends Endpoint {
+  list(descriptor: OrganizationDescriptor): Promise<Section[]>;
 }
 
 interface Shares extends Endpoint {
@@ -1719,4 +1726,10 @@ type CommandOptions = {
   previewUrl: string | Promise<string>,
   transportMode: "auto" | "api" | "cli",
   webUrl: string | Promise<string>
+};
+
+type Section = {
+  id: string,
+  name: string,
+  organizationId: string
 };

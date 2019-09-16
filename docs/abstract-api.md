@@ -1096,6 +1096,32 @@ abstract.projects.info({
 
 
 
+## Sections
+
+A section is a group of projects that belong to a given organization. Sections are used to group similar or related projects together and can be created using the desktop application.
+
+### The section object
+
+| Property         | Type     | Description                                                                   |
+|------------------|----------|-------------------------------------------------------------------------------|
+| `id`             | `string` | UUID                                                                          |
+| `name`           | `string` | The name of the section                                                       |
+| `organizationId` | `string` | UUID of the organization this section belongs to                              |
+
+### List all sections
+
+![API][api-icon]
+
+`sections.list(OrganizationDescriptor): Promise<Section[]>`
+
+List all sections accessible through the current authentication
+
+```js
+abstract.sections.list({ organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9" });
+```
+
+
+
 ## Shares
 
 A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
