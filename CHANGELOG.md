@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/goabstract/abstract-sdk/compare/v3.0.0...v3.1.0) (2019-09-17)
+
+
+### Bug Fixes
+
+* remove pageId from LayerDescriptor examples ([#159](https://github.com/goabstract/abstract-sdk/issues/159)) ([63fac47](https://github.com/goabstract/abstract-sdk/commit/63fac47))
+
+
+### Features
+
+* add sections support to the API transport ([6f910f6](https://github.com/goabstract/abstract-sdk/commit/6f910f6))
+
+
+
 ## [3.0.0](https://github.com/goabstract/abstract-sdk/compare/v2.0.0...v3.0.0) (2019-09-09)
 
 
