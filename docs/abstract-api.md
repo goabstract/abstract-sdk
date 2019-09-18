@@ -1056,7 +1056,7 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 
 ![API][api-icon]
 
-`projects.list(OrganizationDescriptor?, { filter?: "active" | "archived" }): Promise<Project[]>`
+`projects.list(OrganizationDescriptor?, { filter?: "active" | "archived", sectionId?: string }): Promise<Project[]>`
 
 List all projects accessible through the current authentication
 
@@ -1077,6 +1077,15 @@ or, get a list of active projects for a specific organization…
 ```js
 abstract.projects.list({
   organizationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+}, { filter: "active" });
+```
+
+or, get a list of active projects for a specific section within an organization…
+
+```js
+abstract.projects.list({
+  organizationId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  sectionId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
 }, { filter: "active" });
 ```
 
