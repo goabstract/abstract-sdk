@@ -2,7 +2,6 @@
 /* global fetch */
 /* istanbul ignore file */
 import "cross-fetch/polyfill";
-import { join } from "path";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
 import Client from "../Client";
@@ -135,10 +134,8 @@ export default class Endpoint {
 
   async cliRequest(args: string[]) {
     const token = await this.accessToken();
-    const cliPath = join(
-      __dirname,
-      "../../node_modules/@elasticprojects/abstract-cli/bin/abstract-cli"
-    );
+
+    const cliPath = require("@elasticprojects/abstract-cli");
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
     const spawnArgs = [
       cliPath,
