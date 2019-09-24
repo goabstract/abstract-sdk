@@ -234,19 +234,34 @@ A changeset is a group of changes that together form a single, indivisible modif
 | `layerStyleId` | `string`                         | UUID of the layer style associated with this change        |
 | `textStyleId`  | `string`                         | UUID of the text style associated with this change         |
 
-### Retrieve a changeset
+### Retrieve a changeset for a commit
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.info(CommitDescriptor): Promise<Changeset>`
+`changesets.commit(CommitDescriptor): Promise<Changeset>`
 
-Load an individual changeset
+Load a changeset for a commit
 
 ```js
-abstract.changesets.info({
+abstract.changesets.commit({
   branchId: "master",
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   sha: "e2a0a301c4a530ec16024cbb339dfc135c841b10"
+});
+```
+
+### Retrieve a changeset for a branch
+
+![CLI][cli-icon] ![API][api-icon]
+
+`changesets.commit(BranchDscriptor): Promise<Changeset>`
+
+Load a changeset for a branch
+
+```js
+abstract.changesets.branch({
+  branchId: "c426d0a6-e039-43d7-b7b3-e685a25e4cfb",
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
 });
 ```
 

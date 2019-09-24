@@ -1,9 +1,9 @@
 // @flow
-import type { Changeset, CommitDescriptor } from "../types";
+import type { BranchDescriptor, Changeset, CommitDescriptor } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Changesets extends Endpoint {
-  async info(descriptor: CommitDescriptor) {
+  async commit(descriptor: CommitDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -15,8 +15,8 @@ export default class Changesets extends Endpoint {
         return response.changeset;
       },
 
-      cli: () => {
-        return this.cliRequest([
+      cli: async () => {
+        const response = await this.cliRequest([
           "changeset",
           latestDescriptor.projectId,
           "--commit",
@@ -24,11 +24,33 @@ export default class Changesets extends Endpoint {
           "--branch",
           latestDescriptor.branchId
         ]);
+        return response.changeset;
       },
 
       cache: {
-        key: `changeset:${descriptor.sha}`,
+        key: `changeset-commit:${descriptor.sha}`,
         disabled: descriptor.sha === "latest"
+      }
+    });
+  }
+
+  async branch(descriptor: BranchDescriptor) {
+    return this.request<Promise<Changeset>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`
+        );
+        return response.changeset;
+      },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "changeset",
+          descriptor.projectId,
+          "--branch",
+          descriptor.branchId
+        ]);
+        return response.changeset;
       }
     });
   }
