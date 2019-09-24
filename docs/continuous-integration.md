@@ -48,8 +48,11 @@ When setting up a new webhook, it's necessary to select the events that should t
 | `project.deleted` | Triggered when a project is deleted. |
 | `branch.created` | Triggered when a new branch is created. |
 | `branch.updated` | Triggered when an existing branch is updated. |
-| `branch.status.changed` | Triggered when a branch's status changes. |
-| `branch.commits.added` | Triggered when new commits are pushed to a branch. |
+| `branch.statusUpdated` | Triggered when a branch's status is updated. |
+| `commits.created` | Triggered when new commits are pushed to a branch. |
+| `comment.created` | Triggered when a new comment is posted. |
+| `comment.updated` | Triggered when an existing comment is updated. |
+| `comment.deleted` | Triggered when a comment is deleted. |
 
 ## Delivery payloads
 
