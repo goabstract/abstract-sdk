@@ -45,7 +45,7 @@ export class EndpointUndefinedError extends BaseError {
 export class APITokenError extends BaseError {
   constructor() {
     super(
-      "Cannot find API access token. Use options.accessToken or ABSTRACT_TOKEN. See https://sdk.goabstract.com/docs/authentication/ for more information."
+      "Cannot find API access token. Use options.accessToken or ABSTRACT_TOKEN. See https://developer.abstract.com/docs/authentication/ for more information."
     );
   }
 }

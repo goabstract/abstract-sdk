@@ -11,7 +11,7 @@
 const siteConfig = {
   title: "Abstract SDK",
   tagline: "A universal javascript binding for the Abstract API and CLI",
-  url: "https://sdk.goabstract.com",
+  url: "https://developer.abstract.com",
   baseUrl: "/",
   editUrl: "https://github.com/goabstract/abstract-sdk/edit/master/docs/",
 

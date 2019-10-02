@@ -13,15 +13,15 @@ The SDK is available as a Node.js module available via the public NPM registry. 
 npm install abstract-sdk
 ```
 
-Please see the [installation guide](https://sdk.goabstract.com/docs/installation/) for more information.
+Please see the [installation guide](https://developer.abstract.com/docs/installation/) for more information.
 
 ## Documentation
 
-Complete SDK documentation can be found at [https://sdk.goabstract.com](https://sdk.goabstract.com).
+Complete SDK documentation can be found at [https://developer.abstract.com](https://developer.abstract.com).
 
 The following community resources are available to help you get started quickly with the SDK:
 
-- [Documentation website](https://sdk.goabstract.com)
+- [Documentation website](https://developer.abstract.com)
 - [Spectrum chat](https://spectrum.chat/abstract)
 - [Abstract help center](https://www.abstract.com/help/)
 - [Abstract support](https://www.abstract.com/help/contact/)

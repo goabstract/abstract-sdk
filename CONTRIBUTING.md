@@ -68,7 +68,7 @@ $ yarn test
 
 ## Documentation
 
-Both the documentation content and its static website code live inside this repository in the [`docs`](https://github.com/goabstract/abstract-sdk/tree/master/docs) and [`website`](https://github.com/goabstract/abstract-sdk/tree/master/website) folders, respectively. The documentation auto-deploys to [https://sdk.goabstract.com](https://sdk.goabstract.com) whenever new commits occur on the [`docs`](https://github.com/goabstract/abstract-sdk/tree/docs) branch. This means that **pull requests to update documentation should be made against the `docs` branch** instead of `master`.
+Both the documentation content and its static website code live inside this repository in the [`docs`](https://github.com/goabstract/abstract-sdk/tree/master/docs) and [`website`](https://github.com/goabstract/abstract-sdk/tree/master/website) folders, respectively. The documentation auto-deploys to [https://developer.abstract.com](https://developer.abstract.com) whenever new commits occur on the [`docs`](https://github.com/goabstract/abstract-sdk/tree/docs) branch. This means that **pull requests to update documentation should be made against the `docs` branch** instead of `master`.
 
 ### Installation
 
