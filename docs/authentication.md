@@ -24,7 +24,7 @@ If an access token is available in a given environment as an `ABSTRACT_TOKEN` va
 An access token can be passed directly as a string.
 
 ```js
-const client = new Abstract.Client({
+const abstract = new Abstract.Client({
   accessToken: process.env.DEMO_TOKEN
 });
 ```
@@ -32,7 +32,7 @@ const client = new Abstract.Client({
 An access token can also be passed as either a synchronous or an asynchronous function that returns a string.
 
 ```js
-const client = new Abstract.Client({
+const abstract = new Abstract.Client({
   accessToken: async () => getDemoToken()
 });
 ```
