@@ -3,6 +3,7 @@ import Activities from "./endpoints/Activities";
 import Assets from "./endpoints/Assets";
 import Branches from "./endpoints/Branches";
 import Changesets from "./endpoints/Changesets";
+import CollectionLayers from "./endpoints/CollectionLayers";
 import Collections from "./endpoints/Collections";
 import Comments from "./endpoints/Comments";
 import Commits from "./endpoints/Commits";
@@ -27,6 +28,7 @@ export default class Client {
   assets: Assets;
   branches: Branches;
   changesets: Changesets;
+  collectionLayers: CollectionLayers;
   collections: Collections;
   comments: Comments;
   commits: Commits;
@@ -63,6 +65,7 @@ export default class Client {
     this.assets = new Assets(this, options);
     this.branches = new Branches(this, options);
     this.changesets = new Changesets(this, options);
+    this.collectionLayers = new CollectionLayers(this, options);
     this.collections = new Collections(this, options);
     this.comments = new Comments(this, options);
     this.commits = new Commits(this, options);

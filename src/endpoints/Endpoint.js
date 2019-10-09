@@ -109,10 +109,12 @@ export default class Endpoint {
     init: Object = {},
     overrideHostname?: ?string
   ) {
+    const emptyResponse: any = undefined;
     const hostname =
       overrideHostname !== undefined ? overrideHostname : await this.apiUrl;
     const response = await this._fetch(input, init, hostname);
-    const data = await response.json();
+    const data =
+      response.status !== 204 ? await response.json() : emptyResponse;
     /* istanbul ignore next */
     logAPIResponse.enabled && logAPIResponse(data);
     return data;

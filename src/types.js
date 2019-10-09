@@ -17,6 +17,11 @@ export type CollectionDescriptor = {|
   collectionId: string
 |};
 
+export type CollectionLayerDescriptor = {|
+  projectId: string,
+  collectionLayerId: string
+|};
+
 export type ActivityDescriptor = {|
   activityId: string
 |};
@@ -562,16 +567,26 @@ export type NewComment = {
   body: string
 };
 
-export type CollectionLayer = {
-  id: string,
-  collectionId: string,
-  projectId: string,
+export type NewCollectionLayer = {
   fileId: string,
-  pageId: string,
+  isPinned?: boolean,
   layerId: string,
-  sha: string,
+  order?: number,
+  pageId: string,
+  sha: "latest" | string,
+  useLatestCommit?: boolean
+};
+
+export type CollectionLayer = {
+  collectionId: string,
+  fileId: string,
+  id: string,
   isPinned: boolean,
-  order: number
+  layerId: string,
+  order: number,
+  pageId: string,
+  sha: "latest" | string,
+  useLatestCommit: boolean
 };
 
 export type File = {

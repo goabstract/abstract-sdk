@@ -94,7 +94,7 @@ describe("#update", () => {
     mockAPI(
       "/projects/project-id/collections/collection-id",
       { data: { id: "collection-id" } },
-      204,
+      201,
       "put"
     );
     const response = await API_CLIENT.collections.update(

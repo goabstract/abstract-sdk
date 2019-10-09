@@ -361,6 +361,113 @@ abstract.collections.update({
 ```
 
 
+
+## CollectionLayers
+
+A collection layer represents an underlying layer within a collection. Collection layers can be added to, removed from, and updated within existing collections.
+
+### The CollectionLayer object
+
+| Property          | Type      | Description                                                                                           |
+|-------------------|-----------|-------------------------------------------------------------------------------------------------------|
+| `collectionId`    | `string`  | UUID of the collection that this collection layer is part of                                          |
+| `fileId`          | `string`  | UUID of the file that the underlying layer is part of                                                 |
+| `pageId`          | `string`  | UUID of the page that the underlying layer is part of                                                 |
+| `layerId`         | `string`  | UUID of the underlying layer that this collection layer represents                                    |
+| `isPinned`        | `boolean` | SHA of the commit introducing changes in this changeset                                               |
+| `useLatestCommit` | `boolean` | Determines if this collection layer should always point to the latest version of its underlying layer |
+| `id`              | `string`  | UUID identifier of this collection layer                                                              |
+| `order`           | `number`  | SHA of the commit that the underlying layer should point to                                           |
+| `sha`             | `string`  | SHA of the commit that the underlying layer should point to                                           |
+
+### The NewCollectionLayer object
+
+| Property          | Type      | Description                                                                                           |
+|-------------------|-----------|-------------------------------------------------------------------------------------------------------|
+| `fileId`          | `string`  | UUID of the file that the underlying layer is part of                                                 |
+| `pageId`          | `string`  | UUID of the page that the underlying layer is part of                                                 |
+| `layerId`         | `string`  | UUID of the underlying layer that this collection layer represents                                    |
+| `isPinned`        | `boolean` | SHA of the commit introducing changes in this changeset                                               |
+| `useLatestCommit` | `boolean` | Determines if this collection layer should always point to the latest version of its underlying layer |
+| `order`           | `number`  | SHA of the commit that the underlying layer should point to                                           |
+| `sha`             | `string`  | SHA of the commit that the underlying layer should point to                                           |
+
+### Add a layer to a collection
+
+![API][api-icon]
+
+`collectionLayers.add(descriptor: CollectionDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>`
+
+Add a layer to a collection
+
+```js
+abstract.collectionLayers.add({
+	projectId: '003a1ae0-a4b3-11e9-807c-a35b74e69da5',
+	collectionId: '2538be75-c38b-4008-8a60-cf2c0364727e'
+}, {
+	fileId: '745EF992-C945-4B4C-BAFD-C6D45C45C6E2',
+	isPinned: true,
+	layerId: '9E2EB6C6-3681-4FCF-951E-50F7F0A0B0DE',
+	order: 1,
+	pageId: '7DC19A61-4D5F-4D75-BCAE-A589DF08257B',
+	sha: 'latest'
+});
+```
+
+### Remove a layer from a collection
+
+![API][api-icon]
+
+`collectionLayers.remove(descriptor: CollectionLayerDescriptor): Promise<void>`
+
+Remove a layer from a collection
+
+```js
+abstract.collectionLayers.remove({
+	projectId: '003a1ae0-a4b3-11e9-807c-a35b74e69da5',
+	collectionLayerId: '8a2aaa0f-bc8e-4b0d-9f79-dda1c68f12f1'
+});
+```
+
+### Update a layer within a collection
+
+![API][api-icon]
+
+`collectionLayers.update(descriptor: CollectionLayerDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>`
+
+Update a layer within a collection
+
+```js
+abstract.collectionLayers.update({
+	projectId: '003a1ae0-a4b3-11e9-807c-a35b74e69da5',
+	collectionLayerId: '8a2aaa0f-bc8e-4b0d-9f79-dda1c68f12f1'
+}, {
+	fileId: '745EF992-C945-4B4C-BAFD-C6D45C45C6E2',
+	isPinned: false,
+	layerId: '9E2EB6C6-3681-4FCF-951E-50F7F0A0B0DE',
+	order: 2,
+	pageId: '7DC19A61-4D5F-4D75-BCAE-A589DF08257B',
+	sha: 'latest'
+});
+```
+
+### Reorder a layer within a collection
+
+![API][api-icon]
+
+`collectionLayers.move(descriptor: CollectionLayerDescriptor, order: number): Promise<CollectionLayer[]>`
+
+Reorder a layer within a collection
+
+```js
+abstract.collectionLayers.move({
+	projectId: '003a1ae0-a4b3-11e9-807c-a35b74e69da5',
+	collectionLayerId: '8a2aaa0f-bc8e-4b0d-9f79-dda1c68f12f1'
+}, 2);
+```
+
+
+
 ## Comments
 
 A comment in Abstract can be left on a branch, commit, or layer. Comments on layers can also include an optional annotation that
