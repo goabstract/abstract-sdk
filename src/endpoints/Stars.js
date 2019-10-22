@@ -13,7 +13,7 @@ export default class Stars extends Endpoint {
         const response = await this.apiRequest("starred", {
           headers
         });
-        return response.data;
+        return response;
       }
     });
   }
