@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/goabstract/abstract-sdk/compare/v3.1.1...v4.0.0) (2019-10-22)
+
+
+### Bug Fixes
+
+* embed documentation typo &chromless -> ?chromeless ([#161](https://github.com/goabstract/abstract-sdk/issues/161)) ([d7a9b4a](https://github.com/goabstract/abstract-sdk/commit/d7a9b4a))
+
+
+### Features
+
+* add CollectionLayers endpoint ([be2c6aa](https://github.com/goabstract/abstract-sdk/commit/be2c6aa))
+* add support for branch changesets ([9d79909](https://github.com/goabstract/abstract-sdk/commit/9d79909))
+
+
+### BREAKING CHANGES
+
+* `changesets.info` was ranamed to `changesets.commit`
+
+
+
 ### [3.1.1](https://github.com/goabstract/abstract-sdk/compare/v3.1.0...v3.1.1) (2019-09-23)
 
 
