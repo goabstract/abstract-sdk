@@ -64,6 +64,13 @@ export type LayerDescriptor = {|
   layerId: string
 |};
 
+export type StarDescriptor = {|
+  ...$Exact<ObjectDescriptor>,
+  starrableId: string,
+  starrableType: "project", // others?
+  starredAt: string
+|};
+
 export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
 export type UserDescriptor = {|
@@ -388,6 +395,12 @@ export type Project = {
   repoCreatedAt: string,
   visibility: "organization" | "project",
   sizeInBytes: number
+};
+
+export type Star = {
+  starrableId: string,
+  starrableType: "project",
+  starredAt: string
 };
 
 type BaseShare = {|

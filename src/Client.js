@@ -20,6 +20,7 @@ import Previews from "./endpoints/Previews";
 import Projects from "./endpoints/Projects";
 import Sections from "./endpoints/Sections";
 import Shares from "./endpoints/Shares";
+import Stars from "./endpoints/Stars";
 import Users from "./endpoints/Users";
 import type { CommandOptions } from "./types";
 
@@ -44,6 +45,7 @@ export default class Client {
   projects: Projects;
   sections: Sections;
   shares: Shares;
+  starred: Stars;
   users: Users;
 
   cache = new Map<string, any>();
@@ -81,6 +83,7 @@ export default class Client {
     this.projects = new Projects(this, options);
     this.sections = new Sections(this, options);
     this.shares = new Shares(this, options);
+    this.starred = new Stars(this, options);
     this.users = new Users(this, options);
 
     // This is only for informative errors; we proxy each method
