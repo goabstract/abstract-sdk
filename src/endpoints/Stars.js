@@ -1,5 +1,5 @@
 // @flow
-import type { StarDescriptor } from "../types";
+import type { StarDescriptor, Star } from "../types";
 import Endpoint from "./Endpoint";
 
 const headers = {
@@ -7,7 +7,7 @@ const headers = {
 };
 
 export default class Stars extends Endpoint {
-  list(descriptor: StarDescriptor) {
+  list() {
     return this.request<Promise<Star[]>>({
       api: async () => {
         const response = await this.apiRequest("starred", {
