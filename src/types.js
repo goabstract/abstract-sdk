@@ -403,6 +403,37 @@ export type Star = {
   starredAt: string
 };
 
+export type BranchReview = {
+  id: string,
+  branchId: string,
+  projectId: string,
+  status: "REQUESTED",
+  merge: boolean,
+  createdAt: string,
+  commentId: string
+};
+
+export type ReviewRequest = {
+  id: string,
+  branchId: string,
+  projectId: string,
+  requesterId: string,
+  reviewerId: string,
+  reviewer: User,
+  requester: User,
+  commentId: string,
+  status: "REQUESTED",
+  createdAt: string,
+  deletedAt: string,
+  statusChangedAt: string
+};
+
+export type ReviewRequests = {
+  reviewRequests: ReviewRequest[],
+  branchReviews: BranchReview[],
+  branches: Branch[]
+};
+
 type BaseShare = {|
   id: string,
   url: string,
