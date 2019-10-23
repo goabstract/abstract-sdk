@@ -64,13 +64,6 @@ export type LayerDescriptor = {|
   layerId: string
 |};
 
-export type StarDescriptor = {|
-  ...$Exact<ObjectDescriptor>,
-  starrableId: string,
-  starrableType: "project", // others?
-  starredAt: string
-|};
-
 export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
 export type UserDescriptor = {|

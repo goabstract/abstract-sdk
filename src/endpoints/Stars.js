@@ -1,5 +1,5 @@
 // @flow
-import type { StarDescriptor, Star } from "../types";
+import type { Star } from "../types";
 import Endpoint from "./Endpoint";
 
 const headers = {
