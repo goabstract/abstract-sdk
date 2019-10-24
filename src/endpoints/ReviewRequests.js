@@ -1,26 +1,21 @@
 // @flow
-import type { ReviewRequest, ReviewRequestDescriptor } from "../types";
-import Endpoint from "./Endpoints"
+import type { ReviewRequest, OrganizationDescriptor } from "../types";
+import Endpoint from "./Endpoint";
+
+const headers = {
+  "Abstract-Api-Version": "13"
+};
 
 export default class ReviewRequests extends Endpoint {
-  info(descriptor: ReviewRequestDescriptor) {
-    return this.request<Promise<ReviewRequest>>({
-      api: () => {
-        return this.apiRequest(
-          `/organizations/${descriptor.id}/review_requests`
+  list(descriptor: OrganizationDescriptor) {
+    return this.request<Promise<ReviewRequest[]>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `organizations/${descriptor.id}/review_requests`,
+          { headers }
         );
-      },
-
-      cli: () => {
-        return this.cliRequest([
-          "reviews",
-          "load",
-          descriptor.projectId,
-          descriptor.branchId
-        ]);
+        return response.data;
       }
     });
-  });
-
-  // list() { }
+  }
 }

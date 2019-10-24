@@ -422,16 +422,10 @@ export type ReviewRequest = {
   reviewer: User,
   requester: User,
   commentId: string,
-  status: "REQUESTED",
+  status: string,
   createdAt: string,
   deletedAt: string,
   statusChangedAt: string
-};
-
-export type ReviewRequests = {
-  reviewRequests: ReviewRequest[],
-  branchReviews: BranchReview[],
-  branches: Branch[]
 };
 
 type BaseShare = {|
@@ -716,6 +710,12 @@ export type Branch = {
   divergedFromBranchId: string,
   projectId: string,
   user: User
+};
+
+export type ReviewRequests = {
+  reviewRequests: ReviewRequest[],
+  branchReviews: BranchReview[],
+  branches: Branch[]
 };
 
 export type ChangesetStatus =

@@ -18,6 +18,7 @@ import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
 import Previews from "./endpoints/Previews";
 import Projects from "./endpoints/Projects";
+import ReviewRequests from "./endpoints/ReviewRequests";
 import Sections from "./endpoints/Sections";
 import Shares from "./endpoints/Shares";
 import Stars from "./endpoints/Stars";
@@ -43,6 +44,7 @@ export default class Client {
   pages: Pages;
   previews: Previews;
   projects: Projects;
+  reviewRequests: ReviewRequests;
   sections: Sections;
   shares: Shares;
   starred: Stars;
@@ -81,6 +83,7 @@ export default class Client {
     this.pages = new Pages(this, options);
     this.previews = new Previews(this, options);
     this.projects = new Projects(this, options);
+    this.reviewRequests = new ReviewRequests(this, options);
     this.sections = new Sections(this, options);
     this.shares = new Shares(this, options);
     this.starred = new Stars(this, options);
