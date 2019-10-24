@@ -50,7 +50,7 @@ describe("#list", () => {
       ]
     });
     const response = await API_CLIENT.reviewRequests.list({
-      id: organizationId
+      organizationId
     });
     expect(response).toEqual([
       {

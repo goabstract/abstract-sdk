@@ -11,7 +11,7 @@ export default class ReviewRequests extends Endpoint {
     return this.request<Promise<ReviewRequest[]>>({
       api: async () => {
         const response = await this.apiRequest(
-          `organizations/${descriptor.id}/review_requests`,
+          `organizations/${descriptor.organizationId}/review_requests`,
           { headers }
         );
         return response.data;
