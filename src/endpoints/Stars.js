@@ -1,5 +1,5 @@
 // @flow
-import type { StarDescriptor, Star } from "../types";
+import type { Star } from "../types";
 import Endpoint from "./Endpoint";
 
 const headers = {
@@ -13,7 +13,7 @@ export default class Stars extends Endpoint {
         const response = await this.apiRequest("starred", {
           headers
         });
-        return response.data;
+        return response;
       }
     });
   }
