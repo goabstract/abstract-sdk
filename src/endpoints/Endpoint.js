@@ -216,7 +216,7 @@ export default class Endpoint {
           : { "Abstract-Share-Id": inferShareId(token) };
     }
 
-    const tokens = {
+    const tokens: { [string]: ?string } = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
