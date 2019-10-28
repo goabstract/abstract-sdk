@@ -81,13 +81,13 @@ An asset represents a resource exported from a design file. Assets are automatic
 | `sha`         | `string`            | SHA of the commit containing the version of the file this asset belongs to              |
 | `url`         | `string`            | Direct URL to the asset file                                                            |
 
-### List all assets
+### List assets
 
 ![API][api-icon]
 
-`assets.list(BranchDescriptor): Promise<Asset[]>`
+`assets.list(CommitDescriptor): Promise<Asset[]>`
 
-List all assets for a commit on a given branch of a project
+List assets generated for a commit
 
 ```js
 abstract.assets.list({
