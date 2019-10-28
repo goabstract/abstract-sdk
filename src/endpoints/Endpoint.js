@@ -198,7 +198,7 @@ export default class Endpoint {
     return response;
   }
 
-  async _getAPIHeaders(headers?: {}) {
+  async _getAPIHeaders(customHeaders?: { [key: string]: string }) {
     let tokenHeader = {};
     const token = await this.accessToken();
 
@@ -216,18 +216,23 @@ export default class Endpoint {
           : { "Abstract-Share-Id": inferShareId(token) };
     }
 
-    const tokens = {
+    const baseHeaders = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
       "X-Amzn-Trace-Id": `Root=1-${new Date().getTime()}-${uuid()}`,
-      "Abstract-Api-Version": "8",
-      ...tokenHeader,
-      ...headers
+      "Abstract-Api-Version": "8"
     };
-    Object.keys(tokens).forEach(key => {
-      tokens[key] === undefined && delete tokens[key];
+
+    const headers = {
+      ...baseHeaders,
+      ...tokenHeader,
+      ...customHeaders
+    };
+
+    Object.keys(headers).forEach(key => {
+      headers[key] === undefined && delete headers[key];
     });
-    return tokens;
+    return headers;
   }
 }
