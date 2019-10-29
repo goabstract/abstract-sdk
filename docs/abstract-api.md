@@ -374,7 +374,7 @@ A collection layer represents an underlying layer within a collection. Collectio
 | `fileId`          | `string`  | UUID of the file that the underlying layer is part of                                                 |
 | `pageId`          | `string`  | UUID of the page that the underlying layer is part of                                                 |
 | `layerId`         | `string`  | UUID of the underlying layer that this collection layer represents                                    |
-| `projectId`       | `string`  | UUID of the project that this collectioin layer is contained within                                   |
+| `projectId`       | `string`  | UUID of the project that this collection layer is contained within                                    |
 | `isPinned`        | `boolean` | SHA of the commit introducing changes in this changeset                                               |
 | `useLatestCommit` | `boolean` | Determines if this collection layer should always point to the latest version of its underlying layer |
 | `id`              | `string`  | UUID identifier of this collection layer                                                              |
