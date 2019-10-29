@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/goabstract/abstract-sdk/compare/v4.0.1...v4.0.2) (2019-10-29)
+
+
+### Bug Fixes
+
+* add missing projectId property to CollectionLayer type ([#168](https://github.com/goabstract/abstract-sdk/issues/168)) ([5f9e77a](https://github.com/goabstract/abstract-sdk/commit/5f9e77a))
+
+
+
 ### [4.0.1](https://github.com/goabstract/abstract-sdk/compare/v4.0.0...v4.0.1) (2019-10-22)
 
 
