@@ -24,6 +24,7 @@
   "main": "lib/index.js",
   "types": "abstract-sdk.d.ts",
   "browser": {
+    "@elasticprojects/abstract-cli": false,
     "child_process": false,
     "fs": false
   },
