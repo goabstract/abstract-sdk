@@ -585,6 +585,7 @@ export type CollectionLayer = {
   layerId: string,
   order: number,
   pageId: string,
+  projectId: string,
   sha: "latest" | string,
   useLatestCommit: boolean
 };
