@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.3](https://github.com/goabstract/abstract-sdk/compare/v4.0.2...v4.0.3) (2019-10-30)
+
+
+### Bug Fixes
+
+* don't require abstract-cli in the browser ([#169](https://github.com/goabstract/abstract-sdk/issues/169)) ([d65f78b](https://github.com/goabstract/abstract-sdk/commit/d65f78b))
+
+
+
 ### [4.0.2](https://github.com/goabstract/abstract-sdk/compare/v4.0.1...v4.0.2) (2019-10-29)
 
 
