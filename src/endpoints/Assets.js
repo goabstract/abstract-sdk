@@ -1,10 +1,14 @@
 // @flow
 import { promises as fs } from "fs";
 import querystring from "query-string";
+import Cursor from "../Cursor";
 import type {
   Asset,
   AssetDescriptor,
   CommitDescriptor,
+  CursorPromise,
+  FileDescriptor,
+  ListOptions,
   RawOptions
 } from "../types";
 import { isNodeEnvironment } from "../utils";
@@ -25,7 +29,7 @@ export default class Assets extends Endpoint {
     });
   }
 
-  async list(descriptor: CommitDescriptor) {
+  async commit(descriptor: CommitDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -36,6 +40,29 @@ export default class Assets extends Endpoint {
           `projects/${latestDescriptor.projectId}/assets?${query}`
         );
         return response.data.assets;
+      }
+    });
+  }
+
+  file(descriptor: FileDescriptor, options: ListOptions = {}) {
+    return this.request<CursorPromise<Asset[]>>({
+      api: () => {
+        return new Cursor<Asset[]>(
+          async (meta = { nextOffset: options.offset }) => {
+            const query = querystring.stringify({
+              ...options,
+              sha: descriptor.sha,
+              offset: meta.nextOffset
+            });
+            const response = await this.apiRequest(
+              `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/assets?${query}`
+            );
+            return {
+              data: response.data,
+              meta: response.meta
+            };
+          }
+        );
       }
     });
   }

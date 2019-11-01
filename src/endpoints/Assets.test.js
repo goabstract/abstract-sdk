@@ -55,17 +55,35 @@ describe("#raw", () => {
   });
 });
 
-describe("#list", () => {
+describe("#commit", () => {
   test("api", async () => {
     mockAPI("/projects/project-id/assets?sha=sha", {
       data: {
         assets: [{ id: "asset-id" }]
       }
     });
-    const response = await API_CLIENT.assets.list({
+    const response = await API_CLIENT.assets.commit({
       branchId: "branch-id",
       projectId: "project-id",
       sha: "sha"
+    });
+    expect(response).toEqual([{ id: "asset-id" }]);
+  });
+});
+
+describe("#file", () => {
+  test("api", async () => {
+    mockAPI(
+      "/projects/project-id/branches/branch-id/files/file-id/assets?sha=sha",
+      {
+        data: [{ id: "asset-id" }]
+      }
+    );
+    const response = await API_CLIENT.assets.file({
+      branchId: "branch-id",
+      projectId: "project-id",
+      sha: "sha",
+      fileId: "file-id"
     });
     expect(response).toEqual([{ id: "asset-id" }]);
   });

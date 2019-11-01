@@ -81,22 +81,6 @@ An asset represents a resource exported from a design file. Assets are automatic
 | `sha`         | `string`            | SHA of the commit containing the version of the file this asset belongs to              |
 | `url`         | `string`            | Direct URL to the asset file                                                            |
 
-### List assets
-
-![API][api-icon]
-
-`assets.list(CommitDescriptor): Promise<Asset[]>`
-
-List assets generated for a commit
-
-```js
-abstract.assets.list({
-  branchId: "8a13eb62-a42f-435f-b3a3-39af939ad31b",
-  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a", // or sha: "latest"
-});
-```
-
 ### Retrieve an asset
 
 ![API][api-icon]
@@ -112,13 +96,46 @@ abstract.assets.info({
 });
 ```
 
+### List assets for a file
+
+![API][api-icon]
+
+`assets.file(FileDescriptor, { limit?: number, offset?: number }): CursorPromise<Asset[]>`
+
+List the first ten assets for a given file
+
+```js
+abstract.assets.file({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  sha: "latest"
+}, {
+  limit: 10
+});
+```
+
+### List assets for a commit
+
+`assets.commit(CommitDescriptor): Promise<Asset[]>`
+
+List all assets generated for a commit
+
+```js
+abstract.assets.commit({
+  branchId: "8a13eb62-a42f-435f-b3a3-39af939ad31b",
+  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a", // or sha: "latest"
+});
+```
+
 ### Retrieve an asset file
 
 ![API][api-icon]
 
 `asset.raw(AssetDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
-Retrieve a given asset file based on its ID and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
+Retrieve a given asset file based on its ID and save it to disk. **Files will be saved to the current working directory by default**, but a custom `filename` option can be used to customize this location, or `disableWrite` can be used to disable automatic saving altogether.
 
 ```js
 abstract.assets.raw({
@@ -143,6 +160,24 @@ fs.writeFile("asset.png", Buffer.from(processedBuffer), (err) => {
   if (err) throw err;
   console.log("Asset image written!");
 });
+```
+
+### Example: Save all assets for a given file
+
+```js
+// Get all assets for a given file
+const assets = await abstract.assets.file({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  sha: "latest"
+});
+
+// Save the raw file for each asset to the current working directory
+await Promise.all(assets.map(asset => abstract.assets.raw({
+    id: asset.id,
+    projectId: asset.projectId
+})));
 ```
 
 
@@ -472,7 +507,7 @@ abstract.collectionLayers.move({
 ## Comments
 
 A comment in Abstract can be left on a branch, commit, or layer. Comments on layers can also include an optional annotation that
-represents a bounding area ontop of the layer, this can be used to leave comments about specific areas.
+represents a bounding area on-top of the layer, this can be used to leave comments about specific areas.
 
 ### The comment object
 
@@ -598,27 +633,6 @@ to identify which version of the object you would like.
 | `type`                  | `string`   | The type of the commit, may be one of `NORMAL`, `PROJECT_CREATED`, `FILE_ADDED`, `FILE_RENAMED`, `FILE_DELETED`, `FILE_REPLACED`, `LIBRARY_ADDED`, `LIBRARY_REMOVED`, `RESTORE`, `UPDATE`, `MERGE`                |
 | `userId`                | `string`   | UUID of the user this commit was created by                                             |
 | `userName`              | `string`   | Display name of the user this commit was created by                                     |
-
-#### Example response
-
-```js
-{
-  description: "Just eyeballed it."
-  destinationBranchId: ""
-  destinationBranchName: ""
-  fileIds: []
-  parents: ["b56da8ffdc66b3c526f7289c175cfbb7cbf20663"]
-  projectId: "ab8d54b0-502f-11e6-9379-dd323631859b"
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a"
-  sourceBranchId: ""
-  sourceBranchName: ""
-  time: "2018-10-19T01:19:08+02:00"
-  title: "Tweaked the coloring"
-  type: "NORMAL"
-  userId: "c95ecfd4-6ed7-4722-9145-d2f02a34f3d7"
-  userName: "Tim Van Damme"
-}
-```
 
 ### List all commits
 
