@@ -1491,3 +1491,63 @@ export type Section = {
   name: string,
   organizationId: string
 };
+
+export type Webhook = {
+  active: boolean,
+  createdAt: string,
+  errorCount?: number,
+  events: string[],
+  id: string,
+  lastPushedAt?: string,
+  organizationId: string,
+  updatedAt: string,
+  url: string,
+  user?: User
+};
+
+export type WebhookGroup = {
+  id: string,
+  name: string
+};
+
+export type WebhookEvent = {
+  id: string,
+  group: WebhookGroup,
+  name: string
+};
+
+export type NewWebhook = {
+  active: boolean,
+  events: string[],
+  key: string,
+  organizationId: string,
+  url: string
+};
+
+export type WebhookDescriptor = {|
+  organizationId: string,
+  webhookId: string
+|};
+
+export type WebhookDeliveryDescriptor = {
+  deliveryId: string,
+  organizationId: string,
+  webhookId: string
+};
+
+export type WebhookDelivery = {
+  error: boolean,
+  event: WebhookEvent,
+  id: string,
+  pushedAt: string,
+  request: {
+    body: Object,
+    headers: Object
+  },
+  response: {
+    body: Object,
+    code: number,
+    headers: Object
+  },
+  webhookId: string
+};

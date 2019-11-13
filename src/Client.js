@@ -21,6 +21,7 @@ import Projects from "./endpoints/Projects";
 import Sections from "./endpoints/Sections";
 import Shares from "./endpoints/Shares";
 import Users from "./endpoints/Users";
+import Webhooks from "./endpoints/Webhooks";
 import type { CommandOptions } from "./types";
 
 export default class Client {
@@ -45,6 +46,7 @@ export default class Client {
   sections: Sections;
   shares: Shares;
   users: Users;
+  webhooks: Webhooks;
 
   cache = new Map<string, any>();
 
@@ -82,6 +84,7 @@ export default class Client {
     this.sections = new Sections(this, options);
     this.shares = new Shares(this, options);
     this.users = new Users(this, options);
+    this.webhooks = new Webhooks(this, options);
 
     // This is only for informative errors; we proxy each method
     // on each endpoint so we can cache the last method name called.

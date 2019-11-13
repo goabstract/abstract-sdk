@@ -37,7 +37,7 @@ abstract.activities.list({
 }, { limit: 2 });
 ```
 
-> Note: This endpoint returns a special type of `Promise` called a `CursorPromise` that supports cursor-based pagination. More information can be found [here](/docs/pagination).
+> Note: This endpoint returns a special type of `Promise` called a `CursorPromise` that supports cursor-based pagination. Additional information can be found [here](/docs/pagination).
 
 ### Retrieve an activity
 
@@ -420,7 +420,7 @@ A collection layer represents an underlying layer within a collection. Collectio
 | `order`           | `number`  | SHA of the commit that the underlying layer should point to                                           |
 | `sha`             | `string`  | SHA of the commit that the underlying layer should point to                                           |
 
-### The NewCollectionLayer object
+#### The NewCollectionLayer object
 
 | Property          | Type      | Description                                                                                           |
 |-------------------|-----------|-------------------------------------------------------------------------------------------------------|
@@ -1358,7 +1358,7 @@ A user contains information specific to an individual account. Users are global 
 | Property          | Type     | Description                                                  |
 |-------------------|----------|--------------------------------------------------------------|
 | `avatarUrl`       | `string` | URL of the avatar for this user                              |
-| `createdAt`       |  `string`| Timestamp indicating when this account was created           |
+| `createdAt`       | `string` | Timestamp indicating when this account was created           |
 | `deletedAt`       | `string` | Timestamp indicating when this account was deleted           |
 | `id`              | `string` | UUID identifier for the user                                 |
 | `name`            | `string` | The name of the page                                         |
@@ -1395,9 +1395,168 @@ abstract.users.info({
 ```
 
 
+## Webhooks
+
+Webhooks make it easy to efficiently subscribe to events across the Abstract platform. Webhooks live at the organization level, and  organization administrators can create new webhooks within an organization's settings in the web application.
+
+> Note: Additional information on webhooks can be found [here](/docs/webhooks).
+
+### The webhook object
+
+| Property        | Type      | Description                                                         |
+|-----------------|-----------|---------------------------------------------------------------------|
+| `active`        | `boolean` | Indicates if this webhook is currently listening for new events     |
+| `createdAt`     | `string`  | Timstamp indicating when this webhook was created                   |
+| `errorCount`    | `number`  | Number indicating the number of failed deliveries for this webhook  |
+| `events`        | `WebhookEvent[]` | Array of webhook event objects configured for this webhook   |
+| `id`            | `string`  | UUID identifier for this webhook                                    |
+| `lastPushedAt`  | `string`  | Timstamp indicating the time of the most recent delivery for this webhook |
+| `organizationId`| `string`  | UUID of the organization this webook belongs to                     |
+| `updatedAt`     | `string`  | Timstamp indicating when this webhook was last updated              |
+| `url`           | `string`  | URL that this webhook will `POST` deliveries to                     |
+| `user`          | `User`    | The user that created the webhook                                   |
+
+#### WebhookEvent
+
+| Property        | Type      | Description                                                         |
+|-----------------|-----------|---------------------------------------------------------------------|
+| `id`            | `string`  | UUID identifier for this webhook event                              |
+| `group`         | `WebhookGroup`  | Category that this webhook event belongs to                   |
+| `name`          | `string`  | The name of this webhook event                                      |
+
+#### WebhookGroup
+
+| Property        | Type      | Description                                                         |
+|-----------------|-----------|---------------------------------------------------------------------|
+| `id`            | `string`  | UUID identifier for this webhook event group                        |
+| `name`          | `string`  | The name of this webhook event group                                |
+
+#### NewWebhook
+
+| Property        | Type      | Description                                                         |
+|-----------------|-----------|---------------------------------------------------------------------|
+| `active`        | `boolean` | Indicates if this webhook is currently listening for new events     |
+| `events`        | `WebhookEvent[]` | Array of webhook event objects configured for this webhook   |
+| `key`           | `string`  | An optional secret used to validate deliveries for this webhook     |
+| `organizationId`| `string`  | UUID of the organization this webook belongs to                     |
+| `url`           | `string`  | URL that this webhook will `POST` deliveries to                     |
+
+
+### List an organization's webhooks
+
+![API][api-icon]
+
+`webhooks.list(OrganizationDescriptor): Promise<Webhook[]>`
+
+```js
+abstract.webhooks.list({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+### Retrieve a webhook
+
+![API][api-icon]
+
+`webhooks.info(WebhookDescriptor): Promise<Webhook>`
+
+```js
+abstract.webhooks.info({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9",
+  webhookId: "03df2308-82a7-4a05-b9e9-c31ad569249d"
+});
+```
+
+### List available webhook events
+
+![API][api-icon]
+
+`webhooks.events(OrganizationDescriptor): Promise<WebhookEvent[]>`
+
+```js
+abstract.webhooks.events({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+### Create a webhook
+
+![API][api-icon]
+
+`webhooks.create(OrganizationDescriptor, NewWebhook): Promise<Webhook>`
+
+```js
+abstract.webhooks.create({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+}, {
+  active: true,
+  events: [ 'project.created' ],
+  organizationId: "4ed01dff-4bc7-47cd-8b51-9ea3ec9e5de4",
+  url: "https://example-url.com/postreceive"
+});
+```
+
+### Update a webhook
+
+![API][api-icon]
+
+`webhooks.update(OrganizationDescriptor, Webhook): Promise<Webhook>`
+
+```js
+abstract.webhooks.update({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+}, {
+  active: false,
+  events: [ 'project.updated' ],
+  organizationId: "4ed01dff-4bc7-47cd-8b51-9ea3ec9e5de4",
+  url: "https://another-example-url.com/postreceive"
+});
+```
+
+### Delete a webhook
+
+![API][api-icon]
+
+`webhooks.delete(WebhookDescriptor): Promise<void>`
+
+```js
+abstract.webhooks.delete({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9",
+  webhookId: "03df2308-82a7-4a05-b9e9-c31ad569249d"
+});
+```
+
+### Send a test event to a webhook
+
+
+![API][api-icon]
+
+`webhooks.ping(WebhookDescriptor): Promise<void>`
+
+```js
+abstract.webhooks.ping({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9",
+  webhookId: "03df2308-82a7-4a05-b9e9-c31ad569249d"
+});
+```
+
+### List all deliveries for a webhook
+
+
+![API][api-icon]
+
+`webhooks.deliveries(WebhookDescriptor): Promise<void>`
+
+```js
+abstract.webhooks.deliveries({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9",
+  webhookId: "03df2308-82a7-4a05-b9e9-c31ad569249d"
+});
+```
+
 ## Descriptors
 
-Reference for the parameters required to load resources with Abstract SDK.
+Reference for the parameters required to load resources with the Abstract SDK.
 
 ### OrganizationDescriptor
 
@@ -1528,5 +1687,24 @@ Reference for the parameters required to load resources with Abstract SDK.
 {
   organizationId: string,
   userId: string
+}
+```
+
+### WebhookDescriptor
+
+```js
+{
+  organizationId: string,
+  webhookId: string
+}
+```
+
+### WebhookDeliveryDescriptor
+
+```js
+{
+  deliveryId: string,
+  organizationId: string,
+  webhookId: string
 }
 ```

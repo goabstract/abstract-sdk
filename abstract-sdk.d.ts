@@ -55,6 +55,18 @@ export namespace sketch {
   function project(context: any): ProjectDescriptor;
 }
 
+interface Webhooks extends Endpoint {
+  list(descriptor: OrganizationDescriptor): Promise<Webhook[]>;
+  info(descriptor: WebhookDescriptor): Promise<Webhook>;
+  events(descriptor: OrganizationDescriptor): Promise<WebhookEvent[]>;
+  create(descriptor: OrganizationDescriptor, webhook: NewWebhook): Promise<Webhook>;
+  update(descriptor: OrganizationDescriptor, webhook: Webhook): Promise<Webhook>;
+  delete(descriptor: WebhookDescriptor): Promise<void>;
+  ping(descriptor: WebhookDescriptor): Promise<void>;
+  deliveries(descriptor: WebhookDescriptor): Promise<WebhookDelivery[]>;
+  redeliver(descriptor: WebhookDeliveryDescriptor): Promise<void>;
+}
+
 // Client.js
 export class Client {
   activities: Activities;
@@ -76,6 +88,7 @@ export class Client {
   projects: Projects;
   shares: Shares;
   users: Users;
+  webhooks: Webhooks;
   cache: Map<string, any>;
 
   constructor(options: Partial<CommandOptions>);
@@ -1758,4 +1771,64 @@ type Section = {
   id: string,
   name: string,
   organizationId: string
+};
+
+export type Webhook = {
+  active: boolean,
+  createdAt: string,
+  errorCount?: number,
+  events: string[],
+  id: string,
+  lastPushedAt?: string,
+  organizationId: string,
+  updatedAt: string,
+  url: string,
+  user?: User
+};
+
+export type WebhookGroup = {
+  id: string,
+  name: string
+};
+
+export type WebhookEvent = {
+  id: string,
+  group: WebhookGroup,
+  name: string
+};
+
+export type NewWebhook = {
+  active: boolean,
+  events: string[],
+  key: string,
+  organizationId: string,
+  url: string
+};
+
+export type WebhookDescriptor = {
+  organizationId: string,
+  webhookId: string
+};
+
+export type WebhookDeliveryDescriptor = {
+  deliveryId: string,
+  organizationId: string,
+  webhookId: string
+};
+
+export type WebhookDelivery = {
+  error: boolean,
+  event: WebhookEvent,
+  id: string,
+  pushedAt: string,
+  request: {
+    body: Object,
+    headers: Object
+  },
+  response: {
+    body: Object,
+    code: number,
+    headers: Object
+  },
+  webhookId: string
 };
