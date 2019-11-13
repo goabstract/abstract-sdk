@@ -3,7 +3,8 @@ import type {
   CollectionDescriptor,
   CollectionLayer,
   CollectionLayerDescriptor,
-  NewCollectionLayer
+  NewCollectionLayer,
+  UpdatedCollectionLayer
 } from "../types";
 import Endpoint from "./Endpoint";
 
@@ -20,6 +21,28 @@ export default class CollectionLayers extends Endpoint {
           }
         );
         return response;
+      }
+    });
+  }
+
+  addMany(descriptor: CollectionDescriptor, layers: NewCollectionLayer[]) {
+    const collectionLayers = layers.map(layer => {
+      const { layerId, ...collectionLayer } = layer;
+      return { ...collectionLayer, id: layerId };
+    });
+    return this.request<Promise<CollectionLayer>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collection_layers/create_many`,
+          {
+            method: "POST",
+            body: {
+              collectionId: descriptor.collectionId,
+              layers: collectionLayers
+            }
+          }
+        );
+        return response.data;
       }
     });
   }
@@ -51,7 +74,7 @@ export default class CollectionLayers extends Endpoint {
     });
   }
 
-  update(descriptor: CollectionLayerDescriptor, layer: NewCollectionLayer) {
+  update(descriptor: CollectionLayerDescriptor, layer: UpdatedCollectionLayer) {
     return this.request<Promise<CollectionLayer>>({
       api: async () => {
         const response = await this.apiRequest(

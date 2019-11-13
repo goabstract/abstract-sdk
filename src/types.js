@@ -569,11 +569,21 @@ export type NewComment = {
 
 export type NewCollectionLayer = {
   fileId: string,
-  isPinned: boolean,
+  isPinned?: boolean,
   layerId: string,
-  order: number,
+  order?: number,
   pageId: string,
   sha: "latest" | string,
+  useLatestCommit?: boolean
+};
+
+export type UpdatedCollectionLayer = {
+  fileId?: string,
+  isPinned?: boolean,
+  layerId?: string,
+  order?: number,
+  pageId?: string,
+  sha?: "latest" | string,
   useLatestCommit?: boolean
 };
 

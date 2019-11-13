@@ -73,6 +73,7 @@ export class Client {
   assets: Assets;
   branches: Branches;
   changesets: Changesets;
+  collectionLayers: CollectionLayers;
   collections: Collections;
   comments: Comments;
   commits: Commits;
@@ -165,9 +166,10 @@ interface Changesets extends Endpoint {
 
 interface CollectionLayers extends Endpoint {
   add(descriptor: CollectionDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>;
+  addMany(descriptor: CollectionDescriptor, layers: NewCollectionLayer[]): Promise<CollectionLayer[]>;
   remove(descriptor: CollectionLayerDescriptor): Promise<void>;
   move(descriptor: CollectionLayerDescriptor, order: number): Promise<CollectionLayer[]>;
-  update(descriptor: CollectionLayerDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>;
+  update(descriptor: CollectionLayerDescriptor, layer: UpdatedCollectionLayer): Promise<CollectionLayer>;
 }
 
 interface Collections extends Endpoint {
@@ -854,11 +856,21 @@ type NewComment = {
 
 type NewCollectionLayer = {
   fileId: string,
-  isPinned: boolean,
+  isPinned?: boolean,
   layerId: string,
-  order: number,
+  order?: number,
   pageId: string,
   sha: "latest" | string,
+  useLatestCommit?: boolean
+};
+
+type UpdatedCollectionLayer = {
+  fileId?: string,
+  isPinned?: boolean,
+  layerId?: string,
+  order?: number,
+  pageId?: string,
+  sha?: "latest" | string,
   useLatestCommit?: boolean
 };
 

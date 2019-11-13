@@ -24,6 +24,22 @@ describe("#add", () => {
   });
 });
 
+describe("#addMany", () => {
+  test("api", async () => {
+    mockAPI(
+      "/projects/project-id/collection_layers/create_many",
+      { data: [mockLayer] },
+      201,
+      "post"
+    );
+    const response = await API_CLIENT.collectionLayers.addMany(
+      { projectId: "project-id", collectionId: "collection-id" },
+      [mockLayer]
+    );
+    expect(response).toEqual([mockLayer]);
+  });
+});
+
 describe("#remove", () => {
   test("api", async () => {
     mockAPI(

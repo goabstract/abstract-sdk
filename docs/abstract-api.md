@@ -432,13 +432,13 @@ A collection layer represents an underlying layer within a collection. Collectio
 | `order`           | `number`  | SHA of the commit that the underlying layer should point to                                           |
 | `sha`             | `string`  | SHA of the commit that the underlying layer should point to                                           |
 
-### Add a layer to a collection
+### Add a single layer to a collection
 
 ![API][api-icon]
 
 `collectionLayers.add(descriptor: CollectionDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>`
 
-Add a layer to a collection
+Add a single layer to a collection
 
 ```js
 abstract.collectionLayers.add({
@@ -452,6 +452,30 @@ abstract.collectionLayers.add({
 	pageId: '7DC19A61-4D5F-4D75-BCAE-A589DF08257B',
 	sha: 'latest'
 });
+```
+
+### Add multiple layers to a collection
+
+![API][api-icon]
+
+`collectionLayers.addMany(descriptor: CollectionDescriptor, layers: NewCollectionLayer[]): Promise<CollectionLayer[]>`
+
+Add multiple layers to a collection
+
+```js
+abstract.collectionLayers.addMany({
+	projectId: '003a1ae0-a4b3-11e9-807c-a35b74e69da5',
+	collectionId: '2538be75-c38b-4008-8a60-cf2c0364727e'
+}, [
+  {
+    fileId: '745EF992-C945-4B4C-BAFD-C6D45C45C6E2',
+    isPinned: true,
+    layerId: '9E2EB6C6-3681-4FCF-951E-50F7F0A0B0DE',
+    order: 1,
+    pageId: '7DC19A61-4D5F-4D75-BCAE-A589DF08257B',
+    sha: 'latest'
+  }
+]);
 ```
 
 ### Remove a layer from a collection
@@ -473,7 +497,7 @@ abstract.collectionLayers.remove({
 
 ![API][api-icon]
 
-`collectionLayers.update(descriptor: CollectionLayerDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>`
+`collectionLayers.update(descriptor: CollectionLayerDescriptor, layer: UpdatedCollectionLayer): Promise<CollectionLayer>`
 
 Update a layer within a collection
 
