@@ -26,7 +26,7 @@ An activity represents a designated type of event within a project. These events
 
 ![API][api-icon]
 
-`activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): Promise<Activity[]>`
+`activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): CursorPromise<Activity[]>`
 
 List the first two activities for a given project on a specific branch
 
@@ -36,6 +36,8 @@ abstract.activities.list({
   projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f",
 }, { limit: 2 });
 ```
+
+> Note: This endpoint returns a special type of `Promise` called a `CursorPromise` that supports cursor-based pagination. More information can be found [here](/docs/pagination).
 
 ### Retrieve an activity
 
@@ -114,6 +116,8 @@ abstract.assets.file({
   limit: 10
 });
 ```
+
+> Note: This endpoint returns a special type of `Promise` called a `CursorPromise` that supports cursor-based pagination. More information can be found [here](/docs/pagination).
 
 ### List assets for a commit
 
@@ -536,7 +540,7 @@ represents a bounding area on-top of the layer, this can be used to leave commen
 
 ![API][api-icon]
 
-`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerDescriptor): Promise<Comment[]>`
+`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerDescriptor): CursorPromise<Comment[]>`
 
 List the comments for a specific project
 ```js
@@ -555,6 +559,8 @@ abstract.comments.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
 }, { limit: 2 });
 ```
+
+> Note: This endpoint returns a special type of `Promise` called a `CursorPromise` that supports cursor-based pagination. More information can be found [here](/docs/pagination).
 
 ### Retrieve a comment
 
@@ -949,7 +955,7 @@ A notification is a user-facing message triggered by an underlying activity. Not
 
 ![API][api-icon]
 
-`notifications.list(OrganizationDescriptor, { limit?: number, offset?: number }): Promise<Notification[]>`
+`notifications.list(OrganizationDescriptor, { limit?: number, offset?: number }): CursorPromise<Notification[]>`
 
 List the first two notifications for a given organization
 
@@ -958,6 +964,8 @@ abstract.notifications.list({
   organizationId: "8a13eb62-a42f-435f-b3a3-39af939ad31b"
 }, { limit: 2 });
 ```
+
+> Note: This endpoint returns a special type of `Promise` called a `CursorPromise` that supports cursor-based pagination. More information can be found [here](/docs/pagination).
 
 ### Retrieve a notification
 

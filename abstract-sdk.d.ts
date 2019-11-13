@@ -133,6 +133,8 @@ interface Activities extends Endpoint {
 interface Assets extends Endpoint {
   info(descriptor: AssetDescriptor): Promise<Asset>;
   raw(descriptor: AssetDescriptor, options?: RawOptions): Promise<ArrayBuffer>;
+  commit(descriptor: CommitDescriptor): Promise<Asset[]>;
+  file(descriptor: FileDescriptor, options?: ListOptions): CursorPromise<Asset[]>;
 }
 
 interface Branches extends Endpoint {
@@ -144,7 +146,15 @@ interface Branches extends Endpoint {
 }
 
 interface Changesets extends Endpoint {
-  info(descriptor: CommitDescriptor): Promise<Changeset>;
+  branch(descriptor: BranchDescriptor): Promise<Changeset>;
+  commit(descriptor: CommitDescriptor): Promise<Changeset>;
+}
+
+interface CollectionLayers extends Endpoint {
+  add(descriptor: CollectionDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>;
+  remove(descriptor: CollectionLayerDescriptor): Promise<void>;
+  move(descriptor: CollectionLayerDescriptor, order: number): Promise<CollectionLayer[]>;
+  update(descriptor: CollectionLayerDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>;
 }
 
 interface Collections extends Endpoint {
@@ -304,6 +314,11 @@ type CommentDescriptor = {
 type CollectionDescriptor = {
   projectId: string,
   collectionId: string
+};
+
+type CollectionLayerDescriptor = {
+  projectId: string,
+  collectionLayerId: string
 };
 
 type ActivityDescriptor = {
@@ -824,16 +839,27 @@ type NewComment = {
   body: string
 };
 
-type CollectionLayer = {
-  id: string,
-  collectionId: string,
-  projectId: string,
+type NewCollectionLayer = {
   fileId: string,
-  pageId: string,
-  layerId: string,
-  sha: string,
   isPinned: boolean,
-  order: number
+  layerId: string,
+  order: number,
+  pageId: string,
+  sha: "latest" | string,
+  useLatestCommit?: boolean
+};
+
+type CollectionLayer = {
+  collectionId: string,
+  fileId: string,
+  id: string,
+  isPinned: boolean,
+  layerId: string,
+  order: number,
+  pageId: string,
+  projectId: string,
+  sha: "latest" | string,
+  useLatestCommit: boolean
 };
 
 type File = {
