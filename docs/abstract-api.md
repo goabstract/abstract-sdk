@@ -1209,7 +1209,6 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 | `color`          | `string` | A hex value that represents a custom project color                            |
 | `createdAt`      | `string` | Timestamp that the project was created                                        |
 | `createdByUser`  | `User`   | The user that created the project                                             |
-| `description`    | `string` | A longer summary of the project                                               |
 | `firstPushedAt`  | `string` | Timestamp that the project first received data                                |
 | `id`             | `string` | UUID                                                                          |
 | `name`           | `string` | The name of the project                                                       |

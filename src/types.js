@@ -375,7 +375,6 @@ export type Project = {
   id: string,
   name: string,
   about: string,
-  description: string,
   color: string,
   createdAt: string,
   updatedAt: string,
