@@ -201,7 +201,7 @@ interface Comments extends Endpoint {
       BranchDescriptor
       | CommitDescriptor
       | PageDescriptor
-      | LayerDescriptor & { pageId: string },
+      | LayerVersionDescriptor & { pageId: string },
     comment: NewComment
   ): Promise<Comment>;
 
@@ -209,7 +209,7 @@ interface Comments extends Endpoint {
     descriptor:
       BranchDescriptor
       | CommitDescriptor
-      | LayerDescriptor
+      | LayerVersionDescriptor
       | PageDescriptor,
     options?: ListOptions
   ): CursorPromise<Comment[]>;
@@ -217,17 +217,21 @@ interface Comments extends Endpoint {
 
 interface Commits extends Endpoint {
   info(
-    descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor
+    descriptor: CommitDescriptor | FileDescriptor | LayerVersionDescriptor
   ): Promise<Commit>;
 
   list(
-    descriptor: CommitDescriptor | FileDescriptor | LayerDescriptor,
-    options?: { limit?: number }
+    descriptor: BranchDescriptor | FileDescriptor | LayerDescriptor,
+    options?: {
+      limit?: number,
+      startSHA?: string,
+      endSHA?: string
+    }
   ): Promise<Commit[]>;
 }
 
 interface Data extends Endpoint {
-  info(descriptor: LayerDescriptor): Promise<LayerDataset>;
+  info(descriptor: LayerVersionDescriptor): Promise<LayerDataset>;
 }
 
 interface Descriptors extends Endpoint {
@@ -241,7 +245,7 @@ interface Files extends Endpoint {
 }
 
 interface Layers extends Endpoint {
-  info(descriptor: LayerDescriptor): Promise<Layer>;
+  info(descriptor: LayerVersionDescriptor): Promise<Layer>;
   list(
     descriptor: FileDescriptor | PageDescriptor,
     options?: ListOptions
@@ -277,9 +281,9 @@ interface Pages extends Endpoint {
 }
 
 interface Previews extends Endpoint {
-  info(descriptor: LayerDescriptor): Promise<PreviewMeta>;
-  raw(descriptor: LayerDescriptor, options?: RawOptions): Promise<ArrayBuffer>;
-  url(descriptor: LayerDescriptor): Promise<string>;
+  info(descriptor: LayerVersionDescriptor): Promise<PreviewMeta>;
+  raw(descriptor: LayerVersionDescriptor, options?: RawOptions): Promise<ArrayBuffer>;
+  url(descriptor: LayerVersionDescriptor): Promise<string>;
 }
 
 interface Projects extends Endpoint {
@@ -370,7 +374,15 @@ type PageDescriptor = ObjectDescriptor & {
   pageId: string
 };
 
-type LayerDescriptor = ObjectDescriptor & {
+type LayerVersionDescriptor = ObjectDescriptor & {
+  fileId: string,
+  layerId: string
+};
+
+type LayerDescriptor = {
+  sha?: "latest" | string,
+  projectId: string,
+  branchId: string | "master"
   fileId: string,
   layerId: string
 };
@@ -735,7 +747,7 @@ type PageShare = BaseShare & {
 
 type LayerShare = BaseShare & {
   kind: "layer",
-  descriptor: LayerDescriptor,
+  descriptor: LayerVersionDescriptor,
   options: {
     mode?: "design" | "compare" | "build",
     public?: boolean,
@@ -788,7 +800,7 @@ type PageShareInput = BaseShareInput & PageDescriptor & {
   kind: "page"
 };
 
-type LayerShareInput = BaseShareInput & LayerDescriptor & {
+type LayerShareInput = BaseShareInput & LayerVersionDescriptor & {
   kind: "layer",
   options: {
     public: boolean,

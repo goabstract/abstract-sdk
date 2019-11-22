@@ -59,6 +59,14 @@ export type PageDescriptor = {|
 |};
 
 export type LayerDescriptor = {|
+  sha?: "latest" | string,
+  projectId: string,
+  branchId: string | "master",
+  fileId: string,
+  layerId: string
+|};
+
+export type LayerVersionDescriptor = {|
   ...$Exact<ObjectDescriptor>,
   fileId: string,
   layerId: string
@@ -430,7 +438,7 @@ export type PageShare = {
 export type LayerShare = {
   ...BaseShare,
   kind: "layer",
-  descriptor: LayerDescriptor,
+  descriptor: LayerVersionDescriptor,
   options: {
     mode?: "design" | "compare" | "build",
     public?: boolean,
@@ -498,7 +506,7 @@ export type PageShareInput = {
 export type LayerShareInput = {
   kind: "layer",
   ...BaseShareInput,
-  ...LayerDescriptor,
+  ...LayerVersionDescriptor,
   options: {
     public: boolean,
     canInspect: boolean,

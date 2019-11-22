@@ -564,7 +564,7 @@ represents a bounding area on-top of the layer, this can be used to leave commen
 
 ![API][api-icon]
 
-`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerDescriptor): CursorPromise<Comment[]>`
+`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerVersionDescriptor): CursorPromise<Comment[]>`
 
 List the comments for a specific project
 ```js
@@ -604,7 +604,7 @@ abstract.comments.info({
 
 ![API][api-icon]
 
-`comments.create(BranchDescriptor | CommitDescriptor | LayerDescriptor, Comment): Promise<Comment>`
+`comments.create(BranchDescriptor | CommitDescriptor | LayerVersionDescriptor, Comment): Promise<Comment>`
 
 Create a comment on a branch
 
@@ -668,7 +668,7 @@ to identify which version of the object you would like.
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`commits.list(BranchDescriptor | LayerDescriptor): Promise<Commit[]>`
+`commits.list(BranchDescriptor | FileDescriptor | LayerDescriptor, { limit?: number, startSha?: string, endSha?: string }): Promise<Commit[]>`
 
 List the commits for a specific branch
 
@@ -686,8 +686,7 @@ abstract.commits.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "latest"
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
 });
 ```
 
@@ -695,7 +694,7 @@ abstract.commits.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`commits.info (FileDescriptor | LayerDescriptor | CommitDescriptor): Promise<Commit>`
+`commits.info (FileDescriptor | LayerVersionDescriptor | CommitDescriptor): Promise<Commit>`
 
 Load the commit info for a specific commit SHA on a branch
 
@@ -739,7 +738,7 @@ abstract.commits.info({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`data.info(LayerDescriptor): Promise<LayerDataset>`
+`data.info(LayerVersionDescriptor): Promise<LayerDataset>`
 
 ```js
 abstract.data.info({
@@ -893,7 +892,7 @@ abstract.layers.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`layers.info(LayerDescriptor): Promise<Layer>`
+`layers.info(LayerVersionDescriptor): Promise<Layer>`
 
 Load the info for a layer in a file at the latest commit on a branch
 
@@ -1120,7 +1119,7 @@ only available in PNG format.
 
 ![API][api-icon]
 
-`previews.raw(LayerDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
+`previews.raw(LayerVersionDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
 
 Retrieve a preview image for a layer at a specific commit and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
 
@@ -1162,7 +1161,7 @@ fs.writeFile(`preview.png`, Buffer.from(processedBuffer), (err) => {
 
 > Note: The `previews.url` method requires an environment with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
 
-`previews.url(LayerDescriptor): Promise<string>`
+`previews.url(LayerVersionDescriptor): Promise<string>`
 
 > Get an image as a _temporary_ blob url which can be displayed directly in an image tag or downloaded. The url exists only as long as the current browser session and should not be saved to a database directly.
 
@@ -1180,7 +1179,7 @@ abstract.previews.url({
 
 ![API][api-icon]
 
-`previews.info(LayerDescriptor): Promise<Preview>`
+`previews.info(LayerVersionDescriptor): Promise<Preview>`
 
 Load the info for a layer preview
 
@@ -1642,6 +1641,18 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```
 
 ### LayerDescriptor
+
+```js
+{
+  projectId: string,
+  branchId: string | "master",
+  fileId: string,
+  layerId: string,
+  sha?: string | "latest"
+}
+```
+
+### LayerVersionDescriptor
 
 ```js
 {

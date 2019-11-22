@@ -30,7 +30,7 @@ describe("#info", () => {
 describe("#list", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id&limit=10",
+      "/projects/project-id/branches/branch-id/commits?endSHA=end-sha&fileId=file-id&layerId=layer-id&limit=10&startSHA=start-sha",
       {
         commits: []
       }
@@ -43,7 +43,7 @@ describe("#list", () => {
         layerId: "layer-id",
         sha: "sha"
       },
-      { limit: 10 }
+      { limit: 10, startSHA: "start-sha", endSHA: "end-sha" }
     );
 
     expect(response).toEqual([]);
@@ -71,6 +71,10 @@ describe("#list", () => {
         "branch-id",
         "--layer-id",
         "layer-id",
+        "--start-sha",
+        "start-sha",
+        "--end-sha",
+        "end-sha",
         "--limit",
         "10"
       ],
@@ -83,7 +87,7 @@ describe("#list", () => {
         layerId: "layer-id",
         sha: "sha"
       }: any),
-      { limit: 10 }
+      { limit: 10, startSHA: "start-sha", endSHA: "end-sha" }
     );
 
     expect(response).toEqual([]);

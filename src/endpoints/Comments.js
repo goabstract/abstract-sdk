@@ -7,7 +7,7 @@ import type {
   CommentDescriptor,
   CommitDescriptor,
   CursorPromise,
-  LayerDescriptor,
+  LayerVersionDescriptor,
   ListOptions,
   NewComment,
   PageDescriptor
@@ -21,7 +21,7 @@ export default class Comments extends Endpoint {
       | CommitDescriptor
       | PageDescriptor
       | {|
-          ...$Exact<LayerDescriptor>,
+          ...$Exact<LayerVersionDescriptor>,
           pageId: string
         |},
     comment: NewComment
@@ -59,7 +59,7 @@ export default class Comments extends Endpoint {
     descriptor:
       | BranchDescriptor
       | CommitDescriptor
-      | LayerDescriptor
+      | LayerVersionDescriptor
       | PageDescriptor,
     options: ListOptions = {}
   ) {

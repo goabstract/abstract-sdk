@@ -2,12 +2,12 @@
 /* global Blob */
 import { promises as fs } from "fs";
 import { FileAPIError } from "../errors";
-import type { LayerDescriptor, PreviewMeta, RawOptions } from "../types";
+import type { LayerVersionDescriptor, PreviewMeta, RawOptions } from "../types";
 import { isNodeEnvironment } from "../utils";
 import Endpoint from "./Endpoint";
 
 export default class Previews extends Endpoint {
-  async info(descriptor: LayerDescriptor) {
+  async info(descriptor: LayerVersionDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -22,7 +22,7 @@ export default class Previews extends Endpoint {
     });
   }
 
-  async raw(descriptor: LayerDescriptor, options: RawOptions = {}) {
+  async raw(descriptor: LayerVersionDescriptor, options: RawOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -57,7 +57,7 @@ export default class Previews extends Endpoint {
     });
   }
 
-  async url(descriptor: LayerDescriptor) {
+  async url(descriptor: LayerVersionDescriptor) {
     if (typeof Blob === "undefined") {
       throw new FileAPIError();
     }
