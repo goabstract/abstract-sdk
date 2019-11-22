@@ -35,7 +35,7 @@ export default class Commits extends Endpoint {
   }
 
   list(
-    descriptor: BranchDescriptor | FileDescriptor | LayerDescriptor,
+    descriptor: BranchDescriptor | LayerDescriptor,
     options: {
       limit?: number,
       startSHA?: string,

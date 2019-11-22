@@ -380,7 +380,6 @@ type LayerVersionDescriptor = ObjectDescriptor & {
 };
 
 type LayerDescriptor = {
-  sha?: "latest" | string,
   projectId: string,
   branchId: string | "master"
   fileId: string,

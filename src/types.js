@@ -59,7 +59,6 @@ export type PageDescriptor = {|
 |};
 
 export type LayerDescriptor = {|
-  sha?: "latest" | string,
   projectId: string,
   branchId: string | "master",
   fileId: string,
