@@ -1,9 +1,9 @@
 // @flow
-import type { LayerDataset, LayerDescriptor } from "../types";
+import type { LayerDataset, LayerVersionDescriptor } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Data extends Endpoint {
-  async info(descriptor: LayerDescriptor) {
+  async info(descriptor: LayerVersionDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );

@@ -3,14 +3,14 @@ import querystring from "query-string";
 import type {
   FileDescriptor,
   Layer,
-  LayerDescriptor,
+  LayerVersionDescriptor,
   ListOptions,
   PageDescriptor
 } from "../types";
 import Endpoint from "./Endpoint";
 
 export default class Layers extends Endpoint {
-  async info(descriptor: LayerDescriptor) {
+  async info(descriptor: LayerVersionDescriptor) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );

@@ -30,7 +30,7 @@ describe("#info", () => {
 describe("#list", () => {
   test("api", async () => {
     mockAPI(
-      "/projects/project-id/branches/branch-id/commits?fileId=file-id&layerId=layer-id&limit=10",
+      "/projects/project-id/branches/branch-id/commits?endSHA=end-sha&fileId=file-id&layerId=layer-id&limit=10&startSHA=start-sha",
       {
         commits: []
       }
@@ -40,24 +40,21 @@ describe("#list", () => {
         projectId: "project-id",
         branchId: "branch-id",
         fileId: "file-id",
-        layerId: "layer-id",
-        sha: "sha"
+        layerId: "layer-id"
       },
-      { limit: 10 }
+      { limit: 10, startSHA: "start-sha", endSHA: "end-sha" }
     );
 
     expect(response).toEqual([]);
   });
 
-  test("cli - file id", async () => {
-    mockCLI(["commits", "project-id", "branch-id", "--file-id", "file-id"], {
+  test("cli - branch id", async () => {
+    mockCLI(["commits", "project-id", "branch-id"], {
       commits: []
     });
     const response = await CLI_CLIENT.commits.list({
       projectId: "project-id",
-      branchId: "branch-id",
-      fileId: "file-id",
-      sha: "sha"
+      branchId: "branch-id"
     });
 
     expect(response).toEqual([]);
@@ -69,8 +66,14 @@ describe("#list", () => {
         "commits",
         "project-id",
         "branch-id",
+        "--file-id",
+        "file-id",
         "--layer-id",
         "layer-id",
+        "--start-sha",
+        "start-sha",
+        "--end-sha",
+        "end-sha",
         "--limit",
         "10"
       ],
@@ -81,9 +84,10 @@ describe("#list", () => {
         projectId: "project-id",
         branchId: "branch-id",
         layerId: "layer-id",
+        fileId: "file-id",
         sha: "sha"
       }: any),
-      { limit: 10 }
+      { limit: 10, startSHA: "start-sha", endSHA: "end-sha" }
     );
 
     expect(response).toEqual([]);
