@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/goabstract/abstract-sdk/compare/v4.0.2...v5.0.0) (2019-11-26)
+
+
+### Bug Fixes
+
+* document CursorPromise-returning methods and update TypeScript definition ([ddedc5a](https://github.com/goabstract/abstract-sdk/commit/ddedc5a))
+* don't require abstract-cli in the browser ([#169](https://github.com/goabstract/abstract-sdk/issues/169)) ([d65f78b](https://github.com/goabstract/abstract-sdk/commit/d65f78b))
+* remove deprecated description key fom project type ([1535731](https://github.com/goabstract/abstract-sdk/commit/1535731))
+* remove deprecated description key fom project type ([8362134](https://github.com/goabstract/abstract-sdk/commit/8362134))
+
+
+### Features
+
+* add batch collection layer support ([4f840b3](https://github.com/goabstract/abstract-sdk/commit/4f840b3))
+* add file assets endpoint ([2ebc219](https://github.com/goabstract/abstract-sdk/commit/2ebc219))
+* add webhooks API endpoint ([ded4e91](https://github.com/goabstract/abstract-sdk/commit/ded4e91))
+
+
+### BREAKING CHANGES
+
+* `LayerDescriptor` was renamed to `LayerVersionDescriptor`
+* `assets.list` was renamed to  `assets.commit`
+
+
+
 ### [4.0.3](https://github.com/goabstract/abstract-sdk/compare/v4.0.2...v4.0.3) (2019-10-30)
 
 
