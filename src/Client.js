@@ -1,28 +1,27 @@
 // @flow
-import Activities from "./endpoints/Activities";
-import Assets from "./endpoints/Assets";
-import Branches from "./endpoints/Branches";
-import Changesets from "./endpoints/Changesets";
-import CollectionLayers from "./endpoints/CollectionLayers";
-import Collections from "./endpoints/Collections";
-import Comments from "./endpoints/Comments";
-import Commits from "./endpoints/Commits";
-import Data from "./endpoints/Data";
-import Descriptors from "./endpoints/Descriptors";
-import Endpoint from "./endpoints/Endpoint";
-import Files from "./endpoints/Files";
-import Layers from "./endpoints/Layers";
-import Memberships from "./endpoints/Memberships";
-import Notifications from "./endpoints/Notifications";
-import Organizations from "./endpoints/Organizations";
-import Pages from "./endpoints/Pages";
-import Previews from "./endpoints/Previews";
-import Projects from "./endpoints/Projects";
-import Sections from "./endpoints/Sections";
-import Shares from "./endpoints/Shares";
-import Users from "./endpoints/Users";
-import Webhooks from "./endpoints/Webhooks";
-import type { CommandOptions } from "./types";
+import Activities from "@core/endpoints/Activities";
+import Assets from "@core/endpoints/Assets";
+import Branches from "@core/endpoints/Branches";
+import Changesets from "@core/endpoints/Changesets";
+import CollectionLayers from "@core/endpoints/Collection-layers";
+import Collections from "@core/endpoints/Collections";
+import Comments from "@core/endpoints/Comments";
+import Commits from "@core/endpoints/Commits";
+import Data from "@core/endpoints/Data";
+import Descriptors from "@core/endpoints/Descriptors";
+import Files from "@core/endpoints/Files";
+import Layers from "@core/endpoints/Layers";
+import Memberships from "@core/endpoints/Memberships";
+import Notifications from "@core/endpoints/Notifications";
+import Organizations from "@core/endpoints/Organizations";
+import Pages from "@core/endpoints/Pages";
+import Previews from "@core/endpoints/Previews";
+import Projects from "@core/endpoints/Projects";
+import Sections from "@core/endpoints/Sections";
+import Shares from "@core/endpoints/Shares";
+import Users from "@core/endpoints/Users";
+import Webhooks from "@core/endpoints/Webhooks";
+import type { CommandOptions } from "@core/types";
 
 export default class Client {
   activities: Activities;
@@ -48,16 +47,13 @@ export default class Client {
   users: Users;
   webhooks: Webhooks;
 
-  cache = new Map<string, any>();
-
   constructor(options: $Shape<CommandOptions> = {}) {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
       assetUrl: "https://objects.goabstract.com",
-      maxCacheSize: 0,
       previewUrl: "https://previews.goabstract.com",
-      transportMode: "api",
+      transportMode: ["api"],
       webUrl: "https://app.goabstract.com",
       // $FlowFixMe https://github.com/facebook/flow/pull/7298
       ...options
@@ -85,29 +81,5 @@ export default class Client {
     this.shares = new Shares(this, options);
     this.users = new Users(this, options);
     this.webhooks = new Webhooks(this, options);
-
-    // This is only for informative errors; we proxy each method
-    // on each endpoint so we can cache the last method name called.
-    // This allows errors to explicitly state which method is undefined
-    // in a given transport, and avoids using Function.caller which
-    // mostly doesn't work and is nonstandard.
-    return new Proxy(this, {
-      get(target: Object, endpoint: string) {
-        if (typeof target[endpoint] === "object" && target[endpoint]) {
-          return new Proxy(target[endpoint], {
-            get(target: Object, key: string) {
-              if (
-                typeof target[key] === "function" &&
-                !Endpoint.prototype.hasOwnProperty(key)
-              ) {
-                target.lastCalledEndpoint = `${endpoint}.${key}`;
-              }
-              return target[key];
-            }
-          });
-        }
-        return target[endpoint];
-      }
-    });
   }
 }

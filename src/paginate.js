@@ -1,9 +1,7 @@
 // @flow
-import type { CursorPromise } from "./types";
+import { CursorPromise } from "@core/types";
 
-export default function paginate<T>(
-  cursor: CursorPromise<T>
-): AsyncIterable<T> {
+export function paginate<T>(cursor: CursorPromise<T>): AsyncIterable<T> {
   // $FlowFixMe: Flow lacks Symbol support https://github.com/facebook/flow/issues/3258
   return {
     initial: true,
@@ -12,7 +10,8 @@ export default function paginate<T>(
       return this;
     },
     async next() {
-      const value = this.initial ? await cursor : await cursor.next();
+      cursor = this.initial ? cursor : cursor.next();
+      const value = await cursor;
       this.initial = false;
       return { value, done: !value };
     }

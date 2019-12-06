@@ -1,6 +1,5 @@
 // @flow
 import querystring from "query-string";
-import Cursor from "../Cursor";
 import type {
   Activity,
   ActivityDescriptor,
@@ -8,44 +7,43 @@ import type {
   CursorPromise,
   ListOptions,
   OrganizationDescriptor,
-  ProjectDescriptor
-} from "../types";
-import Endpoint from "./Endpoint";
+  ProjectDescriptor,
+  RequestOptions
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Activities extends Endpoint {
-  info(descriptor: ActivityDescriptor) {
-    return this.request<Promise<Activity>>({
-      api: () => {
-        return this.apiRequest(`activities/${descriptor.activityId}`);
+  info(descriptor: ActivityDescriptor, requestOptions: RequestOptions = {}) {
+    return this.configureRequest<Promise<Activity>>(
+      {
+        api: () => {
+          return this.apiRequest(`activities/${descriptor.activityId}`);
+        }
       },
-
-      cache: {
-        key: `activity:${descriptor.activityId}`
-      }
-    });
+      requestOptions
+    );
   }
 
   list(
     descriptor: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
     options: ListOptions = {}
   ) {
-    return this.request<CursorPromise<Activity[]>>({
-      api: () => {
-        return new Cursor<Activity[]>(
-          async (meta = { nextOffset: options.offset }) => {
-            const query = querystring.stringify({
-              ...descriptor,
-              ...options,
-              offset: meta.nextOffset
-            });
-            const response = await this.apiRequest(`activities?${query}`);
-            return {
-              data: response.data.activities,
-              meta: response.meta
-            };
-          }
-        );
-      }
-    });
+    const { limit, offset, ...requestOptions } = options;
+
+    return this.createCursor<CursorPromise<Activity[]>>(
+      (nextOffset = offset) => ({
+        api: () => {
+          const query = querystring.stringify({
+            ...descriptor,
+            limit,
+            offset: nextOffset
+          });
+
+          return this.apiRequest(`activities?${query}`);
+        },
+        requestOptions
+      }),
+      response => response.data.activities
+    );
   }
 }

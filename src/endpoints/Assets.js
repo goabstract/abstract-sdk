@@ -1,106 +1,117 @@
 // @flow
 import { promises as fs } from "fs";
 import querystring from "query-string";
-import Cursor from "../Cursor";
+import { isNodeEnvironment } from "@core/util/helpers";
 import type {
   Asset,
   AssetDescriptor,
   CommitDescriptor,
-  CursorPromise,
   FileDescriptor,
   ListOptions,
-  RawOptions
-} from "../types";
-import { isNodeEnvironment } from "../utils";
-import Endpoint from "./Endpoint";
+  RawOptions,
+  RequestOptions
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
-  info(descriptor: AssetDescriptor) {
-    return this.request<Promise<Asset>>({
-      api: async () => {
-        return this.apiRequest(
-          `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
-        );
+  info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
+    return this.configureRequest<Promise<Asset>>(
+      {
+        api: () => {
+          return this.apiRequest(
+            `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
+          );
+        }
       },
-
-      cache: {
-        key: `asset:${descriptor.assetId}`
-      }
-    });
+      requestOptions
+    );
   }
 
-  async commit(descriptor: CommitDescriptor) {
+  async commit(
+    descriptor: CommitDescriptor,
+    requestOptions: RequestOptions = {}
+  ) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
-    return this.request<Promise<Asset[]>>({
-      api: async () => {
-        const query = querystring.stringify({ sha: latestDescriptor.sha });
-        const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/assets?${query}`
-        );
-        return response.data.assets;
-      }
-    });
+
+    return this.configureRequest<Promise<Asset[]>>(
+      {
+        api: async () => {
+          const query = querystring.stringify({ sha: latestDescriptor.sha });
+
+          const response = await this.apiRequest(
+            `projects/${latestDescriptor.projectId}/assets?${query}`
+          );
+
+          return response.data.assets;
+        }
+      },
+      requestOptions
+    );
   }
 
   file(descriptor: FileDescriptor, options: ListOptions = {}) {
-    return this.request<CursorPromise<Asset[]>>({
-      api: () => {
-        return new Cursor<Asset[]>(
-          async (meta = { nextOffset: options.offset }) => {
-            const query = querystring.stringify({
-              ...options,
-              sha: descriptor.sha,
-              offset: meta.nextOffset
-            });
-            const response = await this.apiRequest(
-              `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/assets?${query}`
-            );
-            return {
-              data: response.data,
-              meta: response.meta
-            };
-          }
-        );
-      }
-    });
+    const { limit, offset, ...requestOptions } = options;
+
+    return this.createCursor<Promise<Asset[]>>(
+      (nextOffset = offset) => ({
+        api: () => {
+          const query = querystring.stringify({
+            sha: descriptor.sha,
+            limit,
+            offset: nextOffset
+          });
+
+          return this.apiRequest(
+            `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/assets?${query}`
+          );
+        },
+        requestOptions
+      }),
+      response => response.data
+    );
   }
 
   raw(descriptor: AssetDescriptor, options: RawOptions = {}) {
-    return this.request<Promise<ArrayBuffer>>({
-      api: async () => {
-        const asset = await this.info(descriptor);
-        const urlRoot = await this.assetUrl;
-        const urlPath = asset.url.replace(
-          /^https:\/\/objects.goabstract.com/,
-          ""
-        );
-        const arrayBuffer = await this.apiRawRequest(
-          `${urlRoot}${urlPath}`,
-          {
-            headers: {
-              Accept: undefined,
-              "Content-Type": undefined,
-              "Abstract-Api-Version": undefined
+    const { disableWrite, filename, ...requestOptions } = options;
+
+    return this.configureRequest<Promise<ArrayBuffer>>(
+      {
+        api: async () => {
+          const asset = await this.info(descriptor);
+          const assetUrl = await this.options.assetUrl;
+          const assetPath = asset.url.replace(
+            /^\S+:\/\/objects.goabstract.com\//,
+            ""
+          );
+
+          const arrayBuffer = await this.apiRequest(
+            assetPath,
+            {
+              headers: {
+                Accept: undefined,
+                "Content-Type": undefined,
+                "Abstract-Api-Version": undefined
+              }
+            },
+            {
+              customHostname: assetUrl,
+              raw: true
             }
-          },
-          null
-        );
+          );
 
-        /* istanbul ignore if */
-        if (isNodeEnvironment() && !options.disableWrite) {
-          const filename =
-            options.filename || `${asset.layerName}.${asset.fileFormat}`;
-          fs.writeFile(filename, Buffer.from(arrayBuffer));
+          /* istanbul ignore if */
+          if (isNodeEnvironment() && !disableWrite) {
+            const diskLocation =
+              filename || `${asset.layerName}.${asset.fileFormat}`;
+            fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
+          }
+
+          return arrayBuffer;
         }
-
-        return arrayBuffer;
       },
-
-      cache: {
-        key: `asset-raw:${descriptor.assetId}`
-      }
-    });
+      requestOptions
+    );
   }
 }

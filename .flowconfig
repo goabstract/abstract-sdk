@@ -1,5 +1,5 @@
 [ignore]
-<PROJECT_ROOT>/lib/*
+<PROJECT_ROOT>/dist/*
 
 [include]
 
@@ -8,5 +8,6 @@
 [lints]
 
 [options]
+module.name_mapper='^@core\/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 
 [strict]

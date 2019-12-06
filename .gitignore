@@ -1,6 +1,6 @@
 .DS_Store
 .yarn-cache
-/lib
+/dist
 /website/build/
 /website/i18n/
 coverage

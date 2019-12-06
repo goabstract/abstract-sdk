@@ -1,21 +1,24 @@
 /* @flow */
 /* global fetch */
-/* istanbul ignore file */
 import "cross-fetch/polyfill";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
-import Client from "../Client";
-import { inferShareId } from "../utils";
-import { log } from "../debug";
 import { version } from "../../package.json";
+import Client from "@core/Client";
+import { inferShareId } from "@core/util/helpers";
+import { log } from "@core/util/debug";
 import {
-  APITokenError,
   EndpointUndefinedError,
-  logAPIError,
+  MultiError,
   throwAPIError,
   throwCLIError
-} from "../errors";
-import type { AccessToken, AccessTokenOption, CommandOptions } from "../types";
+} from "@core/errors";
+import type {
+  ApiRequestOptions,
+  CommandOptions,
+  RequestConfig,
+  RequestOptions
+} from "@core/types";
 
 const logAPIRequest = log.extend("AbstractAPI:request");
 const logAPIResponse = log.extend("AbstractAPI:response");
@@ -23,145 +26,152 @@ const logCLIRequest = log.extend("AbstractCLI:request");
 const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
-export type CacheConfiguration = {
-  disable?: boolean,
-  key: string
-};
-
-export type EndpointRequest<T> = {
-  api?: () => T,
-  cli?: () => T,
-  cache?: CacheConfiguration
-};
-
 export default class Endpoint {
-  _optionAccessToken: ?AccessTokenOption;
-  apiUrl: string | Promise<string>;
-  assetUrl: string | Promise<string>;
   client: Client;
-  lastCalledEndpoint: ?string;
-  maxCacheSize: number;
-  previewUrl: string | Promise<string>;
-  transportMode: string;
-  webUrl: string | Promise<string>;
-
-  accessToken = async (): Promise<AccessToken> =>
-    typeof this._optionAccessToken === "function"
-      ? this._optionAccessToken()
-      : this._optionAccessToken;
+  options: CommandOptions;
 
   constructor(client: Client, options: CommandOptions) {
-    this._optionAccessToken = options.accessToken;
-    this.apiUrl = options.apiUrl;
-    this.assetUrl = options.assetUrl;
     this.client = client;
-    this.maxCacheSize = options.maxCacheSize;
-    this.previewUrl = options.previewUrl;
-    this.transportMode = options.transportMode;
-    this.webUrl = options.webUrl;
+    this.options = options;
   }
 
-  request<T>(request: EndpointRequest<T>): T {
-    let response;
+  configureRequest<T>(
+    config: RequestConfig<T>,
+    requestOptions: RequestOptions = {}
+  ): T {
+    const makeRequest = async () => {
+      let response;
+      const errors = {};
+      const transportMode =
+        requestOptions.transportMode || this.options.transportMode;
 
-    if (request.cache) {
-      const existingEntity = this.client.cache.get(request.cache.key);
-      if (existingEntity) {
-        return existingEntity;
+      if (transportMode.length === 0) {
+        throw new EndpointUndefinedError("any");
       }
-    }
 
-    if (this.transportMode === "auto") {
-      if (request.cli) {
-        response = request.cli();
-      } else if (request.api) {
-        response = request.api();
-      } else {
-        throw new EndpointUndefinedError(
-          this.lastCalledEndpoint,
-          this.transportMode
-        );
+      for (const mode of transportMode) {
+        let requestError;
+        try {
+          if (!config[mode]) {
+            throw new EndpointUndefinedError(mode);
+          }
+          const operation = config[mode].call(this);
+          response = await operation;
+        } catch (error) {
+          requestError = error;
+        }
+        if (requestError) {
+          errors[mode] = requestError;
+        } else {
+          break;
+        }
       }
-    } else if (request[this.transportMode]) {
-      const handler = request[this.transportMode];
-      response = handler();
-    } else {
-      throw new EndpointUndefinedError(
-        this.lastCalledEndpoint,
-        this.transportMode
-      );
-    }
 
-    if (request.cache && this.maxCacheSize > 0 && !request.cache.disable) {
-      this.client.cache.set(request.cache.key, response);
-
-      if (this.client.cache.size > this.maxCacheSize) {
-        const oldestEntity = this.client.cache.keys().next().value;
-        oldestEntity && this.client.cache.delete(oldestEntity);
+      if (Object.keys(errors).length === transportMode.length) {
+        throw new MultiError(errors);
       }
-    }
 
-    return response;
+      return response;
+    };
+
+    const response = makeRequest();
+    return ((response: any): T);
   }
 
   async apiRequest(
-    input: string,
-    init: Object = {},
-    overrideHostname?: ?string
+    url: string,
+    fetchOptions: Object = {},
+    apiOptions: ApiRequestOptions = {}
   ) {
-    const emptyResponse: any = undefined;
-    const hostname =
-      overrideHostname !== undefined ? overrideHostname : await this.apiUrl;
-    const response = await this._fetch(input, init, hostname);
-    const data =
-      response.status !== 204 ? await response.json() : emptyResponse;
-    /* istanbul ignore next */
-    logAPIResponse.enabled && logAPIResponse(data);
-    return data;
-  }
+    const { customHostname, raw } = apiOptions;
+    const hostname = customHostname || (await this.options.apiUrl);
 
-  async apiRawRequest(
-    input: string,
-    init: Object = {},
-    overrideHostname?: ?string
-  ) {
-    const hostname =
-      overrideHostname !== undefined ? overrideHostname : await this.apiUrl;
-    const response = await this._fetch(input, init, hostname);
-    const buffer = response.arrayBuffer();
+    fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
+    fetchOptions.headers = await this._getFetchHeaders(fetchOptions.headers);
+    const args = [`${hostname}/${url}`, fetchOptions];
+
     /* istanbul ignore next */
-    logAPIResponse.enabled && logAPIResponse(buffer.toString());
-    return buffer;
+    logAPIRequest.enabled && logAPIRequest(args);
+
+    const response = await fetch(...args);
+    !response.ok && (await throwAPIError(response, url, fetchOptions.body));
+    if (response.status === 204) {
+      return (undefined: any);
+    }
+
+    // prettier-ignore
+    const apiValue: any = await (raw ? response.arrayBuffer() : response.json());
+    const logValue = raw ? apiValue.toString() : apiValue;
+
+    /* istanbul ignore next */
+    logAPIResponse.enabled && logAPIResponse(logValue);
+
+    return apiValue;
   }
 
   async cliRequest(args: string[]) {
-    const token = await this.accessToken();
-
+    const token = await this._getAccessToken();
     const cliPath = require("@elasticprojects/abstract-cli");
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
+
     const spawnArgs = [
       cliPath,
-      [...tokenArgs, "--api-url", await this.apiUrl, ...args]
+      [...tokenArgs, "--api-url", await this.options.apiUrl, ...args]
     ];
 
     /* istanbul ignore next */
     logCLIRequest.enabled && logCLIRequest(spawnArgs);
-    const request = spawn(...spawnArgs);
 
-    return new Promise((resolve, reject) => {
+    return this._createStreamPromise(spawn(...spawnArgs), spawnArgs);
+  }
+
+  createCursor<T>(
+    getConfig: (nextOffset?: number) => RequestConfig<any>,
+    getValue: (response: any) => any
+  ): T {
+    const createPromise = lastPromise => {
+      lastPromise = lastPromise || Promise.resolve();
+
+      const promise = lastPromise.then(response => {
+        if (response && !response.meta.nextOffset) {
+          return;
+        }
+
+        return this.configureRequest<any>(
+          getConfig(response && response.meta.nextOffset)
+        );
+      });
+
+      const newPromise: any = promise.then<any>(
+        response => response && getValue(response)
+      );
+
+      newPromise.next = () => {
+        return createPromise(promise);
+      };
+
+      return newPromise;
+    };
+
+    return (createPromise(): T);
+  }
+
+  _createStreamPromise(response: any, spawnArgs: any[]) {
+    return new Promise<any>((resolve, reject) => {
       let errBuffer = Buffer.from("");
       let outBuffer = Buffer.from("");
 
-      request.stderr.on("data", chunk => {
+      response.stderr.on("data", chunk => {
         errBuffer = Buffer.concat([errBuffer, chunk]);
       });
 
-      request.stdout.on("data", chunk => {
+      response.stdout.on("data", chunk => {
         outBuffer = Buffer.concat([outBuffer, chunk]);
       });
 
-      request.on("error", reject);
-      request.on("close", errCode => {
+      response.on("error", reject);
+
+      response.on("close", errCode => {
         if (errCode !== 0) {
           const response = JSON.parse(errBuffer.toString());
           try {
@@ -172,60 +182,35 @@ export default class Endpoint {
           return;
         }
 
-        const response = JSON.parse(outBuffer.toString());
+        const cliResponse = JSON.parse(outBuffer.toString());
+
         /* istanbul ignore next */
-        logCLIResponse.enabled && logCLIResponse(response);
-        resolve(response);
+        logCLIResponse.enabled && logCLIResponse(cliResponse);
+
+        resolve(cliResponse);
       });
     });
   }
 
-  async _fetch(input: string, init: Object = {}, hostname: ?string) {
-    if (init.body) {
-      init.body = JSON.stringify(init.body);
-    }
-    init.headers = await this._getAPIHeaders(init.headers);
-    const args = [
-      hostname === null ? input : `${hostname || ""}/${input}`,
-      init
-    ];
-    /* istanbul ignore next */
-    logAPIRequest.enabled && logAPIRequest(args);
-
-    const request = fetch(...args);
-    const response = await request;
-    !response.ok && (await throwAPIError(response, input, init.body));
-    return response;
+  async _getAccessToken() {
+    return typeof this.options.accessToken === "function"
+      ? this.options.accessToken()
+      : this.options.accessToken;
   }
 
-  async _getAPIHeaders(customHeaders?: { [key: string]: string }) {
-    let tokenHeader = {};
-    const token = await this.accessToken();
+  async _getFetchHeaders(customHeaders?: { [key: string]: string }) {
+    const token = await this._getAccessToken();
+    const tokenHeader =
+      typeof token === "string"
+        ? { Authorization: `Bearer ${token}` }
+        : { "Abstract-Share-Id": token && inferShareId(token) };
 
-    if (!token) {
-      const error = new APITokenError();
-      /* istanbul ignore next */
-      logAPIError.enabled && logAPIError(error);
-      throw error;
-    }
-
-    if (token) {
-      tokenHeader =
-        typeof token === "string"
-          ? { Authorization: `Bearer ${token}` }
-          : { "Abstract-Share-Id": inferShareId(token) };
-    }
-
-    const baseHeaders = {
+    const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
       "X-Amzn-Trace-Id": `Root=1-${new Date().getTime()}-${uuid()}`,
-      "Abstract-Api-Version": "8"
-    };
-
-    const headers = {
-      ...baseHeaders,
+      "Abstract-Api-Version": "8",
       ...tokenHeader,
       ...customHeaders
     };
@@ -233,6 +218,7 @@ export default class Endpoint {
     Object.keys(headers).forEach(key => {
       headers[key] === undefined && delete headers[key];
     });
+
     return headers;
   }
 }

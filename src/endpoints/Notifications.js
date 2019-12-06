@@ -1,42 +1,46 @@
 // @flow
 import querystring from "query-string";
-import Cursor from "../Cursor";
 import type {
-  CursorPromise,
   ListOptions,
   Notification,
   NotificationDescriptor,
-  OrganizationDescriptor
-} from "../types";
-import Endpoint from "./Endpoint";
+  OrganizationDescriptor,
+  RequestOptions
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Notifications extends Endpoint {
-  info(descriptor: NotificationDescriptor) {
-    return this.request<Promise<Notification>>({
-      api: () => {
-        return this.apiRequest(`notifications/${descriptor.notificationId}`);
+  info(
+    descriptor: NotificationDescriptor,
+    requestOptions: RequestOptions = {}
+  ) {
+    return this.configureRequest<Promise<Notification>>(
+      {
+        api: () => {
+          return this.apiRequest(`notifications/${descriptor.notificationId}`);
+        }
       },
-
-      cache: {
-        key: `notification:${descriptor.notificationId}`
-      }
-    });
+      requestOptions
+    );
   }
 
   list(descriptor: OrganizationDescriptor, options: ListOptions = {}) {
-    return this.request<CursorPromise<Notification[]>>({
-      api: () => {
-        return new Cursor<Notification[]>(
-          async (meta = { nextOffset: options.offset }) => {
-            const query = querystring.stringify({
-              ...descriptor,
-              ...options,
-              offset: meta.nextOffset
-            });
-            return this.apiRequest(`notifications?${query}`);
-          }
-        );
-      }
-    });
+    const { limit, offset, ...requestOptions } = options;
+
+    return this.createCursor<Promise<Notification[]>>(
+      (nextOffset = offset) => ({
+        api: () => {
+          const query = querystring.stringify({
+            ...descriptor,
+            limit,
+            offset: nextOffset
+          });
+
+          return this.apiRequest(`notifications?${query}`);
+        },
+        requestOptions
+      }),
+      response => response.data
+    );
   }
 }

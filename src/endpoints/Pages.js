@@ -1,57 +1,71 @@
 // @flow
-import type { FileDescriptor, Page, PageDescriptor } from "../types";
-import { NotFoundError } from "../errors";
-import Endpoint from "./Endpoint";
+import type {
+  FileDescriptor,
+  Page,
+  PageDescriptor,
+  RequestOptions
+} from "@core/types";
+import { NotFoundError } from "@core/errors";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Pages extends Endpoint {
-  async info(descriptor: PageDescriptor) {
+  async info(descriptor: PageDescriptor, requestOptions: RequestOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
 
-    return this.request<Promise<Page>>({
-      api: async () => {
-        const { pageId, ...fileDescriptor } = latestDescriptor;
-        const pages = await this.list(fileDescriptor);
-        const page = pages.find(page => page.id === pageId);
-        if (!page) {
-          throw new NotFoundError(`pageId=${pageId}`);
-        }
-        return page;
-      },
+    return this.configureRequest<Promise<Page>>(
+      {
+        api: async () => {
+          const { pageId, ...fileDescriptor } = latestDescriptor;
+          const pages = await this.list(fileDescriptor);
+          const page = pages.find(page => page.id === pageId);
+          if (!page) {
+            throw new NotFoundError(`pageId=${pageId}`);
+          }
+          return page;
+        },
 
-      cli: async () => {
-        const { pageId, ...fileDescriptor } = latestDescriptor;
-        const pages = await this.list(fileDescriptor);
-        const page = pages.find(page => page.id === pageId);
-        if (!page) {
-          throw new NotFoundError(`pageId=${pageId}`);
+        cli: async () => {
+          const { pageId, ...fileDescriptor } = latestDescriptor;
+          const pages = await this.list(fileDescriptor);
+          const page = pages.find(page => page.id === pageId);
+          if (!page) {
+            throw new NotFoundError(`pageId=${pageId}`);
+          }
+          return page;
         }
-        return page;
-      }
-    });
+      },
+      requestOptions
+    );
   }
 
-  async list(descriptor: FileDescriptor) {
+  async list(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
-    return this.request<Promise<Page[]>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/pages`
-        );
-        return response.pages;
-      },
 
-      cli: async () => {
-        const response = await this.cliRequest([
-          "files",
-          latestDescriptor.projectId,
-          latestDescriptor.sha
-        ]);
-        return response.pages;
-      }
-    });
+    return this.configureRequest<Promise<Page[]>>(
+      {
+        api: async () => {
+          const response = await this.apiRequest(
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/pages`
+          );
+
+          return response.pages;
+        },
+
+        cli: async () => {
+          const response = await this.cliRequest([
+            "files",
+            latestDescriptor.projectId,
+            latestDescriptor.sha
+          ]);
+
+          return response.pages;
+        }
+      },
+      requestOptions
+    );
   }
 }
