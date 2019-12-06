@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0-beta.0](https://github.com/goabstract/abstract-sdk/compare/v5.0.0...v6.0.0-beta.0) (2019-12-06)
+
+
+### Features
+
+* multi transport support ([2ff3ce2](https://github.com/goabstract/abstract-sdk/commit/2ff3ce2))
+
+
+### BREAKING CHANGES
+
+* - `transportMode` is now an array of strings, e.g. `["cli", "api"]`.
+- The specified transports will be tried sequentially until one succeeds.
+- If no transport succeeds, a `MultiError` will be thrown with references to all transport errors.
+- Every SDK endpoint now accepts an options argument that can be used to specify a one-off `transportMode` that overrides the globally-configured `transportMode`.
+- Client caching via `maxCacheSize` has been removed.
+
+
+
 ## [5.0.0](https://github.com/goabstract/abstract-sdk/compare/v4.0.2...v5.0.0) (2019-11-26)
 
 
