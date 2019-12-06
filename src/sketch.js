@@ -4,7 +4,7 @@ import type {
   BranchDescriptor,
   FileDescriptor,
   ProjectDescriptor
-} from "./types";
+} from "@core/types";
 
 declare type PROSketchBootstrapT = {
   documentKey: (*) => string

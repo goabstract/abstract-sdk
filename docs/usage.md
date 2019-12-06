@@ -29,8 +29,8 @@ import * as Abstract from "abstract-sdk";
 
 // Create a client
 const client = new Abstract.Client({
-  // Specify a specific transport for demo purposes
-  transportMode: "api"
+  // Use the cli if available, otherwise use the api
+  transportMode: ["cli", "api"]
 });
 
 async function run() {

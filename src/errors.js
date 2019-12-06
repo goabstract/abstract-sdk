@@ -1,19 +1,24 @@
 // @flow
-import { log } from "./debug";
+import { log } from "@core/util/debug";
+import type { ErrorData, ErrorMap } from "@core/types";
 
 export const logAPIError = log.extend("AbstractAPI:error");
 export const logCLIError = log.extend("AbstractCLI:error");
-
-export type ErrorData = {|
-  path: string,
-  body: mixed
-|};
 
 export class BaseError extends Error {
   constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class MultiError extends BaseError {
+  errors: ErrorMap;
+
+  constructor(errors: ErrorMap) {
+    super("An error has occured");
+    this.errors = errors;
   }
 }
 
@@ -26,27 +31,8 @@ export class FileAPIError extends BaseError {
 }
 
 export class EndpointUndefinedError extends BaseError {
-  constructor(endpoint: ?string, transport: string) {
-    super(
-      `Endpoint ${
-        /* istanbul ignore next */
-        endpoint ? `"${endpoint}" ` : ""
-      }not defined in ${
-        /* istanbul ignore next */
-        transport ? `"${transport}"` : "any"
-      } transport${
-        /* istanbul ignore next */
-        transport ? "" : "s"
-      }.`
-    );
-  }
-}
-
-export class APITokenError extends BaseError {
-  constructor() {
-    super(
-      "Cannot find API access token. Use options.accessToken or ABSTRACT_TOKEN. See https://developer.abstract.com/docs/authentication/ for more information."
-    );
+  constructor(transport: string) {
+    super(`Endpoint not defined in ${transport} transport.`);
   }
 }
 
@@ -157,6 +143,6 @@ export function throwCLIError(
     case "service_unavailable":
       throw new ServiceUnavailableError(cliPath, args);
     default:
-      throw new Error("An unexpected error has occurred.");
+      throw new Error(response.message);
   }
 }

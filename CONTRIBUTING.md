@@ -44,7 +44,7 @@ $ yarn flow
 
 ### Building
 
-Transpile the `src` directory into a `lib` directory using Babel:
+Transpile the `src` directory into a `dist` directory using Babel:
 
 ```sh
 $ yarn build

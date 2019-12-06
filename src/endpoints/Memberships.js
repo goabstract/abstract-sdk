@@ -4,48 +4,59 @@ import type {
   OrganizationDescriptor,
   OrganizationMembershipDescriptor,
   ProjectDescriptor,
-  ProjectMembershipDescriptor
-} from "../types";
-import Endpoint from "./Endpoint";
+  ProjectMembershipDescriptor,
+  RequestOptions
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Memberships extends Endpoint {
   info(
-    descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor
+    descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor,
+    requestOptions: RequestOptions = {}
   ) {
-    return this.request<Promise<Membership>>({
-      api: async () => {
-        let url = "";
-        if (descriptor.organizationId) {
-          url = `organizations/${descriptor.organizationId}/memberships/${descriptor.userId}`;
-        }
+    return this.configureRequest<Promise<Membership>>(
+      {
+        api: async () => {
+          let url = "";
 
-        if (descriptor.projectId) {
-          url = `projects/${descriptor.projectId}/memberships/${descriptor.userId}`;
+          if (descriptor.organizationId) {
+            url = `organizations/${descriptor.organizationId}/memberships/${descriptor.userId}`;
+          }
+
+          if (descriptor.projectId) {
+            url = `projects/${descriptor.projectId}/memberships/${descriptor.userId}`;
+          }
+
+          const response = await this.apiRequest(url);
+          return response.data.projectMembership || response.data;
         }
-        const response = await this.apiRequest(url);
-        return response.data.projectMembership || response.data;
       },
-
-      cache: {
-        key: `membership:${descriptor.userId}`
-      }
-    });
+      requestOptions
+    );
   }
 
-  list(descriptor: OrganizationDescriptor | ProjectDescriptor) {
-    return this.request<Promise<Membership[]>>({
-      api: async () => {
-        let url = "";
-        if (descriptor.organizationId) {
-          url = `organizations/${descriptor.organizationId}/memberships`;
-        }
+  list(
+    descriptor: OrganizationDescriptor | ProjectDescriptor,
+    requestOptions: RequestOptions = {}
+  ) {
+    return this.configureRequest<Promise<Membership[]>>(
+      {
+        api: async () => {
+          let url = "";
 
-        if (descriptor.projectId) {
-          url = `projects/${descriptor.projectId}/memberships`;
+          if (descriptor.organizationId) {
+            url = `organizations/${descriptor.organizationId}/memberships`;
+          }
+
+          if (descriptor.projectId) {
+            url = `projects/${descriptor.projectId}/memberships`;
+          }
+
+          const response = await this.apiRequest(url);
+          return response.data;
         }
-        const response = await this.apiRequest(url);
-        return response.data;
-      }
-    });
+      },
+      requestOptions
+    );
   }
 }

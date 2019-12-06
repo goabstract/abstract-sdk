@@ -5,69 +5,88 @@ import type {
   Layer,
   LayerVersionDescriptor,
   ListOptions,
-  PageDescriptor
-} from "../types";
-import Endpoint from "./Endpoint";
+  PageDescriptor,
+  RequestOptions
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Layers extends Endpoint {
-  async info(descriptor: LayerVersionDescriptor) {
+  async info(
+    descriptor: LayerVersionDescriptor,
+    requestOptions: RequestOptions = {}
+  ) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
-    return this.request<Promise<Layer>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
-        );
-        return {
-          ...response.layer,
-          _file: response.file,
-          _page: response.page
-        };
-      },
 
-      cli: async () => {
-        const response = await this.cliRequest([
-          "layer",
-          "meta",
-          latestDescriptor.projectId,
-          latestDescriptor.sha,
-          latestDescriptor.fileId,
-          latestDescriptor.layerId
-        ]);
-        return response.layer;
-      },
+    return this.configureRequest<Promise<Layer>>(
+      {
+        api: async () => {
+          const response = await this.apiRequest(
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
+          );
 
-      cache: {
-        key: `layer:${descriptor.layerId}`,
-        disable: descriptor.sha === "latest"
-      }
-    });
+          return {
+            ...response.layer,
+            _file: response.file,
+            _page: response.page
+          };
+        },
+
+        cli: async () => {
+          const response = await this.cliRequest([
+            "layer",
+            "meta",
+            latestDescriptor.projectId,
+            latestDescriptor.sha,
+            latestDescriptor.fileId,
+            latestDescriptor.layerId
+          ]);
+
+          return response.layer;
+        }
+      },
+      requestOptions
+    );
   }
 
   async list(
     descriptor: FileDescriptor | PageDescriptor,
     options: ListOptions = {}
   ) {
-    descriptor = await this.client.descriptors.getLatestDescriptor(descriptor);
-    return this.request<Promise<Layer[]>>({
-      api: async () => {
-        const query = querystring.stringify({ ...options, ...descriptor });
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/layers?${query}`
-        );
-        return response.layers;
-      },
+    const { limit, offset, ...requestOptions } = options;
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
 
-      cli: async () => {
-        const response = await this.cliRequest([
-          "layers",
-          descriptor.projectId,
-          descriptor.sha,
-          descriptor.fileId
-        ]);
-        return response.layers;
-      }
-    });
+    return this.configureRequest<Promise<Layer[]>>(
+      {
+        api: async () => {
+          const query = querystring.stringify({
+            ...latestDescriptor,
+            limit,
+            offset
+          });
+
+          const response = await this.apiRequest(
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/layers?${query}`
+          );
+
+          return response.layers;
+        },
+
+        cli: async () => {
+          const response = await this.cliRequest([
+            "layers",
+            latestDescriptor.projectId,
+            latestDescriptor.sha,
+            latestDescriptor.fileId
+          ]);
+
+          return response.layers;
+        }
+      },
+      requestOptions
+    );
   }
 }

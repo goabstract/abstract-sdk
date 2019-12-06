@@ -26,7 +26,7 @@ An activity represents a designated type of event within a project. These events
 
 ![API][api-icon]
 
-`activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, { limit?: number, offset?: number }): CursorPromise<Activity[]>`
+`activities.list(BranchDescriptor | OrganizationDescriptor | ProjectDescriptor, ListOptions): CursorPromise<Activity[]>`
 
 List the first two activities for a given project on a specific branch
 
@@ -43,7 +43,7 @@ abstract.activities.list({
 
 ![API][api-icon]
 
-`activities.info(ActivityDescriptor): Promise<Activity>`
+`activities.info(ActivityDescriptor, RequestOptions): Promise<Activity>`
 
 Load the info for an activity
 
@@ -87,7 +87,7 @@ An asset represents a resource exported from a design file. Assets are automatic
 
 ![API][api-icon]
 
-`asset.info(AssetDescriptor): Promise<Asset>`
+`asset.info(AssetDescriptor, RequestOptions): Promise<Asset>`
 
 Load the info for an asset
 
@@ -102,7 +102,7 @@ abstract.assets.info({
 
 ![API][api-icon]
 
-`assets.file(FileDescriptor, { limit?: number, offset?: number }): CursorPromise<Asset[]>`
+`assets.file(FileDescriptor, ListOptions): CursorPromise<Asset[]>`
 
 List the first ten assets for a given file
 
@@ -121,7 +121,7 @@ abstract.assets.file({
 
 ### List assets for a commit
 
-`assets.commit(CommitDescriptor): Promise<Asset[]>`
+`assets.commit(CommitDescriptor, RequestOptions): Promise<Asset[]>`
 
 List all assets generated for a commit
 
@@ -137,7 +137,7 @@ abstract.assets.commit({
 
 ![API][api-icon]
 
-`asset.raw(AssetDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
+`asset.raw(AssetDescriptor, RawOptions}): Promise<ArrayBuffer>`
 
 Retrieve a given asset file based on its ID and save it to disk. **Files will be saved to the current working directory by default**, but a custom `filename` option can be used to customize this location, or `disableWrite` can be used to disable automatic saving altogether.
 
@@ -214,7 +214,7 @@ to be created for logical chunks of work – for example designing a new feature
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.list(ProjectDescriptor, { filter?: "active" | "archived" | "mine" }): Promise<Branch[]>`
+`branches.list(ProjectDescriptor, { ...RequestOptions, filter?: "active" | "archived" | "mine" }): Promise<Branch[]>`
 
 List the active branches for a project
 
@@ -230,7 +230,7 @@ abstract.branches.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.info(BranchDescriptor): Promise<Branch>`
+`branches.info(BranchDescriptor, RequestOptions): Promise<Branch>`
 
 Load the info for a specific branch in a project
 
@@ -277,7 +277,7 @@ A changeset is a group of changes that together form a single, indivisible modif
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.commit(CommitDescriptor): Promise<Changeset>`
+`changesets.commit(CommitDescriptor, RequestOptions): Promise<Changeset>`
 
 Load a changeset for a commit
 
@@ -293,7 +293,7 @@ abstract.changesets.commit({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.commit(BranchDscriptor): Promise<Changeset>`
+`changesets.commit(BranchDscriptor, RequestOptions): Promise<Changeset>`
 
 Load a changeset for a branch
 
@@ -337,7 +337,7 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.list(ProjectDescriptor | BranchDescriptor, { layersPerCollection?: number }): Promise<CollectionPage>`
+`collections.list(ProjectDescriptor | BranchDescriptor, { ...RequestOptions, layersPerCollection?: number }): Promise<CollectionPage>`
 
 List all collections for a branch
 
@@ -352,7 +352,7 @@ abstract.collections.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.info(CollectionDescriptor): Promise<CollectionPage>`
+`collections.info(CollectionDescriptor, RequestOptions): Promise<CollectionPage>`
 
 Load an individual collection
 
@@ -368,7 +368,7 @@ abstract.collections.info({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.create(ProjectDescriptor, NewCollection): Promise<Collection>`
+`collections.create(ProjectDescriptor, NewCollection, RequestOptions): Promise<Collection>`
 
 Create a new collection
 
@@ -386,7 +386,7 @@ abstract.collections.create({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.update(CollectionDescriptor, UpdatedCollection): Promise<Collection>`
+`collections.update(CollectionDescriptor, UpdatedCollection, RequestOptions): Promise<Collection>`
 
 Update an existing collection
 
@@ -436,7 +436,7 @@ A collection layer represents an underlying layer within a collection. Collectio
 
 ![API][api-icon]
 
-`collectionLayers.add(descriptor: CollectionDescriptor, layer: NewCollectionLayer): Promise<CollectionLayer>`
+`collectionLayers.add(CollectionDescriptor, NewCollectionLayer, RequestOptions): Promise<CollectionLayer>`
 
 Add a single layer to a collection
 
@@ -458,7 +458,7 @@ abstract.collectionLayers.add({
 
 ![API][api-icon]
 
-`collectionLayers.addMany(descriptor: CollectionDescriptor, layers: NewCollectionLayer[]): Promise<CollectionLayer[]>`
+`collectionLayers.addMany(CollectionDescriptor, NewCollectionLayer[], RequestOptions): Promise<CollectionLayer[]>`
 
 Add multiple layers to a collection
 
@@ -482,7 +482,7 @@ abstract.collectionLayers.addMany({
 
 ![API][api-icon]
 
-`collectionLayers.remove(descriptor: CollectionLayerDescriptor): Promise<void>`
+`collectionLayers.remove(CollectionLayerDescriptor, RequestOptions): Promise<void>`
 
 Remove a layer from a collection
 
@@ -497,7 +497,7 @@ abstract.collectionLayers.remove({
 
 ![API][api-icon]
 
-`collectionLayers.update(descriptor: CollectionLayerDescriptor, layer: UpdatedCollectionLayer): Promise<CollectionLayer>`
+`collectionLayers.update(CollectionLayerDescriptor, UpdatedCollectionLayer, RequestOptions): Promise<CollectionLayer>`
 
 Update a layer within a collection
 
@@ -519,7 +519,7 @@ abstract.collectionLayers.update({
 
 ![API][api-icon]
 
-`collectionLayers.move(descriptor: CollectionLayerDescriptor, order: number): Promise<CollectionLayer[]>`
+`collectionLayers.move(CollectionLayerDescriptor, number, RequestOptions): Promise<CollectionLayer[]>`
 
 Reorder a layer within a collection
 
@@ -564,7 +564,7 @@ represents a bounding area on-top of the layer, this can be used to leave commen
 
 ![API][api-icon]
 
-`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerVersionDescriptor): CursorPromise<Comment[]>`
+`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerVersionDescriptor, RequestOptions): CursorPromise<Comment[]>`
 
 List the comments for a specific project
 ```js
@@ -590,7 +590,7 @@ abstract.comments.list({
 
 ![API][api-icon]
 
-`comments.info(CommentDescriptor): Promise<Comment>`
+`comments.info(CommentDescriptor, RequestOptions): Promise<Comment>`
 
 Load the info for a comment
 
@@ -604,7 +604,7 @@ abstract.comments.info({
 
 ![API][api-icon]
 
-`comments.create(BranchDescriptor | CommitDescriptor | LayerVersionDescriptor, Comment): Promise<Comment>`
+`comments.create(BranchDescriptor | CommitDescriptor | LayerVersionDescriptor, Comment, RequestOptions): Promise<Comment>`
 
 Create a comment on a branch
 
@@ -668,7 +668,7 @@ to identify which version of the object you would like.
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`commits.list(BranchDescriptor | FileDescriptor | LayerDescriptor, { limit?: number, startSha?: string, endSha?: string }): Promise<Commit[]>`
+`commits.list(BranchDescriptor | FileDescriptor | LayerDescriptor, { ...RequestOptions, limit?: number, startSha?: string, endSha?: string }): Promise<Commit[]>`
 
 List the commits for a specific branch
 
@@ -694,7 +694,7 @@ abstract.commits.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`commits.info (FileDescriptor | LayerVersionDescriptor | CommitDescriptor): Promise<Commit>`
+`commits.info (FileDescriptor | LayerVersionDescriptor | CommitDescriptor, RequestOptions): Promise<Commit>`
 
 Load the commit info for a specific commit SHA on a branch
 
@@ -738,7 +738,7 @@ abstract.commits.info({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`data.info(LayerVersionDescriptor): Promise<LayerDataset>`
+`data.info(LayerVersionDescriptor, RequestOptions): Promise<LayerDataset>`
 
 ```js
 abstract.data.info({
@@ -774,7 +774,7 @@ A file represents a standard file – in Abstract a file is always loaded from a
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`files.list(BranchDescriptor): Promise<File[]>`
+`files.list(BranchDescriptor, RequestOptions): Promise<File[]>`
 
 List the files for a branch at the latest commit
 
@@ -790,7 +790,7 @@ abstract.files.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`files.info(FileDescriptor): Promise<File>`
+`files.info(FileDescriptor, RequestOptions): Promise<File>`
 
 Load the file info for the latest commit on a branch
 
@@ -807,7 +807,7 @@ abstract.files.info({
 
 ![CLI][cli-icon]
 
-`files.raw(FileDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
+`files.raw(FileDescriptor, RawOptions): Promise<ArrayBuffer>`
 
 Retrieve a Sketch file from Abstract based on its file ID and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
 
@@ -860,7 +860,7 @@ A layer is a container for designs. In Sketch a layer usually represents an artb
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`layers.list(FileDescriptor | PageDescriptor, { limit?: number, offset?: number }): Promise<Layer[]>`
+`layers.list(FileDescriptor | PageDescriptor, ListOptions): Promise<Layer[]>`
 
 List the layers for a file at a commit
 
@@ -892,7 +892,7 @@ abstract.layers.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`layers.info(LayerVersionDescriptor): Promise<Layer>`
+`layers.info(LayerVersionDescriptor, RequestOptions): Promise<Layer>`
 
 Load the info for a layer in a file at the latest commit on a branch
 
@@ -926,7 +926,7 @@ A membership contains information about a user's role within an organization or 
 
 ![API][api-icon]
 
-`memberships.list(OrganizationDescriptor | ProjectDescriptor): Promise<Membership[]>`
+`memberships.list(OrganizationDescriptor | ProjectDescriptor, RequestOptions): Promise<Membership[]>`
 
 List the members of an organization
 
@@ -940,7 +940,7 @@ abstract.memberships.list({
 
 ![API][api-icon]
 
-`memberships.info(OrganizationMembershipDescriptor | ProjectMembershipDescriptor): Promise<Membership>`
+`memberships.info(OrganizationMembershipDescriptor | ProjectMembershipDescriptor, RequestOptions): Promise<Membership>`
 
 Load the info for a specific member
 
@@ -978,7 +978,7 @@ A notification is a user-facing message triggered by an underlying activity. Not
 
 ![API][api-icon]
 
-`notifications.list(OrganizationDescriptor, { limit?: number, offset?: number }): CursorPromise<Notification[]>`
+`notifications.list(OrganizationDescriptor, ListOptions): CursorPromise<Notification[]>`
 
 List the first two notifications for a given organization
 
@@ -994,7 +994,7 @@ abstract.notifications.list({
 
 ![API][api-icon]
 
-`notifications.info(NotificationDescriptor): Promise<Notification>`
+`notifications.info(NotificationDescriptor, RequestOptions): Promise<Notification>`
 
 Load the info for a notification
 
@@ -1030,7 +1030,7 @@ Organizations contain users and projects.
 
 ![API][api-icon]
 
-`organizations.list(): Promise<Organization[]>`
+`organizations.list(RequestOptions): Promise<Organization[]>`
 
 Load the organizations accessible by the current access token
 
@@ -1042,7 +1042,7 @@ abstract.organizations.list();
 
 ![API][api-icon]
 
-`organizations.info(OrganizationDescriptor): Promise<Organization>`
+`organizations.info(OrganizationDescriptor, RequestOptions): Promise<Organization>`
 
 Load the info for an organization
 
@@ -1073,7 +1073,7 @@ A page is a container for layers, often a file will have several pages to organi
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`pages.list(FileDescriptor): Promise<Page[]>`
+`pages.list(FileDescriptor, RequestOptions): Promise<Page[]>`
 
 List the pages for a file at a commit
 
@@ -1090,7 +1090,7 @@ abstract.pages.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`pages.info(PageDescriptor): Promise<Page>`
+`pages.info(PageDescriptor, RequestOptions): Promise<Page>`
 
 Load the info for a page in a file at the latest commit on a branch
 
@@ -1119,7 +1119,7 @@ only available in PNG format.
 
 ![API][api-icon]
 
-`previews.raw(LayerVersionDescriptor, { filename?: string, disableWrite?: boolean }): Promise<ArrayBuffer>`
+`previews.raw(LayerVersionDescriptor, RawOptions): Promise<ArrayBuffer>`
 
 Retrieve a preview image for a layer at a specific commit and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
 
@@ -1161,7 +1161,7 @@ fs.writeFile(`preview.png`, Buffer.from(processedBuffer), (err) => {
 
 > Note: The `previews.url` method requires an environment with [URL.createObjectURL](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL). If you are using node, you will need to save the image to a file with [`previews.raw`](#retrieve-an-image-file)
 
-`previews.url(LayerVersionDescriptor): Promise<string>`
+`previews.url(LayerVersionDescriptor, RequestOptions): Promise<string>`
 
 > Get an image as a _temporary_ blob url which can be displayed directly in an image tag or downloaded. The url exists only as long as the current browser session and should not be saved to a database directly.
 
@@ -1179,7 +1179,7 @@ abstract.previews.url({
 
 ![API][api-icon]
 
-`previews.info(LayerVersionDescriptor): Promise<Preview>`
+`previews.info(LayerVersionDescriptor, RequestOptions): Promise<Preview>`
 
 Load the info for a layer preview
 
@@ -1223,7 +1223,7 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 
 ![API][api-icon]
 
-`projects.list(OrganizationDescriptor?, { filter?: "active" | "archived", sectionId?: string }): Promise<Project[]>`
+`projects.list(OrganizationDescriptor?, { ...RequestOptions, filter?: "active" | "archived", sectionId?: string }): Promise<Project[]>`
 
 List all projects accessible through the current authentication
 
@@ -1260,7 +1260,7 @@ abstract.projects.list({
 
 ![API][api-icon]
 
-`projects.info(ProjectDescriptor): Promise<Project>`
+`projects.info(ProjectDescriptor, RequestOptions): Promise<Project>`
 
 Load the info for a project
 
@@ -1288,7 +1288,7 @@ A section is a group of projects that belong to a given organization. Sections a
 
 ![API][api-icon]
 
-`sections.list(OrganizationDescriptor): Promise<Section[]>`
+`sections.list(OrganizationDescriptor, RequestOptions): Promise<Section[]>`
 
 List all sections accessible through the current authentication
 
@@ -1319,7 +1319,7 @@ A share is a shareable url to an object in Abstract. You can use the desktop or 
 
 ![API][api-icon]
 
-`shares.info(ShareDescriptor): Promise<Share>`
+`shares.info(ShareDescriptor, RequestOptions): Promise<Share>`
 
 ```js
 abstract.shares.info({
@@ -1353,7 +1353,7 @@ const branchFiles = await abstract.files.list(branchShare.descriptor);
 
 ![API][api-icon]
 
-`shares.create(OrganizationDescriptor, InputShare): Promise<Share>`
+`shares.create(OrganizationDescriptor, InputShare, RequestOptions): Promise<Share>`
 
 Create a layer share in your organization
 
@@ -1392,7 +1392,7 @@ A user contains information specific to an individual account. Users are global 
 
 ![API][api-icon]
 
-`users.list(OrganizationDescriptor | ProjectDescriptor): Promise<User[]>`
+`users.list(OrganizationDescriptor | ProjectDescriptor, RequestOptions): Promise<User[]>`
 
 List the users in an organization
 
@@ -1406,7 +1406,7 @@ abstract.users.list({
 
 ![API][api-icon]
 
-`users.info(UserDescriptor): Promise<User>`
+`users.info(UserDescriptor, RequestOptions): Promise<User>`
 
 Load the info for a specific user
 
@@ -1468,7 +1468,7 @@ Webhooks make it easy to efficiently subscribe to events across the Abstract pla
 
 ![API][api-icon]
 
-`webhooks.list(OrganizationDescriptor): Promise<Webhook[]>`
+`webhooks.list(OrganizationDescriptor, RequestOptions): Promise<Webhook[]>`
 
 ```js
 abstract.webhooks.list({
@@ -1480,7 +1480,7 @@ abstract.webhooks.list({
 
 ![API][api-icon]
 
-`webhooks.info(WebhookDescriptor): Promise<Webhook>`
+`webhooks.info(WebhookDescriptor, RequestOptions): Promise<Webhook>`
 
 ```js
 abstract.webhooks.info({
@@ -1493,7 +1493,7 @@ abstract.webhooks.info({
 
 ![API][api-icon]
 
-`webhooks.events(OrganizationDescriptor): Promise<WebhookEvent[]>`
+`webhooks.events(OrganizationDescriptor, RequestOptions): Promise<WebhookEvent[]>`
 
 ```js
 abstract.webhooks.events({
@@ -1505,7 +1505,7 @@ abstract.webhooks.events({
 
 ![API][api-icon]
 
-`webhooks.create(OrganizationDescriptor, NewWebhook): Promise<Webhook>`
+`webhooks.create(OrganizationDescriptor, NewWebhook, RequestOptions): Promise<Webhook>`
 
 ```js
 abstract.webhooks.create({
@@ -1522,7 +1522,7 @@ abstract.webhooks.create({
 
 ![API][api-icon]
 
-`webhooks.update(OrganizationDescriptor, Webhook): Promise<Webhook>`
+`webhooks.update(OrganizationDescriptor, Webhook, RequestOptions): Promise<Webhook>`
 
 ```js
 abstract.webhooks.update({
@@ -1539,7 +1539,7 @@ abstract.webhooks.update({
 
 ![API][api-icon]
 
-`webhooks.delete(WebhookDescriptor): Promise<void>`
+`webhooks.delete(WebhookDescriptor, RequestOptions): Promise<void>`
 
 ```js
 abstract.webhooks.delete({
@@ -1553,7 +1553,7 @@ abstract.webhooks.delete({
 
 ![API][api-icon]
 
-`webhooks.ping(WebhookDescriptor): Promise<void>`
+`webhooks.ping(WebhookDescriptor, RequestOptions): Promise<void>`
 
 ```js
 abstract.webhooks.ping({
@@ -1567,13 +1567,43 @@ abstract.webhooks.ping({
 
 ![API][api-icon]
 
-`webhooks.deliveries(WebhookDescriptor): Promise<void>`
+`webhooks.deliveries(WebhookDescriptor, RequestOptions): Promise<void>`
 
 ```js
 abstract.webhooks.deliveries({
   organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9",
   webhookId: "03df2308-82a7-4a05-b9e9-c31ad569249d"
 });
+```
+
+## Request options
+
+Options objects that can be passed to different SDK endpoints.
+
+### RequestOptions
+
+```js
+{
+  transportMode?: ("api" | "cli")[]
+}
+```
+
+### ListOptions
+```js
+{
+  transportMode?: ("api" | "cli")[],
+  limit?: number,
+  offset?: number
+}
+```
+
+### RawOptions
+```js
+{
+  transportMode?: ("api" | "cli")[],
+  disableWrite?: boolean,
+  filename?: string
+}
 ```
 
 ## Descriptors

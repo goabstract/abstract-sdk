@@ -1,10 +1,9 @@
 // @flow
 /* istanbul ignore file */
-import Client from "./Client";
-import paginate from "./paginate";
-import * as sketch from "./sketch";
+import Client from "@core/Client";
+import { paginate } from "@core/paginate";
+import * as sketch from "@core/sketch";
 import {
-  APITokenError,
   BaseError,
   EndpointUndefinedError,
   FileAPIError,
@@ -14,13 +13,12 @@ import {
   RateLimitError,
   ServiceUnavailableError,
   UnauthorizedError
-} from "./errors";
+} from "@core/errors";
 
 export {
   // Core API
   Client,
   // Custom errors
-  APITokenError,
   BaseError,
   EndpointUndefinedError,
   FileAPIError,
@@ -35,4 +33,4 @@ export {
   sketch
 };
 
-export type * from "./types";
+export type * from "@core/types";

@@ -1,13 +1,19 @@
 // @flow
-import type { ObjectDescriptor } from "../types";
-import Endpoint from "./Endpoint";
+import type { ObjectDescriptor, RequestOptions } from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Descriptors extends Endpoint {
-  async getLatestDescriptor<T: ObjectDescriptor>(descriptor: T): Promise<T> {
+  async getLatestDescriptor<T: ObjectDescriptor>(
+    descriptor: T,
+    requestOptions: RequestOptions = {}
+  ): Promise<T> {
     if (descriptor.sha !== "latest") return descriptor;
+
     const [commit] = await this.client.commits.list((descriptor: any), {
+      ...requestOptions,
       limit: 1
     });
+
     return {
       ...descriptor,
       commitSha: commit.sha,

@@ -1,4 +1,5 @@
 // @flow
+/* istanbul ignore file */
 
 export type OrganizationDescriptor = {|
   organizationId: string
@@ -73,6 +74,56 @@ export type LayerVersionDescriptor = {|
 
 export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
+export type ErrorData = {|
+  path: string,
+  body: mixed
+|};
+
+export type ErrorMap = {
+  [mode: string]: Error
+};
+
+export type RequestConfig<T> = {
+  api?: () => T,
+  cli?: () => T
+};
+
+export type ApiRequestOptions = {
+  customHostname?: string,
+  raw?: boolean
+};
+
+export type RequestOptions = {
+  transportMode?: ("api" | "cli")[]
+};
+
+export type ListOptions = {
+  ...RequestOptions,
+  limit?: number,
+  offset?: number
+};
+
+export type RawOptions = {
+  ...RequestOptions,
+  disableWrite?: boolean,
+  filename?: string
+};
+
+export type AccessToken = ?string | ShareDescriptor;
+export type AccessTokenOption =
+  | AccessToken // TODO: Deprecate?
+  | (() => AccessToken) // TODO: Deprecate
+  | (() => Promise<AccessToken>);
+
+export type CommandOptions = {
+  accessToken: AccessTokenOption,
+  apiUrl: string | Promise<string>,
+  assetUrl: string | Promise<string>,
+  previewUrl: string | Promise<string>,
+  transportMode: ("api" | "cli")[],
+  webUrl: string | Promise<string>
+};
+
 export type UserDescriptor = {|
   userId: string
 |};
@@ -81,16 +132,6 @@ export type AssetDescriptor = {|
   assetId: string,
   projectId: string
 |};
-
-export type ListOptions = {
-  limit?: number,
-  offset?: number
-};
-
-export type RawOptions = {
-  disableWrite?: boolean,
-  filename?: string
-};
 
 export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
 
@@ -1455,23 +1496,6 @@ export type Asset = {
   url: string
 };
 
-export interface CursorPromise<T> extends Promise<T> {
-  next(): CursorPromise<T>;
-}
-
-export type CursorMeta = {
-  limit: number,
-  maxCreatedAt: string,
-  nextOffset?: number,
-  offset: number,
-  total: number
-};
-
-export type CursorResponse<T> = {
-  data: T,
-  meta: CursorMeta
-};
-
 export type CollectionsResponse = {
   collections: Collection[],
   files: File[],
@@ -1484,22 +1508,6 @@ export type CollectionResponse = {
   files: File[],
   pages: Page[],
   layers: Layer[]
-};
-
-export type AccessToken = ?string | ShareDescriptor;
-export type AccessTokenOption =
-  | AccessToken // TODO: Deprecate?
-  | (() => AccessToken) // TODO: Deprecate
-  | (() => Promise<AccessToken>);
-
-export type CommandOptions = {
-  accessToken: AccessTokenOption,
-  apiUrl: string | Promise<string>,
-  assetUrl: string | Promise<string>,
-  maxCacheSize: number,
-  previewUrl: string | Promise<string>,
-  transportMode: "auto" | "api" | "cli",
-  webUrl: string | Promise<string>
 };
 
 export type Section = {
@@ -1567,3 +1575,7 @@ export type WebhookDelivery = {
   },
   webhookId: string
 };
+
+export interface CursorPromise<T> extends Promise<T> {
+  next(): CursorPromise<T>;
+}

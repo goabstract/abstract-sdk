@@ -8,101 +8,137 @@ import type {
   CollectionsResponse,
   NewCollection,
   ProjectDescriptor,
+  RequestOptions,
   UpdatedCollection
-} from "../types";
-import Endpoint from "./Endpoint";
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Collections extends Endpoint {
-  create(descriptor: ProjectDescriptor, collection: NewCollection) {
-    return this.request<Promise<Collection>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections`,
-          {
-            method: "POST",
-            body: collection
-          }
-        );
-        return response.data;
-      }
-    });
+  create(
+    descriptor: ProjectDescriptor,
+    collection: NewCollection,
+    requestOptions: RequestOptions = {}
+  ) {
+    return this.configureRequest<Promise<Collection>>(
+      {
+        api: async () => {
+          const response = await this.apiRequest(
+            `projects/${descriptor.projectId}/collections`,
+            {
+              method: "POST",
+              body: collection
+            }
+          );
+
+          return response.data;
+        }
+      },
+      requestOptions
+    );
   }
 
   info(
     descriptor: CollectionDescriptor,
-    options: { layersPerCollection?: number | "all" } = {
-      layersPerCollection: "all"
-    }
+    options: {
+      ...RequestOptions,
+      layersPerCollection?: number | "all"
+    } = {}
   ) {
-    return this.request<Promise<CollectionResponse>>({
-      api: async () => {
-        const query = querystring.stringify({ ...options });
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
-        );
-        const { collections, ...meta } = response.data;
-        return {
-          collection: collections[0],
-          ...meta
-        };
-      },
+    const { layersPerCollection, ...requestOptions } = options;
 
-      cli: async () => {
-        const response = await this.cliRequest([
-          "collection",
-          "load",
-          descriptor.projectId,
-          descriptor.collectionId
-        ]);
-        const { collections, ...meta } = response.data;
-        return {
-          collection: collections[0],
-          ...meta
-        };
-      }
-    });
+    return this.configureRequest<Promise<CollectionResponse>>(
+      {
+        api: async () => {
+          const query = querystring.stringify({ layersPerCollection });
+          const response = await this.apiRequest(
+            `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
+          );
+
+          const { collections, ...meta } = response.data;
+          return {
+            collection: collections[0],
+            ...meta
+          };
+        },
+
+        cli: async () => {
+          const response = await this.cliRequest([
+            "collection",
+            "load",
+            descriptor.projectId,
+            descriptor.collectionId
+          ]);
+
+          const { collections, ...meta } = response.data;
+          return {
+            collection: collections[0],
+            ...meta
+          };
+        }
+      },
+      requestOptions
+    );
   }
 
   list(
     descriptor: ProjectDescriptor | BranchDescriptor,
-    options?: { layersPerCollection?: number | "all" } = {}
+    options: {
+      ...RequestOptions,
+      layersPerCollection?: number | "all"
+    } = {}
   ) {
-    return this.request<Promise<CollectionsResponse>>({
-      api: async () => {
-        const { projectId, ...sanitizedDescriptor } = descriptor;
-        const query = querystring.stringify({
-          ...sanitizedDescriptor,
-          ...options
-        });
-        const response = await this.apiRequest(
-          `projects/${projectId}/collections?${query}`
-        );
-        return response.data;
-      },
+    const { layersPerCollection, ...requestOptions } = options;
 
-      cli: async () => {
-        const response = await this.cliRequest([
-          "collections",
-          descriptor.projectId,
-          ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
-        ]);
-        return response.data;
-      }
-    });
+    return this.configureRequest<Promise<CollectionsResponse>>(
+      {
+        api: async () => {
+          const { projectId, ...sanitizedDescriptor } = descriptor;
+          const query = querystring.stringify({
+            ...sanitizedDescriptor,
+            layersPerCollection
+          });
+
+          const response = await this.apiRequest(
+            `projects/${projectId}/collections?${query}`
+          );
+
+          return response.data;
+        },
+
+        cli: async () => {
+          const response = await this.cliRequest([
+            "collections",
+            descriptor.projectId,
+            ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
+          ]);
+
+          return response.data;
+        }
+      },
+      requestOptions
+    );
   }
 
-  update(descriptor: CollectionDescriptor, collection: UpdatedCollection) {
-    return this.request<Promise<Collection>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}`,
-          {
-            method: "PUT",
-            body: collection
-          }
-        );
-        return response.data;
-      }
-    });
+  update(
+    descriptor: CollectionDescriptor,
+    collection: UpdatedCollection,
+    requestOptions: RequestOptions = {}
+  ) {
+    return this.configureRequest<Promise<Collection>>(
+      {
+        api: async () => {
+          const response = await this.apiRequest(
+            `projects/${descriptor.projectId}/collections/${descriptor.collectionId}`,
+            {
+              method: "PUT",
+              body: collection
+            }
+          );
+
+          return response.data;
+        }
+      },
+      requestOptions
+    );
   }
 }

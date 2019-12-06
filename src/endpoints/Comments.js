@@ -1,18 +1,17 @@
 // @flow
 import querystring from "query-string";
-import Cursor from "../Cursor";
 import type {
   BranchDescriptor,
   Comment,
   CommentDescriptor,
   CommitDescriptor,
-  CursorPromise,
   LayerVersionDescriptor,
   ListOptions,
   NewComment,
-  PageDescriptor
-} from "../types";
-import Endpoint from "./Endpoint";
+  PageDescriptor,
+  RequestOptions
+} from "@core/types";
+import Endpoint from "@core/endpoints/Endpoint";
 
 export default class Comments extends Endpoint {
   async create(
@@ -24,38 +23,46 @@ export default class Comments extends Endpoint {
           ...$Exact<LayerVersionDescriptor>,
           pageId: string
         |},
-    comment: NewComment
+    comment: NewComment,
+    requestOptions: RequestOptions = {}
   ) {
     if (descriptor.sha) {
       descriptor = await this.client.descriptors.getLatestDescriptor(
         descriptor
       );
     }
-    return this.request<Promise<Comment>>({
-      api: async () => {
-        const body = {
-          ...comment,
-          ...descriptor,
-          commitSha: descriptor.sha || undefined
-        };
 
-        return this.apiRequest("comments", {
-          method: "POST",
-          body
-        });
-      }
-    });
+    return this.configureRequest<Promise<Comment>>(
+      {
+        api: async () => {
+          const body = {
+            ...comment,
+            ...descriptor,
+            commitSha: descriptor.sha || undefined
+          };
+
+          return this.apiRequest("comments", {
+            method: "POST",
+            body
+          });
+        }
+      },
+      requestOptions
+    );
   }
 
-  info(descriptor: CommentDescriptor) {
-    return this.request<Promise<Comment>>({
-      api: () => {
-        return this.apiRequest(`comments/${descriptor.commentId}`);
-      }
-    });
+  info(descriptor: CommentDescriptor, requestOptions: RequestOptions = {}) {
+    return this.configureRequest<Promise<Comment>>(
+      {
+        api: () => {
+          return this.apiRequest(`comments/${descriptor.commentId}`);
+        }
+      },
+      requestOptions
+    );
   }
 
-  list(
+  async list(
     descriptor:
       | BranchDescriptor
       | CommitDescriptor
@@ -63,33 +70,27 @@ export default class Comments extends Endpoint {
       | PageDescriptor,
     options: ListOptions = {}
   ) {
-    let newDescriptor;
-    return this.request<CursorPromise<Comment[]>>({
-      api: () => {
-        return new Cursor<Comment[]>(
-          async (meta = { nextOffset: options.offset }) => {
-            /* istanbul ignore else */
-            if (!newDescriptor) {
-              newDescriptor = descriptor;
+    const { limit, offset, ...requestOptions } = options;
+    if (descriptor.sha) {
+      descriptor = await this.client.descriptors.getLatestDescriptor(
+        descriptor
+      );
+    }
 
-              /* istanbul ignore else */
-              if (newDescriptor.sha) {
-                newDescriptor = await this.client.descriptors.getLatestDescriptor(
-                  newDescriptor
-                );
-              }
-            }
+    return this.createCursor<Promise<Comment[]>>(
+      (nextOffset = offset) => ({
+        api: () => {
+          const query = querystring.stringify({
+            ...descriptor,
+            limit,
+            offset: nextOffset
+          });
 
-            const query = querystring.stringify({
-              ...newDescriptor,
-              ...options,
-              offset: meta.nextOffset
-            });
-
-            return this.apiRequest(`comments?${query}`);
-          }
-        );
-      }
-    });
+          return this.apiRequest(`comments?${query}`);
+        },
+        requestOptions
+      }),
+      response => response.data
+    );
   }
 }
