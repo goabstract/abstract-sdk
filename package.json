@@ -31,7 +31,6 @@
   "repository": "github:goabstract/abstract-sdk",
   "scripts": {
     "prepare": "./scripts/install-types.sh",
-    "commitlint": "commitlint --edit",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest --coverage --runInBand",
     "prebuild": "rm -rf dist && flow-copy-source -i **/testing.js src dist",
@@ -46,8 +45,6 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^8.0.0",
     "@elasticprojects/eslint-config-abstract": "^4.1.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^24.1.0",
@@ -63,24 +60,19 @@
     "flow-copy-source": "^2.0.3",
     "jest": "^24.1.0",
     "nock": "^11.0.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "eslint-import-resolver-babel-module": "^5.1.0",
     "prettier": "^1.14.2",
     "standard-version": "^6.0.1"
   },
   "dependencies": {
     "@babel/runtime-corejs2": "^7.3.4",
     "@elasticprojects/abstract-cli": "^2.3.0",
-    "babel-plugin-module-resolver": "^3.2.0",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
-    "eslint-import-resolver-babel-module": "^5.1.0",
     "flow-typed": "^2.5.1",
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "eslintConfig": {
     "extends": "@elasticprojects/eslint-config-abstract",
