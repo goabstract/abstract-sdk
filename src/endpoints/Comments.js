@@ -4,7 +4,7 @@ import type {
   BranchDescriptor,
   Comment,
   CommentDescriptor,
-  CommitDescriptor,
+  BranchCommitDescriptor,
   LayerVersionDescriptor,
   ListOptions,
   NewComment,
@@ -17,7 +17,7 @@ export default class Comments extends Endpoint {
   async create(
     descriptor:
       | BranchDescriptor
-      | CommitDescriptor
+      | BranchCommitDescriptor
       | PageDescriptor
       | {|
           ...$Exact<LayerVersionDescriptor>,
@@ -65,7 +65,7 @@ export default class Comments extends Endpoint {
   async list(
     descriptor:
       | BranchDescriptor
-      | CommitDescriptor
+      | BranchCommitDescriptor
       | LayerVersionDescriptor
       | PageDescriptor,
     options: ListOptions = {}

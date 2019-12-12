@@ -1,6 +1,6 @@
 // @flow
 import type {
-  CommitDescriptor,
+  BranchCommitDescriptor,
   File,
   FileDescriptor,
   RawOptions,
@@ -44,7 +44,7 @@ export default class Files extends Endpoint {
   }
 
   async list(
-    descriptor: CommitDescriptor,
+    descriptor: BranchCommitDescriptor,
     requestOptions: RequestOptions = {}
   ) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(

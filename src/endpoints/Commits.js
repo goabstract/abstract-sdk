@@ -3,6 +3,7 @@ import querystring from "query-string";
 import type {
   BranchDescriptor,
   Commit,
+  BranchCommitDescriptor,
   CommitDescriptor,
   FileDescriptor,
   LayerDescriptor,
@@ -13,15 +14,25 @@ import Endpoint from "../endpoints/Endpoint";
 
 export default class Commits extends Endpoint {
   info(
-    descriptor: CommitDescriptor | FileDescriptor | LayerVersionDescriptor,
+    descriptor:
+      | BranchCommitDescriptor
+      | CommitDescriptor
+      | FileDescriptor
+      | LayerVersionDescriptor,
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Commit>>(
       {
         api: () => {
-          return this.apiRequest(
-            `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits/${descriptor.sha}`
-          );
+          // loading commits with a share token requires a branchId so this
+          // route is maintained for that circumstance
+          return descriptor.branchId
+            ? this.apiRequest(
+                `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits/${descriptor.sha}`
+              )
+            : this.apiRequest(
+                `projects/${descriptor.projectId}/commits/${descriptor.sha}`
+              );
         },
 
         cli: async () => {
