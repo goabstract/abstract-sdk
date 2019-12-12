@@ -3,7 +3,7 @@ import Activities from "./endpoints/Activities";
 import Assets from "./endpoints/Assets";
 import Branches from "./endpoints/Branches";
 import Changesets from "./endpoints/Changesets";
-import CollectionLayers from "./endpoints/Collection-layers";
+import CollectionLayers from "./endpoints/CollectionLayers";
 import Collections from "./endpoints/Collections";
 import Comments from "./endpoints/Comments";
 import Commits from "./endpoints/Commits";

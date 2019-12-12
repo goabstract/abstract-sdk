@@ -1339,6 +1339,8 @@ abstract.shares.info({
 
 ![API][api-icon]
 
+`shares.info(ShareDescriptor, RequestOptions): Promise<Share>`
+
 List all files for branch's share url
 
 ```js
@@ -1470,6 +1472,8 @@ Webhooks make it easy to efficiently subscribe to events across the Abstract pla
 
 `webhooks.list(OrganizationDescriptor, RequestOptions): Promise<Webhook[]>`
 
+List all webhooks for a given organization
+
 ```js
 abstract.webhooks.list({
   organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
@@ -1481,6 +1485,8 @@ abstract.webhooks.list({
 ![API][api-icon]
 
 `webhooks.info(WebhookDescriptor, RequestOptions): Promise<Webhook>`
+
+Retrieve a single webhook
 
 ```js
 abstract.webhooks.info({
@@ -1495,6 +1501,8 @@ abstract.webhooks.info({
 
 `webhooks.events(OrganizationDescriptor, RequestOptions): Promise<WebhookEvent[]>`
 
+List all available webhook events
+
 ```js
 abstract.webhooks.events({
   organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
@@ -1506,6 +1514,8 @@ abstract.webhooks.events({
 ![API][api-icon]
 
 `webhooks.create(OrganizationDescriptor, NewWebhook, RequestOptions): Promise<Webhook>`
+
+Create a new webhook
 
 ```js
 abstract.webhooks.create({
@@ -1524,6 +1534,8 @@ abstract.webhooks.create({
 
 `webhooks.update(OrganizationDescriptor, Webhook, RequestOptions): Promise<Webhook>`
 
+Update an existing webhook
+
 ```js
 abstract.webhooks.update({
   organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
@@ -1541,6 +1553,8 @@ abstract.webhooks.update({
 
 `webhooks.delete(WebhookDescriptor, RequestOptions): Promise<void>`
 
+Delete a webhook
+
 ```js
 abstract.webhooks.delete({
   organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9",
@@ -1550,10 +1564,11 @@ abstract.webhooks.delete({
 
 ### Send a test event to a webhook
 
-
 ![API][api-icon]
 
 `webhooks.ping(WebhookDescriptor, RequestOptions): Promise<void>`
+
+Send a test event to an existing webhook
 
 ```js
 abstract.webhooks.ping({
@@ -1564,10 +1579,11 @@ abstract.webhooks.ping({
 
 ### List all deliveries for a webhook
 
-
 ![API][api-icon]
 
-`webhooks.deliveries(WebhookDescriptor, RequestOptions): Promise<void>`
+`webhooks.deliveries(WebhookDescriptor, RequestOptions): Promise<WebhookDelivery[]>`
+
+List all deliveries for a webhook
 
 ```js
 abstract.webhooks.deliveries({
@@ -1575,6 +1591,28 @@ abstract.webhooks.deliveries({
   webhookId: "03df2308-82a7-4a05-b9e9-c31ad569249d"
 });
 ```
+
+### Verify a webhook delivery
+
+![API][api-icon]
+
+`webhooks.verify(WebhookDelivery, expectedSignature, signingKey, RequestOptions): Promise<boolean>`
+
+Verify that a webhook delivery payload was sent by Abstract
+
+```js
+app.post("/webhook", async (req, res) => {
+  const payload = req.body;
+  const expectedSignature = req.header("Abstract-Webhooks-Signature");
+  const signingKey = process.env.WEBHOOK_SIGNING_KEY;
+
+  const verified = await abstract.webhooks.verify(payload, expectedSignature, signingKey);
+
+  // Webhook verified, do something with payload data...
+});
+```
+
+> Note: This endpoint is intended to be used on a webhook server to verify that incoming delivery requests were sent by Abstract. More information on webhook security techniques can be found [here](/docs/webhooks-security).
 
 ## Request options
 

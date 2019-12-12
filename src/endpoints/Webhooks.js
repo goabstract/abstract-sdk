@@ -1,4 +1,5 @@
 // @flow
+import sha256 from "js-sha256";
 import type {
   NewWebhook,
   OrganizationDescriptor,
@@ -158,6 +159,23 @@ export default class Users extends Endpoint {
             `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}/deliveries/${descriptor.deliveryId}/redeliver`,
             { method: "POST" }
           );
+        }
+      },
+      requestOptions
+    );
+  }
+
+  verify(
+    payload: any,
+    expectedSignature: string,
+    signingKey: string,
+    requestOptions: RequestOptions = {}
+  ) {
+    return this.configureRequest<Promise<boolean>>(
+      {
+        api: async () => {
+          const signature = sha256.hmac(signingKey, JSON.stringify(payload));
+          return signature === expectedSignature;
         }
       },
       requestOptions

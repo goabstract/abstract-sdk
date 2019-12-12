@@ -11,6 +11,7 @@
       "transports",
       "pagination",
       "webhooks",
+      "webhooks-security",
       "latest",
       "embed"
     ],

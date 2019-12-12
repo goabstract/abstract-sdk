@@ -1,4 +1,5 @@
 // @flow
+import sha256 from "js-sha256";
 import { mockAPI, API_CLIENT } from "../../src/util/testing";
 
 describe("webhooks", () => {
@@ -195,6 +196,23 @@ describe("webhooks", () => {
       });
 
       expect(response).toEqual({});
+    });
+  });
+
+  describe("verify", () => {
+    test("api", async () => {
+      const payload = { foo: "bar" };
+      const signingKey = "key";
+      const expectedSignature = sha256.hmac(
+        signingKey,
+        JSON.stringify(payload)
+      );
+      const verified = await API_CLIENT.webhooks.verify(
+        payload,
+        expectedSignature,
+        signingKey
+      );
+      expect(verified).toBe(true);
     });
   });
 });

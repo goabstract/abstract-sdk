@@ -22,6 +22,8 @@ Webhooks are specific to an organization and can be created via its integration 
 1. Go to the **Integrations** settings page.
 2. Click the  **Add Webhook** button.
 3. Configure a receiving HTTPS endpoint URL.
+4. Optionally configure a signing key to enable [signature verification](/docs/webhooks-security).
+> Keep signing keys somewhere safe! After initial creation, the underlying value won't be visible again.
 4. Configure events that should trigger deliveries.
 5. Click the **Add Webhook** button.
 

@@ -59,6 +59,7 @@
     "flow-bin": "^0.110.1",
     "flow-copy-source": "^2.0.3",
     "jest": "^24.1.0",
+    "js-sha256": "^0.9.0",
     "nock": "^11.0.0",
     "prettier": "^1.14.2",
     "standard-version": "^6.0.1"

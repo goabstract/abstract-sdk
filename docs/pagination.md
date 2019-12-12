@@ -18,55 +18,51 @@ In practice, paginated methods return a special type of `Promise` that contains 
 The following example demonstrates how to work with pages of results.
 
 1. Use an SDK client instance to fetch the first ten activities for a project.
-
-  ```js
-  const firstPage = client.activities.list({
-    projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
-  }, { limit: 10 });
-  ```
+    ```js
+    const firstPage = client.activities.list({
+      projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
+    }, { limit: 10 });
+    ```
 
 2. Since `firstPage` is a `CursorPromise`, it will resolve to the first ten activities. Its `next` method can be used to fetch the next page of activities.
+    ```js
+    const firstPage = client.activities.list({
+      projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
+    }, { limit: 10 });
 
-  ```js
-  const firstPage = client.activities.list({
-    projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
-  }, { limit: 10 });
+    const firstPageResponse = await firstPage;
 
-  const firstPageResponse = await firstPage;
+    const secondPage = firstPage.next();
+    const secondPageResponse = await secondPage;
 
-  const secondPage = firstPage.next();
-  const secondPageResponse = await secondPage;
-
-  console.log(`First Page: ${firstPageResponse.length}, Second Page: ${secondPageResponse.length}`);
-  ```
+    console.log(`First Page: ${firstPageResponse.length}, Second Page: ${secondPageResponse.length}`);
+    ```
 
 3. Putting this all together, all activities could be fetched using recursion.
-
-  ```js
-  async function fetchActivities(request) {
+    ```js
+    async function fetchActivities(request) {
       const response = await request;
       if (!response) return;
       console.log(`Result page: ${response.length} items`);
       fetchActivities(request.next());
-  }
+    }
 
-  fetchActivities(client.activities.list({
-    projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
-  }, { limit: 10 }));
-  ```
+    fetchActivities(client.activities.list({
+      projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
+    }, { limit: 10 }));
+    ```
 
 4. The SDK also offers a convenience `paginate` function to wrap any `CursorPromise` with an `AsyncIterable` interface. This allows all cursor-paginated methods to also be used with [`for-await-of` asynchronous iteration](https://github.com/tc39/proposal-async-iteration).
+    > Note: This `paginate` utility function and the asynchronous iteration support it provides are currently experimental and may not work as expected.
+    
+    ```js
+    const iterable = paginate(client.activities.list({
+      projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
+    }, { limit: 10 }));
 
-> Note: This `paginate` utility function and the asynchronous iteration support it provides are currently experimental and may not work as expected.
-
-  ```js
-  const iterable = paginate(client.activities.list({
-    projectId: 'b8bf5540-6e1e-11e6-8526-2d315b6ef48f'
-  }, { limit: 10 }));
-
-  (async () => {
-    for await (const page of iterable) {
+    (async () => {
+      for await (const page of iterable) {
         console.log('Items: ', page.length);
-    }
-  })();
-  ```
+      }
+    })();
+    ```
