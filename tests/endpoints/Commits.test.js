@@ -9,6 +9,21 @@ import {
 describe("commits", () => {
   describe("info", () => {
     test("api", async () => {
+      mockAPI("/projects/project-id/commits/sha", {
+        sha: "sha"
+      });
+
+      const response = await API_CLIENT.commits.info({
+        projectId: "project-id",
+        sha: "sha"
+      });
+
+      expect(response).toEqual({
+        sha: "sha"
+      });
+    });
+
+    test("api - branch", async () => {
       mockAPI("/projects/project-id/branches/branch-id/commits/sha", {
         sha: "sha"
       });

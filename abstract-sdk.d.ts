@@ -142,7 +142,7 @@ interface Activities extends Endpoint {
 interface Assets extends Endpoint {
   info(descriptor: AssetDescriptor, requestOptions: RequestOptions): Promise<Asset>;
   raw(descriptor: AssetDescriptor, options?: RawOptions): Promise<ArrayBuffer>;
-  commit(descriptor: CommitDescriptor, requestOptions: RequestOptions): Promise<Asset[]>;
+  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<Asset[]>;
   file(descriptor: FileDescriptor, options?: ListOptions): CursorPromise<Asset[]>;
 }
 
@@ -156,7 +156,7 @@ interface Branches extends Endpoint {
 
 interface Changesets extends Endpoint {
   branch(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
-  commit(descriptor: CommitDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
+  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
 }
 
 interface CollectionLayers extends Endpoint {
@@ -195,7 +195,7 @@ interface Comments extends Endpoint {
   create(
     descriptor:
       BranchDescriptor
-      | CommitDescriptor
+      | BranchCommitDescriptor
       | PageDescriptor
       | LayerVersionDescriptor & { pageId: string },
     comment: NewComment, requestOptions: RequestOptions
@@ -204,7 +204,7 @@ interface Comments extends Endpoint {
   list(
     descriptor:
       BranchDescriptor
-      | CommitDescriptor
+      | BranchCommitDescriptor
       | LayerVersionDescriptor
       | PageDescriptor,
     options?: ListOptions
@@ -213,7 +213,7 @@ interface Comments extends Endpoint {
 
 interface Commits extends Endpoint {
   info(
-    descriptor: CommitDescriptor | FileDescriptor | LayerVersionDescriptor, requestOptions: RequestOptions
+    descriptor: BranchCommitDescriptor | FileDescriptor | LayerVersionDescriptor, requestOptions: RequestOptions
   ): Promise<Commit>;
 
   list(
@@ -236,7 +236,7 @@ interface Descriptors extends Endpoint {
 
 interface Files extends Endpoint {
   info(descriptor: FileDescriptor, requestOptions: RequestOptions): Promise<File>;
-  list(descriptor: CommitDescriptor, requestOptions: RequestOptions): Promise<File[]>;
+  list(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<File[]>;
   raw(descriptor: FileDescriptor, options?: RawOptions): Promise<void>;
 }
 
@@ -350,7 +350,7 @@ type ObjectDescriptor = {
   branchId: string | "master"
 };
 
-type CommitDescriptor = {
+type BranchCommitDescriptor = {
   sha: string,
   projectId: string,
   branchId: string | "master"
@@ -722,7 +722,7 @@ type ProjectShare = BaseShare & {
 
 type CommitShare = BaseShare & {
   kind: "commit",
-  descriptor: CommitDescriptor
+  descriptor: BranchCommitDescriptor
 };
 
 type BranchShare = BaseShare & {
@@ -779,7 +779,7 @@ type ProjectShareInput = BaseShareInput & ProjectDescriptor & {
   kind: "project"
 };
 
-type CommitShareInput = BaseShareInput & CommitDescriptor & {
+type CommitShareInput = BaseShareInput & BranchCommitDescriptor & {
   kind: "commit"
 };
 

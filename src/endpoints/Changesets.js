@@ -2,14 +2,14 @@
 import type {
   BranchDescriptor,
   Changeset,
-  CommitDescriptor,
+  BranchCommitDescriptor,
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Changesets extends Endpoint {
   async commit(
-    descriptor: CommitDescriptor,
+    descriptor: BranchCommitDescriptor,
     requestOptions: RequestOptions = {}
   ) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(

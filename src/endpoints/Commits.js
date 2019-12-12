@@ -19,9 +19,15 @@ export default class Commits extends Endpoint {
     return this.configureRequest<Promise<Commit>>(
       {
         api: () => {
-          return this.apiRequest(
-            `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits/${descriptor.sha}`
-          );
+          // loading commits with a share token requires a branchId so this
+          // route is maintained for that circumstance
+          return descriptor.branchId
+            ? this.apiRequest(
+                `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits/${descriptor.sha}`
+              )
+            : this.apiRequest(
+                `projects/${descriptor.projectId}/commits/${descriptor.sha}`
+              );
         },
 
         cli: async () => {

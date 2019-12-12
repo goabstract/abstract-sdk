@@ -1,9 +1,13 @@
 // @flow
-import type { ObjectDescriptor, RequestOptions } from "../types";
+import type {
+  ObjectDescriptor,
+  BranchCommitDescriptor,
+  RequestOptions
+} from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Descriptors extends Endpoint {
-  async getLatestDescriptor<T: ObjectDescriptor>(
+  async getLatestDescriptor<T: ObjectDescriptor | BranchCommitDescriptor>(
     descriptor: T,
     requestOptions: RequestOptions = {}
   ): Promise<T> {

@@ -5,7 +5,7 @@ import { isNodeEnvironment } from "../util/helpers";
 import type {
   Asset,
   AssetDescriptor,
-  CommitDescriptor,
+  BranchCommitDescriptor,
   FileDescriptor,
   ListOptions,
   RawOptions,
@@ -28,7 +28,7 @@ export default class Assets extends Endpoint {
   }
 
   async commit(
-    descriptor: CommitDescriptor,
+    descriptor: BranchCommitDescriptor,
     requestOptions: RequestOptions = {}
   ) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
