@@ -3,7 +3,7 @@
 import child_process from "child_process";
 import nock from "nock";
 import { Readable } from "readable-stream";
-import Client from "@core/Client";
+import Client from "../Client";
 
 jest.mock("child_process");
 

@@ -9,8 +9,8 @@ import type {
   OrganizationDescriptor,
   ProjectDescriptor,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Activities extends Endpoint {
   info(descriptor: ActivityDescriptor, requestOptions: RequestOptions = {}) {

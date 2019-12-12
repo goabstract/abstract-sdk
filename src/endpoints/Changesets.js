@@ -4,8 +4,8 @@ import type {
   Changeset,
   CommitDescriptor,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Changesets extends Endpoint {
   async commit(

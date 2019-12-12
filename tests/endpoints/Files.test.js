@@ -1,6 +1,11 @@
 // @flow
-import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "@core/util/testing";
-import { NotFoundError } from "@core/errors";
+import {
+  mockAPI,
+  mockCLI,
+  API_CLIENT,
+  CLI_CLIENT
+} from "../../src/util/testing";
+import { NotFoundError } from "../../src/errors";
 
 describe("files", () => {
   describe("info", () => {

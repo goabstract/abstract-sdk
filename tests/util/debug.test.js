@@ -1,5 +1,5 @@
 // @flow
-import { log } from "@core/util/debug";
+import { log } from "../../src/util/debug";
 
 describe("debug", () => {
   test("namespace", () => {

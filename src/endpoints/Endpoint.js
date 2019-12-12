@@ -4,21 +4,21 @@ import "cross-fetch/polyfill";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
 import { version } from "../../package.json";
-import Client from "@core/Client";
-import { inferShareId } from "@core/util/helpers";
-import { log } from "@core/util/debug";
+import Client from "../Client";
+import { inferShareId } from "../util/helpers";
+import { log } from "../util/debug";
 import {
   EndpointUndefinedError,
   MultiError,
   throwAPIError,
   throwCLIError
-} from "@core/errors";
+} from "../errors";
 import type {
   ApiRequestOptions,
   CommandOptions,
   RequestConfig,
   RequestOptions
-} from "@core/types";
+} from "../types";
 
 const logAPIRequest = log.extend("AbstractAPI:request");
 const logAPIResponse = log.extend("AbstractAPI:response");

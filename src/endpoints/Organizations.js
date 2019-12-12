@@ -3,8 +3,8 @@ import type {
   OrganizationDescriptor,
   Organization,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Organizations extends Endpoint {
   info(

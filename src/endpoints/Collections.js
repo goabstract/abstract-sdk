@@ -10,8 +10,8 @@ import type {
   ProjectDescriptor,
   RequestOptions,
   UpdatedCollection
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Collections extends Endpoint {
   create(

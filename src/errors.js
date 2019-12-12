@@ -1,6 +1,6 @@
 // @flow
-import { log } from "@core/util/debug";
-import type { ErrorData, ErrorMap } from "@core/types";
+import { log } from "./util/debug";
+import type { ErrorData, ErrorMap } from "./types";
 
 export const logAPIError = log.extend("AbstractAPI:error");
 export const logCLIError = log.extend("AbstractCLI:error");

@@ -4,9 +4,9 @@ import type {
   Page,
   PageDescriptor,
   RequestOptions
-} from "@core/types";
-import { NotFoundError } from "@core/errors";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import { NotFoundError } from "../errors";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Pages extends Endpoint {
   async info(descriptor: PageDescriptor, requestOptions: RequestOptions = {}) {

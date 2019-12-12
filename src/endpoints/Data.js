@@ -3,8 +3,8 @@ import type {
   LayerDataset,
   LayerVersionDescriptor,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Data extends Endpoint {
   async info(

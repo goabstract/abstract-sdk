@@ -8,8 +8,8 @@ import type {
   WebhookDeliveryDescriptor,
   WebhookDescriptor,
   WebhookEvent
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Users extends Endpoint {
   list(

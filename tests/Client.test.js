@@ -3,14 +3,14 @@ import {
   EndpointUndefinedError,
   MultiError,
   NotFoundError
-} from "@core/errors";
+} from "../src/errors";
 import {
   mockAPI,
   mockCLI,
   API_CLIENT,
   CLIENT_CONFIG
-} from "@core/util/testing";
-import type { AccessToken } from "@core/types";
+} from "../src/util/testing";
+import type { AccessToken } from "../src/types";
 
 const Client = require("../src/Client").default;
 

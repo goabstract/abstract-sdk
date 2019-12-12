@@ -1,7 +1,7 @@
 // @flow
 import { promises as fs } from "fs";
 import querystring from "query-string";
-import { isNodeEnvironment } from "@core/util/helpers";
+import { isNodeEnvironment } from "../util/helpers";
 import type {
   Asset,
   AssetDescriptor,
@@ -10,8 +10,8 @@ import type {
   ListOptions,
   RawOptions,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
   info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {

@@ -5,10 +5,10 @@ import type {
   FileDescriptor,
   RawOptions,
   RequestOptions
-} from "@core/types";
-import { NotFoundError } from "@core/errors";
-import { isNodeEnvironment } from "@core/util/helpers";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import { NotFoundError } from "../errors";
+import { isNodeEnvironment } from "../util/helpers";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {

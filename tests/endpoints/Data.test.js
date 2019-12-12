@@ -1,5 +1,10 @@
 // @flow
-import { mockAPI, mockCLI, API_CLIENT, CLI_CLIENT } from "@core/util/testing";
+import {
+  mockAPI,
+  mockCLI,
+  API_CLIENT,
+  CLI_CLIENT
+} from "../../src/util/testing";
 
 describe("data", () => {
   describe("info", () => {

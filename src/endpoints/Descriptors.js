@@ -1,6 +1,6 @@
 // @flow
-import type { ObjectDescriptor, RequestOptions } from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+import type { ObjectDescriptor, RequestOptions } from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Descriptors extends Endpoint {
   async getLatestDescriptor<T: ObjectDescriptor>(

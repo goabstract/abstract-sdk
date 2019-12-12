@@ -7,8 +7,8 @@ import type {
   ListOptions,
   PageDescriptor,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Layers extends Endpoint {
   async info(

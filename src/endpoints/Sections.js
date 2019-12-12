@@ -1,10 +1,6 @@
 // @flow
-import type {
-  OrganizationDescriptor,
-  RequestOptions,
-  Section
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+import type { OrganizationDescriptor, RequestOptions, Section } from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Sections extends Endpoint {
   list(

@@ -1,6 +1,6 @@
 // @flow
-import { mockAPI, API_CLIENT } from "@core/util/testing";
-import { paginate } from "@core/paginate";
+import { mockAPI, API_CLIENT } from "../src/util/testing";
+import { paginate } from "../src/paginate";
 
 describe("paginate", () => {
   beforeEach(() => {

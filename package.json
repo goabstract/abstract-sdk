@@ -60,8 +60,6 @@
     "flow-copy-source": "^2.0.3",
     "jest": "^24.1.0",
     "nock": "^11.0.0",
-    "babel-plugin-module-resolver": "^3.2.0",
-    "eslint-import-resolver-babel-module": "^5.1.0",
     "prettier": "^1.14.2",
     "standard-version": "^6.0.1"
   },
@@ -82,16 +80,10 @@
     "settings": {
       "react": {
         "version": "^16.0.0"
-      },
-      "import/resolver": {
-        "babel-module": {}
       }
     }
   },
   "jest": {
-    "moduleNameMapper": {
-      "^@core/(.*)$": "<rootDir>/src/$1"
-    },
     "testPathIgnorePatterns": [
       "<rootDir>/dist"
     ],
@@ -123,15 +115,7 @@
     ],
     "plugins": [
       "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-proposal-class-properties",
-      [
-        "babel-plugin-module-resolver",
-        {
-          "alias": {
-            "@core": "./src"
-          }
-        }
-      ]
+      "@babel/plugin-proposal-class-properties"
     ]
   }
 }

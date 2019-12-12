@@ -8,8 +8,8 @@ import type {
   LayerDescriptor,
   LayerVersionDescriptor,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Commits extends Endpoint {
   info(

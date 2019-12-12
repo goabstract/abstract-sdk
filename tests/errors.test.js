@@ -1,5 +1,5 @@
 // @flow
-import { CLI_CLIENT } from "@core/util/testing";
+import { CLI_CLIENT } from "../src/util/testing";
 import {
   EndpointUndefinedError,
   FileAPIError,
@@ -11,7 +11,7 @@ import {
   throwAPIError,
   InternalServerError,
   throwCLIError
-} from "@core/errors";
+} from "../src/errors";
 
 let globalBlob;
 

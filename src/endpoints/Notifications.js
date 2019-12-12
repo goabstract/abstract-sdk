@@ -6,8 +6,8 @@ import type {
   NotificationDescriptor,
   OrganizationDescriptor,
   RequestOptions
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Notifications extends Endpoint {
   info(

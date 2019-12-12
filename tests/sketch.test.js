@@ -1,5 +1,5 @@
 // @flow
-import * as sketch from "@core/sketch";
+import * as sketch from "../src/sketch";
 
 let globalProcess;
 let globalNSString;

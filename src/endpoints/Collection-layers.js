@@ -6,8 +6,8 @@ import type {
   NewCollectionLayer,
   RequestOptions,
   UpdatedCollectionLayer
-} from "@core/types";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class CollectionLayers extends Endpoint {
   add(

@@ -1,5 +1,5 @@
 // @flow
-import type { ShareDescriptor } from "@core/types";
+import type { ShareDescriptor } from "../types";
 
 function parseShareURL(url: string): ?string {
   return url.split("share.goabstract.com/")[1];

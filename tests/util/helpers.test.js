@@ -1,5 +1,5 @@
 // @flow
-import * as utils from "@core/util/helpers";
+import * as utils from "../../src/util/helpers";
 
 describe("helpers", () => {
   test("inferShareId", () => {

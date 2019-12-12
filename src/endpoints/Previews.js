@@ -1,15 +1,15 @@
 /* @flow */
 /* global Blob */
 import { promises as fs } from "fs";
-import { FileAPIError } from "@core/errors";
+import { FileAPIError } from "../errors";
 import type {
   LayerVersionDescriptor,
   PreviewMeta,
   RawOptions,
   RequestOptions
-} from "@core/types";
-import { isNodeEnvironment } from "@core/util/helpers";
-import Endpoint from "@core/endpoints/Endpoint";
+} from "../types";
+import { isNodeEnvironment } from "../util/helpers";
+import Endpoint from "../endpoints/Endpoint";
 
 export default class Previews extends Endpoint {
   async info(

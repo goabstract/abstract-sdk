@@ -1,5 +1,5 @@
 // @flow
-import { CursorPromise } from "@core/types";
+import { CursorPromise } from "./types";
 
 export function paginate<T>(cursor: CursorPromise<T>): AsyncIterable<T> {
   // $FlowFixMe: Flow lacks Symbol support https://github.com/facebook/flow/issues/3258

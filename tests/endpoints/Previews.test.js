@@ -1,6 +1,6 @@
 // @flow
 /* global Blob */
-import { API_CLIENT, mockPreviewAPI } from "@core/util/testing";
+import { API_CLIENT, mockPreviewAPI } from "../../src/util/testing";
 
 describe("previews", () => {
   describe("info", () => {
