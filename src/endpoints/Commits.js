@@ -3,6 +3,7 @@ import querystring from "query-string";
 import type {
   BranchDescriptor,
   Commit,
+  BranchCommitDescriptor,
   CommitDescriptor,
   FileDescriptor,
   LayerDescriptor,
@@ -13,7 +14,11 @@ import Endpoint from "../endpoints/Endpoint";
 
 export default class Commits extends Endpoint {
   info(
-    descriptor: CommitDescriptor | FileDescriptor | LayerVersionDescriptor,
+    descriptor:
+      | BranchCommitDescriptor
+      | CommitDescriptor
+      | FileDescriptor
+      | LayerVersionDescriptor,
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Commit>>(

@@ -1684,6 +1684,15 @@ Reference for the parameters required to load resources with the Abstract SDK.
 }
 ```
 
+### CommitDescriptor
+
+```js
+{
+  projectId: string,
+  branchId: string | "master"
+}
+```
+
 ### FileDescriptor
 
 ```js
