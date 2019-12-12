@@ -37,10 +37,15 @@ export type ObjectDescriptor = {
   branchId: string | "master"
 };
 
-export type CommitDescriptor = {|
+export type BranchCommitDescriptor = {|
   sha: string,
   projectId: string,
   branchId: string | "master"
+|};
+
+export type CommitDescriptor = {|
+  sha: string,
+  projectId: string
 |};
 
 export type BranchDescriptor = {|
@@ -454,7 +459,7 @@ export type ProjectShare = {
 export type CommitShare = {
   ...BaseShare,
   kind: "commit",
-  descriptor: CommitDescriptor
+  descriptor: BranchCommitDescriptor
 };
 
 export type BranchShare = {
@@ -522,7 +527,7 @@ export type ProjectShareInput = {
 export type CommitShareInput = {
   kind: "commit",
   ...BaseShareInput,
-  ...CommitDescriptor
+  ...BranchCommitDescriptor
 };
 
 export type BranchShareInput = {

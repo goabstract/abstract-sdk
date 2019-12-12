@@ -121,7 +121,7 @@ abstract.assets.file({
 
 ### List assets for a commit
 
-`assets.commit(CommitDescriptor, RequestOptions): Promise<Asset[]>`
+`assets.commit(BranchCommitDescriptor, RequestOptions): Promise<Asset[]>`
 
 List all assets generated for a commit
 
@@ -277,7 +277,7 @@ A changeset is a group of changes that together form a single, indivisible modif
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.commit(CommitDescriptor, RequestOptions): Promise<Changeset>`
+`changesets.commit(BranchCommitDescriptor, RequestOptions): Promise<Changeset>`
 
 Load a changeset for a commit
 
@@ -564,7 +564,7 @@ represents a bounding area on-top of the layer, this can be used to leave commen
 
 ![API][api-icon]
 
-`comments.list(BranchDescriptor | CommitDescriptor | PageDescriptor | LayerVersionDescriptor, RequestOptions): CursorPromise<Comment[]>`
+`comments.list(BranchDescriptor | BranchCommitDescriptor | PageDescriptor | LayerVersionDescriptor, RequestOptions): CursorPromise<Comment[]>`
 
 List the comments for a specific project
 ```js
@@ -604,7 +604,7 @@ abstract.comments.info({
 
 ![API][api-icon]
 
-`comments.create(BranchDescriptor | CommitDescriptor | LayerVersionDescriptor, Comment, RequestOptions): Promise<Comment>`
+`comments.create(BranchDescriptor | BranchCommitDescriptor | LayerVersionDescriptor, Comment, RequestOptions): Promise<Comment>`
 
 Create a comment on a branch
 
@@ -701,7 +701,6 @@ Load the commit info for a specific commit SHA on a branch
 ```js
 abstract.commits.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
 });
 ```
@@ -1675,13 +1674,22 @@ Reference for the parameters required to load resources with the Abstract SDK.
 }
 ```
 
-### CommitDescriptor
+### BranchCommitDescriptor
 
 ```js
 {
   projectId: string,
   branchId: string | "master",
   sha: string
+}
+```
+
+### CommitDescriptor
+
+```js
+{
+  projectId: string,
+  branchId: string | "master"
 }
 ```
 
