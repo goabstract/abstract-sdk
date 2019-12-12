@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.1](https://github.com/goabstract/abstract-sdk/compare/v6.0.0...v6.0.1) (2019-12-12)
+
+
+### Bug Fixes
+
+* do not use aliases for easier external consumption ([52d7597](https://github.com/goabstract/abstract-sdk/commit/52d7597))
+
+
+
 ## [6.0.0](https://github.com/goabstract/abstract-sdk/compare/v6.0.0-beta.0...v6.0.0) (2019-12-09)
 
 
