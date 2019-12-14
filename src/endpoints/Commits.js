@@ -54,19 +54,19 @@ export default class Commits extends Endpoint {
     options: {
       ...RequestOptions,
       limit?: number,
-      startSHA?: string,
-      endSHA?: string
+      startSha?: string,
+      endSha?: string
     } = {}
   ) {
-    const { limit, startSHA, endSHA, ...requestOptions } = options;
+    const { limit, startSha, endSha, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Commit[]>>(
       {
         api: async () => {
           const query = querystring.stringify({
             limit,
-            startSHA,
-            endSHA,
+            startSha,
+            endSha,
             fileId: descriptor.fileId && descriptor.fileId,
             layerId: descriptor.layerId && descriptor.layerId
           });
@@ -85,8 +85,8 @@ export default class Commits extends Endpoint {
             descriptor.branchId,
             ...(descriptor.fileId ? ["--file-id", descriptor.fileId] : []),
             ...(descriptor.layerId ? ["--layer-id", descriptor.layerId] : []),
-            ...(options.startSHA ? ["--start-sha", options.startSHA] : []),
-            ...(options.endSHA ? ["--end-sha", options.endSHA] : []),
+            ...(options.startSha ? ["--start-sha", options.startSha] : []),
+            ...(options.endSha ? ["--end-sha", options.endSha] : []),
             ...(options.limit ? ["--limit", options.limit.toString()] : [])
           ]);
 
