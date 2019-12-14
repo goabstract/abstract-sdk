@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.0.0](https://github.com/goabstract/abstract-sdk/compare/v6.0.1...v7.0.0) (2019-12-14)
+
+
+### Bug Fixes
+
+* Incorrect casing on commits.list parameters ([#176](https://github.com/goabstract/abstract-sdk/issues/176)) ([457c0a7](https://github.com/goabstract/abstract-sdk/commit/457c0a7))
+
+
+### Features
+
+* add webhooks verification endpoint ([25b70cd](https://github.com/goabstract/abstract-sdk/commit/25b70cd))
+* Remove need to pass branchId to load a commit ([#173](https://github.com/goabstract/abstract-sdk/issues/173)) ([c016216](https://github.com/goabstract/abstract-sdk/commit/c016216))
+
+
+### BREAKING CHANGES
+
+* - `CommitDescriptor` renamed to `BranchCommitDescriptor`
+- `commits.info` no longer requires a branch ID to load a commit
+
+
+
 ### [6.0.1](https://github.com/goabstract/abstract-sdk/compare/v6.0.0...v6.0.1) (2019-12-12)
 
 
