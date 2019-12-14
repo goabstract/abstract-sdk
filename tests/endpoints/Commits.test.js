@@ -61,7 +61,7 @@ describe("commits", () => {
   describe("list", () => {
     test("api", async () => {
       mockAPI(
-        "/projects/project-id/branches/branch-id/commits?endSHA=end-sha&fileId=file-id&layerId=layer-id&limit=10&startSHA=start-sha",
+        "/projects/project-id/branches/branch-id/commits?endSha=end-sha&fileId=file-id&layerId=layer-id&limit=10&startSha=start-sha",
         {
           commits: []
         }
@@ -76,8 +76,8 @@ describe("commits", () => {
         },
         {
           limit: 10,
-          startSHA: "start-sha",
-          endSHA: "end-sha"
+          startSha: "start-sha",
+          endSha: "end-sha"
         }
       );
 
@@ -129,8 +129,8 @@ describe("commits", () => {
         }: any),
         {
           limit: 10,
-          startSHA: "start-sha",
-          endSHA: "end-sha"
+          startSha: "start-sha",
+          endSha: "end-sha"
         }
       );
 

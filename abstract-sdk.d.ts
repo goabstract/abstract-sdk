@@ -220,8 +220,8 @@ interface Commits extends Endpoint {
     descriptor: BranchDescriptor | FileDescriptor | LayerDescriptor,
     options?: RequestOptions & {
       limit?: number,
-      startSHA?: string,
-      endSHA?: string
+      startSha?: string,
+      endSha?: string
     }
   ): Promise<Commit[]>;
 }
