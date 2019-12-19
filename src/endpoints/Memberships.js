@@ -14,49 +14,45 @@ export default class Memberships extends Endpoint {
     descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Membership>>(
-      {
-        api: async () => {
-          let url = "";
+    return this.configureRequest<Promise<Membership>>({
+      api: async () => {
+        let url = "";
 
-          if (descriptor.organizationId) {
-            url = `organizations/${descriptor.organizationId}/memberships/${descriptor.userId}`;
-          }
-
-          if (descriptor.projectId) {
-            url = `projects/${descriptor.projectId}/memberships/${descriptor.userId}`;
-          }
-
-          const response = await this.apiRequest(url);
-          return response.data.projectMembership || response.data;
+        if (descriptor.organizationId) {
+          url = `organizations/${descriptor.organizationId}/memberships/${descriptor.userId}`;
         }
+
+        if (descriptor.projectId) {
+          url = `projects/${descriptor.projectId}/memberships/${descriptor.userId}`;
+        }
+
+        const response = await this.apiRequest(url);
+        return response.data.projectMembership || response.data;
       },
       requestOptions
-    );
+    });
   }
 
   list(
     descriptor: OrganizationDescriptor | ProjectDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Membership[]>>(
-      {
-        api: async () => {
-          let url = "";
+    return this.configureRequest<Promise<Membership[]>>({
+      api: async () => {
+        let url = "";
 
-          if (descriptor.organizationId) {
-            url = `organizations/${descriptor.organizationId}/memberships`;
-          }
-
-          if (descriptor.projectId) {
-            url = `projects/${descriptor.projectId}/memberships`;
-          }
-
-          const response = await this.apiRequest(url);
-          return response.data;
+        if (descriptor.organizationId) {
+          url = `organizations/${descriptor.organizationId}/memberships`;
         }
+
+        if (descriptor.projectId) {
+          url = `projects/${descriptor.projectId}/memberships`;
+        }
+
+        const response = await this.apiRequest(url);
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 }

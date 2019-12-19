@@ -14,14 +14,12 @@ export default class Notifications extends Endpoint {
     descriptor: NotificationDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Notification>>(
-      {
-        api: () => {
-          return this.apiRequest(`notifications/${descriptor.notificationId}`);
-        }
+    return this.configureRequest<Promise<Notification>>({
+      api: () => {
+        return this.apiRequest(`notifications/${descriptor.notificationId}`);
       },
       requestOptions
-    );
+    });
   }
 
   list(descriptor: OrganizationDescriptor, options: ListOptions = {}) {

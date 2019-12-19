@@ -14,14 +14,12 @@ import Endpoint from "../endpoints/Endpoint";
 
 export default class Activities extends Endpoint {
   info(descriptor: ActivityDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Activity>>(
-      {
-        api: () => {
-          return this.apiRequest(`activities/${descriptor.activityId}`);
-        }
+    return this.configureRequest<Promise<Activity>>({
+      api: () => {
+        return this.apiRequest(`activities/${descriptor.activityId}`);
       },
       requestOptions
-    );
+    });
   }
 
   list(

@@ -32,34 +32,30 @@ export default class Comments extends Endpoint {
       );
     }
 
-    return this.configureRequest<Promise<Comment>>(
-      {
-        api: async () => {
-          const body = {
-            ...comment,
-            ...descriptor,
-            commitSha: descriptor.sha || undefined
-          };
+    return this.configureRequest<Promise<Comment>>({
+      api: async () => {
+        const body = {
+          ...comment,
+          ...descriptor,
+          commitSha: descriptor.sha || undefined
+        };
 
-          return this.apiRequest("comments", {
-            method: "POST",
-            body
-          });
-        }
+        return this.apiRequest("comments", {
+          method: "POST",
+          body
+        });
       },
       requestOptions
-    );
+    });
   }
 
   info(descriptor: CommentDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Comment>>(
-      {
-        api: () => {
-          return this.apiRequest(`comments/${descriptor.commentId}`);
-        }
+    return this.configureRequest<Promise<Comment>>({
+      api: () => {
+        return this.apiRequest(`comments/${descriptor.commentId}`);
       },
       requestOptions
-    );
+    });
   }
 
   async list(

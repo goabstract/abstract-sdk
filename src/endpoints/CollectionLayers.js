@@ -17,22 +17,20 @@ export default class CollectionLayers extends Endpoint {
   ) {
     layer = { ...layer, collectionId: descriptor.collectionId };
 
-    return this.configureRequest<Promise<CollectionLayer>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collection_layers`,
-            {
-              method: "POST",
-              body: layer
-            }
-          );
+    return this.configureRequest<Promise<CollectionLayer>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collection_layers`,
+          {
+            method: "POST",
+            body: layer
+          }
+        );
 
-          return response;
-        }
+        return response;
       },
       requestOptions
-    );
+    });
   }
 
   addMany(
@@ -45,46 +43,43 @@ export default class CollectionLayers extends Endpoint {
       return { ...collectionLayer, id: layerId };
     });
 
-    return this.configureRequest<Promise<CollectionLayer>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collection_layers/create_many`,
-            {
-              method: "POST",
-              body: {
-                collectionId: descriptor.collectionId,
-                layers: collectionLayers
-              }
+    return this.configureRequest<Promise<CollectionLayer>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collection_layers/create_many`,
+          {
+            method: "POST",
+            body: {
+              collectionId: descriptor.collectionId,
+              layers: collectionLayers
             }
-          );
+          }
+        );
 
-          return response.data;
-        }
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 
   remove(
     descriptor: CollectionLayerDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<void>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,
-            {
-              method: "DELETE"
-            }
-          );
+    return this.configureRequest<Promise<void>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,
+          {
+            method: "DELETE"
+          }
+        );
 
-          return response;
-        }
+        return response;
       },
+
       requestOptions
-    );
+    });
   }
 
   move(
@@ -92,22 +87,20 @@ export default class CollectionLayers extends Endpoint {
     order: number,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<CollectionLayer[]>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}/move`,
-            {
-              method: "POST",
-              body: { order }
-            }
-          );
+    return this.configureRequest<Promise<CollectionLayer[]>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}/move`,
+          {
+            method: "POST",
+            body: { order }
+          }
+        );
 
-          return response;
-        }
+        return response;
       },
       requestOptions
-    );
+    });
   }
 
   update(
@@ -115,21 +108,19 @@ export default class CollectionLayers extends Endpoint {
     layer: UpdatedCollectionLayer,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<CollectionLayer>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,
-            {
-              method: "PUT",
-              body: layer
-            }
-          );
+    return this.configureRequest<Promise<CollectionLayer>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,
+          {
+            method: "PUT",
+            body: layer
+          }
+        );
 
-          return response;
-        }
+        return response;
       },
       requestOptions
-    );
+    });
   }
 }

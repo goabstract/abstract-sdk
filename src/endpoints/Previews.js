@@ -20,18 +20,16 @@ export default class Previews extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<PreviewMeta>>(
-      {
-        api: async () => ({
-          webUrl: `${await this.options.webUrl}/projects/${
-            latestDescriptor.projectId
-          }/commits/${latestDescriptor.sha}/files/${
-            latestDescriptor.fileId
-          }/layers/${latestDescriptor.layerId}`
-        })
-      },
+    return this.configureRequest<Promise<PreviewMeta>>({
+      api: async () => ({
+        webUrl: `${await this.options.webUrl}/projects/${
+          latestDescriptor.projectId
+        }/commits/${latestDescriptor.sha}/files/${
+          latestDescriptor.fileId
+        }/layers/${latestDescriptor.layerId}`
+      }),
       requestOptions
-    );
+    });
   }
 
   async raw(descriptor: LayerVersionDescriptor, options: RawOptions = {}) {
@@ -40,36 +38,34 @@ export default class Previews extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<ArrayBuffer>>(
-      {
-        api: async () => {
-          const previewUrl = await this.options.previewUrl;
-          const arrayBuffer = await this.apiRequest(
-            `projects/${latestDescriptor.projectId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`,
-            {
-              headers: {
-                Accept: undefined,
-                "Content-Type": undefined,
-                "Abstract-Api-Version": undefined
-              }
-            },
-            {
-              customHostname: previewUrl,
-              raw: true
+    return this.configureRequest<Promise<ArrayBuffer>>({
+      api: async () => {
+        const previewUrl = await this.options.previewUrl;
+        const arrayBuffer = await this.apiRequest(
+          `projects/${latestDescriptor.projectId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`,
+          {
+            headers: {
+              Accept: undefined,
+              "Content-Type": undefined,
+              "Abstract-Api-Version": undefined
             }
-          );
-
-          /* istanbul ignore if */
-          if (isNodeEnvironment() && !disableWrite) {
-            const diskLocation = filename || `${latestDescriptor.layerId}.png`;
-            fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
+          },
+          {
+            customHostname: previewUrl,
+            raw: true
           }
+        );
 
-          return arrayBuffer;
+        /* istanbul ignore if */
+        if (isNodeEnvironment() && !disableWrite) {
+          const diskLocation = filename || `${latestDescriptor.layerId}.png`;
+          fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
         }
+
+        return arrayBuffer;
       },
       requestOptions
-    );
+    });
   }
 
   async url(

@@ -14,19 +14,17 @@ const headers = {
 
 export default class Projects extends Endpoint {
   info(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Project>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}`,
-            { headers }
-          );
+    return this.configureRequest<Promise<Project>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}`,
+          { headers }
+        );
 
-          return response.data;
-        }
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 
   list(
@@ -39,28 +37,26 @@ export default class Projects extends Endpoint {
   ) {
     const { filter, sectionId, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<Project[]>>(
-      {
-        api: async () => {
-          const query = querystring.stringify({
-            ...descriptor,
-            filter,
-            sectionId
-          });
-          const response = await this.apiRequest(`projects?${query}`, {
-            headers
-          });
+    return this.configureRequest<Promise<Project[]>>({
+      api: async () => {
+        const query = querystring.stringify({
+          ...descriptor,
+          filter,
+          sectionId
+        });
+        const response = await this.apiRequest(`projects?${query}`, {
+          headers
+        });
 
-          if (sectionId) {
-            return response.data.projects.filter(
-              project => project.sectionId === sectionId
-            );
-          }
-
-          return response.data.projects;
+        if (sectionId) {
+          return response.data.projects.filter(
+            project => project.sectionId === sectionId
+          );
         }
+
+        return response.data.projects;
       },
       requestOptions
-    );
+    });
   }
 }

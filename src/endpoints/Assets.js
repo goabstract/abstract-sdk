@@ -15,16 +15,14 @@ import Endpoint from "../endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
   info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Asset>>(
-      {
-        api: () => {
-          return this.apiRequest(
-            `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
-          );
-        }
+    return this.configureRequest<Promise<Asset>>({
+      api: () => {
+        return this.apiRequest(
+          `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
+        );
       },
       requestOptions
-    );
+    });
   }
 
   async commit(
@@ -35,20 +33,18 @@ export default class Assets extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Asset[]>>(
-      {
-        api: async () => {
-          const query = querystring.stringify({ sha: latestDescriptor.sha });
+    return this.configureRequest<Promise<Asset[]>>({
+      api: async () => {
+        const query = querystring.stringify({ sha: latestDescriptor.sha });
 
-          const response = await this.apiRequest(
-            `projects/${latestDescriptor.projectId}/assets?${query}`
-          );
+        const response = await this.apiRequest(
+          `projects/${latestDescriptor.projectId}/assets?${query}`
+        );
 
-          return response.data.assets;
-        }
+        return response.data.assets;
       },
       requestOptions
-    );
+    });
   }
 
   file(descriptor: FileDescriptor, options: ListOptions = {}) {
@@ -76,42 +72,40 @@ export default class Assets extends Endpoint {
   raw(descriptor: AssetDescriptor, options: RawOptions = {}) {
     const { disableWrite, filename, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<ArrayBuffer>>(
-      {
-        api: async () => {
-          const asset = await this.info(descriptor);
-          const assetUrl = await this.options.assetUrl;
-          const assetPath = asset.url.replace(
-            /^\S+:\/\/objects.goabstract.com\//,
-            ""
-          );
+    return this.configureRequest<Promise<ArrayBuffer>>({
+      api: async () => {
+        const asset = await this.info(descriptor);
+        const assetUrl = await this.options.assetUrl;
+        const assetPath = asset.url.replace(
+          /^\S+:\/\/objects.goabstract.com\//,
+          ""
+        );
 
-          const arrayBuffer = await this.apiRequest(
-            assetPath,
-            {
-              headers: {
-                Accept: undefined,
-                "Content-Type": undefined,
-                "Abstract-Api-Version": undefined
-              }
-            },
-            {
-              customHostname: assetUrl,
-              raw: true
+        const arrayBuffer = await this.apiRequest(
+          assetPath,
+          {
+            headers: {
+              Accept: undefined,
+              "Content-Type": undefined,
+              "Abstract-Api-Version": undefined
             }
-          );
-
-          /* istanbul ignore if */
-          if (isNodeEnvironment() && !disableWrite) {
-            const diskLocation =
-              filename || `${asset.layerName}.${asset.fileFormat}`;
-            fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
+          },
+          {
+            customHostname: assetUrl,
+            raw: true
           }
+        );
 
-          return arrayBuffer;
+        /* istanbul ignore if */
+        if (isNodeEnvironment() && !disableWrite) {
+          const diskLocation =
+            filename || `${asset.layerName}.${asset.fileFormat}`;
+          fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
         }
+
+        return arrayBuffer;
       },
       requestOptions
-    );
+    });
   }
 }
