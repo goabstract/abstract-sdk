@@ -860,6 +860,30 @@ export type Changeset = {
   branchId: string
 };
 
+export type SharedItem = {
+  fileId: string,
+  id: string,
+  libraryId: string,
+  libraryName: string,
+  name: string,
+  projectId: string,
+  sha: string,
+  type: string,
+  version: number
+};
+
+export type ChangesetResponse = {
+  changeset: Changeset,
+  colors?: SharedItem[],
+  files: File[],
+  gradients?: SharedItem[],
+  layerStyles?: SharedItem[],
+  layers: Layer[],
+  pages: Page[],
+  sharedData: SharedItem[],
+  textStyles?: SharedItem[]
+};
+
 export type Page = {
   id: string,
   name: string,
@@ -1490,6 +1514,7 @@ export type Asset = {
   fileFormat: string,
   fileId: string,
   formatName: string,
+
   id: string,
   layerId: string,
   layerName: string,

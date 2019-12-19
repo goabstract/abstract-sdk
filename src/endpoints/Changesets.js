@@ -1,7 +1,7 @@
 // @flow
 import type {
   BranchDescriptor,
-  Changeset,
+  ChangesetResponse,
   BranchCommitDescriptor,
   RequestOptions
 } from "../types";
@@ -16,7 +16,7 @@ export default class Changesets extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Changeset>>(
+    return this.configureRequest<Promise<ChangesetResponse>>(
       {
         api: async () => {
           const response = await this.apiRequest(
@@ -47,7 +47,7 @@ export default class Changesets extends Endpoint {
     descriptor: BranchDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Changeset>>(
+    return this.configureRequest<Promise<ChangesetResponse>>(
       {
         api: async () => {
           const response = await this.apiRequest(

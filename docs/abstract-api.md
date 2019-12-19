@@ -246,7 +246,21 @@ abstract.branches.info({
 
 A changeset is a group of changes that together form a single, indivisible modification to a project. Changesets include data on all visual and nonvisual changes and provide insight into the differences between two versions of a project.
 
-### The changeset object
+### The ChangesetResponse object
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `changeset` | `Changeset` | Base changeset |
+| `colors` | `SharedItem[]` | Colors that changed in this changeset |
+| `files` | `File[]` | Files that changed in this changeset |
+| `gradients` | `SharedItem[]` | Gradients that changed in this changeset |
+| `layerStyles` | `SharedItem[]` | Layer styles that changed in this changeset |
+| `layers` | `Layer[]` | Layers that changed in this changeset |
+| `pages` | `Page[]` | Pages that changed in this changeset |
+| `sharedData` | `SharedItem[]` | Shared data that changed in this changeset |
+| `textStyles` | `SharedItem[]` | Text styles that changed in this changeset |
+
+### The Changeset object
 
 | Property       | Type                | Description                                                                             |
 |----------------|---------------------|-----------------------------------------------------------------------------------------|
@@ -257,7 +271,7 @@ A changeset is a group of changes that together form a single, indivisible modif
 | `projectId`    | `string`            | UUID of the project this changeset belongs to                                           |
 | `sha`          | `string`            | SHA of the base commit in this changeset that changes are against                       |
 
-#### ChangesetChange
+#### The ChangesetChange object
 
 | Property       | Type                             | Description                                                |
 |----------------|----------------------------------|------------------------------------------------------------|
@@ -277,7 +291,7 @@ A changeset is a group of changes that together form a single, indivisible modif
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.commit(BranchCommitDescriptor, RequestOptions): Promise<Changeset>`
+`changesets.commit(BranchCommitDescriptor, RequestOptions): Promise<ChangesetResponse>`
 
 Load a changeset for a commit
 
@@ -293,7 +307,7 @@ abstract.changesets.commit({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.commit(BranchDscriptor, RequestOptions): Promise<Changeset>`
+`changesets.commit(BranchDscriptor, RequestOptions): Promise<ChangesetResponse>`
 
 Load a changeset for a branch
 
@@ -309,14 +323,14 @@ abstract.changesets.branch({
 
 A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
 
-### The collection page object
+### The collections response object
 
 | Property | Type | Description |
 |----------|------|-------------|
-| collections | Collection[] | Array of collections |
-| files | File[] | Array of files |
-| pages | Page[] | Array of pages |
-| layers | Layer[] | Array of layers |
+| `collections` | `Collection[]` | Array of collections |
+| `files` | `File[]` | Array of files |
+| `pages` | `Page[]` | Array of pages |
+| `layers` | `Layer[]` | Array of layers |
 
 #### The collection object
 
@@ -337,7 +351,7 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.list(ProjectDescriptor | BranchDescriptor, { ...RequestOptions, layersPerCollection?: number }): Promise<CollectionPage>`
+`collections.list(ProjectDescriptor | BranchDescriptor, { ...RequestOptions, layersPerCollection?: number }): Promise<CollectionsResponse>`
 
 List all collections for a branch
 
@@ -352,7 +366,7 @@ abstract.collections.list({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.info(CollectionDescriptor, RequestOptions): Promise<CollectionPage>`
+`collections.info(CollectionDescriptor, RequestOptions): Promise<CollectionsResponse>`
 
 Load an individual collection
 
