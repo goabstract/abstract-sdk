@@ -1512,7 +1512,6 @@ export type Asset = {
   fileFormat: string,
   fileId: string,
   formatName: string,
-
   id: string,
   layerId: string,
   layerName: string,

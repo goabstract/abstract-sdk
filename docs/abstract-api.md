@@ -251,7 +251,6 @@ A changeset is a group of changes that together form a single, indivisible modif
 | Property | Type | Description |
 |----------|------|-------------|
 | `changeset` | `Changeset` | Base changeset |
-| `commit` | `Commit` | Commit associated with this changeset |
 | `files` | `File[]` | Files that changed in this changeset |
 | `layers` | `Layer[]` | Layers that changed in this changeset |
 | `pages` | `Page[]` | Pages that changed in this changeset |
