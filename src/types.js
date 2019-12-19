@@ -872,18 +872,6 @@ export type SharedItem = {
   version: number
 };
 
-export type ChangesetResponse = {
-  changeset: Changeset,
-  colors?: SharedItem[],
-  files: File[],
-  gradients?: SharedItem[],
-  layerStyles?: SharedItem[],
-  layers: Layer[],
-  pages: Page[],
-  sharedData: SharedItem[],
-  textStyles?: SharedItem[]
-};
-
 export type Page = {
   id: string,
   name: string,
@@ -912,6 +900,15 @@ export type Layer = {
   status?: string,
   updatedAt: string,
   order: number
+};
+
+export type ChangesetResponse = {
+  changeset: Changeset,
+  commit?: Commit,
+  files: File[],
+  layers: Layer[],
+  pages: Page[],
+  sharedData: SharedItem[]
 };
 
 export type LayerBlendModeNormal = 0;

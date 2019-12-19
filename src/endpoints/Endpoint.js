@@ -210,7 +210,7 @@ export default class Endpoint {
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
       "X-Amzn-Trace-Id": `Root=1-${new Date().getTime()}-${uuid()}`,
-      "Abstract-Api-Version": "8",
+      "Abstract-Api-Version": "19",
       ...tokenHeader,
       ...customHeaders
     };

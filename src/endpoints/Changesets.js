@@ -7,6 +7,10 @@ import type {
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
+const headers = {
+  "Abstract-Api-Version": "19"
+};
+
 export default class Changesets extends Endpoint {
   async commit(
     descriptor: BranchCommitDescriptor,
@@ -20,7 +24,8 @@ export default class Changesets extends Endpoint {
       {
         api: async () => {
           const response = await this.apiRequest(
-            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`,
+            { headers }
           );
 
           return response.changeset;
@@ -51,7 +56,8 @@ export default class Changesets extends Endpoint {
       {
         api: async () => {
           const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`
+            `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`,
+            { headers }
           );
 
           return response.changeset;

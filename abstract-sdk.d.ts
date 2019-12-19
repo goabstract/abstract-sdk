@@ -1115,14 +1115,11 @@ type SharedItem = {
 
 type ChangesetResponse = {
   changeset: Changeset,
-  colors?: SharedItem[],
+  commit?: Commit,
   files: File[],
-  gradients?: SharedItem[],
-  layerStyles?: SharedItem[],
   layers: Layer[],
   pages: Page[],
-  sharedData: SharedItem[],
-  textStyles?:  SharedItem[]
+  sharedData: SharedItem[]
 };
 
 type Page = {

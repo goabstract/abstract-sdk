@@ -251,14 +251,11 @@ A changeset is a group of changes that together form a single, indivisible modif
 | Property | Type | Description |
 |----------|------|-------------|
 | `changeset` | `Changeset` | Base changeset |
-| `colors` | `SharedItem[]` | Colors that changed in this changeset |
+| `commit` | `Commit` | Commit associated with this changeset |
 | `files` | `File[]` | Files that changed in this changeset |
-| `gradients` | `SharedItem[]` | Gradients that changed in this changeset |
-| `layerStyles` | `SharedItem[]` | Layer styles that changed in this changeset |
 | `layers` | `Layer[]` | Layers that changed in this changeset |
 | `pages` | `Page[]` | Pages that changed in this changeset |
 | `sharedData` | `SharedItem[]` | Shared data that changed in this changeset |
-| `textStyles` | `SharedItem[]` | Text styles that changed in this changeset |
 
 ### The Changeset object
 
@@ -266,7 +263,8 @@ A changeset is a group of changes that together form a single, indivisible modif
 |----------------|---------------------|-----------------------------------------------------------------------------------------|
 | `branchId`     | `string`            | UUID of the branch that this changeset is part of, or the string "master"               |
 | `changes`      | `ChangesetChange[]` | List of changes that make up this changeset                                             |
-| `compareToSha` | `string`            | SHA of the commit introducing changes in this changeset                                 |
+| `compareToSha` | `string`            
+| SHA of the commit introducing changes in this changeset                                 |
 | `id`           | `string`            | UUID identifier of the changeset                                                        |
 | `projectId`    | `string`            | UUID of the project this changeset belongs to                                           |
 | `sha`          | `string`            | SHA of the base commit in this changeset that changes are against                       |
