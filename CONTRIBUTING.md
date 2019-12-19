@@ -90,17 +90,21 @@ $ yarn start
 
 New package versions of `abstract-sdk` are automatically published to the public NPM registry whenever new tags are pushed to the repository. This repository uses [`standard-version`](https://github.com/conventional-changelog/standard-version) as convention to automate versioning, tagging, and changelog generation:
 
-```sh
-$ yarn release
-$ git push origin master --follow-tags
-```
-
-Or cut a pre-release:
-
-```sh
-$ yarn release --prerelease alpha
-$ git push origin master --follow-tags
-```
+1. Bump the version and submit a pull request.
+    ```sh
+    $ yarn release
+    $ git push origin <new_tag_version>
+    ```
+2. Once the PR lands, push the new tag to the repository.
+    ```sh
+    $ git push origin <new_tag_version>
+    ```
+3. Lastly, update the documentation.
+    ```sh
+    $ git checkout docs
+    $ git rebase master
+    $ git push origin docs -f
+    ```
 
 <br />
 <br />
