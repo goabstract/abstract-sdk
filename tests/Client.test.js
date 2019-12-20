@@ -8,7 +8,8 @@ import {
   mockAPI,
   mockCLI,
   API_CLIENT,
-  CLIENT_CONFIG
+  CLIENT_CONFIG,
+  CLI_CLIENT
 } from "../src/util/testing";
 import type { AccessToken, RequestOptions } from "../src/types";
 
@@ -191,6 +192,33 @@ describe("Client", () => {
     expect(response).toEqual([
       {
         id: "org-id"
+      }
+    ]);
+  });
+
+  test("CursorPromise transportMode", async () => {
+    mockAPI("/activities?organizationId=org-id", {
+      data: {
+        activities: [
+          {
+            id: "activity-id"
+          }
+        ]
+      }
+    });
+
+    const response = await CLI_CLIENT.activities.list(
+      {
+        organizationId: "org-id"
+      },
+      {
+        transportMode: ["api"]
+      }
+    );
+
+    expect(response).toEqual([
+      {
+        id: "activity-id"
       }
     ]);
   });

@@ -16,8 +16,7 @@ import {
 import type {
   ApiRequestOptions,
   CommandOptions,
-  RequestConfig,
-  RequestOptions
+  RequestConfig
 } from "../types";
 
 const logAPIRequest = log.extend("AbstractAPI:request");
