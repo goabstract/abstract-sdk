@@ -22,17 +22,15 @@ export default class Changesets extends Endpoint {
 
     return this.configureRequest<Promise<ChangesetResponse>>(
       {
-        api: async () => {
-          const response = await this.apiRequest(
+        api: () => {
+          return this.apiRequest(
             `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`,
             { headers }
           );
-
-          return response.changeset;
         },
 
-        cli: async () => {
-          const response = await this.cliRequest([
+        cli: () => {
+          return this.cliRequest([
             "changeset",
             latestDescriptor.projectId,
             "--commit",
@@ -40,8 +38,6 @@ export default class Changesets extends Endpoint {
             "--branch",
             latestDescriptor.branchId
           ]);
-
-          return response.changeset;
         }
       },
       requestOptions
@@ -54,24 +50,20 @@ export default class Changesets extends Endpoint {
   ) {
     return this.configureRequest<Promise<ChangesetResponse>>(
       {
-        api: async () => {
-          const response = await this.apiRequest(
+        api: () => {
+          return this.apiRequest(
             `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`,
             { headers }
           );
-
-          return response.changeset;
         },
 
-        cli: async () => {
-          const response = await this.cliRequest([
+        cli: () => {
+          return this.cliRequest([
             "changeset",
             descriptor.projectId,
             "--branch",
             descriptor.branchId
           ]);
-
-          return response.changeset;
         }
       },
       requestOptions
