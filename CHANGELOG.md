@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-alpha.1](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-alpha.0...v8.0.0-alpha.1) (2019-12-20)
+
+
+### Bug Fixes
+
+* update changeset return value ([567741e](https://github.com/goabstract/abstract-sdk/commit/567741e))
+
+
+
 ## [8.0.0-alpha.0](https://github.com/goabstract/abstract-sdk/compare/v7.0.0...v8.0.0-alpha.0) (2019-12-19)
 
 
