@@ -1,11 +1,15 @@
 // @flow
 import type {
   BranchDescriptor,
-  Changeset,
+  ChangesetResponse,
   BranchCommitDescriptor,
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+
+const headers = {
+  "Abstract-Api-Version": "19"
+};
 
 export default class Changesets extends Endpoint {
   async commit(
@@ -16,17 +20,16 @@ export default class Changesets extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Changeset>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`
+    return this.configureRequest<Promise<ChangesetResponse>>({
+      api: () => {
+        return this.apiRequest(
+          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`,
+          { headers }
         );
-
-        return response.changeset;
       },
 
-      cli: async () => {
-        const response = await this.cliRequest([
+      cli: () => {
+        return this.cliRequest([
           "changeset",
           latestDescriptor.projectId,
           "--commit",
@@ -34,8 +37,6 @@ export default class Changesets extends Endpoint {
           "--branch",
           latestDescriptor.branchId
         ]);
-
-        return response.changeset;
       },
 
       requestOptions
@@ -46,24 +47,21 @@ export default class Changesets extends Endpoint {
     descriptor: BranchDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Changeset>>({
-      api: async () => {
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`
+    return this.configureRequest<Promise<ChangesetResponse>>({
+      api: () => {
+        return this.apiRequest(
+          `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`,
+          { headers }
         );
-
-        return response.changeset;
       },
 
-      cli: async () => {
-        const response = await this.cliRequest([
+      cli: () => {
+        return this.cliRequest([
           "changeset",
           descriptor.projectId,
           "--branch",
           descriptor.branchId
         ]);
-
-        return response.changeset;
       },
 
       requestOptions

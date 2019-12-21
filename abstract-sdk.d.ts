@@ -155,8 +155,8 @@ interface Branches extends Endpoint {
 }
 
 interface Changesets extends Endpoint {
-  branch(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
-  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
+  branch(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<ChangesetResponse>;
+  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<ChangesetResponse>;
 }
 
 interface CollectionLayers extends Endpoint {
@@ -1099,6 +1099,27 @@ type Changeset = {
   changes: ChangesetChange[],
   projectId: string,
   branchId: string
+};
+
+type SharedItem = {
+  fileId: string,
+  id: string,
+  libraryId: string,
+  libraryName: string,
+  name: string,
+  projectId: string,
+  sha: string,
+  type: string,
+  version: number
+};
+
+type ChangesetResponse = {
+  changeset: Changeset,
+  commit?: Commit,
+  files: File[],
+  layers: Layer[],
+  pages: Page[],
+  sharedData: SharedItem[]
 };
 
 type Page = {
