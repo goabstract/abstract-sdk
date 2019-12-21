@@ -88,11 +88,6 @@ export type ErrorMap = {
   [mode: string]: Error
 };
 
-export type RequestConfig<T> = {
-  api?: () => T,
-  cli?: () => T
-};
-
 export type ApiRequestOptions = {
   customHostname?: string,
   raw?: boolean
@@ -100,6 +95,12 @@ export type ApiRequestOptions = {
 
 export type RequestOptions = {
   transportMode?: ("api" | "cli")[]
+};
+
+export type RequestConfig<T> = {
+  api?: () => T,
+  cli?: () => T,
+  requestOptions?: RequestOptions
 };
 
 export type ListOptions = {

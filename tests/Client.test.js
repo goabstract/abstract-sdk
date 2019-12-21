@@ -8,9 +8,10 @@ import {
   mockAPI,
   mockCLI,
   API_CLIENT,
-  CLIENT_CONFIG
+  CLIENT_CONFIG,
+  CLI_CLIENT
 } from "../src/util/testing";
-import type { AccessToken } from "../src/types";
+import type { AccessToken, RequestOptions } from "../src/types";
 
 const Client = require("../src/Client").default;
 
@@ -173,5 +174,52 @@ describe("Client", () => {
     expect((spawnSpy: any).mock.calls[0][1].includes("--user-token")).toBe(
       false
     );
+  });
+
+  test("undefined request options", async () => {
+    mockAPI("/organizations", {
+      data: [
+        {
+          id: "org-id"
+        }
+      ]
+    });
+
+    const response = await API_CLIENT.organizations.list(
+      ((null: any): RequestOptions)
+    );
+
+    expect(response).toEqual([
+      {
+        id: "org-id"
+      }
+    ]);
+  });
+
+  test("CursorPromise transportMode", async () => {
+    mockAPI("/activities?organizationId=org-id", {
+      data: {
+        activities: [
+          {
+            id: "activity-id"
+          }
+        ]
+      }
+    });
+
+    const response = await CLI_CLIENT.activities.list(
+      {
+        organizationId: "org-id"
+      },
+      {
+        transportMode: ["api"]
+      }
+    );
+
+    expect(response).toEqual([
+      {
+        id: "activity-id"
+      }
+    ]);
   });
 });

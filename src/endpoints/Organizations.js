@@ -11,29 +11,25 @@ export default class Organizations extends Endpoint {
     descriptor: OrganizationDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Organization>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `organizations/${descriptor.organizationId}`
-          );
+    return this.configureRequest<Promise<Organization>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `organizations/${descriptor.organizationId}`
+        );
 
-          return response.data;
-        }
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 
   list(requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Organization[]>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest("organizations");
-          return response.data;
-        }
+    return this.configureRequest<Promise<Organization[]>>({
+      api: async () => {
+        const response = await this.apiRequest("organizations");
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 }

@@ -7,17 +7,15 @@ export default class Sections extends Endpoint {
     descriptor: OrganizationDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Section[]>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `sections?organizationId=${descriptor.organizationId}`
-          );
+    return this.configureRequest<Promise<Section[]>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `sections?organizationId=${descriptor.organizationId}`
+        );
 
-          return response;
-        }
+        return response;
       },
       requestOptions
-    );
+    });
   }
 }

@@ -19,22 +19,20 @@ export default class Collections extends Endpoint {
     collection: NewCollection,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Collection>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collections`,
-            {
-              method: "POST",
-              body: collection
-            }
-          );
+    return this.configureRequest<Promise<Collection>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collections`,
+          {
+            method: "POST",
+            body: collection
+          }
+        );
 
-          return response.data;
-        }
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 
   info(
@@ -46,38 +44,37 @@ export default class Collections extends Endpoint {
   ) {
     const { layersPerCollection, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<CollectionResponse>>(
-      {
-        api: async () => {
-          const query = querystring.stringify({ layersPerCollection });
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
-          );
+    return this.configureRequest<Promise<CollectionResponse>>({
+      api: async () => {
+        const query = querystring.stringify({ layersPerCollection });
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
+        );
 
-          const { collections, ...meta } = response.data;
-          return {
-            collection: collections[0],
-            ...meta
-          };
-        },
-
-        cli: async () => {
-          const response = await this.cliRequest([
-            "collection",
-            "load",
-            descriptor.projectId,
-            descriptor.collectionId
-          ]);
-
-          const { collections, ...meta } = response.data;
-          return {
-            collection: collections[0],
-            ...meta
-          };
-        }
+        const { collections, ...meta } = response.data;
+        return {
+          collection: collections[0],
+          ...meta
+        };
       },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "collection",
+          "load",
+          descriptor.projectId,
+          descriptor.collectionId
+        ]);
+
+        const { collections, ...meta } = response.data;
+        return {
+          collection: collections[0],
+          ...meta
+        };
+      },
+
       requestOptions
-    );
+    });
   }
 
   list(
@@ -89,34 +86,33 @@ export default class Collections extends Endpoint {
   ) {
     const { layersPerCollection, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<CollectionsResponse>>(
-      {
-        api: async () => {
-          const { projectId, ...sanitizedDescriptor } = descriptor;
-          const query = querystring.stringify({
-            ...sanitizedDescriptor,
-            layersPerCollection
-          });
+    return this.configureRequest<Promise<CollectionsResponse>>({
+      api: async () => {
+        const { projectId, ...sanitizedDescriptor } = descriptor;
+        const query = querystring.stringify({
+          ...sanitizedDescriptor,
+          layersPerCollection
+        });
 
-          const response = await this.apiRequest(
-            `projects/${projectId}/collections?${query}`
-          );
+        const response = await this.apiRequest(
+          `projects/${projectId}/collections?${query}`
+        );
 
-          return response.data;
-        },
-
-        cli: async () => {
-          const response = await this.cliRequest([
-            "collections",
-            descriptor.projectId,
-            ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
-          ]);
-
-          return response.data;
-        }
+        return response.data;
       },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "collections",
+          descriptor.projectId,
+          ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
+        ]);
+
+        return response.data;
+      },
+
       requestOptions
-    );
+    });
   }
 
   update(
@@ -124,21 +120,19 @@ export default class Collections extends Endpoint {
     collection: UpdatedCollection,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Collection>>(
-      {
-        api: async () => {
-          const response = await this.apiRequest(
-            `projects/${descriptor.projectId}/collections/${descriptor.collectionId}`,
-            {
-              method: "PUT",
-              body: collection
-            }
-          );
+    return this.configureRequest<Promise<Collection>>({
+      api: async () => {
+        const response = await this.apiRequest(
+          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}`,
+          {
+            method: "PUT",
+            body: collection
+          }
+        );
 
-          return response.data;
-        }
+        return response.data;
       },
       requestOptions
-    );
+    });
   }
 }

@@ -19,37 +19,33 @@ export default class Shares extends Endpoint {
     shareInput: ShareInput,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<T>>(
-      {
-        api: () => {
-          return this.apiRequest("share_links", {
-            method: "POST",
-            body: {
-              ...descriptor,
-              ...shareInput,
-              commitSha: (shareInput: any).sha
-            },
-            headers
-          });
-        }
+    return this.configureRequest<Promise<T>>({
+      api: () => {
+        return this.apiRequest("share_links", {
+          method: "POST",
+          body: {
+            ...descriptor,
+            ...shareInput,
+            commitSha: (shareInput: any).sha
+          },
+          headers
+        });
       },
       requestOptions
-    );
+    });
   }
 
   info<T: Share>(
     descriptor: ShareDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<T>>(
-      {
-        api: () => {
-          return this.apiRequest(`share_links/${inferShareId(descriptor)}`, {
-            headers
-          });
-        }
+    return this.configureRequest<Promise<T>>({
+      api: () => {
+        return this.apiRequest(`share_links/${inferShareId(descriptor)}`, {
+          headers
+        });
       },
       requestOptions
-    );
+    });
   }
 }

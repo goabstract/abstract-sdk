@@ -16,8 +16,7 @@ import {
 import type {
   ApiRequestOptions,
   CommandOptions,
-  RequestConfig,
-  RequestOptions
+  RequestConfig
 } from "../types";
 
 const logAPIRequest = log.extend("AbstractAPI:request");
@@ -35,13 +34,11 @@ export default class Endpoint {
     this.options = options;
   }
 
-  configureRequest<T>(
-    config: RequestConfig<T>,
-    requestOptions: RequestOptions = {}
-  ): T {
+  configureRequest<T>(config: RequestConfig<T>): T {
     const makeRequest = async () => {
       let response;
       const errors = {};
+      const requestOptions = config.requestOptions || {};
       const transportMode =
         requestOptions.transportMode || this.options.transportMode;
 
