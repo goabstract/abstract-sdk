@@ -1,6 +1,6 @@
 {
   "name": "abstract-sdk",
-  "version": "8.0.0-alpha.1",
+  "version": "7.0.1",
   "description": "Universal JavaScript bindings for the Abstract API and CLI",
   "keywords": [
     "abstract",

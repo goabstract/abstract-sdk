@@ -2,35 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [8.0.0-alpha.1](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-alpha.0...v8.0.0-alpha.1) (2019-12-20)
-
-
-### Bug Fixes
-
-* update changeset return value ([567741e](https://github.com/goabstract/abstract-sdk/commit/567741e))
-
-
-
-## [8.0.0-alpha.0](https://github.com/goabstract/abstract-sdk/compare/v7.0.0...v8.0.0-alpha.0) (2019-12-19)
-
-
-### Bug Fixes
-
-* do not bump api version for all endpoints ([f4ce3df](https://github.com/goabstract/abstract-sdk/commit/f4ce3df))
-* move js-sha256 from devDependencies to dependencies ([#178](https://github.com/goabstract/abstract-sdk/issues/178)) ([f9b93b3](https://github.com/goabstract/abstract-sdk/commit/f9b93b3))
-
-
-### Features
-
-* changeset.* return ChangesetResponse ([4d9c3e1](https://github.com/goabstract/abstract-sdk/commit/4d9c3e1))
-
-
-### BREAKING CHANGES
-
-* changeset.* return ChangesetResponse
-
-
-
 ### [7.0.1](https://github.com/goabstract/abstract-sdk/compare/v7.0.0...v7.0.1) (2019-12-16)
 
 
