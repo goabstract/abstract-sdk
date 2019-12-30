@@ -106,7 +106,7 @@
           "corejs": 2,
           "useBuiltIns": "usage",
           "targets": {
-            "node": 8
+            "node": 10
           },
           "exclude": [
             "transform-regenerator"
