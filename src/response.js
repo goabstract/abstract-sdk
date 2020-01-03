@@ -1,9 +1,11 @@
 // @flow
-export function wrap(value: any, response: any) {
-  value = Array.isArray(value) ? [...value] : { ...response };
+type Value = {} | [];
+type Envelope<T: Value> = T & { _response?: {} };
+
+export function wrap<T: Value>(value: Envelope<T>, response: {}): Envelope<T> {
   Object.defineProperty(value, "_response", {
     enumerable: false,
-    value: response
+    value: { ...response }
   });
   return value;
 }
