@@ -17,7 +17,7 @@ export default class Branches extends Endpoint {
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}`
         );
 
-        return wrap(response, response);
+        return wrap(response);
       },
 
       cli: async () => {
@@ -28,7 +28,7 @@ export default class Branches extends Endpoint {
           descriptor.branchId
         ]);
 
-        return wrap(response, response);
+        return wrap(response);
       },
 
       requestOptions
