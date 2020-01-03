@@ -23,4 +23,36 @@ describe("response", () => {
 
     expect(unwrap(response)).toEqual(rawResponse);
   });
+
+  test("unwraps full response - no extra data (array)", async () => {
+    const rawResponse = {
+      id: "branch-id"
+    };
+
+    mockAPI("/projects/project-id/branches/branch-id", rawResponse);
+
+    const response = await API_CLIENT.branches.info({
+      branchId: "branch-id",
+      projectId: "project-id"
+    });
+
+    expect(unwrap(response)).toEqual(rawResponse);
+  });
+
+  test("unwraps full response - no extra data (object)", async () => {
+    const rawResponse = [
+      {
+        id: "branch-id"
+      }
+    ];
+
+    mockAPI("/projects/project-id/branches/branch-id", rawResponse);
+
+    const response = await API_CLIENT.branches.info({
+      branchId: "branch-id",
+      projectId: "project-id"
+    });
+
+    expect(unwrap(response)).toEqual(rawResponse);
+  });
 });
