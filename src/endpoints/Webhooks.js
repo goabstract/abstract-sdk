@@ -11,6 +11,7 @@ import type {
   WebhookEvent
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Users extends Endpoint {
   list(
@@ -18,10 +19,11 @@ export default class Users extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Webhook[]>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks`
         );
+        return wrap(response);
       },
       requestOptions
     });
@@ -29,10 +31,11 @@ export default class Users extends Endpoint {
 
   info(descriptor: WebhookDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Webhook>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}`
         );
+        return wrap(response);
       },
       requestOptions
     });
@@ -43,10 +46,11 @@ export default class Users extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<WebhookEvent[]>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/events`
         );
+        return wrap(response);
       },
       requestOptions
     });
@@ -58,8 +62,8 @@ export default class Users extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Webhook>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/subscribe`,
           {
             method: "POST",
@@ -68,6 +72,7 @@ export default class Users extends Endpoint {
             }
           }
         );
+        return wrap(response);
       },
       requestOptions
     });
@@ -79,8 +84,8 @@ export default class Users extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Webhook>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/subscribe`,
           {
             method: "POST",
@@ -89,6 +94,7 @@ export default class Users extends Endpoint {
             }
           }
         );
+        return wrap(response);
       },
       requestOptions
     });
@@ -123,10 +129,11 @@ export default class Users extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<WebhookDelivery[]>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}/deliveries`
         );
+        return wrap(response);
       },
       requestOptions
     });

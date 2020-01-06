@@ -16,7 +16,6 @@ export default class Branches extends Endpoint {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}`
         );
-
         return wrap(response);
       },
 
@@ -27,7 +26,6 @@ export default class Branches extends Endpoint {
           descriptor.projectId,
           descriptor.branchId
         ]);
-
         return wrap(response);
       },
 

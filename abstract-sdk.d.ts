@@ -155,8 +155,8 @@ interface Branches extends Endpoint {
 }
 
 interface Changesets extends Endpoint {
-  branch(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<ChangesetResponse>;
-  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<ChangesetResponse>;
+  branch(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
+  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
 }
 
 interface CollectionLayers extends Endpoint {
@@ -177,12 +177,12 @@ interface Collections extends Endpoint {
   info(
     descriptor: CollectionDescriptor,
     options?: RequestOptions & { layersPerCollection?: number | "all" }
-  ): Promise<CollectionResponse>;
+  ): Promise<Collection>;
 
   list(
     descriptor: ProjectDescriptor | BranchDescriptor,
     options?: RequestOptions & { layersPerCollection?: number | "all" }
-  ): Promise<CollectionsResponse>;
+  ): Promise<Collection[]>;
 
   update(
     descriptor: CollectionDescriptor,
@@ -1114,15 +1114,6 @@ type SharedItem = {
   version: number
 };
 
-type ChangesetResponse = {
-  changeset: Changeset,
-  commit?: Commit,
-  files: File[],
-  layers: Layer[],
-  pages: Page[],
-  sharedData: SharedItem[]
-};
-
 type Page = {
   id: string,
   name: string,
@@ -1763,20 +1754,6 @@ type Asset = {
 interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
-
-type CollectionsResponse = {
-  collections: Collection[],
-  files: File[],
-  pages: Page[],
-  layers: Layer[]
-};
-
-type CollectionResponse = {
-  collection: Collection,
-  files: File[],
-  pages: Page[],
-  layers: Layer[]
-};
 
 type AccessToken = ?string | ShareDescriptor;
 type AccessTokenOption =

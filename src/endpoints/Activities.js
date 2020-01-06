@@ -11,12 +11,16 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Activities extends Endpoint {
   info(descriptor: ActivityDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Activity>>({
-      api: () => {
-        return this.apiRequest(`activities/${descriptor.activityId}`);
+      api: async () => {
+        const response = await this.apiRequest(
+          `activities/${descriptor.activityId}`
+        );
+        return wrap(response);
       },
       requestOptions
     });
@@ -41,7 +45,7 @@ export default class Activities extends Endpoint {
         },
         requestOptions
       }),
-      response => response.data.activities
+      response => wrap(response.data.activities, response)
     );
   }
 }

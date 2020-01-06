@@ -9,6 +9,7 @@ import type {
 import { NotFoundError } from "../errors";
 import { isNodeEnvironment } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
@@ -24,6 +25,7 @@ export default class Files extends Endpoint {
         if (!file) {
           throw new NotFoundError(`fileId=${latestDescriptor.fileId}`);
         }
+        wrap(file);
         return file;
       },
 

@@ -7,12 +7,14 @@ import type {
   UserDescriptor
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Users extends Endpoint {
   info(descriptor: UserDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<User>>({
-      api: () => {
-        return this.apiRequest(`users/${descriptor.userId}`);
+      api: async () => {
+        const response = await this.apiRequest(`users/${descriptor.userId}`);
+        return wrap(response);
       },
       requestOptions
     });
@@ -35,7 +37,7 @@ export default class Users extends Endpoint {
         }
 
         const response = await this.apiRequest(url);
-        return response.data.map(membership => membership.user);
+        return wrap(response.data.map(membership => membership.user), response);
       },
       requestOptions
     });

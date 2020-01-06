@@ -8,6 +8,7 @@ import type {
   ShareInput
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 const headers = {
   "Abstract-Api-Version": "13"
@@ -20,8 +21,8 @@ export default class Shares extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<T>>({
-      api: () => {
-        return this.apiRequest("share_links", {
+      api: async () => {
+        const response = await this.apiRequest("share_links", {
           method: "POST",
           body: {
             ...descriptor,
@@ -30,6 +31,7 @@ export default class Shares extends Endpoint {
           },
           headers
         });
+        return wrap(response);
       },
       requestOptions
     });
@@ -40,10 +42,14 @@ export default class Shares extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<T>>({
-      api: () => {
-        return this.apiRequest(`share_links/${inferShareId(descriptor)}`, {
-          headers
-        });
+      api: async () => {
+        const response = await this.apiRequest(
+          `share_links/${inferShareId(descriptor)}`,
+          {
+            headers
+          }
+        );
+        return wrap(response);
       },
       requestOptions
     });

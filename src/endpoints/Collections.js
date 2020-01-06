@@ -4,14 +4,13 @@ import type {
   BranchDescriptor,
   Collection,
   CollectionDescriptor,
-  CollectionResponse,
-  CollectionsResponse,
   NewCollection,
   ProjectDescriptor,
   RequestOptions,
   UpdatedCollection
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Collections extends Endpoint {
   create(
@@ -29,7 +28,7 @@ export default class Collections extends Endpoint {
           }
         );
 
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });
@@ -44,18 +43,13 @@ export default class Collections extends Endpoint {
   ) {
     const { layersPerCollection, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<CollectionResponse>>({
+    return this.configureRequest<Promise<Collection>>({
       api: async () => {
         const query = querystring.stringify({ layersPerCollection });
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
         );
-
-        const { collections, ...meta } = response.data;
-        return {
-          collection: collections[0],
-          ...meta
-        };
+        return wrap(response.data.collections[0], response);
       },
 
       cli: async () => {
@@ -65,12 +59,7 @@ export default class Collections extends Endpoint {
           descriptor.projectId,
           descriptor.collectionId
         ]);
-
-        const { collections, ...meta } = response.data;
-        return {
-          collection: collections[0],
-          ...meta
-        };
+        return wrap(response.data.collections[0], response);
       },
 
       requestOptions
@@ -86,7 +75,7 @@ export default class Collections extends Endpoint {
   ) {
     const { layersPerCollection, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<CollectionsResponse>>({
+    return this.configureRequest<Promise<Collection[]>>({
       api: async () => {
         const { projectId, ...sanitizedDescriptor } = descriptor;
         const query = querystring.stringify({
@@ -98,7 +87,7 @@ export default class Collections extends Endpoint {
           `projects/${projectId}/collections?${query}`
         );
 
-        return response.data;
+        return wrap(response.data.collections, response);
       },
 
       cli: async () => {
@@ -108,7 +97,7 @@ export default class Collections extends Endpoint {
           ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
         ]);
 
-        return response.data;
+        return wrap(response.data.collections, response);
       },
 
       requestOptions
@@ -130,7 +119,7 @@ export default class Collections extends Endpoint {
           }
         );
 
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });

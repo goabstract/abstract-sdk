@@ -5,6 +5,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Data extends Endpoint {
   async info(
@@ -16,14 +17,15 @@ export default class Data extends Endpoint {
     );
 
     return this.configureRequest<Promise<LayerDataset>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}/data`
         );
+        return wrap(response);
       },
 
-      cli: () => {
-        return this.cliRequest([
+      cli: async () => {
+        const response = await this.cliRequest([
           "layer",
           "data",
           latestDescriptor.projectId,
@@ -31,6 +33,7 @@ export default class Data extends Endpoint {
           latestDescriptor.fileId,
           latestDescriptor.layerId
         ]);
+        return wrap(response);
       },
 
       requestOptions

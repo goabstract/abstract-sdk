@@ -12,14 +12,16 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../response";
 
 export default class Assets extends Endpoint {
   info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Asset>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
         );
+        return wrap(response);
       },
       requestOptions
     });
@@ -41,7 +43,7 @@ export default class Assets extends Endpoint {
           `projects/${latestDescriptor.projectId}/assets?${query}`
         );
 
-        return response.data.assets;
+        return wrap(response.data.assets, response);
       },
       requestOptions
     });
@@ -65,7 +67,7 @@ export default class Assets extends Endpoint {
         },
         requestOptions
       }),
-      response => response.data
+      response => wrap(response.data, response)
     );
   }
 
