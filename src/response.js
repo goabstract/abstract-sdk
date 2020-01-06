@@ -1,8 +1,5 @@
 // @flow
-type Value = {} | [];
-type Envelope<T: Value> = T & { _response?: {} };
-
-export function wrap<T: Value>(value: Envelope<T>, response?: {}): Envelope<T> {
+export function wrap(value: any, response?: any) {
   response = response || value;
   Object.defineProperty(value, "_response", {
     enumerable: false,

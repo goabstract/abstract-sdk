@@ -24,8 +24,7 @@ export default class Files extends Endpoint {
         if (!file) {
           throw new NotFoundError(`fileId=${latestDescriptor.fileId}`);
         }
-        wrap(file);
-        return file;
+        return wrap(file);
       },
 
       cli: async () => {
@@ -36,7 +35,7 @@ export default class Files extends Endpoint {
           latestDescriptor.fileId
         ]);
 
-        return response.file;
+        return wrap(response.file, response);
       },
 
       requestOptions
@@ -57,7 +56,7 @@ export default class Files extends Endpoint {
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files`
         );
 
-        return response.files;
+        return wrap(response.files, response);
       },
 
       cli: async () => {
@@ -67,7 +66,7 @@ export default class Files extends Endpoint {
           latestDescriptor.sha
         ]);
 
-        return response.files;
+        return wrap(response.files, response);
       },
 
       requestOptions
