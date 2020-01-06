@@ -101,6 +101,7 @@ User-Agent: Abstract-Webhooks
       "description": null,
       "firstPushedAt": "2019-07-12T14:40:36Z",
       "id": "003a1ae0-a4b3-11e9-807c-a35b74e69da5",
+      "isNew": false,
       "name": "SDK Examples (edited)",
       "objectType": "project",
       "organizationId": "4ed01dff-4bc7-47cd-8b51-9ea3ec9e5de4",
