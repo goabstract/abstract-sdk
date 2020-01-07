@@ -51,7 +51,7 @@ export default class Client {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
-      assetUrl: "https://objects.goabstract.com",
+      objectUrl: "https://objects.goabstract.com",
       previewUrl: "https://previews.goabstract.com",
       transportMode: ["api"],
       webUrl: "https://app.goabstract.com",

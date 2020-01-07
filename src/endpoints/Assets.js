@@ -77,7 +77,7 @@ export default class Assets extends Endpoint {
     return this.configureRequest<Promise<ArrayBuffer>>({
       api: async () => {
         const asset = await this.info(descriptor);
-        const assetUrl = await this.options.assetUrl;
+        const assetUrl = await this.options.objectUrl;
         const assetPath = asset.url.replace(
           /^\S+:\/\/objects.goabstract.com\//,
           ""

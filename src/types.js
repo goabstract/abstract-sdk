@@ -124,7 +124,7 @@ export type AccessTokenOption =
 export type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
-  assetUrl: string | Promise<string>,
+  objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>

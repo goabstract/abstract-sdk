@@ -237,7 +237,7 @@ interface Descriptors extends Endpoint {
 interface Files extends Endpoint {
   info(descriptor: FileDescriptor, requestOptions: RequestOptions): Promise<File>;
   list(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<File[]>;
-  raw(descriptor: FileDescriptor, options?: RawOptions): Promise<void>;
+  raw(descriptor: FileDescriptor, options?: RawOptions): Promise<ArrayBuffer | void>;
 }
 
 interface Layers extends Endpoint {

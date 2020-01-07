@@ -1,4 +1,5 @@
 // @flow
+import { promises as fs } from "fs";
 import type {
   BranchCommitDescriptor,
   File,
@@ -6,9 +7,12 @@ import type {
   RawOptions,
   RequestOptions
 } from "../types";
-import { NotFoundError } from "../errors";
+import { FileExportError, NotFoundError } from "../errors";
 import { isNodeEnvironment, wrap } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
+
+const EXPORT_TIMEOUT = 2000;
+const MAX_EXPORT_DURATION = EXPORT_TIMEOUT * 15;
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
@@ -79,7 +83,67 @@ export default class Files extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<ArrayBuffer | void>>({
+      api: async () => {
+        const exportRequest = (exportId?: string) => {
+          return this.apiRequest(
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/export`,
+            {
+              method: "POST",
+              body: { ...latestDescriptor, export_id: exportId }
+            }
+          );
+        };
+
+        const file = await this.info(latestDescriptor);
+        let exportJob = await exportRequest();
+
+        const checkStatus = async (count: number) => {
+          exportJob = await exportRequest(exportJob.id);
+
+          if (exportJob.status === "complete") {
+            const fileUrl = await this.options.objectUrl;
+            const filePath = exportJob.downloadUrl.replace(
+              /^\S+:\/\/objects.goabstract.com\//,
+              ""
+            );
+
+            const arrayBuffer = await this.apiRequest(
+              filePath,
+              {
+                headers: {
+                  Accept: undefined,
+                  "Content-Type": undefined,
+                  "Abstract-Api-Version": undefined
+                }
+              },
+              {
+                customHostname: fileUrl,
+                raw: true
+              }
+            );
+
+            /* istanbul ignore if */
+            if (isNodeEnvironment() && !disableWrite) {
+              const diskLocation = filename || `${file.name}.sketch`;
+              fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
+            }
+
+            return arrayBuffer;
+          } else if (
+            count * EXPORT_TIMEOUT >= MAX_EXPORT_DURATION ||
+            exportJob.status === "failed"
+          ) {
+            throw new FileExportError(file.id, exportJob.id);
+          } else {
+            await new Promise(resolve => setTimeout(resolve, EXPORT_TIMEOUT));
+            return checkStatus(count++);
+          }
+        };
+
+        return checkStatus(0);
+      },
+
       cli: async () => {
         /* istanbul ignore if */
         if (!isNodeEnvironment() || disableWrite) {

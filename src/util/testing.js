@@ -22,7 +22,7 @@ function buildTextStream(text?: string): ReadableStream {
 export const CLIENT_CONFIG = {
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
-  assetUrl: "http://assetUrl",
+  objectUrl: "http://objectUrl",
   previewUrl: "http://previewUrl"
 };
 
@@ -86,5 +86,5 @@ export function mockAssetAPI(
   code: number = 200,
   method: string = "get"
 ) {
-  (nock("http://asseturl"): any)[method](url).reply(code, response);
+  (nock("http://objecturl"): any)[method](url).reply(code, response);
 }
