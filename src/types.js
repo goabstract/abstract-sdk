@@ -438,6 +438,7 @@ export type Project = {
   archivedAt: string,
   firstPushedAt: string,
   pushedAt: string,
+  isNew: boolean,
   repoCreatedAt: string,
   visibility: "organization" | "project",
   sizeInBytes: number

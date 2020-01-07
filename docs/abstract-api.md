@@ -1220,6 +1220,7 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 | `createdByUser`  | `User`   | The user that created the project                                             |
 | `firstPushedAt`  | `string` | Timestamp that the project first received data                                |
 | `id`             | `string` | UUID                                                                          |
+| `isNew`          | `boolean`| True if nobody has committed in this project yet                              |
 | `name`           | `string` | The name of the project                                                       |
 | `organizationId` | `string` | UUID of the organization this project belongs to                              |
 | `pushedAt`       | `string` | Timestamp that data was last received                                         |
