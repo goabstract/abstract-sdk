@@ -7,7 +7,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
+import { wrap } from "../util/helpers";
 
 const headers = {
   "Abstract-Api-Version": "13"

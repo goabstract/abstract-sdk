@@ -10,7 +10,7 @@ import type {
   UpdatedCollection
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
+import { wrap } from "../util/helpers";
 
 export default class Collections extends Endpoint {
   create(

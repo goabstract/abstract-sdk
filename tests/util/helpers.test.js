@@ -1,5 +1,6 @@
 // @flow
 import * as utils from "../../src/util/helpers";
+import { API_CLIENT } from "../../src/util/testing";
 
 describe("helpers", () => {
   test("inferShareId", () => {
@@ -21,5 +22,11 @@ describe("helpers", () => {
 
   test("isNodeEnvironment", () => {
     expect(utils.isNodeEnvironment()).toBe(true);
+  });
+
+  test("wrap", () => {
+    const value = { foo: "bar" };
+    const response = { ...value, baz: "qux" };
+    expect(API_CLIENT.unwrap(utils.wrap(value, response))).toEqual(response);
   });
 });

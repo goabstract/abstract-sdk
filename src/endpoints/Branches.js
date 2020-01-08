@@ -7,7 +7,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
+import { wrap } from "../util/helpers";
 
 export default class Branches extends Endpoint {
   info(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {

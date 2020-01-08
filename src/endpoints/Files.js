@@ -7,9 +7,8 @@ import type {
   RequestOptions
 } from "../types";
 import { NotFoundError } from "../errors";
-import { isNodeEnvironment } from "../util/helpers";
+import { isNodeEnvironment, wrap } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {

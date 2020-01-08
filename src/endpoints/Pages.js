@@ -7,7 +7,7 @@ import type {
 } from "../types";
 import { NotFoundError } from "../errors";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
+import { wrap } from "../util/helpers";
 
 export default class Pages extends Endpoint {
   async info(descriptor: PageDescriptor, requestOptions: RequestOptions = {}) {

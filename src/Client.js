@@ -82,4 +82,8 @@ export default class Client {
     this.users = new Users(this, options);
     this.webhooks = new Webhooks(this, options);
   }
+
+  unwrap(value: any) {
+    return value._response;
+  }
 }

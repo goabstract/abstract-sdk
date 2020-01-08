@@ -11,7 +11,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
+import { wrap } from "../util/helpers";
 
 export default class Activities extends Endpoint {
   info(descriptor: ActivityDescriptor, requestOptions: RequestOptions = {}) {

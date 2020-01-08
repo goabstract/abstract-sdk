@@ -1,5 +1,5 @@
 // @flow
-import { inferShareId } from "../util/helpers";
+import { inferShareId, wrap } from "../util/helpers";
 import type {
   OrganizationDescriptor,
   RequestOptions,
@@ -8,7 +8,6 @@ import type {
   ShareInput
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
 
 const headers = {
   "Abstract-Api-Version": "13"
