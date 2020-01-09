@@ -12,6 +12,7 @@
       "pagination",
       "webhooks",
       "webhooks-security",
+      "responses",
       "latest",
       "embed"
     ],
