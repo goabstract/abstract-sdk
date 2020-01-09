@@ -12,6 +12,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Comments extends Endpoint {
   async create(
@@ -40,10 +41,12 @@ export default class Comments extends Endpoint {
           commitSha: descriptor.sha || undefined
         };
 
-        return this.apiRequest("comments", {
+        const response = await this.apiRequest("comments", {
           method: "POST",
           body
         });
+
+        return wrap(response);
       },
       requestOptions
     });
@@ -51,8 +54,11 @@ export default class Comments extends Endpoint {
 
   info(descriptor: CommentDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Comment>>({
-      api: () => {
-        return this.apiRequest(`comments/${descriptor.commentId}`);
+      api: async () => {
+        const response = await this.apiRequest(
+          `comments/${descriptor.commentId}`
+        );
+        return wrap(response);
       },
       requestOptions
     });
@@ -86,7 +92,7 @@ export default class Comments extends Endpoint {
         },
         requestOptions
       }),
-      response => response.data
+      response => wrap(response.data, response)
     );
   }
 }

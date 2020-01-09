@@ -8,6 +8,7 @@ import type {
   UpdatedCollectionLayer
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class CollectionLayers extends Endpoint {
   add(
@@ -27,7 +28,7 @@ export default class CollectionLayers extends Endpoint {
           }
         );
 
-        return response;
+        return wrap(response);
       },
       requestOptions
     });
@@ -56,7 +57,7 @@ export default class CollectionLayers extends Endpoint {
           }
         );
 
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });
@@ -67,15 +68,13 @@ export default class CollectionLayers extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<void>>({
-      api: async () => {
-        const response = await this.apiRequest(
+      api: () => {
+        return this.apiRequest(
           `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,
           {
             method: "DELETE"
           }
         );
-
-        return response;
       },
 
       requestOptions
@@ -97,7 +96,7 @@ export default class CollectionLayers extends Endpoint {
           }
         );
 
-        return response;
+        return wrap(response);
       },
       requestOptions
     });
@@ -118,7 +117,7 @@ export default class CollectionLayers extends Endpoint {
           }
         );
 
-        return response;
+        return wrap(response);
       },
       requestOptions
     });

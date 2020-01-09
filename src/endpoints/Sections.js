@@ -1,6 +1,7 @@
 // @flow
 import type { OrganizationDescriptor, RequestOptions, Section } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Sections extends Endpoint {
   list(
@@ -13,7 +14,7 @@ export default class Sections extends Endpoint {
           `sections?organizationId=${descriptor.organizationId}`
         );
 
-        return response;
+        return wrap(response);
       },
       requestOptions
     });

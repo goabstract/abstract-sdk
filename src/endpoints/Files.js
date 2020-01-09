@@ -7,7 +7,7 @@ import type {
   RequestOptions
 } from "../types";
 import { NotFoundError } from "../errors";
-import { isNodeEnvironment } from "../util/helpers";
+import { isNodeEnvironment, wrap } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Files extends Endpoint {
@@ -24,6 +24,7 @@ export default class Files extends Endpoint {
         if (!file) {
           throw new NotFoundError(`fileId=${latestDescriptor.fileId}`);
         }
+        wrap(file);
         return file;
       },
 

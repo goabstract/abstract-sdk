@@ -1,5 +1,5 @@
 // @flow
-import { inferShareId } from "../util/helpers";
+import { inferShareId, wrap } from "../util/helpers";
 import type {
   OrganizationDescriptor,
   RequestOptions,
@@ -20,8 +20,8 @@ export default class Shares extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<T>>({
-      api: () => {
-        return this.apiRequest("share_links", {
+      api: async () => {
+        const response = await this.apiRequest("share_links", {
           method: "POST",
           body: {
             ...descriptor,
@@ -30,6 +30,7 @@ export default class Shares extends Endpoint {
           },
           headers
         });
+        return wrap(response);
       },
       requestOptions
     });
@@ -40,10 +41,14 @@ export default class Shares extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<T>>({
-      api: () => {
-        return this.apiRequest(`share_links/${inferShareId(descriptor)}`, {
-          headers
-        });
+      api: async () => {
+        const response = await this.apiRequest(
+          `share_links/${inferShareId(descriptor)}`,
+          {
+            headers
+          }
+        );
+        return wrap(response);
       },
       requestOptions
     });

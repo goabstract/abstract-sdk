@@ -7,6 +7,7 @@ import type {
 } from "../types";
 import { NotFoundError } from "../errors";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Pages extends Endpoint {
   async info(descriptor: PageDescriptor, requestOptions: RequestOptions = {}) {
@@ -22,7 +23,7 @@ export default class Pages extends Endpoint {
         if (!page) {
           throw new NotFoundError(`pageId=${pageId}`);
         }
-        return page;
+        return wrap(page);
       },
 
       cli: async () => {
@@ -32,7 +33,7 @@ export default class Pages extends Endpoint {
         if (!page) {
           throw new NotFoundError(`pageId=${pageId}`);
         }
-        return page;
+        return wrap(page);
       },
 
       requestOptions
@@ -50,7 +51,7 @@ export default class Pages extends Endpoint {
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/pages`
         );
 
-        return response.pages;
+        return wrap(response.pages, response);
       },
 
       cli: async () => {
@@ -60,7 +61,7 @@ export default class Pages extends Endpoint {
           latestDescriptor.sha
         ]);
 
-        return response.pages;
+        return wrap(response.pages, response);
       },
 
       requestOptions

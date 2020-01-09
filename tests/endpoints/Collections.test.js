@@ -54,9 +54,7 @@ describe("collections", () => {
       });
 
       expect(response).toEqual({
-        collection: {
-          id: "collection-id"
-        }
+        id: "collection-id"
       });
     });
 
@@ -77,9 +75,7 @@ describe("collections", () => {
       });
 
       expect(response).toEqual({
-        collection: {
-          id: "collection-id"
-        }
+        id: "collection-id"
       });
     });
   });
@@ -101,13 +97,11 @@ describe("collections", () => {
         branchId: "branch-id"
       });
 
-      expect(response).toEqual({
-        collections: [
-          {
-            id: "collection-id"
-          }
-        ]
-      });
+      expect(response).toEqual([
+        {
+          id: "collection-id"
+        }
+      ]);
     });
 
     test("cli", async () => {
@@ -126,13 +120,11 @@ describe("collections", () => {
         branchId: "branch-id"
       });
 
-      expect(response).toEqual({
-        collections: [
-          {
-            id: "collection-id"
-          }
-        ]
-      });
+      expect(response).toEqual([
+        {
+          id: "collection-id"
+        }
+      ]);
     });
 
     test("cli - no branch id", async () => {
@@ -150,13 +142,11 @@ describe("collections", () => {
         projectId: "project-id"
       });
 
-      expect(response).toEqual({
-        collections: [
-          {
-            id: "collection-id"
-          }
-        ]
-      });
+      expect(response).toEqual([
+        {
+          id: "collection-id"
+        }
+      ]);
     });
   });
 

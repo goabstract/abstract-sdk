@@ -8,6 +8,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Notifications extends Endpoint {
   info(
@@ -15,8 +16,11 @@ export default class Notifications extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Notification>>({
-      api: () => {
-        return this.apiRequest(`notifications/${descriptor.notificationId}`);
+      api: async () => {
+        const response = await this.apiRequest(
+          `notifications/${descriptor.notificationId}`
+        );
+        return wrap(response);
       },
       requestOptions
     });
@@ -38,7 +42,7 @@ export default class Notifications extends Endpoint {
         },
         requestOptions
       }),
-      response => response.data
+      response => wrap(response.data, response)
     );
   }
 }

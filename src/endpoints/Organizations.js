@@ -5,6 +5,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Organizations extends Endpoint {
   info(
@@ -17,7 +18,7 @@ export default class Organizations extends Endpoint {
           `organizations/${descriptor.organizationId}`
         );
 
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });
@@ -27,7 +28,7 @@ export default class Organizations extends Endpoint {
     return this.configureRequest<Promise<Organization[]>>({
       api: async () => {
         const response = await this.apiRequest("organizations");
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });

@@ -7,6 +7,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 const headers = {
   "Abstract-Api-Version": "13"
@@ -21,7 +22,7 @@ export default class Projects extends Endpoint {
           { headers }
         );
 
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });
@@ -54,7 +55,7 @@ export default class Projects extends Endpoint {
           );
         }
 
-        return response.data.projects;
+        return wrap(response.data.projects, response);
       },
       requestOptions
     });

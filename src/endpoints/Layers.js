@@ -9,6 +9,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Layers extends Endpoint {
   async info(
@@ -25,11 +26,7 @@ export default class Layers extends Endpoint {
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
         );
 
-        return {
-          ...response.layer,
-          _file: response.file,
-          _page: response.page
-        };
+        return wrap(response.layer, response);
       },
 
       cli: async () => {
@@ -42,7 +39,7 @@ export default class Layers extends Endpoint {
           latestDescriptor.layerId
         ]);
 
-        return response.layer;
+        return wrap(response.layer, response);
       },
 
       requestOptions
@@ -70,7 +67,7 @@ export default class Layers extends Endpoint {
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/layers?${query}`
         );
 
-        return response.layers;
+        return wrap(response.layers, response);
       },
 
       cli: async () => {
@@ -81,7 +78,7 @@ export default class Layers extends Endpoint {
           latestDescriptor.fileId
         ]);
 
-        return response.layers;
+        return wrap(response.layers, response);
       },
 
       requestOptions

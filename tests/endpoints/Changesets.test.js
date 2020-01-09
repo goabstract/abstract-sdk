@@ -21,9 +21,7 @@ describe("commit", () => {
     });
 
     expect(response).toEqual({
-      changeset: {
-        id: "changeset-id"
-      }
+      id: "changeset-id"
     });
   });
 
@@ -44,9 +42,7 @@ describe("commit", () => {
     });
 
     expect(response).toEqual({
-      changeset: {
-        id: "changeset-id"
-      }
+      id: "changeset-id"
     });
   });
 });
@@ -65,9 +61,7 @@ describe("branch", () => {
     });
 
     expect(response).toEqual({
-      changeset: {
-        id: "changeset-id"
-      }
+      id: "changeset-id"
     });
   });
 
@@ -84,9 +78,7 @@ describe("branch", () => {
     });
 
     expect(response).toEqual({
-      changeset: {
-        id: "changeset-id"
-      }
+      id: "changeset-id"
     });
   });
 });

@@ -7,23 +7,26 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Branches extends Endpoint {
   info(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Branch>>({
-      api: () => {
-        return this.apiRequest(
+      api: async () => {
+        const response = await this.apiRequest(
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}`
         );
+        return wrap(response);
       },
 
-      cli: () => {
-        return this.cliRequest([
+      cli: async () => {
+        const response = await this.cliRequest([
           "branch",
           "load",
           descriptor.projectId,
           descriptor.branchId
         ]);
+        return wrap(response);
       },
 
       requestOptions
@@ -47,7 +50,7 @@ export default class Branches extends Endpoint {
           `projects/${descriptor.projectId}/branches/?${query}`
         );
 
-        return response.data.branches;
+        return wrap(response.data.branches, response);
       },
 
       cli: async () => {
@@ -57,7 +60,7 @@ export default class Branches extends Endpoint {
           ...(filter ? ["--filter", filter] : [])
         ]);
 
-        return response.branches;
+        return wrap(response.branches, response);
       },
 
       requestOptions

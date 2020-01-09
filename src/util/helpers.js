@@ -34,3 +34,12 @@ export function isNodeEnvironment(): boolean {
     process.versions.node !== undefined
   );
 }
+
+export function wrap(value: any, response?: any) {
+  response = response || value;
+  Object.defineProperty(value, "_response", {
+    enumerable: false,
+    value: Array.isArray(response) ? [...response] : { ...(response: {}) }
+  });
+  return value;
+}

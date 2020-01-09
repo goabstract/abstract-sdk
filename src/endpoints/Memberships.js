@@ -8,6 +8,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Memberships extends Endpoint {
   info(
@@ -27,7 +28,7 @@ export default class Memberships extends Endpoint {
         }
 
         const response = await this.apiRequest(url);
-        return response.data.projectMembership || response.data;
+        return wrap(response.data.projectMembership || response.data, response);
       },
       requestOptions
     });
@@ -50,7 +51,7 @@ export default class Memberships extends Endpoint {
         }
 
         const response = await this.apiRequest(url);
-        return response.data;
+        return wrap(response.data, response);
       },
       requestOptions
     });

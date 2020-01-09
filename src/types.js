@@ -904,15 +904,6 @@ export type Layer = {
   order: number
 };
 
-export type ChangesetResponse = {
-  changeset: Changeset,
-  commit?: Commit,
-  files: File[],
-  layers: Layer[],
-  pages: Page[],
-  sharedData: SharedItem[]
-};
-
 export type LayerBlendModeNormal = 0;
 export type LayerBlendModeDarken = 1;
 export type LayerBlendModeMultiply = 2;
@@ -1522,20 +1513,6 @@ export type Asset = {
   scale: string,
   sha: string,
   url: string
-};
-
-export type CollectionsResponse = {
-  collections: Collection[],
-  files: File[],
-  pages: Page[],
-  layers: Layer[]
-};
-
-export type CollectionResponse = {
-  collection: Collection,
-  files: File[],
-  pages: Page[],
-  layers: Layer[]
 };
 
 export type Section = {

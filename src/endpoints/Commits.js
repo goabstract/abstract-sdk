@@ -11,6 +11,7 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 
 export default class Commits extends Endpoint {
   info(
@@ -22,16 +23,17 @@ export default class Commits extends Endpoint {
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<Commit>>({
-      api: () => {
+      api: async () => {
         // loading commits with a share token requires a branchId so this
         // route is maintained for that circumstance
-        return descriptor.branchId
+        const response = descriptor.branchId
           ? this.apiRequest(
               `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits/${descriptor.sha}`
             )
           : this.apiRequest(
               `projects/${descriptor.projectId}/commits/${descriptor.sha}`
             );
+        return wrap(response);
       },
 
       cli: async () => {
@@ -41,7 +43,7 @@ export default class Commits extends Endpoint {
           descriptor.sha
         ]);
 
-        return response.commit;
+        return wrap(response.commit, response);
       },
 
       requestOptions
@@ -73,7 +75,7 @@ export default class Commits extends Endpoint {
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}/commits?${query}`
         );
 
-        return response.commits;
+        return wrap(response.commits, response);
       },
 
       cli: async () => {
@@ -88,7 +90,7 @@ export default class Commits extends Endpoint {
           ...(options.limit ? ["--limit", options.limit.toString()] : [])
         ]);
 
-        return response.commits;
+        return wrap(response.commits, response);
       },
 
       requestOptions
