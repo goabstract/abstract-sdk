@@ -12,7 +12,6 @@ import type {
   RequestOptions
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
 
 export default class Assets extends Endpoint {
   info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {

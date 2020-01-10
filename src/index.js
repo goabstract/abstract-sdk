@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 import Client from "./Client";
 import { paginate } from "./paginate";
-import { unwrap } from "./response";
 import * as sketch from "./sketch";
 import {
   BaseError,
@@ -33,8 +32,7 @@ export {
   UnauthorizedError,
   // Utilities
   paginate,
-  sketch,
-  unwrap
+  sketch
 };
 
 export type * from "./types";

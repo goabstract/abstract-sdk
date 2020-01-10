@@ -141,7 +141,7 @@ describe("files", () => {
         ]
       });
 
-      [...Array(2)].map(() => {
+      [...Array(2)].forEach(() => {
         mockAPI(
           "/projects/project-id/branches/branch-id/files/file-id/export",
           {
@@ -194,7 +194,7 @@ describe("files", () => {
         ]
       });
 
-      [...Array(20)].map(() => {
+      [...Array(20)].forEach(() => {
         mockAPI(
           "/projects/project-id/branches/branch-id/files/file-id/export",
           {

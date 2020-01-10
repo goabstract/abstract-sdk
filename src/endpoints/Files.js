@@ -137,7 +137,7 @@ export default class Files extends Endpoint {
             throw new FileExportError(file.id, exportJob.id);
           } else {
             await new Promise(resolve => setTimeout(resolve, EXPORT_TIMEOUT));
-            return checkStatus(count++);
+            return checkStatus(count + 1);
           }
         };
 

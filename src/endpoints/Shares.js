@@ -8,7 +8,6 @@ import type {
   ShareInput
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../response";
 
 const headers = {
   "Abstract-Api-Version": "13"
