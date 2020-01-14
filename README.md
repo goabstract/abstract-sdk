@@ -7,7 +7,7 @@ The Abstract SDK provides universal JavaScript bindings for both the Abstract AP
 
 ## Installation
 
-The SDK is available as a Node.js module available via the public NPM registry. An underlying Node.js version of `8.0.0` or higher is required.
+The SDK is available as a Node.js module available via the public NPM registry. An underlying Node.js version of `10.0.0` or higher is required.
 
 ```sh
 npm install abstract-sdk
