@@ -10,7 +10,9 @@ describe("branches", () => {
   describe("info", () => {
     test("api", async () => {
       mockAPI("/projects/project-id/branches/branch-id", {
-        id: "branch-id"
+        data: {
+          id: "branch-id"
+        }
       });
 
       const response = await API_CLIENT.branches.info({
