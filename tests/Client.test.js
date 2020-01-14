@@ -249,11 +249,11 @@ describe("Client", () => {
       id: "branch-id"
     };
 
-    mockAPI("/projects/project-id/branches/branch-id", rawResponse);
+    mockAPI("/projects/project-id/commits/123", rawResponse);
 
-    const response = await API_CLIENT.branches.info({
-      branchId: "branch-id",
-      projectId: "project-id"
+    const response = await API_CLIENT.commits.info({
+      projectId: "project-id",
+      sha: "123"
     });
 
     expect(API_CLIENT.unwrap(response)).toEqual(rawResponse);
@@ -266,11 +266,11 @@ describe("Client", () => {
       }
     ];
 
-    mockAPI("/projects/project-id/branches/branch-id", rawResponse);
+    mockAPI("/projects/project-id/commits/123", rawResponse);
 
-    const response = await API_CLIENT.branches.info({
-      branchId: "branch-id",
-      projectId: "project-id"
+    const response = await API_CLIENT.commits.info({
+      projectId: "project-id",
+      sha: "123"
     });
 
     expect(API_CLIENT.unwrap(response)).toEqual(rawResponse);

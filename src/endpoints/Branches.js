@@ -9,14 +9,22 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
+// Version 17 returns policies for branches
+const headers = {
+  "Abstract-Api-Version": "17"
+};
+
 export default class Branches extends Endpoint {
   info(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Branch>>({
       api: async () => {
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/${descriptor.branchId}`
+          `projects/${descriptor.projectId}/branches/${descriptor.branchId}`,
+          {
+            headers
+          }
         );
-        return wrap(response);
+        return wrap(response.data, response);
       },
 
       cli: async () => {
@@ -47,7 +55,10 @@ export default class Branches extends Endpoint {
         const query = querystring.stringify({ filter });
 
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/?${query}`
+          `projects/${descriptor.projectId}/branches/?${query}`,
+          {
+            headers
+          }
         );
 
         return wrap(response.data.branches, response);
