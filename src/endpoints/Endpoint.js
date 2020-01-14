@@ -1,5 +1,6 @@
 /* @flow */
 /* global fetch */
+import { Readable } from "stream";
 import "cross-fetch/polyfill";
 import { spawn } from "child_process";
 import uuid from "uuid/v4";
@@ -19,6 +20,7 @@ import type {
   RequestConfig
 } from "../types";
 
+const cliPath = require("@elasticprojects/abstract-cli");
 const logAPIRequest = log.extend("AbstractAPI:request");
 const logAPIResponse = log.extend("AbstractAPI:response");
 const logCLIRequest = log.extend("AbstractCLI:request");
@@ -80,7 +82,7 @@ export default class Endpoint {
     fetchOptions: Object = {},
     apiOptions: ApiRequestOptions = {}
   ) {
-    const { customHostname, raw } = apiOptions;
+    const { customHostname, raw, onProgress } = apiOptions;
     const hostname = customHostname || (await this.options.apiUrl);
 
     fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
@@ -96,6 +98,36 @@ export default class Endpoint {
       return (undefined: any);
     }
 
+    if (onProgress) {
+      const totalSize = Number(response.headers.get("Content-Length"));
+      let receivedSize = 0;
+      const body = await response.body;
+      // Node environments using cross-fetch polyfill
+      /* istanbul ignore else */
+      if (body instanceof Readable) {
+        body.on("readable", () => {
+          let chunk;
+          while ((chunk = body.read())) {
+            receivedSize += chunk.length;
+            onProgress(receivedSize, totalSize);
+          }
+        });
+        // Browser environments using native fetch
+      } else if (body) {
+        const reader = body.getReader();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (value) {
+            receivedSize += value.length;
+            onProgress(receivedSize, totalSize);
+          }
+          if (done) {
+            break;
+          }
+        }
+      }
+    }
+
     // prettier-ignore
     const apiValue: any = await (raw ? response.arrayBuffer() : response.json());
     const logValue = raw ? apiValue.toString() : apiValue;
@@ -108,7 +140,6 @@ export default class Endpoint {
 
   async cliRequest(args: string[]) {
     const token = await this._getAccessToken();
-    const cliPath = require("@elasticprojects/abstract-cli");
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 
     const spawnArgs = [

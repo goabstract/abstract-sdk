@@ -80,11 +80,12 @@ export function mockPreviewAPI(
   (nock("http://previewurl"): any)[method](url).reply(code, response);
 }
 
-export function mockAssetAPI(
+export function mockObjectAPI(
   url: string,
   response: Object,
   code: number = 200,
   method: string = "get"
 ) {
-  (nock("http://objecturl"): any)[method](url).reply(code, response);
+  const base = (nock("http://objecturl"): any).replyContentLength();
+  base[method](url).reply(code, response);
 }

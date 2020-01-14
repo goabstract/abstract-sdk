@@ -1,6 +1,6 @@
 // @flow
 import {
-  mockAssetAPI,
+  mockObjectAPI,
   mockAPI,
   mockCLI,
   API_CLIENT,
@@ -132,7 +132,7 @@ describe("files", () => {
       global.setTimeout = globalSetTimeout;
     });
 
-    test("api - node", async () => {
+    test("api - node with progress", async () => {
       mockAPI("/projects/project-id/branches/branch-id/files", {
         files: [
           {
@@ -163,7 +163,7 @@ describe("files", () => {
         "post"
       );
 
-      mockAssetAPI("/file", {
+      mockObjectAPI("/file", {
         id: "file-id"
       });
 
@@ -175,7 +175,11 @@ describe("files", () => {
           sha: "sha"
         },
         {
-          disableWrite: true
+          disableWrite: true,
+          onProgress: (received, total) => {
+            expect(received).toBe(16);
+            expect(total).toBe(16);
+          }
         }
       );
 

@@ -237,7 +237,7 @@ interface Descriptors extends Endpoint {
 interface Files extends Endpoint {
   info(descriptor: FileDescriptor, requestOptions: RequestOptions): Promise<File>;
   list(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<File[]>;
-  raw(descriptor: FileDescriptor, options?: RawOptions): Promise<ArrayBuffer | void>;
+  raw(descriptor: FileDescriptor, options?: RawProgressOptions): Promise<ArrayBuffer | void>;
 }
 
 interface Layers extends Endpoint {
@@ -1851,11 +1851,18 @@ type RequestConfig<T> = {
   cli?: () => T
 };
 
+type ProgressCallback = (receivedBytes: number, totalBytes: number) => void;
+
 type ApiRequestOptions = {
   customHostname?: string,
-  raw?: boolean
+  raw?: boolean,
+  onProgress?: ProgressCallback
 };
 
 type RequestOptions = {
   transportMode?: ("api" | "cli")[]
+};
+
+type RawProgressOptions = RawOptions & {
+  onProgress?: ProgressCallback
 };

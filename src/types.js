@@ -88,9 +88,15 @@ export type ErrorMap = {
   [mode: string]: Error
 };
 
+export type ProgressCallback = (
+  receivedBytes: number,
+  totalBytes: number
+) => void;
+
 export type ApiRequestOptions = {
   customHostname?: string,
-  raw?: boolean
+  raw?: boolean,
+  onProgress?: ProgressCallback
 };
 
 export type RequestOptions = {
@@ -113,6 +119,11 @@ export type RawOptions = {
   ...RequestOptions,
   disableWrite?: boolean,
   filename?: string
+};
+
+export type RawProgressOptions = {
+  ...RawOptions,
+  onProgress?: ProgressCallback
 };
 
 export type AccessToken = ?string | ShareDescriptor;

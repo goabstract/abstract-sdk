@@ -1,5 +1,5 @@
 // @flow
-import { mockAPI, mockAssetAPI, API_CLIENT } from "../../src/util/testing";
+import { mockAPI, mockObjectAPI, API_CLIENT } from "../../src/util/testing";
 
 describe("assets", () => {
   describe("info", () => {
@@ -35,7 +35,7 @@ describe("assets", () => {
         url: "https://objects.goabstract.com/foo"
       });
 
-      mockAssetAPI("/foo", {
+      mockObjectAPI("/foo", {
         id: "asset-id"
       });
 
@@ -62,7 +62,7 @@ describe("assets", () => {
         url: "https://objects.goabstract.com/foo"
       });
 
-      mockAssetAPI("/foo", {
+      mockObjectAPI("/foo", {
         id: "asset-id"
       });
 

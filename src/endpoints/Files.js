@@ -4,7 +4,7 @@ import type {
   BranchCommitDescriptor,
   File,
   FileDescriptor,
-  RawOptions,
+  RawProgressOptions,
   RequestOptions
 } from "../types";
 import { FileExportError, NotFoundError } from "../errors";
@@ -77,8 +77,8 @@ export default class Files extends Endpoint {
     });
   }
 
-  async raw(descriptor: FileDescriptor, options: RawOptions = {}) {
-    const { disableWrite, filename, ...requestOptions } = options;
+  async raw(descriptor: FileDescriptor, options: RawProgressOptions = {}) {
+    const { disableWrite, filename, onProgress, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -119,7 +119,8 @@ export default class Files extends Endpoint {
               },
               {
                 customHostname: fileUrl,
-                raw: true
+                raw: true,
+                onProgress
               }
             );
 
