@@ -8,6 +8,7 @@ import type {
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
+import { BranchSearchCLIError } from "../errors";
 
 // Version 17 returns policies for branches
 const headers = {
@@ -42,29 +43,30 @@ export default class Branches extends Endpoint {
   }
 
   list(
-    descriptor: ProjectDescriptor,
+    descriptor?: ProjectDescriptor,
     options: {
       ...RequestOptions,
-      filter?: "active" | "archived" | "mine"
+      filter?: "active" | "archived" | "mine",
+      search?: string
     } = {}
   ) {
-    const { filter, ...requestOptions } = options;
+    const { filter, search, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Branch[]>>({
       api: async () => {
-        const query = querystring.stringify({ filter });
+        const query = querystring.stringify({ filter, search });
+        const requestUrl = descriptor
+          ? `projects/${descriptor.projectId}/branches/?${query}`
+          : `branches/?${query}`;
 
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/?${query}`,
-          {
-            headers
-          }
-        );
-
+        const response = await this.apiRequest(requestUrl, { headers });
         return wrap(response.data.branches, response);
       },
 
       cli: async () => {
+        if (!descriptor) {
+          throw new BranchSearchCLIError();
+        }
         const response = await this.cliRequest([
           "branches",
           descriptor.projectId,

@@ -30,6 +30,14 @@ export class FileAPIError extends BaseError {
   }
 }
 
+export class BranchSearchCLIError extends BaseError {
+  constructor() {
+    super(
+      "This method requires a ProjectDescriptor when using the CLI transport."
+    );
+  }
+}
+
 export class EndpointUndefinedError extends BaseError {
   constructor(transport: string) {
     super(`Endpoint not defined in ${transport} transport.`);

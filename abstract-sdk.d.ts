@@ -149,8 +149,8 @@ interface Assets extends Endpoint {
 interface Branches extends Endpoint {
   info(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<Branch>;
   list(
-    descriptor: ProjectDescriptor,
-    options?: RequestOptions & { filter?: "active" | "archived" | "mine" }
+    descriptor?: ProjectDescriptor,
+    options?: RequestOptions & { filter?: "active" | "archived" | "mine", search?: string }
   ): Promise<Branch[]>;
 }
 
