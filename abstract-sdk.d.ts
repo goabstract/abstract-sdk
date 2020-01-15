@@ -240,11 +240,16 @@ interface Files extends Endpoint {
   raw(descriptor: FileDescriptor, options?: RawOptions): Promise<void>;
 }
 
+type LayersListOptions = ListOptions & {
+  excludeLibraryDependencies?: boolean,
+  onlyLibraryDependencies?: boolean,
+}
+
 interface Layers extends Endpoint {
   info(descriptor: LayerVersionDescriptor, requestOptions: RequestOptions): Promise<Layer>;
   list(
     descriptor: FileDescriptor | PageDescriptor,
-    options?: ListOptions
+    options?: LayersListOptions
   ): Promise<Layer[]>;
 }
 
