@@ -54,16 +54,13 @@ describe("layers", () => {
 
   describe("list", () => {
     test("api", async () => {
-      mockAPI(
-        "/projects/project-id/branches/branch-id/files/file-id/layers?branchId=branch-id&fileId=file-id&projectId=project-id&sha=sha",
-        {
-          layers: [
-            {
-              id: "layer-id"
-            }
-          ]
-        }
-      );
+      mockAPI("/projects/project-id/branches/branch-id/files/file-id/layers?", {
+        layers: [
+          {
+            id: "layer-id"
+          }
+        ]
+      });
 
       const response = await API_CLIENT.layers.list({
         branchId: "branch-id",
