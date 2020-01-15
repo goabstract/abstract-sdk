@@ -214,7 +214,7 @@ to be created for logical chunks of work – for example designing a new feature
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.list(ProjectDescriptor, { ...RequestOptions, filter?: "active" | "archived" | "mine" }): Promise<Branch[]>`
+`branches.list(ProjectDescriptor, { ...RequestOptions, filter?: "active" | "archived" | "mine", search?: string }): Promise<Branch[]>`
 
 List the active branches for a project
 
@@ -225,6 +225,16 @@ abstract.branches.list({
   filter: "active"
 });
 ```
+
+Search for a branch by name across all projects 
+
+```js
+abstract.branches.list(undefined, {
+  search: "branch name"
+});
+```
+
+> Note: Searching for branches is only available when using the [API transport](/docs/transports).
 
 ### Retrieve a branch
 

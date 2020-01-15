@@ -5,6 +5,7 @@ import {
   API_CLIENT,
   CLI_CLIENT
 } from "../../src/util/testing";
+import { BranchSearchCLIError } from "../../src/errors";
 
 describe("branches", () => {
   describe("info", () => {
@@ -91,6 +92,28 @@ describe("branches", () => {
       ]);
     });
 
+    test("api - list", async () => {
+      mockAPI("/branches/?search=foo", {
+        data: {
+          branches: [
+            {
+              id: "branch-id"
+            }
+          ]
+        }
+      });
+
+      const response = await API_CLIENT.branches.list(undefined, {
+        search: "foo"
+      });
+
+      expect(response).toEqual([
+        {
+          id: "branch-id"
+        }
+      ]);
+    });
+
     test("cli", async () => {
       mockCLI(["branches", "project-id"], {
         branches: [
@@ -134,6 +157,14 @@ describe("branches", () => {
           id: "branch-id"
         }
       ]);
+    });
+
+    test("cli - no descriptor", async () => {
+      try {
+        await CLI_CLIENT.branches.list(undefined);
+      } catch (error) {
+        expect(error.errors.cli).toBeInstanceOf(BranchSearchCLIError);
+      }
     });
   });
 });
