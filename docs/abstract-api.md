@@ -851,7 +851,7 @@ A layer is a container for designs. In Sketch a layer usually represents an artb
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`layers.list(FileDescriptor | PageDescriptor, ListOptions): Promise<Layer[]>`
+`layers.list(FileDescriptor | PageDescriptor, LayersListOptions): Promise<Layer[]>`
 
 List the layers for a file at a commit
 
@@ -875,7 +875,9 @@ abstract.layers.list({
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
 }, {
   limit: 25,
-  offset: 0
+  offset: 0,
+  excludeLibraryDependencies: false,
+  onlyLibraryDependencies: false
 });
 ```
 
