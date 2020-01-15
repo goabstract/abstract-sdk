@@ -42,32 +42,43 @@ export default class Branches extends Endpoint {
   }
 
   list(
-    descriptor: ProjectDescriptor,
+    descriptor: ?ProjectDescriptor,
     options: {
       ...RequestOptions,
-      filter?: "active" | "archived" | "mine"
+      filter?: "active" | "archived" | "mine",
+      search?: string
     } = {}
   ) {
-    const { filter, ...requestOptions } = options;
+    const { filter, search, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Branch[]>>({
       api: async () => {
-        const query = querystring.stringify({ filter });
+        const projectId = descriptor ? descriptor.projectId : undefined;
+        const query = querystring.stringify({ filter, search });
 
-        const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/branches/?${query}`,
-          {
-            headers
-          }
-        );
+        const response = projectId
+          ? await this.apiRequest(`projects/${projectId}/branches/?${query}`, {
+              headers
+            })
+          : await this.apiRequest(`branches/?${query}`, {
+              headers
+            });
 
         return wrap(response.data.branches, response);
       },
 
       cli: async () => {
+        const projectId = descriptor ? descriptor.projectId : undefined;
+        if (!projectId) {
+          throw new Error("projectId required with CLI transport");
+        }
+        if (search) {
+          throw new Error("search not supported with CLI transport");
+        }
+
         const response = await this.cliRequest([
           "branches",
-          descriptor.projectId,
+          projectId,
           ...(filter ? ["--filter", filter] : [])
         ]);
 
