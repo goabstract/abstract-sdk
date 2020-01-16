@@ -875,9 +875,23 @@ abstract.layers.list({
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
 }, {
   limit: 25,
+  offset: 0
+});
+```
+
+A file can also contain layers from external libraries. If you'd like to only see the layers in this file and not the external library elements they depend upon, use the `fromLibraries` option…
+
+```js
+abstract.layers.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+}, {
+  limit: 25,
   offset: 0,
-  excludeLibraryDependencies: false,
-  onlyLibraryDependencies: false
+  fromLibraries: "exclude"
 });
 ```
 
@@ -1626,6 +1640,16 @@ Options objects that can be passed to different SDK endpoints.
   transportMode?: ("api" | "cli")[],
   limit?: number,
   offset?: number
+}
+```
+
+### LayersListOptions
+```js
+{
+  transportMode?: ("api" | "cli")[],
+  limit?: number,
+  offset?: number
+  fromLibraries?: "include" | "exclude" | "only" # default is "include"
 }
 ```
 

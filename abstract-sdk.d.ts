@@ -241,8 +241,7 @@ interface Files extends Endpoint {
 }
 
 type LayersListOptions = ListOptions & {
-  excludeLibraryDependencies?: boolean,
-  onlyLibraryDependencies?: boolean,
+  fromLibraries: "include" | "exclude" | "only"
 }
 
 interface Layers extends Endpoint {

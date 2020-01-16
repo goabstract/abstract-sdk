@@ -13,8 +13,7 @@ import { wrap } from "../util/helpers";
 
 type LayersListOptions = {
   ...ListOptions,
-  excludeLibraryDependencies?: boolean,
-  onlyLibraryDependencies?: boolean
+  fromLibraries?: "include" | "excluce" | "only"
 };
 
 export default class Layers extends Endpoint {
@@ -56,13 +55,7 @@ export default class Layers extends Endpoint {
     descriptor: FileDescriptor | PageDescriptor,
     options: LayersListOptions = {}
   ) {
-    const {
-      limit,
-      offset,
-      excludeLibraryDependencies,
-      onlyLibraryDependencies,
-      ...requestOptions
-    } = options;
+    const { limit, offset, fromLibraries, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
@@ -70,10 +63,10 @@ export default class Layers extends Endpoint {
     return this.configureRequest<Promise<Layer[]>>({
       api: async () => {
         const query = querystring.stringify({
+          ...latestDescriptor,
           limit,
           offset,
-          excludeLibraryDependencies,
-          onlyLibraryDependencies
+          fromLibraries
         });
 
         const response = await this.apiRequest(
