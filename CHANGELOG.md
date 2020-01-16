@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.7](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.6...v8.0.0-beta.7) (2020-01-16)
+
+
+### Features
+
+* api file export ([#199](https://github.com/goabstract/abstract-sdk/issues/199)) ([d2d310f](https://github.com/goabstract/abstract-sdk/commit/d2d310f))
+
+
+### BREAKING CHANGES
+
+* api file export (#199)
+
+
+
 ### [7.0.1](https://github.com/goabstract/abstract-sdk/compare/v7.0.0...v7.0.1) (2019-12-16)
 
 
