@@ -22,7 +22,7 @@ function buildTextStream(text?: string): ReadableStream {
 export const CLIENT_CONFIG = {
   accessToken: "accessToken",
   apiUrl: "http://apiUrl",
-  assetUrl: "http://assetUrl",
+  objectUrl: "http://objectUrl",
   previewUrl: "http://previewUrl"
 };
 
@@ -80,11 +80,12 @@ export function mockPreviewAPI(
   (nock("http://previewurl"): any)[method](url).reply(code, response);
 }
 
-export function mockAssetAPI(
+export function mockObjectAPI(
   url: string,
   response: Object,
   code: number = 200,
   method: string = "get"
 ) {
-  (nock("http://asseturl"): any)[method](url).reply(code, response);
+  const base = (nock("http://objecturl"): any).replyContentLength();
+  base[method](url).reply(code, response);
 }

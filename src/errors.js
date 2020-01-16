@@ -105,6 +105,14 @@ export class ServiceUnavailableError extends BaseError {
   }
 }
 
+export class FileExportError extends BaseError {
+  constructor(fileId: string, exportId: string) {
+    super(
+      `File export failed for fileId ${fileId} and export jobId ${exportId}.`
+    );
+  }
+}
+
 export async function throwAPIError(
   response: Response,
   url: string,

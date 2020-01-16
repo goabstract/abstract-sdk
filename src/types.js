@@ -88,9 +88,15 @@ export type ErrorMap = {
   [mode: string]: Error
 };
 
+export type ProgressCallback = (
+  receivedBytes: number,
+  totalBytes: number
+) => void;
+
 export type ApiRequestOptions = {
   customHostname?: string,
-  raw?: boolean
+  raw?: boolean,
+  onProgress?: ProgressCallback
 };
 
 export type RequestOptions = {
@@ -115,6 +121,11 @@ export type RawOptions = {
   filename?: string
 };
 
+export type RawProgressOptions = {
+  ...RawOptions,
+  onProgress?: ProgressCallback
+};
+
 export type AccessToken = ?string | ShareDescriptor;
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
@@ -124,7 +135,7 @@ export type AccessTokenOption =
 export type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
-  assetUrl: string | Promise<string>,
+  objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>

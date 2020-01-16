@@ -29,11 +29,11 @@ _Default value: `https://api.goabstract.com`_
 
 This option can be used to specify a custom URL that points to an instance of the Abstract HTTP API. This is used when building the request URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
 
-### `assetUrl`
+### `objectUrl`
 
 _Default value: `https://objects.goabstract.com`_
 
-This option can be used to specify a custom URL that points to an instance of the Abstract asset retrieval service. This is used when building asset file URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
+This option can be used to specify a custom URL that points to an instance of the Abstract object retrieval service. This is used when building URLs for static assets including files and assets when using the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
 
 ### `previewUrl`
 

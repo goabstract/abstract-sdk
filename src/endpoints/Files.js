@@ -1,14 +1,18 @@
 // @flow
+import { promises as fs } from "fs";
 import type {
   BranchCommitDescriptor,
   File,
   FileDescriptor,
-  RawOptions,
+  RawProgressOptions,
   RequestOptions
 } from "../types";
-import { NotFoundError } from "../errors";
+import { FileExportError, NotFoundError } from "../errors";
 import { isNodeEnvironment, wrap } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
+
+const EXPORT_STATUS_CHECK_INTERVAL = 2000;
+const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
@@ -24,8 +28,7 @@ export default class Files extends Endpoint {
         if (!file) {
           throw new NotFoundError(`fileId=${latestDescriptor.fileId}`);
         }
-        wrap(file);
-        return file;
+        return wrap(file);
       },
 
       cli: async () => {
@@ -36,7 +39,7 @@ export default class Files extends Endpoint {
           latestDescriptor.fileId
         ]);
 
-        return response.file;
+        return wrap(response.file, response);
       },
 
       requestOptions
@@ -57,7 +60,7 @@ export default class Files extends Endpoint {
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files`
         );
 
-        return response.files;
+        return wrap(response.files, response);
       },
 
       cli: async () => {
@@ -67,20 +70,82 @@ export default class Files extends Endpoint {
           latestDescriptor.sha
         ]);
 
-        return response.files;
+        return wrap(response.files, response);
       },
 
       requestOptions
     });
   }
 
-  async raw(descriptor: FileDescriptor, options: RawOptions = {}) {
-    const { disableWrite, filename, ...requestOptions } = options;
+  async raw(descriptor: FileDescriptor, options: RawProgressOptions = {}) {
+    const { disableWrite, filename, onProgress, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
 
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<ArrayBuffer | void>>({
+      api: async () => {
+        const exportRequest = (exportId?: string) => {
+          return this.apiRequest(
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/export`,
+            {
+              method: "POST",
+              body: { ...latestDescriptor, export_id: exportId }
+            }
+          );
+        };
+
+        const file = await this.info(latestDescriptor);
+        let exportJob = await exportRequest();
+
+        const checkStatus = async (count: number) => {
+          exportJob = await exportRequest(exportJob.id);
+
+          if (exportJob.status === "complete") {
+            const fileUrl = await this.options.objectUrl;
+            const filePath = exportJob.downloadUrl.replace(
+              /^\S+:\/\/objects.goabstract.com\//,
+              ""
+            );
+
+            const arrayBuffer = await this.apiRequest(
+              filePath,
+              {
+                headers: {
+                  Accept: undefined,
+                  "Content-Type": undefined
+                }
+              },
+              {
+                customHostname: fileUrl,
+                raw: true,
+                onProgress
+              }
+            );
+
+            /* istanbul ignore if */
+            if (isNodeEnvironment() && !disableWrite) {
+              const diskLocation = filename || `${file.name}.sketch`;
+              fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
+            }
+
+            return arrayBuffer;
+          } else if (
+            count * EXPORT_STATUS_CHECK_INTERVAL >= MAX_EXPORT_DURATION ||
+            exportJob.status === "failed"
+          ) {
+            throw new FileExportError(file.id, exportJob.id);
+          } else {
+            await new Promise(resolve =>
+              setTimeout(resolve, EXPORT_STATUS_CHECK_INTERVAL)
+            );
+            return checkStatus(count + 1);
+          }
+        };
+
+        return checkStatus(0);
+      },
+
       cli: async () => {
         /* istanbul ignore if */
         if (!isNodeEnvironment() || disableWrite) {

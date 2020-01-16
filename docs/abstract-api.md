@@ -133,7 +133,7 @@ abstract.assets.commit({
 });
 ```
 
-### Retrieve an asset file
+### Export an asset file
 
 ![API][api-icon]
 
@@ -804,11 +804,11 @@ abstract.files.info({
 });
 ```
 
-### Retrieve a Sketch file
+### Export a file
 
-![CLI][cli-icon]
+![CLI][cli-icon] ![API][api-icon]
 
-`files.raw(FileDescriptor, RawOptions): Promise<ArrayBuffer>`
+`files.raw(FileDescriptor, RawProgressOptions): Promise<ArrayBuffer | void>`
 
 Retrieve a Sketch file from Abstract based on its file ID and save it to disk. Files will be saved to the current working directory by default, but a custom `filename` option can be used to customize this location.
 
@@ -821,14 +821,38 @@ abstract.files.raw({
 });
 ```
 
-You can also load the file info at any commit on the branch…
+The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. For example, it's possible to write the file to disk manually after post-processing it:
 
 ```js
-abstract.files.info({
+const arrayBuffer = await abstract.files.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  sha: "latest"
+}, {
+  disableWrite: true
+});
+
+processedBuffer = postProcess(arrayBuffer);
+
+fs.writeFile("file.sketch", Buffer.from(processedBuffer), (err) => {
+  if (err) throw err;
+  console.log("File written!");
+});
+```
+
+It's also possible to get insight into the underlying progress of the file export.
+
+```js
+abstract.files.raw({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  sha: "latest"
+}, {
+  onProgress: (receivedBytes: number, totalBytes: number) => {
+    console.log(`${receivedBytes * 100 / totalBytes}% complete`);
+  }
 });
 ```
 
@@ -1643,6 +1667,16 @@ Options objects that can be passed to different SDK endpoints.
   transportMode?: ("api" | "cli")[],
   disableWrite?: boolean,
   filename?: string
+}
+```
+
+### RawProgressOptions
+```js
+{
+  transportMode?: ("api" | "cli")[],
+  disableWrite?: boolean,
+  filename?: string,
+  onProgress?: (receivedBytes: number, totalBytes: number) => void;
 }
 ```
 

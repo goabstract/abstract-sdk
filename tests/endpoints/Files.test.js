@@ -1,11 +1,12 @@
 // @flow
 import {
+  mockObjectAPI,
   mockAPI,
   mockCLI,
   API_CLIENT,
   CLI_CLIENT
 } from "../../src/util/testing";
-import { NotFoundError } from "../../src/errors";
+import { NotFoundError, FileExportError } from "../../src/errors";
 
 describe("files", () => {
   describe("info", () => {
@@ -119,16 +120,109 @@ describe("files", () => {
 
   describe("raw", () => {
     let globalProcess;
+    let globalSetTimeout;
 
-    beforeAll(() => {
+    beforeEach(() => {
       globalProcess = global.process;
+      globalSetTimeout = global.setTimeout;
     });
 
-    afterAll(() => {
+    afterEach(() => {
       global.process = globalProcess;
+      global.setTimeout = globalSetTimeout;
     });
 
-    test("cli", async () => {
+    test("api - node with progress", async () => {
+      mockAPI("/projects/project-id/branches/branch-id/files", {
+        files: [
+          {
+            id: "file-id"
+          }
+        ]
+      });
+
+      [...Array(2)].forEach(() => {
+        mockAPI(
+          "/projects/project-id/branches/branch-id/files/file-id/export",
+          {
+            id: "export-id",
+            status: "processing"
+          },
+          200,
+          "post"
+        );
+      });
+
+      mockAPI(
+        "/projects/project-id/branches/branch-id/files/file-id/export",
+        {
+          downloadUrl: "https://objects.goabstract.com/file",
+          status: "complete"
+        },
+        200,
+        "post"
+      );
+
+      mockObjectAPI("/file", {
+        id: "file-id"
+      });
+
+      const response = await API_CLIENT.files.raw(
+        {
+          branchId: "branch-id",
+          fileId: "file-id",
+          projectId: "project-id",
+          sha: "sha"
+        },
+        {
+          disableWrite: true,
+          onProgress: (received, total) => {
+            expect(received).toBe(16);
+            expect(total).toBe(16);
+          }
+        }
+      );
+
+      expect(response).toBeInstanceOf(ArrayBuffer);
+    });
+
+    test("api - max duration", async () => {
+      global.setTimeout = cb => {
+        cb();
+      };
+      mockAPI("/projects/project-id/branches/branch-id/files", {
+        files: [
+          {
+            id: "file-id"
+          }
+        ]
+      });
+
+      [...Array(20)].forEach(() => {
+        mockAPI(
+          "/projects/project-id/branches/branch-id/files/file-id/export",
+          {
+            id: "export-id",
+            status: "processing"
+          },
+          200,
+          "post"
+        );
+      });
+
+      try {
+        await API_CLIENT.files.raw({
+          branchId: "branch-id",
+          fileId: "file-id",
+          projectId: "project-id",
+          sha: "sha"
+        });
+      } catch (error) {
+        expect(error.errors.api).toBeInstanceOf(FileExportError);
+      }
+    });
+
+    test("cli - exports file", async () => {
       mockCLI(
         [
           "file",
