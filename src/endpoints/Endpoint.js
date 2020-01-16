@@ -20,7 +20,6 @@ import type {
   RequestConfig
 } from "../types";
 
-const cliPath = require("@elasticprojects/abstract-cli");
 const logAPIRequest = log.extend("AbstractAPI:request");
 const logAPIResponse = log.extend("AbstractAPI:response");
 const logCLIRequest = log.extend("AbstractCLI:request");
@@ -140,6 +139,7 @@ export default class Endpoint {
 
   async cliRequest(args: string[]) {
     const token = await this._getAccessToken();
+    const cliPath = require("@elasticprojects/abstract-cli");
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 
     const spawnArgs = [

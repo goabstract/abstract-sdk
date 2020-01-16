@@ -11,8 +11,8 @@ import { FileExportError, NotFoundError } from "../errors";
 import { isNodeEnvironment, wrap } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
 
-const EXPORT_TIMEOUT = 2000;
-const MAX_EXPORT_DURATION = EXPORT_TIMEOUT * 15;
+const EXPORT_STATUS_CHECK_INTERVAL = 2000;
+const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
 
 export default class Files extends Endpoint {
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
@@ -113,8 +113,7 @@ export default class Files extends Endpoint {
               {
                 headers: {
                   Accept: undefined,
-                  "Content-Type": undefined,
-                  "Abstract-Api-Version": undefined
+                  "Content-Type": undefined
                 }
               },
               {
@@ -132,12 +131,14 @@ export default class Files extends Endpoint {
 
             return arrayBuffer;
           } else if (
-            count * EXPORT_TIMEOUT >= MAX_EXPORT_DURATION ||
+            count * EXPORT_STATUS_CHECK_INTERVAL >= MAX_EXPORT_DURATION ||
             exportJob.status === "failed"
           ) {
             throw new FileExportError(file.id, exportJob.id);
           } else {
-            await new Promise(resolve => setTimeout(resolve, EXPORT_TIMEOUT));
+            await new Promise(resolve =>
+              setTimeout(resolve, EXPORT_STATUS_CHECK_INTERVAL)
+            );
             return checkStatus(count + 1);
           }
         };
