@@ -30,9 +30,20 @@ describe("data", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["layer", "data", "project-id", "sha", "file-id", "layer-id"], {
-        layerId: "layer-id"
-      });
+      mockCLI(
+        [
+          "layer",
+          "data",
+          "project-id",
+          "branch-id",
+          "sha",
+          "file-id",
+          "layer-id"
+        ],
+        {
+          layerId: "layer-id"
+        }
+      );
 
       const response = await CLI_CLIENT.data.info({
         branchId: "branch-id",
