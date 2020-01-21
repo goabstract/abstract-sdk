@@ -29,6 +29,7 @@ export default class Data extends Endpoint {
           "layer",
           "data",
           latestDescriptor.projectId,
+          latestDescriptor.branchId,
           latestDescriptor.sha,
           latestDescriptor.fileId,
           latestDescriptor.layerId
