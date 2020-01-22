@@ -13,7 +13,7 @@ import { wrap } from "../util/helpers";
 
 type LayersListOptions = {
   ...ListOptions,
-  fromLibraries?: "include" | "excluce" | "only"
+  fromLibraries?: "include" | "exclude" | "only"
 };
 
 export default class Layers extends Endpoint {
