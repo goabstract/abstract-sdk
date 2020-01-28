@@ -101,5 +101,48 @@ describe("layers", () => {
         }
       ]);
     });
+
+    test("cli with options", async () => {
+      mockCLI(
+        [
+          "layers",
+          "project-id",
+          "sha",
+          "file-id",
+          "--limit=1",
+          "--offset=1",
+          "--page-id=page-id",
+          "--from-libraries=include"
+        ],
+        {
+          layers: [
+            {
+              id: "layer-id"
+            }
+          ]
+        }
+      );
+
+      const response = await CLI_CLIENT.layers.list(
+        {
+          projectId: "project-id",
+          branchId: "branch-id",
+          sha: "sha",
+          fileId: "file-id",
+          pageId: "page-id"
+        },
+        {
+          limit: 1,
+          offset: 1,
+          fromLibraries: "include"
+        }
+      );
+
+      expect(response).toEqual([
+        {
+          id: "layer-id"
+        }
+      ]);
+    });
   });
 });

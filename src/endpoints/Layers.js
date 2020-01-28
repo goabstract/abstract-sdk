@@ -77,13 +77,30 @@ export default class Layers extends Endpoint {
       },
 
       cli: async () => {
-        const response = await this.cliRequest([
+        const args = [
           "layers",
           latestDescriptor.projectId,
           latestDescriptor.sha,
           latestDescriptor.fileId
-        ]);
+        ];
 
+        if (limit) {
+          args.push(`--limit=${limit}`);
+        }
+
+        if (offset) {
+          args.push(`--offset=${offset}`);
+        }
+
+        if (latestDescriptor.pageId) {
+          args.push(`--page-id=${latestDescriptor.pageId}`);
+        }
+
+        if (fromLibraries) {
+          args.push(`--from-libraries=${fromLibraries}`);
+        }
+
+        const response = await this.cliRequest(args);
         return wrap(response.layers, response);
       },
 

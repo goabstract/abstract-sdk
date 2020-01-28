@@ -721,10 +721,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@elasticprojects/abstract-cli@^2.3.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@elasticprojects/abstract-cli/-/abstract-cli-2.20.0.tgz#f1a4d192ccd9f1a8ca843266eee13ba1d4e71ecb"
-  integrity sha512-ehYhpkBIqbfdCxHej21xUxCbfjh5xtzQG0YXXkundXcS+aKp+5ANNqv439zn+9a3d+hcKwws204JADioFbuJlQ==
+"@elasticprojects/abstract-cli@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@elasticprojects/abstract-cli/-/abstract-cli-3.5.0.tgz#d0b28a2eda039720243425d5207bbb49da90d6ab"
+  integrity sha512-U+gYbvYkpRY5pQlFJTizQItO39O7elwbcQiYEOXb8cp5fUwsOxiEtBJipCmsBz12aWan6xvgfeMtQw5x1J/tLA==
 
 "@elasticprojects/eslint-config-abstract@^4.1.0":
   version "4.1.0"
