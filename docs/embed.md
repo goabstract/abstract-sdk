@@ -20,16 +20,16 @@ Embeds can be used to display interactive, up-to-date previews for layers and co
       const copy = document.querySelector('#copy');
       const input = document.querySelector('#embed-input');
       const waiting = document.querySelector('#waiting');
+      const shareLinkPattern = /^https?:\/\/share\.(go)?abstract\.com/;
       function generateCode() {
         container.classList.remove('done');
         copy.classList.remove('copied');
         const urlDiv = document.querySelector('#embed-gen + pre > code > .hljs-tag:first-child > .hljs-string:nth-child(3)');
-        const shareId = input.value.match(/\/[\w\d-]+$/);
-        if (!shareId) {
+        if (!shareLinkPattern.test(input.value)) {
           waiting.innerHTML = 'Invalid share link. Please try again...';
           return;
         }
-        const embedUrl = `https://app.goabstract.com/embed${shareId}`;
+        const embedUrl = input.value.replace(shareLinkPattern, 'https://app.abstract.com/embed');
         urlDiv.innerHTML = `"${embedUrl}"`;
         container.classList.add('done');
       }
@@ -55,7 +55,7 @@ Embeds can be used to display interactive, up-to-date previews for layers and co
 
 ```html
 <iframe
-  src="https://app.goabstract.com/embed/"
+  src="https://app.abstract.com/embed/"
   width="784"
   height="360"
   frameborder="0"
