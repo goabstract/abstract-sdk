@@ -20,7 +20,7 @@ Embeds can be used to display interactive, up-to-date previews for layers and co
       const copy = document.querySelector('#copy');
       const input = document.querySelector('#embed-input');
       const waiting = document.querySelector('#waiting');
-      const shareLinkPattern = /^https?:\/\/share.(go)?abstract.com/;
+      const shareLinkPattern = /^https?:\/\/share\.(go)?abstract\.com/;
       function generateCode() {
         container.classList.remove('done');
         copy.classList.remove('copied');
