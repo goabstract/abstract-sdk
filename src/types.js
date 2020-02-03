@@ -126,6 +126,16 @@ export type RawProgressOptions = {
   onProgress?: ProgressCallback
 };
 
+export type CollectionsListOptions = {
+  ...ListOptions,
+  branchStatus?: string,
+  layersPerCollection?: number | "all",
+  search?: string,
+  sortBy?: string,
+  sortDir?: string,
+  userId?: string
+};
+
 export type AccessToken = ?string | ShareDescriptor;
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?

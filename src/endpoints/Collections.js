@@ -4,6 +4,7 @@ import type {
   BranchDescriptor,
   Collection,
   CollectionDescriptor,
+  CollectionsListOptions,
   NewCollection,
   ProjectDescriptor,
   RequestOptions,
@@ -11,6 +12,11 @@ import type {
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
+
+// Version 16 returns cached thumbnails
+const headers = {
+  "Abstract-Api-Version": "16"
+};
 
 export default class Collections extends Endpoint {
   create(
@@ -68,23 +74,38 @@ export default class Collections extends Endpoint {
 
   list(
     descriptor: ProjectDescriptor | BranchDescriptor,
-    options: {
-      ...RequestOptions,
-      layersPerCollection?: number | "all"
-    } = {}
+    options: CollectionsListOptions = {}
   ) {
-    const { layersPerCollection, ...requestOptions } = options;
+    const {
+      branchStatus,
+      layersPerCollection,
+      limit,
+      offset,
+      search,
+      sortBy,
+      sortDir,
+      userId,
+      ...requestOptions
+    } = options;
 
     return this.configureRequest<Promise<Collection[]>>({
       api: async () => {
         const { projectId, ...sanitizedDescriptor } = descriptor;
         const query = querystring.stringify({
           ...sanitizedDescriptor,
-          layersPerCollection
+          branchStatus,
+          layersPerCollection,
+          limit,
+          offset,
+          search,
+          sortBy,
+          sortDir,
+          userId
         });
 
         const response = await this.apiRequest(
-          `projects/${projectId}/collections?${query}`
+          `projects/${projectId}/collections?${query}`,
+          { headers }
         );
 
         return wrap(response.data.collections, response);
@@ -94,7 +115,10 @@ export default class Collections extends Endpoint {
         const response = await this.cliRequest([
           "collections",
           descriptor.projectId,
-          ...(descriptor.branchId ? ["--branch", descriptor.branchId] : [])
+          ...(descriptor.branchId ? ["--branch", descriptor.branchId] : []),
+          ...(layersPerCollection
+            ? ["--layersLimit", String(layersPerCollection)]
+            : [])
         ]);
 
         return wrap(response.data.collections, response);
