@@ -19,6 +19,7 @@ import Previews from "./endpoints/Previews";
 import Projects from "./endpoints/Projects";
 import Sections from "./endpoints/Sections";
 import Shares from "./endpoints/Shares";
+import Stars from "./endpoints/Stars";
 import Users from "./endpoints/Users";
 import Webhooks from "./endpoints/Webhooks";
 import type { CommandOptions } from "./types";
@@ -44,6 +45,7 @@ export default class Client {
   projects: Projects;
   sections: Sections;
   shares: Shares;
+  stars: Stars;
   users: Users;
   webhooks: Webhooks;
 
@@ -79,6 +81,7 @@ export default class Client {
     this.projects = new Projects(this, options);
     this.sections = new Sections(this, options);
     this.shares = new Shares(this, options);
+    this.stars = new Stars(this, options);
     this.users = new Users(this, options);
     this.webhooks = new Webhooks(this, options);
   }

@@ -88,6 +88,7 @@ export class Client {
   previews: Previews;
   projects: Projects;
   shares: Shares;
+  stars: Stars;
   users: Users;
   webhooks: Webhooks;
 
@@ -113,13 +114,13 @@ interface Endpoint {
 
   configureRequest<T>(
     config: RequestConfig<T>,
-    requestOptions: RequestOptions = {}
+    requestOptions?: RequestOptions
   ): T;
     
   apiRequest(
     url: string,
-    fetchOptions: Object = {},
-    apiOptions: ApiRequestOptions = {}
+    fetchOptions?: Object,
+    apiOptions?: ApiRequestOptions
   ): Promise<any>;
 
   cliRequest(args: string[]): Promise<any>;
@@ -132,7 +133,7 @@ interface Endpoint {
 
 // Endpoints
 interface Activities extends Endpoint {
-  info(descriptor: ActivityDescriptor, requestOptions: RequestOptions): Promise<Activity>;
+  info(descriptor: ActivityDescriptor, requestOptions?: RequestOptions): Promise<Activity>;
   list(
     descriptor: BranchDescriptor | OrganizationDescriptor | ProjectDescriptor,
     options?: ListOptions
@@ -140,14 +141,14 @@ interface Activities extends Endpoint {
 }
 
 interface Assets extends Endpoint {
-  info(descriptor: AssetDescriptor, requestOptions: RequestOptions): Promise<Asset>;
+  info(descriptor: AssetDescriptor, requestOptions?: RequestOptions): Promise<Asset>;
   raw(descriptor: AssetDescriptor, options?: RawOptions): Promise<ArrayBuffer>;
-  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<Asset[]>;
+  commit(descriptor: BranchCommitDescriptor, requestOptions?: RequestOptions): Promise<Asset[]>;
   file(descriptor: FileDescriptor, options?: ListOptions): CursorPromise<Asset[]>;
 }
 
 interface Branches extends Endpoint {
-  info(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<Branch>;
+  info(descriptor: BranchDescriptor, requestOptions?: RequestOptions): Promise<Branch>;
   list(
     descriptor?: ProjectDescriptor,
     options?: RequestOptions & { filter?: "active" | "archived" | "mine", search?: string }
@@ -155,23 +156,23 @@ interface Branches extends Endpoint {
 }
 
 interface Changesets extends Endpoint {
-  branch(descriptor: BranchDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
-  commit(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<Changeset>;
+  branch(descriptor: BranchDescriptor, requestOptions?: RequestOptions): Promise<Changeset>;
+  commit(descriptor: BranchCommitDescriptor, requestOptions?: RequestOptions): Promise<Changeset>;
 }
 
 interface CollectionLayers extends Endpoint {
-  add(descriptor: CollectionDescriptor, layer: NewCollectionLayer, requestOptions: RequestOptions): Promise<CollectionLayer>;
-  addMany(descriptor: CollectionDescriptor, layers: NewCollectionLayer[], requestOptions: RequestOptions): Promise<CollectionLayer[]>;
-  remove(descriptor: CollectionLayerDescriptor, requestOptions: RequestOptions): Promise<void>;
-  move(descriptor: CollectionLayerDescriptor, order: number, requestOptions: RequestOptions): Promise<CollectionLayer[]>;
-  update(descriptor: CollectionLayerDescriptor, layer: UpdatedCollectionLayer, requestOptions: RequestOptions): Promise<CollectionLayer>;
+  add(descriptor: CollectionDescriptor, layer: NewCollectionLayer, requestOptions?: RequestOptions): Promise<CollectionLayer>;
+  addMany(descriptor: CollectionDescriptor, layers: NewCollectionLayer[], requestOptions?: RequestOptions): Promise<CollectionLayer[]>;
+  remove(descriptor: CollectionLayerDescriptor, requestOptions?: RequestOptions): Promise<void>;
+  move(descriptor: CollectionLayerDescriptor, order: number, requestOptions?: RequestOptions): Promise<CollectionLayer[]>;
+  update(descriptor: CollectionLayerDescriptor, layer: UpdatedCollectionLayer, requestOptions?: RequestOptions): Promise<CollectionLayer>;
 }
 
 interface Collections extends Endpoint {
   create(
     descriptor: ProjectDescriptor,
     collection: NewCollection,
-    requestOptions: RequestOptions
+    requestOptions?: RequestOptions
   ): Promise<Collection>;
 
   info(
@@ -186,19 +187,19 @@ interface Collections extends Endpoint {
 
   update(
     descriptor: CollectionDescriptor,
-    collection: UpdatedCollection, requestOptions: RequestOptions
+    collection: UpdatedCollection, requestOptions?: RequestOptions
   ): Promise<Collection>;
 }
 
 interface Comments extends Endpoint {
-  info(descriptor: CommentDescriptor, requestOptions: RequestOptions): Promise<Comment>;
+  info(descriptor: CommentDescriptor, requestOptions?: RequestOptions): Promise<Comment>;
   create(
     descriptor:
       BranchDescriptor
       | BranchCommitDescriptor
       | PageDescriptor
       | LayerVersionDescriptor & { pageId: string },
-    comment: NewComment, requestOptions: RequestOptions
+    comment: NewComment, requestOptions?: RequestOptions
   ): Promise<Comment>;
 
   list(
@@ -213,7 +214,7 @@ interface Comments extends Endpoint {
 
 interface Commits extends Endpoint {
   info(
-    descriptor: BranchCommitDescriptor | FileDescriptor | LayerVersionDescriptor, requestOptions: RequestOptions
+    descriptor: BranchCommitDescriptor | FileDescriptor | LayerVersionDescriptor, requestOptions?: RequestOptions
   ): Promise<Commit>;
 
   list(
@@ -227,16 +228,16 @@ interface Commits extends Endpoint {
 }
 
 interface Data extends Endpoint {
-  info(descriptor: LayerVersionDescriptor, requestOptions: RequestOptions): Promise<LayerDataset>;
+  info(descriptor: LayerVersionDescriptor, requestOptions?: RequestOptions): Promise<LayerDataset>;
 }
 
 interface Descriptors extends Endpoint {
-  getLatestDescriptor<T>(descriptor: T, requestOptions: RequestOptions): Promise<T>;
+  getLatestDescriptor<T>(descriptor: T, requestOptions?: RequestOptions): Promise<T>;
 }
 
 interface Files extends Endpoint {
-  info(descriptor: FileDescriptor, requestOptions: RequestOptions): Promise<File>;
-  list(descriptor: BranchCommitDescriptor, requestOptions: RequestOptions): Promise<File[]>;
+  info(descriptor: FileDescriptor, requestOptions?: RequestOptions): Promise<File>;
+  list(descriptor: BranchCommitDescriptor, requestOptions?: RequestOptions): Promise<File[]>;
   raw(descriptor: FileDescriptor, options?: RawProgressOptions): Promise<ArrayBuffer | void>;
 }
 
@@ -245,7 +246,7 @@ type LayersListOptions = ListOptions & {
 }
 
 interface Layers extends Endpoint {
-  info(descriptor: LayerVersionDescriptor, requestOptions: RequestOptions): Promise<Layer>;
+  info(descriptor: LayerVersionDescriptor, requestOptions?: RequestOptions): Promise<Layer>;
   list(
     descriptor: FileDescriptor | PageDescriptor,
     options?: LayersListOptions
@@ -254,16 +255,16 @@ interface Layers extends Endpoint {
 
 interface Memberships extends Endpoint {
   info(
-    descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor, requestOptions: RequestOptions
+    descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor, requestOptions?: RequestOptions
   ): Promise<Membership>;
 
   list(
-    descriptor: OrganizationDescriptor | ProjectDescriptor, requestOptions: RequestOptions
+    descriptor: OrganizationDescriptor | ProjectDescriptor, requestOptions?: RequestOptions
   ): Promise<Membership[]>;
 }
 
 interface Notifications extends Endpoint {
-  info(descriptor: NotificationDescriptor, requestOptions: RequestOptions): Promise<Notification>;
+  info(descriptor: NotificationDescriptor, requestOptions?: RequestOptions): Promise<Notification>;
   list(
     descriptor: OrganizationDescriptor,
     options?: ListOptions
@@ -271,23 +272,23 @@ interface Notifications extends Endpoint {
 }
 
 interface Organizations extends Endpoint {
-  info(descriptor: OrganizationDescriptor, requestOptions: RequestOptions): Promise<Organization>;
-  list(requestOptions: RequestOptions): Promise<Organization[]>;
+  info(descriptor: OrganizationDescriptor, requestOptions?: RequestOptions): Promise<Organization>;
+  list(requestOptions?: RequestOptions): Promise<Organization[]>;
 }
 
 interface Pages extends Endpoint {
-  info(descriptor: PageDescriptor, requestOptions: RequestOptions): Promise<Page>;
-  list(descriptor: FileDescriptor, requestOptions: RequestOptions): Promise<Page[]>;
+  info(descriptor: PageDescriptor, requestOptions?: RequestOptions): Promise<Page>;
+  list(descriptor: FileDescriptor, requestOptions?: RequestOptions): Promise<Page[]>;
 }
 
 interface Previews extends Endpoint {
-  info(descriptor: LayerVersionDescriptor, requestOptions: RequestOptions): Promise<PreviewMeta>;
+  info(descriptor: LayerVersionDescriptor, requestOptions?: RequestOptions): Promise<PreviewMeta>;
   raw(descriptor: LayerVersionDescriptor, options?: RawOptions): Promise<ArrayBuffer>;
-  url(descriptor: LayerVersionDescriptor, requestOptions: RequestOptions): Promise<string>;
+  url(descriptor: LayerVersionDescriptor, requestOptions?: RequestOptions): Promise<string>;
 }
 
 interface Projects extends Endpoint {
-  info(descriptor: ProjectDescriptor, requestOptions: RequestOptions): Promise<Project>;
+  info(descriptor: ProjectDescriptor, requestOptions?: RequestOptions): Promise<Project>;
   list(
     descriptor: OrganizationDescriptor,
     options?: RequestOptions & {
@@ -298,20 +299,32 @@ interface Projects extends Endpoint {
 }
 
 interface Sections extends Endpoint {
-  list(descriptor: OrganizationDescriptor, requestOptions: RequestOptions): Promise<Section[]>;
+  list(descriptor: OrganizationDescriptor, requestOptions?: RequestOptions): Promise<Section[]>;
 }
 
 interface Shares extends Endpoint {
-  info<T>(descriptor: ShareDescriptor, requestOptions: RequestOptions): Promise<T>;
+  info<T>(descriptor: ShareDescriptor, requestOptions?: RequestOptions): Promise<T>;
   create<T>(
     descriptor: OrganizationDescriptor,
-    shareInput: ShareInput, requestOptions: RequestOptions
+    shareInput: ShareInput, requestOptions?: RequestOptions
   ): Promise<T>;
 }
 
+interface Stars extends Endpoint {
+  list(requestOptions?: RequestOptions): Promise<Star[]>;
+  create(
+    descriptor: ProjectDescriptor | SectionDescriptor,
+    requestOptions?: RequestOptions
+  ): Promise<Star>;
+  delete(
+    descriptor: ProjectDescriptor | SectionDescriptor,
+    requestOptions?: RequestOptions
+  ): Promise<void>;
+}
+
 interface Users extends Endpoint {
-  info(descriptor: UserDescriptor, requestOptions: RequestOptions): Promise<User>;
-  list(descriptor: OrganizationDescriptor | ProjectDescriptor, requestOptions: RequestOptions): Promise<User[]>;
+  info(descriptor: UserDescriptor, requestOptions?: RequestOptions): Promise<User>;
+  list(descriptor: OrganizationDescriptor | ProjectDescriptor, requestOptions?: RequestOptions): Promise<User[]>;
 }
 
 // Supporting types
@@ -1869,4 +1882,14 @@ type RequestOptions = {
 
 type RawProgressOptions = RawOptions & {
   onProgress?: ProgressCallback
+};
+
+type Star = {
+  starrableId: string;
+  starrableType: 'Project' | 'Section',
+  starredAt: string
+};
+
+type SectionDescriptor = {
+  sectionId: string
 };

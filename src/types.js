@@ -141,6 +141,16 @@ export type CommandOptions = {
   webUrl: string | Promise<string>
 };
 
+export type Star = {
+  starrableId: string,
+  starrableType: "Project" | "Section",
+  starredAt: string
+};
+
+export type SectionDescriptor = {
+  sectionId: string
+};
+
 export type UserDescriptor = {|
   userId: string
 |};

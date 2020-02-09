@@ -1415,6 +1415,60 @@ abstract.shares.create({
 });
 ```
 
+
+## Stars
+
+A star represents an underlying project or section of projects, and it indicates that a user has favorites the underlying object for easier discovery.
+
+### The star object
+
+| Property         | Type     | Description                                                                   |
+|------------------|----------|-------------------------------------------------------------------------------|
+| `starrableId`    | `string` | The ID of the underlying project or section that this star represents         |
+| `starrableType`  | `string` | Indicates the type of the underlying entity, either "Project" or "Section"    |
+| `starredAt`      | `string` | Timestamp that the project or section was starred                             |
+
+### List all starred projects or sections
+
+![API][api-icon]
+
+`stars.list(RequestOptions): Promise<Star[]>`
+
+List all starred projects or sections
+
+```js
+abstract.stars.list();
+```
+
+### Star a project
+
+![API][api-icon]
+
+`stars.create(ProjectDescriptor | SectionDescriptor, RequestOptions): Promise<Star>`
+
+Star a project
+
+```js
+abstract.stars.create({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+### Un-star a project
+
+![API][api-icon]
+
+`stars.delete(ProjectDescriptor | SectionDescriptor, RequestOptions): Promise<void>`
+
+Un-star a project
+
+```js
+abstract.stars.delete({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+
 ## Users
 
 A user contains information specific to an individual account. Users are global to Abstract and are not specific to organizations. A user is created in the application by creating a new account.
