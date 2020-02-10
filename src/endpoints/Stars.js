@@ -1,5 +1,4 @@
 // @flow
-import querystring from "query-string";
 import type {
   ProjectDescriptor,
   RequestOptions,

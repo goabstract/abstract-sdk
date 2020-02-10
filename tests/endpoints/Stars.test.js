@@ -1,5 +1,4 @@
 // @flow
-import sha256 from "js-sha256";
 import { mockAPI, API_CLIENT } from "../../src/util/testing";
 
 describe("stars", () => {

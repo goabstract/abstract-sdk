@@ -1314,6 +1314,59 @@ abstract.projects.info({
 
 
 
+## Review Requests
+
+A review request represents a notification to review a given branch of work.
+
+### The review request object
+
+| Property          | Type     | Description                                                                   |
+|-------------------|----------|-------------------------------------------------------------------------------|
+| `branchId`        | `string` | The ID of the branch being reviewed                                           |
+| `commentId`       | `string` | ID of the comment associated with this review request                         |
+| `createdAt`       | `string` | Timestamp indicating when this review was requested                           |
+| `id`              | `string` | UUID of this review request                                                   |
+| `projectId`       | `string` | ID of the project that the reviewed branch belongs to                         |
+| `requester`       | `User`  | User who initiated or created this review request                               |
+| `reviewer`        | `User` | User who was requested to review this work                                      |
+| `requesterID`     | `User` | ID of the user who initiated or created this review request                     |
+| `reviewerID`      | `User` | ID of the user who was requested to review this work                            |
+| `status`          | `string` | Status of this review, one of `APPROVED` or `REJECTED`                        |
+| `statusChangedAt` | `string` | Timestamp indicating when this review was last updated                        |
+
+### List all review requests
+
+![API][api-icon]
+
+`reviewRequests.list(OrganizationDescriptor | ProjectDescriptor | BranchDescriptor, RequestOptions): Promise<ReviewRequest[]>`
+
+List all review requests for a given branch
+
+```js
+abstract.reviewRequests.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+});
+```
+
+List all review requests for a given project, regardless of branch
+
+```js
+abstract.reviewRequests.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+List all review requests for a given organization, regardless of project
+
+```js
+abstract.reviewRequests.list({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+
+
 ## Sections
 
 A section is a group of projects that belong to a given organization. Sections are used to group similar or related projects together and can be created using the desktop application.

@@ -1605,3 +1605,17 @@ export type WebhookDelivery = {
 export interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
+
+export type ReviewRequest = {
+  branchId: string,
+  commentId?: string,
+  createdAt: string,
+  id: string,
+  projectId: string,
+  requester: User,
+  requesterId: string,
+  reviewer: User,
+  reviewerId: string,
+  status: ReviewStatus,
+  statusChangedAt: string
+};
