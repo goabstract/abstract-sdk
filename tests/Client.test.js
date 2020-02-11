@@ -44,7 +44,7 @@ describe("Client", () => {
   test("all transports throw", async () => {
     mockAPI("/projects/project-id/branches/?", { ok: false }, 404);
 
-    mockCLI(["branches", "project-id"], undefined, {
+    mockCLI(["branches", "list", "--project-id", "project-id"], undefined, {
       code: "not_found"
     });
 
@@ -80,7 +80,7 @@ describe("Client", () => {
       }
     });
 
-    mockCLI(["branches", "project-id"], undefined, {
+    mockCLI(["branches", "list", "--project-id", "project-id"], undefined, {
       code: "not_found"
     });
 
@@ -148,13 +148,16 @@ describe("Client", () => {
       accessToken: (() => ({ shareId: "share-id" }): () => AccessToken)
     });
 
-    const spawnSpy = mockCLI(["branches", "project-id"], {
-      branches: [
-        {
-          id: "branch-id"
-        }
-      ]
-    });
+    const spawnSpy = mockCLI(
+      ["branches", "list", "--project-id", "project-id"],
+      {
+        branches: [
+          {
+            id: "branch-id"
+          }
+        ]
+      }
+    );
 
     const response = await client.branches.list(
       {

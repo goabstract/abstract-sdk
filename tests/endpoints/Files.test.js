@@ -53,11 +53,22 @@ describe("files", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["file", "project-id", "sha", "file-id"], {
-        file: {
-          id: "file-id"
+      mockCLI(
+        [
+          "files",
+          "meta",
+          "file-id",
+          "--project-id",
+          "project-id",
+          "--sha",
+          "sha"
+        ],
+        {
+          file: {
+            id: "file-id"
+          }
         }
-      });
+      );
 
       const response = await CLI_CLIENT.files.info({
         branchId: "branch-id",
@@ -96,7 +107,7 @@ describe("files", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["files", "project-id", "sha"], {
+      mockCLI(["files", "list", "--project-id", "project-id", "--sha", "sha"], {
         files: [
           {
             id: "file-id"
@@ -225,7 +236,7 @@ describe("files", () => {
     test("cli - exports file", async () => {
       mockCLI(
         [
-          "file",
+          "files",
           "export",
           "file-id",
           "filename",
@@ -256,7 +267,7 @@ describe("files", () => {
     test("cli - uses cwd", async () => {
       mockCLI(
         [
-          "file",
+          "files",
           "export",
           "file-id",
           "cwd",

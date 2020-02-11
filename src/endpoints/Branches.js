@@ -30,10 +30,10 @@ export default class Branches extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
-          "branch",
-          "load",
-          descriptor.projectId,
-          descriptor.branchId
+          "branches",
+          "get",
+          descriptor.branchId,
+          ...["--project-id", descriptor.projectId]
         ]);
         return wrap(response);
       },
@@ -69,7 +69,8 @@ export default class Branches extends Endpoint {
         }
         const response = await this.cliRequest([
           "branches",
-          descriptor.projectId,
+          "list",
+          ...["--project-id", descriptor.projectId],
           ...(filter ? ["--filter", filter] : [])
         ]);
 
