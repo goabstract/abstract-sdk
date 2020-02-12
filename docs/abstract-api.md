@@ -358,7 +358,7 @@ abstract.collections.list({
   branchId: "master"
 }, {
   branchStatus: "active",
-  layersPerCollection: 1337,
+  layersPerCollection: 5,
   search: "search string",
   sortBy: "updatedAt"
 });
