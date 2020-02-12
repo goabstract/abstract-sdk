@@ -339,7 +339,7 @@ A collection is a set of layers at the same or different commits on a branch, th
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`collections.list(ProjectDescriptor | BranchDescriptor, { ...RequestOptions, layersPerCollection?: number }): Promise<Collection[]>`
+`collections.list(ProjectDescriptor | BranchDescriptor, CollectionsListOptions): Promise<Collection[]>`
 
 List all collections for a branch
 
@@ -349,6 +349,22 @@ abstract.collections.list({
   branchId: "master"
 });
 ```
+
+Search and sort specific collections
+
+```js
+abstract.collections.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+}, {
+  branchStatus: "active",
+  layersPerCollection: 5,
+  search: "search string",
+  sortBy: "updatedAt"
+});
+```
+s
+> Note: Collection searching and sorting is only available when using the [API transport](/docs/transports).
 
 ### Retrieve a collection
 
@@ -1810,6 +1826,21 @@ Options objects that can be passed to different SDK endpoints.
   disableWrite?: boolean,
   filename?: string,
   onProgress?: (receivedBytes: number, totalBytes: number) => void;
+}
+```
+
+### CollectionsListOptions
+```js
+{
+  branchStatus?: string,
+  layersPerCollection?: number | "all",
+  limit?: number,
+  offset?: number,
+  search?: string,
+  sortBy?: string,
+  sortDir?: string,
+  transportMode?: ("api" | "cli")[],
+  userId?: string
 }
 ```
 

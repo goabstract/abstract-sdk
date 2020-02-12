@@ -82,20 +82,35 @@ describe("collections", () => {
 
   describe("list", () => {
     test("api", async () => {
-      mockAPI("/projects/project-id/collections?branchId=branch-id", {
-        data: {
-          collections: [
-            {
-              id: "collection-id"
-            }
-          ]
+      mockAPI(
+        "/projects/project-id/collections?branchId=branch-id&branchStatus=active&layersPerCollection=1337&limit=10&offset=2&search=search&sortBy=sort-by&sortDir=sort-dir&userId=user-id",
+        {
+          data: {
+            collections: [
+              {
+                id: "collection-id"
+              }
+            ]
+          }
         }
-      });
+      );
 
-      const response = await API_CLIENT.collections.list({
-        projectId: "project-id",
-        branchId: "branch-id"
-      });
+      const response = await API_CLIENT.collections.list(
+        {
+          projectId: "project-id",
+          branchId: "branch-id"
+        },
+        {
+          branchStatus: "active",
+          layersPerCollection: 1337,
+          limit: 10,
+          offset: 2,
+          search: "search",
+          sortBy: "sort-by",
+          sortDir: "sort-dir",
+          userId: "user-id"
+        }
+      );
 
       expect(response).toEqual([
         {
@@ -105,20 +120,35 @@ describe("collections", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["collections", "project-id", "--branch", "branch-id"], {
-        data: {
-          collections: [
-            {
-              id: "collection-id"
-            }
-          ]
+      mockCLI(
+        [
+          "collections",
+          "project-id",
+          "--branch",
+          "branch-id",
+          "--layersLimit",
+          "1337"
+        ],
+        {
+          data: {
+            collections: [
+              {
+                id: "collection-id"
+              }
+            ]
+          }
         }
-      });
+      );
 
-      const response = await CLI_CLIENT.collections.list({
-        projectId: "project-id",
-        branchId: "branch-id"
-      });
+      const response = await CLI_CLIENT.collections.list(
+        {
+          projectId: "project-id",
+          branchId: "branch-id"
+        },
+        {
+          layersPerCollection: 1337
+        }
+      );
 
       expect(response).toEqual([
         {

@@ -182,7 +182,7 @@ interface Collections extends Endpoint {
 
   list(
     descriptor: ProjectDescriptor | BranchDescriptor,
-    options?: RequestOptions & { layersPerCollection?: number | "all" }
+    options?: CollectionsListOptions
   ): Promise<Collection[]>;
 
   update(
@@ -418,6 +418,15 @@ type ListOptions = RequestOptions & {
 type RawOptions = RequestOptions & {
   disableWrite?: boolean,
   filename?: string
+};
+
+type CollectionsListOptions = ListOptions & {
+  branchStatus?: string,
+  layersPerCollection?: number | "all",
+  search?: string,
+  sortBy?: string,
+  sortDir?: string,
+  userId?: string
 };
 
 type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
