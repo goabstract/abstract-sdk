@@ -33,10 +33,11 @@ export default class Files extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
-          "file",
-          latestDescriptor.projectId,
-          latestDescriptor.sha,
-          latestDescriptor.fileId
+          "files",
+          "meta",
+          latestDescriptor.fileId,
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`
         ]);
 
         return wrap(response.file, response);
@@ -66,8 +67,9 @@ export default class Files extends Endpoint {
       cli: async () => {
         const response = await this.cliRequest([
           "files",
-          latestDescriptor.projectId,
-          latestDescriptor.sha
+          "list",
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`
         ]);
 
         return wrap(response.files, response);
@@ -153,7 +155,7 @@ export default class Files extends Endpoint {
         }
 
         await this.cliRequest([
-          "file",
+          "files",
           "export",
           latestDescriptor.fileId,
           filename || process.cwd(),

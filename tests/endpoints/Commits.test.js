@@ -40,7 +40,7 @@ describe("commits", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["commit", "project-id", "sha"], {
+      mockCLI(["commits", "get", "sha", "--project-id=project-id"], {
         commit: {
           id: "commit-id"
         }
@@ -85,9 +85,12 @@ describe("commits", () => {
     });
 
     test("cli - without options", async () => {
-      mockCLI(["commits", "project-id", "branch-id"], {
-        commits: []
-      });
+      mockCLI(
+        ["commits", "list", "--project-id=project-id", "--branch-id=branch-id"],
+        {
+          commits: []
+        }
+      );
 
       const response = await CLI_CLIENT.commits.list({
         projectId: "project-id",
@@ -101,8 +104,9 @@ describe("commits", () => {
       mockCLI(
         [
           "commits",
-          "project-id",
-          "branch-id",
+          "list",
+          "--project-id=project-id",
+          "--branch-id=branch-id",
           "--file-id",
           "file-id",
           "--layer-id",
