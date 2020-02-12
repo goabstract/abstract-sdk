@@ -36,8 +36,8 @@ export default class Files extends Endpoint {
           "files",
           "meta",
           latestDescriptor.fileId,
-          ...["--project-id", latestDescriptor.projectId],
-          ...["--sha", latestDescriptor.sha]
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`
         ]);
 
         return wrap(response.file, response);
@@ -68,8 +68,8 @@ export default class Files extends Endpoint {
         const response = await this.cliRequest([
           "files",
           "list",
-          ...["--project-id", latestDescriptor.projectId],
-          ...["--sha", latestDescriptor.sha]
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`
         ]);
 
         return wrap(response.files, response);

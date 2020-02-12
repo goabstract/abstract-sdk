@@ -27,7 +27,7 @@ describe("branches", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["branches", "get", "branch-id", "--project-id", "project-id"], {
+      mockCLI(["branches", "get", "branch-id", "--project-id=project-id"], {
         id: "branch-id"
       });
 
@@ -115,7 +115,7 @@ describe("branches", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["branches", "list", "--project-id", "project-id"], {
+      mockCLI(["branches", "list", "--project-id=project-id"], {
         branches: [
           {
             id: "branch-id"
@@ -136,7 +136,7 @@ describe("branches", () => {
 
     test("cli - filter", async () => {
       mockCLI(
-        ["branches", "list", "--project-id", "project-id", "--filter", "mine"],
+        ["branches", "list", "--project-id=project-id", "--filter", "mine"],
         {
           branches: [
             {

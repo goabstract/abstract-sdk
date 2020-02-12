@@ -33,7 +33,7 @@ export default class Branches extends Endpoint {
           "branches",
           "get",
           descriptor.branchId,
-          ...["--project-id", descriptor.projectId]
+          `--project-id=${descriptor.projectId}`
         ]);
         return wrap(response);
       },
@@ -70,7 +70,7 @@ export default class Branches extends Endpoint {
         const response = await this.cliRequest([
           "branches",
           "list",
-          ...["--project-id", descriptor.projectId],
+          `--project-id=${descriptor.projectId}`,
           ...(filter ? ["--filter", filter] : [])
         ]);
 

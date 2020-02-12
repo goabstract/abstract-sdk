@@ -38,7 +38,7 @@ export default class Commits extends Endpoint {
           "commits",
           "get",
           descriptor.sha,
-          ...["--project-id", descriptor.projectId]
+          `--project-id=${descriptor.projectId}`
         ]);
 
         return wrap(response.commit, response);
@@ -80,8 +80,8 @@ export default class Commits extends Endpoint {
         const response = await this.cliRequest([
           "commits",
           "list",
-          ...["--project-id", descriptor.projectId],
-          ...["--branch-id", descriptor.branchId],
+          `--project-id=${descriptor.projectId}`,
+          `--branch-id=${descriptor.branchId}`,
           ...(descriptor.fileId ? ["--file-id", descriptor.fileId] : []),
           ...(descriptor.layerId ? ["--layer-id", descriptor.layerId] : []),
           ...(options.startSha ? ["--start-sha", options.startSha] : []),

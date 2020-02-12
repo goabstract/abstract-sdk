@@ -40,7 +40,7 @@ describe("commits", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["commits", "get", "sha", "--project-id", "project-id"], {
+      mockCLI(["commits", "get", "sha", "--project-id=project-id"], {
         commit: {
           id: "commit-id"
         }
@@ -86,14 +86,7 @@ describe("commits", () => {
 
     test("cli - without options", async () => {
       mockCLI(
-        [
-          "commits",
-          "list",
-          "--project-id",
-          "project-id",
-          "--branch-id",
-          "branch-id"
-        ],
+        ["commits", "list", "--project-id=project-id", "--branch-id=branch-id"],
         {
           commits: []
         }
@@ -112,10 +105,8 @@ describe("commits", () => {
         [
           "commits",
           "list",
-          "--project-id",
-          "project-id",
-          "--branch-id",
-          "branch-id",
+          "--project-id=project-id",
+          "--branch-id=branch-id",
           "--file-id",
           "file-id",
           "--layer-id",

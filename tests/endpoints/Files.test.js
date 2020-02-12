@@ -54,15 +54,7 @@ describe("files", () => {
 
     test("cli", async () => {
       mockCLI(
-        [
-          "files",
-          "meta",
-          "file-id",
-          "--project-id",
-          "project-id",
-          "--sha",
-          "sha"
-        ],
+        ["files", "meta", "file-id", "--project-id=project-id", "--sha=sha"],
         {
           file: {
             id: "file-id"
@@ -107,7 +99,7 @@ describe("files", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["files", "list", "--project-id", "project-id", "--sha", "sha"], {
+      mockCLI(["files", "list", "--project-id=project-id", "--sha=sha"], {
         files: [
           {
             id: "file-id"
