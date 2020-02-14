@@ -1,6 +1,7 @@
 // @flow
 /* istanbul ignore file */
 import Client from "./Client";
+import { inferShareId } from "./util/helpers";
 import { paginate } from "./paginate";
 import * as sketch from "./sketch";
 import {
@@ -31,6 +32,7 @@ export {
   ServiceUnavailableError,
   UnauthorizedError,
   // Utilities
+  inferShareId,
   paginate,
   sketch
 };

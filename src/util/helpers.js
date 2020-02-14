@@ -2,7 +2,7 @@
 import type { ShareDescriptor } from "../types";
 
 function parseShareURL(url: string): ?string {
-  return url.split("share.goabstract.com/")[1];
+  return url.split(/share\.(?:go)?abstract\.com\//)[1];
 }
 
 export function inferShareId(shareDescriptor: ShareDescriptor): string {
