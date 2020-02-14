@@ -9,6 +9,11 @@ describe("helpers", () => {
         url: "share.goabstract.com/share-id"
       })
     ).toBe("share-id");
+    expect(
+      utils.inferShareId({
+        url: "share.abstract.com/share-id-2"
+      })
+    ).toBe("share-id-2");
   });
 
   test("inferShareId throws", () => {
