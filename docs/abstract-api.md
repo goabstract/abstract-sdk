@@ -1246,6 +1246,7 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 |------------------|----------|-------------------------------------------------------------------------------|
 | `about`          | `string` | A longer description of the project (May optionally include markdown tags)    |
 | `archivedAt`     | `string` | Timestamp that the project was archived                                       |
+| `assetAutoGeneration` | `string` | Status of project asset generation. One of "all", "master", or "off".    |
 | `color`          | `string` | A hex value that represents a custom project color                            |
 | `createdAt`      | `string` | Timestamp that the project was created                                        |
 | `createdByUser`  | `User`   | The user that created the project                                             |
@@ -1260,6 +1261,18 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 | `updatedAt`      | `string` | Timestamp that the project was last updated                                   |
 | `visibility`     | `string` | Either "organization" for a team project, or "specific" for a private project |
 
+#### NewProject
+
+| Property         | Type      | Description                                                                   |
+|------------------|-----------|-------------------------------------------------------------------------------|
+| `about`          | `string`  | A longer description of the project (May optionally include markdown tags)    |
+| `assetAutoGeneration` | `string` | Status of project asset generation. One of "all", "master", or "off".    |
+| `color`          | `string`  | A hex value that represents a custom project color                            |
+| `createdAt`      | `string`  | Timestamp that the project was created                                        |
+| `name`           | `string`  | The name of the project                                                       |
+| `organizationId` | `string`  | UUID of the organization this project belongs to                              |
+| `sectionId`      | `string`  | UUID of the section this project belongs to                                   |
+| `visibility`     | `string`  | Either "organization" for a team project, or "specific" for a private project |
 
 ### List all projects
 
@@ -1312,6 +1325,81 @@ abstract.projects.info({
 });
 ```
 
+### Create a project
+
+![API][api-icon]
+
+`projects.create(OrganizationDescriptor, NewProject, RequestOptions): Promise<Project>`
+
+Create a new project
+
+```js
+abstract.projects.create({
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+}, {
+  name: "New Project",
+  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+});
+```
+
+### Delete a project
+
+![API][api-icon]
+
+`projects.delete(ProjectDescriptor, RequestOptions): Promise<void>`
+
+Delete a project
+
+```js
+abstract.projects.delete({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+### Update a project
+
+![API][api-icon]
+
+`projects.update(ProjectDescriptor, Project, RequestOptions): Promise<Project>`
+
+Update an existing project
+
+```js
+abstract.projects.update({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+}, {
+  ...existingProject,
+  name: "Updated Project Name"
+});
+```
+
+### Archive a project
+
+![API][api-icon]
+
+`projects.archive(ProjectDescriptor, RequestOptions): Promise<Project>`
+
+Archive a project
+
+```js
+abstract.projects.achive({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+### Un-archive a project
+
+![API][api-icon]
+
+`projects.unarchive(ProjectDescriptor, RequestOptions): Promise<Project>`
+
+Un-archive a project
+
+```js
+abstract.projects.unarchive({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
 
 
 ## Review Requests
