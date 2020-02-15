@@ -456,6 +456,8 @@ export type Organization = {
   userId: string
 };
 
+export type AssetAutoGenerationOption = "all" | "master" | "off";
+
 export type Project = {
   id: string,
   name: string,
@@ -472,7 +474,19 @@ export type Project = {
   isNew: boolean,
   repoCreatedAt: string,
   visibility: "organization" | "project",
-  sizeInBytes: number
+  sizeInBytes: number,
+  assetAutoGeneration: AssetAutoGenerationOption
+};
+
+export type NewProject = {
+  name: string,
+  organizationId: string,
+  about?: string,
+  color?: string,
+  sectionId?: string,
+  createdAt?: string,
+  visibility?: "organization" | "project",
+  assetAutoGeneration?: AssetAutoGenerationOption
 };
 
 type BaseShare = {|

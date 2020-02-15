@@ -296,6 +296,28 @@ interface Projects extends Endpoint {
       sectionId?: string
     }
   ): Promise<Project[]>;
+  create(
+    descriptor: OrganizationDescriptor,
+    project: NewProject,
+    requestOptions?: RequestOptions
+  ): Promise<Project>;
+  update(
+    descriptor: OrganizationDescriptor,
+    project: Project,
+    requestOptions?: RequestOptions
+  ): Promise<Project>;
+  delete(
+    descriptor: ProjectDescriptor,
+    requestOptions?: RequestOptions
+  ): Promise<void>;
+  archive(
+    descriptor: ProjectDescriptor,
+    requestOptions?: RequestOptions
+  ): Promise<Project>;
+  unarchive(
+    descriptor: ProjectDescriptor,
+    requestOptions?: RequestOptions
+  ): Promise<Project>;
 }
 
 interface Sections extends Endpoint {
@@ -731,7 +753,21 @@ type Project = {
   isNew: boolean,
   repoCreatedAt: string,
   visibility: "organization" | "project",
-  sizeInBytes: number
+  sizeInBytes: number,
+  assetAutoGeneration: AssetAutoGenerationOption
+};
+
+type AssetAutoGenerationOption = "all" | "master" | "off";
+
+type NewProject = {
+  name: string,
+  organizationId: string,
+  about?: string,
+  color?: string,
+  sectionId?: string,
+  createdAt?: string,
+  visibility?: "organization" | "project",
+  assetAutoGeneration?: AssetAutoGenerationOption
 };
 
 type BaseShare = {
