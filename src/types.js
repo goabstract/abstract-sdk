@@ -101,7 +101,7 @@ export type ApiRequestOptions = {
 
 export type RequestOptions = {
   transportMode?: ("api" | "cli")[],
-  headers?: { [string]: string }
+  _version?: number
 };
 
 export type RequestConfig<T> = {

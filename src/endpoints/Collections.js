@@ -54,9 +54,13 @@ export default class Collections extends Endpoint {
         const query = querystring.stringify({ layersPerCollection });
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`,
-          {
-            headers: requestOptions.headers
-          }
+          requestOptions._version
+            ? {
+                headers: {
+                  "Abstract-Api-Version": requestOptions._version
+                }
+              }
+            : { headers }
         );
         return wrap(response.data.collections[0], response);
       },
@@ -108,9 +112,13 @@ export default class Collections extends Endpoint {
 
         const response = await this.apiRequest(
           `projects/${projectId}/collections?${query}`,
-          {
-            headers: requestOptions.headers || headers
-          }
+          requestOptions._version
+            ? {
+                headers: {
+                  "Abstract-Api-Version": requestOptions._version
+                }
+              }
+            : { headers }
         );
 
         return wrap(response.data.collections, response);
