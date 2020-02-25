@@ -14,9 +14,7 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 // Version 16 returns cached thumbnails
-const headers = {
-  "Abstract-Api-Version": "16"
-};
+const API_VERSION = 16;
 
 export default class Collections extends Endpoint {
   create(
@@ -54,13 +52,11 @@ export default class Collections extends Endpoint {
         const query = querystring.stringify({ layersPerCollection });
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`,
-          requestOptions._version
-            ? {
-                headers: {
-                  "Abstract-Api-Version": requestOptions._version
-                }
-              }
-            : { headers }
+          {
+            headers: {
+              "Abstract-Api-Version": requestOptions._version || API_VERSION
+            }
+          }
         );
         return wrap(response.data.collections[0], response);
       },
@@ -112,13 +108,11 @@ export default class Collections extends Endpoint {
 
         const response = await this.apiRequest(
           `projects/${projectId}/collections?${query}`,
-          requestOptions._version
-            ? {
-                headers: {
-                  "Abstract-Api-Version": requestOptions._version
-                }
-              }
-            : { headers }
+          {
+            headers: {
+              "Abstract-Api-Version": requestOptions._version || API_VERSION
+            }
+          }
         );
 
         return wrap(response.data.collections, response);
