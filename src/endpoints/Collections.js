@@ -53,7 +53,10 @@ export default class Collections extends Endpoint {
       api: async () => {
         const query = querystring.stringify({ layersPerCollection });
         const response = await this.apiRequest(
-          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`
+          `projects/${descriptor.projectId}/collections/${descriptor.collectionId}?${query}`,
+          {
+            headers: requestOptions.headers
+          }
         );
         return wrap(response.data.collections[0], response);
       },
@@ -105,7 +108,9 @@ export default class Collections extends Endpoint {
 
         const response = await this.apiRequest(
           `projects/${projectId}/collections?${query}`,
-          { headers }
+          {
+            headers: requestOptions.headers || headers
+          }
         );
 
         return wrap(response.data.collections, response);

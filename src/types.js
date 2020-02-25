@@ -100,7 +100,8 @@ export type ApiRequestOptions = {
 };
 
 export type RequestOptions = {
-  transportMode?: ("api" | "cli")[]
+  transportMode?: ("api" | "cli")[],
+  headers?: { [string]: string }
 };
 
 export type RequestConfig<T> = {
