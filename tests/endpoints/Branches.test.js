@@ -114,6 +114,29 @@ describe("branches", () => {
       ]);
     });
 
+    test("api - pagination", async () => {
+      mockAPI("/branches/?offset=5&limit=10", {
+        data: {
+          branches: [
+            {
+              id: "branch-id"
+            }
+          ]
+        }
+      });
+
+      const response = await API_CLIENT.branches.list(undefined, {
+        offset: 5,
+        limit: 10
+      });
+
+      expect(response).toEqual([
+        {
+          id: "branch-id"
+        }
+      ]);
+    });
+
     test("cli", async () => {
       mockCLI(["branches", "list", "--project-id=project-id"], {
         branches: [
