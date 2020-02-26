@@ -32,13 +32,13 @@ describe("data", () => {
     test("cli", async () => {
       mockCLI(
         [
-          "layer",
-          "data",
-          "project-id",
-          "branch-id",
-          "sha",
-          "file-id",
-          "layer-id"
+          "layers",
+          "inspect",
+          "layer-id",
+          "--project-id=project-id",
+          "--branch-id=branch-id",
+          "--sha=sha",
+          "--file-id=file-id"
         ],
         {
           layerId: "layer-id"

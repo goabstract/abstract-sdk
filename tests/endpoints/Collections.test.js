@@ -59,15 +59,18 @@ describe("collections", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["collection", "load", "project-id", "collection-id"], {
-        data: {
-          collections: [
-            {
-              id: "collection-id"
-            }
-          ]
+      mockCLI(
+        ["collections", "get", "collection-id", "--project-id=project-id"],
+        {
+          data: {
+            collections: [
+              {
+                id: "collection-id"
+              }
+            ]
+          }
         }
-      });
+      );
 
       const response = await CLI_CLIENT.collections.info({
         projectId: "project-id",
@@ -123,8 +126,9 @@ describe("collections", () => {
       mockCLI(
         [
           "collections",
+          "list",
           "project-id",
-          "--branch",
+          "--branch-id",
           "branch-id",
           "--layersLimit",
           "1337"
@@ -158,7 +162,7 @@ describe("collections", () => {
     });
 
     test("cli - no branch id", async () => {
-      mockCLI(["collections", "project-id"], {
+      mockCLI(["collections", "list", "project-id"], {
         data: {
           collections: [
             {

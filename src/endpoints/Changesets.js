@@ -32,12 +32,10 @@ export default class Changesets extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
+          "commits",
           "changeset",
-          latestDescriptor.projectId,
-          "--commit",
           latestDescriptor.sha,
-          "--branch",
-          latestDescriptor.branchId
+          `--project-id=${latestDescriptor.projectId}`
         ]);
         return wrap(response.changeset, response);
       },
@@ -58,10 +56,10 @@ export default class Changesets extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
+          "branches",
           "changeset",
-          descriptor.projectId,
-          "--branch",
-          descriptor.branchId
+          descriptor.branchId,
+          `--project-id=${descriptor.projectId}`
         ]);
         return wrap(response.changeset, response);
       },
