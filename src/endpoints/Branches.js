@@ -3,6 +3,7 @@ import querystring from "query-string";
 import type {
   Branch,
   BranchDescriptor,
+  ListOptions,
   ProjectDescriptor,
   RequestOptions
 } from "../types";
@@ -45,16 +46,16 @@ export default class Branches extends Endpoint {
   list(
     descriptor?: ProjectDescriptor,
     options: {
-      ...RequestOptions,
+      ...ListOptions,
       filter?: "active" | "archived" | "mine",
       search?: string
     } = {}
   ) {
-    const { filter, search, ...requestOptions } = options;
+    const { limit, offset, filter, search, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Branch[]>>({
       api: async () => {
-        const query = querystring.stringify({ filter, search });
+        const query = querystring.stringify({ limit, offset, filter, search });
         const requestUrl = descriptor
           ? `projects/${descriptor.projectId}/branches/?${query}`
           : `branches/?${query}`;
