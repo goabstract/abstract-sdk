@@ -36,12 +36,12 @@ export default class Layers extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
-          "layer",
-          "meta",
-          latestDescriptor.projectId,
-          latestDescriptor.sha,
-          latestDescriptor.fileId,
-          latestDescriptor.layerId
+          "layers",
+          "info",
+          latestDescriptor.layerId,
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`,
+          `--file-id=${latestDescriptor.fileId}`
         ]);
 
         return wrap(response.layer, response);
@@ -79,9 +79,10 @@ export default class Layers extends Endpoint {
       cli: async () => {
         const args = [
           "layers",
-          latestDescriptor.projectId,
-          latestDescriptor.sha,
-          latestDescriptor.fileId
+          "list",
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`,
+          `--file-id=${latestDescriptor.fileId}`
         ];
 
         if (limit) {

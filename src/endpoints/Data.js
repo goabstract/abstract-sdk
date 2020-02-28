@@ -26,13 +26,13 @@ export default class Data extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
-          "layer",
-          "data",
-          latestDescriptor.projectId,
-          latestDescriptor.branchId,
-          latestDescriptor.sha,
-          latestDescriptor.fileId,
-          latestDescriptor.layerId
+          "layers",
+          "inspect",
+          latestDescriptor.layerId,
+          `--project-id=${latestDescriptor.projectId}`,
+          `--branch-id=${latestDescriptor.branchId}`,
+          `--sha=${latestDescriptor.sha}`,
+          `--file-id=${latestDescriptor.fileId}`
         ]);
         return wrap(response);
       },

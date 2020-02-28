@@ -63,10 +63,10 @@ export default class Collections extends Endpoint {
 
       cli: async () => {
         const response = await this.cliRequest([
-          "collection",
-          "load",
-          descriptor.projectId,
-          descriptor.collectionId
+          "collections",
+          "get",
+          descriptor.collectionId,
+          `--project-id=${descriptor.projectId}`
         ]);
         return wrap(response.data.collections[0], response);
       },
@@ -121,8 +121,9 @@ export default class Collections extends Endpoint {
       cli: async () => {
         const response = await this.cliRequest([
           "collections",
+          "list",
           descriptor.projectId,
-          ...(descriptor.branchId ? ["--branch", descriptor.branchId] : []),
+          ...(descriptor.branchId ? ["--branch-id", descriptor.branchId] : []),
           ...(layersPerCollection
             ? ["--layersLimit", String(layersPerCollection)]
             : [])

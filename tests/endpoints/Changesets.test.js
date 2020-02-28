@@ -26,14 +26,11 @@ describe("commit", () => {
   });
 
   test("cli", async () => {
-    mockCLI(
-      ["changeset", "project-id", "--commit", "sha", "--branch", "branch-id"],
-      {
-        changeset: {
-          id: "changeset-id"
-        }
+    mockCLI(["commits", "changeset", "sha", "--project-id=project-id"], {
+      changeset: {
+        id: "changeset-id"
       }
-    );
+    });
 
     const response = await CLI_CLIENT.changesets.commit({
       branchId: "branch-id",
@@ -66,7 +63,7 @@ describe("branch", () => {
   });
 
   test("cli", async () => {
-    mockCLI(["changeset", "project-id", "--branch", "branch-id"], {
+    mockCLI(["branches", "changeset", "branch-id", "--project-id=project-id"], {
       changeset: {
         id: "changeset-id"
       }

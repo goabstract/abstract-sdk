@@ -32,11 +32,21 @@ describe("layers", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["layer", "meta", "project-id", "sha", "file-id", "layer-id"], {
-        layer: {
-          id: "layer-id"
+      mockCLI(
+        [
+          "layers",
+          "info",
+          "layer-id",
+          "--project-id=project-id",
+          "--sha=sha",
+          "--file-id=file-id"
+        ],
+        {
+          layer: {
+            id: "layer-id"
+          }
         }
-      });
+      );
 
       const response = await CLI_CLIENT.layers.info({
         branchId: "branch-id",
@@ -80,13 +90,22 @@ describe("layers", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["layers", "project-id", "sha", "file-id"], {
-        layers: [
-          {
-            id: "layer-id"
-          }
-        ]
-      });
+      mockCLI(
+        [
+          "layers",
+          "list",
+          "--project-id=project-id",
+          "--sha=sha",
+          "--file-id=file-id"
+        ],
+        {
+          layers: [
+            {
+              id: "layer-id"
+            }
+          ]
+        }
+      );
 
       const response = await CLI_CLIENT.layers.list({
         branchId: "branch-id",
@@ -106,9 +125,10 @@ describe("layers", () => {
       mockCLI(
         [
           "layers",
-          "project-id",
-          "sha",
-          "file-id",
+          "list",
+          "--project-id=project-id",
+          "--sha=sha",
+          "--file-id=file-id",
           "--limit=1",
           "--offset=1",
           "--page-id=page-id",
