@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.13](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.7...v8.0.0-beta.13) (2020-03-02)
+
+
+### Bug Fixes
+
+* Allow abstract.com domain for share links and expose inferShareId ([#217](https://github.com/goabstract/abstract-sdk/issues/217)) ([7789a92](https://github.com/goabstract/abstract-sdk/commit/7789a92))
+* data endpoint needs to pass branch id to cli ([#208](https://github.com/goabstract/abstract-sdk/issues/208)) ([328e5ef](https://github.com/goabstract/abstract-sdk/commit/328e5ef))
+* embed generator ([#213](https://github.com/goabstract/abstract-sdk/issues/213)) ([42f466d](https://github.com/goabstract/abstract-sdk/commit/42f466d))
+* support branch pagination ([#221](https://github.com/goabstract/abstract-sdk/issues/221)) ([34e6a42](https://github.com/goabstract/abstract-sdk/commit/34e6a42))
+
+
+### Features
+
+* add ability to manage project and section stars ([bc8a31f](https://github.com/goabstract/abstract-sdk/commit/bc8a31f))
+* add layer dependency filtering options ([#207](https://github.com/goabstract/abstract-sdk/issues/207)) ([88705e8](https://github.com/goabstract/abstract-sdk/commit/88705e8))
+* add layer filtering options to cli transport ([#209](https://github.com/goabstract/abstract-sdk/issues/209)) ([42006ab](https://github.com/goabstract/abstract-sdk/commit/42006ab))
+* add review requests to API transport ([09b64c8](https://github.com/goabstract/abstract-sdk/commit/09b64c8))
+* support full project CRUD ([#201](https://github.com/goabstract/abstract-sdk/issues/201)) ([a000ca6](https://github.com/goabstract/abstract-sdk/commit/a000ca6))
+* update collections list parameters ([#214](https://github.com/goabstract/abstract-sdk/issues/214)) ([dcb290a](https://github.com/goabstract/abstract-sdk/commit/dcb290a))
+
+
+
 ## [8.0.0-beta.7](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.6...v8.0.0-beta.7) (2020-01-16)
 
 
