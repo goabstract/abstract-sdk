@@ -14,7 +14,33 @@ import Endpoint from "../endpoints/Endpoint";
 const EXPORT_STATUS_CHECK_INTERVAL = 2000;
 const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
 
+/**
+ *
+ *
+ * @export
+ * @class Files
+ * @extends {Endpoint}
+ * @description
+ * A file represents a standard file – in Abstract a file is always
+ * loaded from a specific commit <strong>SHA</strong>, or point in time.
+ */
 export default class Files extends Endpoint {
+  /**
+   *
+   *
+   * @param {FileDescriptor} descriptor
+   * @param {RequestOptions} [requestOptions={}]
+   * @returns {Promise<File>}
+   * @memberof Files
+   * @example
+   * // Load the file info for the latest commit on a branch
+   * abstract.files.info({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "master",
+   *  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+   *  sha: "latest"
+   * });
+   */
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
@@ -47,6 +73,21 @@ export default class Files extends Endpoint {
     });
   }
 
+  /**
+   *
+   *
+   * @param {BranchCommitDescriptor} descriptor
+   * @param {RequestOptions} [requestOptions={}]
+   * @returns {Promise<File[]>}
+   * @memberof Files
+   * @example
+   * // List the files for a branch at the latest commit
+   * abstract.files.list({
+   *   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *   branchId: "master",
+   *   sha: "latest"
+   * });
+   */
   async list(
     descriptor: BranchCommitDescriptor,
     requestOptions: RequestOptions = {}
@@ -79,6 +120,61 @@ export default class Files extends Endpoint {
     });
   }
 
+  /**
+   *
+   *
+   * @param {FileDescriptor} descriptor
+   * @param {RawProgressOptions} [options={}]
+   * @returns {Promise<ArrayBuffer | void>}
+   * @memberof Files
+   * @description
+   * Retrieve a Sketch file from Abstract based on its file ID and save it to disk.
+   * Files will be saved to the current working directory by default, but a custom
+   * filename option can be used to customize this location. (1)
+   * The resulting ArrayBuffer can be also be used with node fs APIs directly.
+   * For example, it's possible to write the file to disk
+   * manually after post-processing it (2)
+   * It's also possible to get insight into
+   * the underlying progress of the file export. (3)
+   * @example
+   * // 1
+   * abstract.files.raw({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "master",
+   *  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+   *  sha: "latest"
+   * });
+   * @example
+   * // 2
+   * const arrayBuffer = await abstract.files.raw({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "master",
+   *  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+   *  sha: "latest"
+   * }, {
+   *  disableWrite: true
+   * });
+   *
+   * processedBuffer = postProcess(arrayBuffer);
+   *
+   * fs.writeFile("file.sketch", Buffer.from(processedBuffer), (err) => {
+   *  if (err) throw err;
+   *  console.log("File written!");
+   * });
+   *
+   * @example
+   * // 3
+   * abstract.files.raw({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "master",
+   *  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+   *  sha: "latest"
+   * }, {
+   *  onProgress: (receivedBytes: number, totalBytes: number) => {
+   *    console.log(`${receivedBytes * 100 / totalBytes}% complete`);
+   *  }
+   * });
+   */
   async raw(descriptor: FileDescriptor, options: RawProgressOptions = {}) {
     const { disableWrite, filename, onProgress, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(

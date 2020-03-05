@@ -8,6 +8,13 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
+/**
+ *
+ * Stars desc
+ * @export
+ * @class Stars
+ * @extends {Endpoint}
+ */
 export default class Stars extends Endpoint {
   list(requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Star[]>>({

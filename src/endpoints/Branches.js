@@ -15,7 +15,30 @@ const headers = {
   "Abstract-Api-Version": "17"
 };
 
+/**
+ * @class Branches
+ * @description
+ * A branch is where design work and commits happen.
+ * A branch acts as a personal workspace for contributors,
+ * we encourage branches to be created for logical chunks of work
+ * – for example designing a new feature.
+ * @extends {Endpoint}
+ */
 export default class Branches extends Endpoint {
+  /**
+   * @memberof Branches
+   * @param {BranchDescriptor} descriptor
+   * @param {RequestOptions} [requestOptions={}]
+   * @description
+   * Retrieve a branch
+   * @returns {Promise<Branch>}
+   * @example
+   * // Load the info for a specific branch in a project
+   * abstract.branches.info({
+   *   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *   branchId: "master"
+   * });
+   */
   info(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Branch>>({
       api: async () => {
@@ -42,6 +65,34 @@ export default class Branches extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Branches
+   * @param {ProjectDescriptor} [descriptor]
+   * @param {object} options
+   * @param {object} options.RequestOptions - spread operator
+   * @param {("active" | "archived" | "mine")} options.filter
+   * @param {string} options.search
+   * @returns {Promise<Branch[]>}
+   * @description
+   * List all branches
+   * <div class="banner banner-warning">
+   *  Note: Searching for branches is only available when using the API transport.
+   * </div>
+   * @returns {Promise<Branch[]>}
+   * @example
+   * // List the active branches for a project
+   * abstract.branches.list({
+   *   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   * }, {
+   *   filter: "active"
+   * });
+   *
+   * @example
+   * // Search for a branch by name across all projects
+   * abstract.branches.list(undefined, {
+   *   search: "branch name"
+   * });
+   */
   list(
     descriptor?: ProjectDescriptor,
     options: {
