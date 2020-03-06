@@ -9,6 +9,13 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
+/**
+ *
+ * ReviewRequests Desc
+ * @export
+ * @class ReviewRequests
+ * @extends {Endpoint}
+ */
 export default class ReviewRequests extends Endpoint {
   list(
     descriptor: OrganizationDescriptor | ProjectDescriptor | BranchDescriptor,

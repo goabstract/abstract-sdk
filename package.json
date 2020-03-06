@@ -36,7 +36,9 @@
     "prebuild": "rm -rf dist && flow-copy-source -i **/testing.js src dist",
     "build": "babel src -d dist --ignore **/testing.js",
     "prepublish": "yarn build",
-    "release": "standard-version"
+    "release": "standard-version",
+    "build-doc": "documentation build src/index.js --config documentation.yml -f html -o docjs --theme node_modules/docjs-theme",
+    "serve-doc": "documentation serve --watch src/index.js --config documentation.yml --theme node_modules/docjs-theme"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0",
@@ -48,6 +50,8 @@
     "@elasticprojects/eslint-config-abstract": "^4.1.0",
     "babel-eslint": "^9.0.0",
     "babel-jest": "^24.1.0",
+    "documentation": "^12.1.4",
+    "docjs-theme": "berezovskycom/documentj-theme",
     "eslint": "^4.8.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",

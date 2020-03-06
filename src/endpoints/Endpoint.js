@@ -27,6 +27,12 @@ const logCLIRequest = log.extend("AbstractCLI:request");
 const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
+/**
+ *
+ * Endpoint Desc
+ * @export
+ * @class Endpoint
+ */
 export default class Endpoint {
   client: Client;
   options: CommandOptions;

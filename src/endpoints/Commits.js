@@ -13,7 +13,35 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
+/**
+ *
+ * @export
+ * @class Commits
+ * @extends {Endpoint}
+ * @description
+ * A commit represents a point in time – contributors can create commits
+ * in the desktop app to save their work at different stages.
+ * When loading data from the Abstract SDK you will almost always need
+ * to provide a commit <strong>SHA</strong> to identify
+ * which version of the object you would like.
+ */
 export default class Commits extends Endpoint {
+  /**
+   *
+   *
+   * @param {(BranchCommitDescriptor
+   *       | CommitDescriptor
+   *       | FileDescriptor
+   *       | LayerVersionDescriptor)} descriptor
+   * @param {RequestOptions} [requestOptions={}]
+   * @returns {Promise<Commit>}
+   * @example
+   * abstract.commits.info({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+   * });
+   * @memberof Commits
+   */
   info(
     descriptor:
       | BranchCommitDescriptor
@@ -48,6 +76,32 @@ export default class Commits extends Endpoint {
     });
   }
 
+  /**
+  *
+  *
+  * @param {(BranchDescriptor | LayerDescriptor)} descriptor
+  * @param {{ ...RequestOptions, limit?: number,
+      startSha?: string,
+      endSha?: string} = {}} options
+  * @memberof Commits
+   * @example
+   * // List the commits for a specific branch
+   * abstract.commits.list({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "master"
+   * });
+   * 
+   * @example
+   * // or, get a list of commits for a layer – this query
+   * // will only return commits where the referenced layer was changed…
+   * abstract.commits.list({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "master",
+   *  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+   *  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
+   * });
+   * @returns {Promise<Commit[]>}
+  */
   list(
     descriptor: BranchDescriptor | LayerDescriptor,
     options: {

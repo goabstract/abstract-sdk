@@ -12,7 +12,31 @@ const headers = {
   "Abstract-Api-Version": "19"
 };
 
+/**
+ * @class Changesets
+ * @description
+ * A changeset is a group of changes that together form a single,
+ * indivisible modification to a project.
+ * Changesets include data on all visual and nonvisual changes
+ * and provide insight into the differences between two versions of a project.
+ * @extends {Endpoint}
+ */
 export default class Changesets extends Endpoint {
+  /**
+   * @memberof Changesets
+   * @param {BranchCommitDescriptor} descriptor
+   * @param {RequestOptions} requestOptions
+   * @returns {Promise<Changeset>}
+   * @description
+   * Retrieve a changeset for a commit
+   * @example
+   * // Load a changeset for a commit
+   * abstract.changesets.commit({
+   *  branchId: "master",
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  sha: "e2a0a301c4a530ec16024cbb339dfc135c841b10"
+   * });
+   */
   async commit(
     descriptor: BranchCommitDescriptor,
     requestOptions: RequestOptions = {}
@@ -44,6 +68,21 @@ export default class Changesets extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Changesets
+   * @param {BranchDescriptor} descriptor
+   * @param {RequestOptions} requestOptions
+   * @returns {Promise<Changeset>}
+   * @description
+   * Retrieve a changeset for a branch
+   * @example
+   * // Load a changeset for a branch
+   * abstract.changesets.branch({
+   *  branchId: "c426d0a6-e039-43d7-b7b3-e685a25e4cfb",
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+   * });
+   *
+   */
   branch(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Changeset>>({
       api: async () => {
