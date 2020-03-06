@@ -144,7 +144,13 @@ export default class Endpoint {
 
     const spawnArgs = [
       cliPath,
-      [...tokenArgs, "--api-url", await this.options.apiUrl, ...args]
+      [
+        ...tokenArgs,
+        "--api-url",
+        await this.options.apiUrl,
+        "--skip-network-read-ops",
+        ...args
+      ]
     ];
 
     /* istanbul ignore next */
