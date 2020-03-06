@@ -106,6 +106,8 @@
           "corejs": 2,
           "useBuiltIns": "usage",
           "targets": {
+            "chrome": 58,
+            "ie": 11,
             "node": 10
           },
           "exclude": [
