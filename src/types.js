@@ -261,6 +261,15 @@ export type CommandOptions = {
   webUrl: string | Promise<string>
 };
 
+/**
+ * @name Star
+ * @property {string} starrableId
+ * The ID of the underlying projector section that this star
+ * @property {"Project" | "Section"} starrableType
+ * Indicates the type of the underlying entity, either "Project" or "Section"
+ * @property {string} starredAt
+ * Timestamp that the project or section was starred
+ */
 export type Star = {
   starrableId: string,
   starrableType: "Project" | "Section",
