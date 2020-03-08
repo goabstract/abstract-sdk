@@ -1899,10 +1899,10 @@ type WebhookDelivery = {
   webhookId: string
 };
 
-type ErrorData = {|
+type ErrorData = {
   path: string,
-  body: mixed
-|};
+  body: any
+};
 
 type ErrorMap = {
   [mode: string]: Error
