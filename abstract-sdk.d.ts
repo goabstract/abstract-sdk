@@ -1817,7 +1817,7 @@ interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
 
-type AccessToken = ?string | ShareDescriptor;
+type AccessToken = string | ShareDescriptor;
 type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
