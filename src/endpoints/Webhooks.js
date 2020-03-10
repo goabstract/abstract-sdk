@@ -298,10 +298,12 @@ export default class Users extends Endpoint {
 
   /**
    *
-   * @param {*} payload
+   * @param {WebhookDelivery} payload
    * @param {string} expectedSignature
    * @param {string} signingKey
    * @param {RequestOptions} [requestOptions={}]
+   * @memberof Webhooks
+   * @returns {Promise<boolean>}
    * @description Verify a webhook delivery
    * <div class="banner banner-warning">
    *  Note: This endpoint is intended to be used on a webhook server to verify
