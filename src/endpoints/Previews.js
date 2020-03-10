@@ -149,9 +149,9 @@ export default class Previews extends Endpoint {
    * @description
    * <div class="banner banner-warning">
    *  Note: The <code>previews.url</code> method requires an environment with
-   * <a href="#">URL.createObjectURL</a>.
+   * <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL">URL.createObjectURL</a>.
    * If you are using node, you will need to save the image to a file with
-   * <a href="#">previews.raw</a>
+   * <a href="#previewsraw">previews.raw</a>
    * </div>
    * <div class="banner banner-warning">
    *  Get an image as a <em>temporary</em> blob url which can be displayed directly
