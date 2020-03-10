@@ -58,6 +58,7 @@
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.110.1",
     "flow-copy-source": "^2.0.3",
+    "flow-typed": "^2.5.1",
     "jest": "^24.1.0",
     "nock": "^11.0.0",
     "prettier": "^1.14.2",
@@ -68,7 +69,6 @@
     "@elasticprojects/abstract-cli": "^4.3.0",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
-    "flow-typed": "^2.5.1",
     "js-sha256": "^0.9.0",
     "query-string": "^6.1.0",
     "uuid": "^3.3.2"
