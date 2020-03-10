@@ -50,6 +50,31 @@ export {
 export type * from "./types";
 
 /**
+ * @name Introduction
+ * @description
+ * <h1>Abstract SDK</h1>
+ * <p>A universal javascript binding for the Abstract API and CLI</p>
+ * <a href="https://sdk.goabstract.com/docs/installation">Get Started</a>
+ * <a href="https://github.com/goabstract/abstract-sdk">GitHub</a>
+ * <ul>
+ * <li>
+ * <h3>API</h3>
+ * <p>Abstract is built on an extensive HTTP API, you can use the
+ * SDK to access the data stored in Abstract from servers,
+ * other apps, or CI environments.
+ * </p>
+ * </li>
+ * <li>
+ * <h3>CLI</h3>
+ * <p>The Abstract desktop application comes with an embedded CLI.
+ * This SDK provides an easy and consistent interface to accessing
+ * your data stored locally in Abstract.
+ * </p>
+ * </li>
+ * </ul>
+ */
+
+/**
  * @name RateLimits
  * @description
  * When using the SDK with the API transport, requests are subject to a flat rate limit of 120 requests per minute. This helps to ensure API stability and helps to prevent misuse of Abstract servers. Rate limits are issued on a per-token basis rather than per-client; this means that multiple clients configured to use the same token will exhaust the same rate limit.
@@ -218,7 +243,7 @@ export type * from "./types";
  * Please note that payloads, event names, and other related
  * functionality could change before launching publicly.
  * <a href="https://docs.google.com/forms/d/e/1FAIpQLSevRBz_upT8p2YrieDRrlIKyAUAOHQ5A1xZFn2AMLlrae2rOA/viewform">Request beta access now</a>
- *
+ * </div>
  * <h3>Creating a webhook</h3>
  * Webhooks are specific to an organization and can be created via its integration settings.
  * The following process outlines how to create a new webhook.
@@ -274,7 +299,7 @@ export type * from "./types";
  * and should never be committed to version control.
  * </div>
  *
- * See <a href="#">Creating a webhook</a>
+ * See <a href="#webhook">Creating a webhook</a>
  * for more information on creating a webhook with a signing key.
  *
  * <h3>Verifying a delivery</h3>
@@ -293,7 +318,7 @@ export type * from "./types";
  * The recommended way to verify webhook deliveries
  * is to use the official <a href="https://sdk.goabstract.com/docs">JavaScript SDK</a>.
  *
- * The SDK exposes a <a href="#">webhooks.verify method</a> specifically intended
+ * The SDK exposes a <a href="#webhooksverify">webhooks.verify method</a> specifically intended
  * to verify webhook deliveries. The method accepts a delivery payload,
  * the <code>Abstract-Webhooks-Signature</code> header, and the webhook's configured
  * signing key, and returns a <code>Promise</code> that resolves to a
