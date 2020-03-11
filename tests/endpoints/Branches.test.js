@@ -214,7 +214,7 @@ describe("branches", () => {
 
     test("api - with parent", async () => {
       mockAPI(
-        "/projects/project-id/branches/branch-id/merge_state?parent_id=parent-id",
+        "/projects/project-id/branches/branch-id/merge_state?parentId=parent-id",
         {
           data: {
             state: "CLEAN"

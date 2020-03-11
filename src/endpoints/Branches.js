@@ -88,7 +88,7 @@ export default class Branches extends Endpoint {
       api: async () => {
         let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}/merge_state`;
         if (parent) {
-          const query = querystring.stringify({ parent_id: parent });
+          const query = querystring.stringify({ parentId: parent });
           requestUrl = `${requestUrl}?${query}`;
         }
         const response = await this.apiRequest(requestUrl, { headers });
