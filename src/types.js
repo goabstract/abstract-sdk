@@ -785,6 +785,19 @@ export type Branch = {
   user: User
 };
 
+export type BranchMergeState = {
+  state:
+    | "CLEAN"
+    | "NEEDS_UPDATE"
+    | "NEEDS_REMOTE_UPDATE",
+  parentId?: string,
+  parentCommit?: string,
+  branchId?: string,
+  branchCommit?: string,
+  ahead?: number,
+  behind?: number
+};
+
 export type ChangesetStatus =
   | "added"
   | "deleted"

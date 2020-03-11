@@ -193,4 +193,59 @@ describe("branches", () => {
       }
     });
   });
+
+  describe("mergeState", () => {
+    test("api - without parent", async () => {
+      mockAPI("/projects/project-id/branches/branch-id/merge_state", {
+        data: {
+          state: "CLEAN"
+        }
+      });
+
+      const response = await API_CLIENT.branches.mergeState({
+        branchId: "branch-id",
+        projectId: "project-id"
+      }, null);
+
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+    });
+
+    test("api - with parent", async () => {
+      try {
+      mockAPI("/projects/project-id/branches/branch-id/merge_state?parent_id=parent-id", {
+        data: {
+          state: "CLEAN"
+        }
+      });
+
+      const response = await API_CLIENT.branches.mergeState({
+        branchId: "branch-id",
+        projectId: "project-id"
+      }, "parent-id");
+
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    test("cli", async () => {
+      mockCLI(["branches", "merge-state", "branch-id", "--project-id=project-id"], {
+        state: "CLEAN"
+      });
+
+      const response = await CLI_CLIENT.branches.mergeState({
+        branchId: "branch-id",
+        projectId: "project-id"
+      }, null);
+
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+    });
+  });
 });

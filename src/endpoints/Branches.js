@@ -3,6 +3,7 @@ import querystring from "query-string";
 import type {
   Branch,
   BranchDescriptor,
+  BranchMergeState,
   ListOptions,
   ProjectDescriptor,
   RequestOptions
@@ -79,6 +80,34 @@ export default class Branches extends Endpoint {
       },
 
       requestOptions
+    });
+  }
+
+  mergeState(
+    descriptor: BranchDescriptor,
+    parent?: string
+  ) {
+    return this.configureRequest<Promise<BranchMergeState>>({
+      api: async () => {
+        let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}/merge_state`;
+        if (parent) {
+          const query = querystring.stringify({ parent_id: parent });
+          requestUrl = `${requestUrl}?${query}`
+        }
+        const response = await this.apiRequest(requestUrl, { headers });
+        return wrap(response.data, response);
+      },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "branches",
+          "merge-state",
+          descriptor.branchId,
+          `--project-id=${descriptor.projectId}`
+        ]);
+
+        return wrap(response, response)
+      }
     });
   }
 }
