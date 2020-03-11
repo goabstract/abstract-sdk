@@ -213,30 +213,35 @@ describe("branches", () => {
     });
 
     test("api - with parent", async () => {
-      try {
-      mockAPI("/projects/project-id/branches/branch-id/merge_state?parent_id=parent-id", {
-        data: {
-          state: "CLEAN"
+      mockAPI(
+        "/projects/project-id/branches/branch-id/merge_state?parent_id=parent-id",
+        {
+          data: {
+            state: "CLEAN"
+          }
         }
-      });
+      );
 
-      const response = await API_CLIENT.branches.mergeState({
-        branchId: "branch-id",
-        projectId: "project-id"
-      }, "parent-id");
+      const response = await API_CLIENT.branches.mergeState(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        "parent-id"
+      );
 
       expect(response).toEqual({
         state: "CLEAN"
       });
-      } catch (e) {
-        console.log(e);
-      }
     });
 
     test("cli", async () => {
-      mockCLI(["branches", "merge-state", "branch-id", "--project-id=project-id"], {
-        state: "CLEAN"
-      });
+      mockCLI(
+        ["branches", "merge-state", "branch-id", "--project-id=project-id"],
+        {
+          state: "CLEAN"
+        }
+      );
 
       const response = await CLI_CLIENT.branches.mergeState({
         branchId: "branch-id",
