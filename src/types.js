@@ -159,22 +159,47 @@ export type LayerVersionDescriptor = {|
   layerId: string
 |};
 
+/**
+ * @name ShareDescriptor
+ * @type {{url: string} | {shareId: string}}
+ */
 export type ShareDescriptor = {| url: string |} | {| shareId: string |};
 
+/**
+ * @name ErrorData
+ * @property {string} path
+ * @property {mixed} body
+ */
 export type ErrorData = {|
   path: string,
   body: mixed
 |};
 
+/**
+ * @name ErrorMap
+ * @property {Error} mode
+ */
 export type ErrorMap = {
   [mode: string]: Error
 };
 
+/**
+ * @name ProgressCallback
+ * @param {number} receivedBytes
+ * @param {number} totalBytes
+ * @returns {void}
+ */
 export type ProgressCallback = (
   receivedBytes: number,
   totalBytes: number
 ) => void;
 
+/**
+ * @name ApiRequestOptions
+ * @property {string} customHostname?
+ * @property {boolean} raw?
+ * @property {ProgressCallback} onProgress?
+ */
 export type ApiRequestOptions = {
   customHostname?: string,
   raw?: boolean,
@@ -183,13 +208,20 @@ export type ApiRequestOptions = {
 
 /**
  * @name RequestOptions
- * @param {("api" | "cli")} transportMode
+ * @property {("api" | "cli")} transportMode
+ * @property {number} _version?
  */
 export type RequestOptions = {
   transportMode?: ("api" | "cli")[],
   _version?: number
 };
 
+/**
+ * @name RequestConfig
+ * @property {function} api?
+ * @property {function} cli?
+ * @property {RequestOptions} requestOptions
+ */
 export type RequestConfig<T> = {
   api?: () => T,
   cli?: () => T,
@@ -232,6 +264,12 @@ export type RawProgressOptions = {
 
 /**
  * @name CollectionsListOptions
+ * @property {string} branchStatus?
+ * @property {number | "all"} layersPerCollection?
+ * @property {string} search?
+ * @property {string} sortBy?
+ * @property {string} sortDir?
+ * @property {string} userId?
  */
 export type CollectionsListOptions = {
   ...ListOptions,
@@ -243,7 +281,16 @@ export type CollectionsListOptions = {
   userId?: string
 };
 
+/**
+ * @name AccessToken
+ * @type {?string | ShareDescriptor}
+ */
 export type AccessToken = ?string | ShareDescriptor;
+
+/**
+ * @name AccessTokenOption
+ * @type {AccessToken} Might be returned by a function or a promise
+ */
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
@@ -251,6 +298,12 @@ export type AccessTokenOption =
 
 /**
  * @name CommandOptions
+ * @property {AccessTokenOption} accessToken
+ * @property {string | Promise<string>} apiUrl
+ * @property {string | Promise<string>} objectUrl
+ * @property {string | Promise<string>} previewUrl
+ * @property {("api" | "cli")[]} transportMode
+ * @property {string | Promise<string>} webUrl
  */
 export type CommandOptions = {
   accessToken: AccessTokenOption,
@@ -276,24 +329,48 @@ export type Star = {
   starredAt: string
 };
 
+/**
+ * @name SectionDescriptor
+ * @property {string} sectionId
+ */
 export type SectionDescriptor = {
   sectionId: string
 };
 
+/**
+ * @name UserDescriptor
+ * @property {userId} string
+ */
 export type UserDescriptor = {|
   userId: string
 |};
 
 /**
  * @name AssetDescriptor
+ * @property {string} assetId
+ * @property {string} projectId
  */
 export type AssetDescriptor = {|
   assetId: string,
   projectId: string
 |};
 
+/**
+ * @name ReviewStatus
+ * @type {string}
+ * @description
+ * "REQUESTED" | "REJECTED" | "APPROVED"
+ */
 export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
 
+/**
+ * @name ActivityBase
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ */
 type ActivityBase = {
   id: string,
   createdAt: string,
@@ -302,6 +379,19 @@ type ActivityBase = {
   userId: string
 };
 
+/**
+ * @name ActivityBranchArchived
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_ARCHIVED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.previousStatus
+ */
 export type ActivityBranchArchived = ActivityBase & {
   type: "BRANCH_ARCHIVED",
   payload: {
@@ -310,6 +400,19 @@ export type ActivityBranchArchived = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityBranchCreated
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_CREATED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.branchDescription?
+ */
 export type ActivityBranchCreated = ActivityBase & {
   type: "BRANCH_CREATED",
   payload: {
@@ -318,6 +421,19 @@ export type ActivityBranchCreated = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityBranchDeleted
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_DELETED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.previousStatus
+ */
 export type ActivityBranchDeleted = ActivityBase & {
   type: "BRANCH_DELETED",
   payload: {
@@ -326,6 +442,20 @@ export type ActivityBranchDeleted = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityBranchDescriptionUpdated
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_DESCRIPTION_UPDATED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.branchDescription
+ * @property {string} payload.previousDescription
+ */
 export type ActivityBranchDescriptionUpdated = ActivityBase & {
   type: "BRANCH_DESCRIPTION_UPDATED",
   payload: {
@@ -335,6 +465,19 @@ export type ActivityBranchDescriptionUpdated = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityBranchRenamed
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_RENAMED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.previousName
+ */
 export type ActivityBranchRenamed = ActivityBase & {
   type: "BRANCH_RENAMED",
   payload: {
@@ -343,6 +486,20 @@ export type ActivityBranchRenamed = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityBranchStatusUpdated
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_STATUS_UPDATED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.previousStatus
+ * @property {string} payload.status
+ */
 export type ActivityBranchStatusUpdated = ActivityBase & {
   type: "BRANCH_STATUS_UPDATED",
   payload: {
@@ -352,6 +509,19 @@ export type ActivityBranchStatusUpdated = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityBranchUnarchived
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"BRANCH_UNARCHIVED"} type
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.status
+ */
 export type ActivityBranchUnarchived = ActivityBase & {
   type: "BRANCH_UNARCHIVED",
   payload: {
@@ -360,6 +530,19 @@ export type ActivityBranchUnarchived = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityCollectionPublished
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"COLLECTION_PUBLISHED"} type
+ * @property {object} payload
+ * @property {string} payload.collectionId
+ * @property {string} payload.name
+ */
 export type ActivityCollectionPublished = ActivityBase & {
   type: "COLLECTION_PUBLISHED",
   payload: {
@@ -368,6 +551,18 @@ export type ActivityCollectionPublished = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectArchived
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_ARCHIVED"} type
+ * @property {object} payload
+ * @property {string} payload.projectName
+ */
 export type ActivityProjectArchived = ActivityBase & {
   type: "PROJECT_ARCHIVED",
   payload: {
@@ -375,6 +570,18 @@ export type ActivityProjectArchived = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectCreated
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_CREATED"} type
+ * @property {object} payload
+ * @property {string} payload.projectName
+ */
 export type ActivityProjectCreated = ActivityBase & {
   type: "PROJECT_CREATED",
   payload: {
@@ -382,6 +589,18 @@ export type ActivityProjectCreated = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectDeleted
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_DELETED"} type
+ * @property {object} payload
+ * @property {string} payload.projectName
+ */
 export type ActivityProjectDeleted = ActivityBase & {
   type: "PROJECT_DELETED",
   payload: {
@@ -389,6 +608,18 @@ export type ActivityProjectDeleted = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectDescriptionChanged
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_DESCRIPTION_CHANGED"} type
+ * @property {object} payload
+ * @property {string} payload.projectName
+ */
 export type ActivityProjectDescriptionChanged = ActivityBase & {
   type: "PROJECT_DESCRIPTION_CHANGED",
   payload: {
@@ -396,6 +627,19 @@ export type ActivityProjectDescriptionChanged = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectRenamed
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_RENAMED"} type
+ * @property {object} payload
+ * @property {string} payload.previousName
+ * @property {string} payload.newName
+ */
 export type ActivityProjectRenamed = ActivityBase & {
   type: "PROJECT_RENAMED",
   payload: {
@@ -404,6 +648,18 @@ export type ActivityProjectRenamed = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectRenamed
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_UNARCHIVED"} type
+ * @property {object} payload
+ * @property {string} payload.projectName
+ */
 export type ActivityProjectUnarchived = ActivityBase & {
   type: "PROJECT_UNARCHIVED",
   payload: {
@@ -411,6 +667,20 @@ export type ActivityProjectUnarchived = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityProjectTransferred
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"PROJECT_TRANSFERRED"} type
+ * @property {object} payload
+ * @property {string} payload.projectName
+ * @property {string} payload.previousOrganizationName
+ * @property {string} payload.newOrganizationName
+ */
 export type ActivityProjectTransferred = ActivityBase & {
   type: "PROJECT_TRANSFERRED",
   payload: {
@@ -420,6 +690,14 @@ export type ActivityProjectTransferred = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityCommitCommon
+ * @property {string} pushActivityId
+ * @property {string} sha
+ * @property {string} title
+ * @property {string} description
+ * @property {string} branchName
+ */
 type ActivityCommitCommon = {
   pushActivityId: string,
   sha: string,
@@ -428,11 +706,42 @@ type ActivityCommitCommon = {
   branchName: string
 };
 
+/**
+ * @name ActivityCommit
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"COMMIT"} type
+ * @property {ActivityCommitCommon} payload
+ */
 export type ActivityCommit = ActivityBase & {
   type: "COMMIT",
   payload: ActivityCommitCommon
 };
 
+/**
+ * @name ActivityMergeCommit
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"MERGE_COMMIT"} type
+ * @property {object} payload
+ * @property {string} payload.pushActivityId
+ * @property {string} payload.sha
+ * @property {string} payload.title
+ * @property {string} payload.description
+ * @property {string} payload.branchName
+ * @property {string} payload.sourceBranchId
+ * @property {string} payload.sourceBranchName
+ * @property {string} payload.destinationBranchId
+ * @property {string} payload.destinationBranchName
+ */
 export type ActivityMergeCommit = ActivityBase & {
   type: "MERGE_COMMIT",
   payload: ActivityCommitCommon & {
@@ -443,6 +752,24 @@ export type ActivityMergeCommit = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityUpdateCommit
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"UPDATE_COMMIT"} type
+ * @property {object} payload
+ * @property {string} payload.pushActivityId
+ * @property {string} payload.sha
+ * @property {string} payload.title
+ * @property {string} payload.description
+ * @property {string} payload.branchName
+ * @property {string} payload.sourceBranchId
+ * @property {string} payload.sourceBranchName
+ */
 export type ActivityUpdateCommit = ActivityBase & {
   type: "UPDATE_COMMIT",
   payload: ActivityCommitCommon & {
@@ -451,6 +778,30 @@ export type ActivityUpdateCommit = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityUpdateCommit
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {object} payload
+ * @property {string} payload.reviewId?
+ * @property {ReviewStatus} payload.reviewStatus?
+ * @property {ReviewStatus} payload.commentFileId
+ * @property {ReviewStatus} payload.commentFileName
+ * @property {ReviewStatus} payload.commentId
+ * @property {ReviewStatus} payload.commentLayerId
+ * @property {ReviewStatus} payload.commentLayerName
+ * @property {ReviewStatus} payload.commentPageId
+ * @property {ReviewStatus} payload.commentPageName
+ * @property {ReviewStatus} payload.commentParentId
+ * @property {ReviewStatus} payload.commitBranchId
+ * @property {ReviewStatus} payload.commitBranchName
+ * @property {ReviewStatus} payload.commitSha
+ * @property {ReviewStatus} payload.commitMessage
+ */
 export type ActivityCommentCreated = ActivityBase & {
   type: "COMMENT_CREATED",
   payload: {
@@ -471,6 +822,21 @@ export type ActivityCommentCreated = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityUpdateCommit
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"REVIEW_REQUESTED"} type
+ *
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.reviewerName
+ * @property {string} payload.reviewerId
+ */
 export type ActivityReviewRequested = ActivityBase & {
   type: "REVIEW_REQUESTED",
   payload: {
@@ -480,6 +846,21 @@ export type ActivityReviewRequested = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityReviewDismissed
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"REVIEW_DISMISSED"} type
+ *
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.reviewerName
+ * @property {string} payload.reviewerId
+ */
 export type ActivityReviewDismissed = ActivityBase & {
   type: "REVIEW_DISMISSED",
   payload: {
@@ -489,6 +870,21 @@ export type ActivityReviewDismissed = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityReviewerRemoved
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"REVIEWER_REMOVED"} type
+ *
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.reviewerName
+ * @property {string} payload.reviewerId
+ */
 export type ActivityReviewerRemoved = ActivityBase & {
   type: "REVIEWER_REMOVED",
   payload: {
@@ -498,6 +894,22 @@ export type ActivityReviewerRemoved = ActivityBase & {
   }
 };
 
+/**
+ * @name ActivityReviewCompleted
+ * @property {string} id
+ * @property {string} createdAt
+ * @property {string} projectId
+ * @property {string} branchId
+ * @property {string} userId
+ *
+ * @property {"REVIEW_COMPLETED"} type
+ *
+ * @property {object} payload
+ * @property {string} payload.branchName
+ * @property {string} payload.reviewerName
+ * @property {string} payload.reviewerId
+ * @property {string} payload.status
+ */
 export type ActivityReviewCompleted = ActivityBase & {
   type: "REVIEW_COMPLETED",
   payload: {
@@ -634,6 +1046,12 @@ export type Organization = {
   userId: string
 };
 
+/**
+ * @name AssetAutoGenerationOption
+ * @type {string}
+ * @description
+ * "all" | "master" | "off
+ */
 export type AssetAutoGenerationOption = "all" | "master" | "off";
 
 /**
@@ -674,6 +1092,17 @@ export type Project = {
   assetAutoGeneration: AssetAutoGenerationOption
 };
 
+/**
+ * @name NewProject
+ * @property {string} name
+ * @property {string} organizationId
+ * @property {string} about?
+ * @property {string} color?
+ * @property {string} sectionId?
+ * @property {string} createdAt?
+ * @property {"organization" | "project"} visibility?
+ * @property {AssetAutoGenerationOption} assetAutoGeneration?
+ */
 export type NewProject = {
   name: string,
   organizationId: string,
@@ -861,40 +1290,101 @@ export type Share =
   | CommentShare
   | CollectionShare;
 
-type BaseShareInput = {|
+/**
+ * @name BaseShareInput
+ * @property {string} organizationId
+ */
+export type BaseShareInput = {|
   organizationId: string
 |};
 
+/**
+ * @name ProjectShareInput
+ * @property {"project"} kind
+ * @property {string} organizationId
+ * @property {string} projectId
+ */
 export type ProjectShareInput = {
   kind: "project",
   ...BaseShareInput,
   ...ProjectDescriptor
 };
 
+/**
+ * @name CommitShareInput
+ * @property {"commit"} kind
+ * @property {string} organizationId
+ * @property {string} sha
+ * @property {string} projectId
+ * @property {string | "master"} branchId
+ */
 export type CommitShareInput = {
   kind: "commit",
   ...BaseShareInput,
   ...BranchCommitDescriptor
 };
 
+/**
+ * @name BranchShareInput
+ * @property {"branch"} kind
+ * @property {string} organizationId
+ * @property {string} projectId
+ * @property {string | "master"} brachId
+ */
 export type BranchShareInput = {
   kind: "branch",
   ...BaseShareInput,
   ...BranchDescriptor
 };
 
+/**
+ * @name FileShareInput
+ * @property {"file"} kind
+ * @property {string} organizationId
+ * @property {"latest" | string} sha
+ * @property {string} projectId
+ * @property {string | "master"} branchId
+ * @property {string} fileId
+ */
 export type FileShareInput = {
   kind: "file",
   ...BaseShareInput,
   ...FileDescriptor
 };
 
+/**
+ * @name PageShareInput
+ * @property {"page"} kind
+ * @property {string} organizationId
+ * @property {"latest" | string} sha
+ * @property {string} projectId
+ * @property {string | "master"} branchId
+ * @property {string} fileId
+ * @property {pageId} string
+ */
 export type PageShareInput = {
   kind: "page",
   ...BaseShareInput,
   ...PageDescriptor
 };
 
+/**
+ * @name LayerShareInput
+ * @property {"layer"} kind
+ * @property {string} organizationId
+ * @property {"latest" | string} sha
+ * @property {string} projectId
+ * @property {string | "master"} branchId
+ * @property {string} fileId
+ * @property {string} layerId
+ * 
+ * @property {object} options
+ * @property {boolean} options.public
+ * @property {boolean} options.canInspect
+ * @property {boolean} options.canShowHistory
+ * @property {"design" | "compare" | "build"} options.mode
+
+ */
 export type LayerShareInput = {
   kind: "layer",
   ...BaseShareInput,
@@ -907,18 +1397,44 @@ export type LayerShareInput = {
   }
 };
 
+/**
+ * @name CommentShareInput
+ * @property {"comment"} kind
+ * @property {string} organizationId
+ * @property {string} commentId
+ */
 export type CommentShareInput = {
   kind: "comment",
   ...BaseShareInput,
   ...CommentDescriptor
 };
 
+/**
+ * @name CollectionShareInput
+ * @property {"collection"} kind
+ * @property {string} organizationId
+ * @property {string} projectId
+ * @property {string} collectionId
+ */
 export type CollectionShareInput = {
   kind: "collection",
   ...BaseShareInput,
   ...CollectionDescriptor
 };
 
+/**
+ * @name ShareInput
+ * @type {
+ *   ProjectShareInput
+ * | CommitShareInput
+ * | BranchShareInput
+ * | FileShareInput
+ * | PageShareInput
+ * | LayerShareInput
+ * | CommentShareInput
+ * | CollectionShareInput
+ * }
+ */
 export type ShareInput =
   | ProjectShareInput
   | CommitShareInput
@@ -929,6 +1445,17 @@ export type ShareInput =
   | CommentShareInput
   | CollectionShareInput;
 
+/**
+ * @name Annotation
+ * @property {string} id
+ * @property {number} x
+ * @property {number} y
+ * @property {number} width
+ * @property {number} height
+ * @property {boolean} editing
+ * @property {number} scale
+ * @property {number} number
+ */
 export type Annotation = {
   id: string,
   x: number,
@@ -985,6 +1512,8 @@ export type Comment = {
 
 /**
  * @name NewComment
+ * @property {Annotation} annotation?
+ * @property {body} string
  */
 export type NewComment = {
   annotation?: Annotation,
@@ -1220,6 +1749,13 @@ export type Branch = {
 
 /**
  * @name ChangesetStatus
+ * @type {
+ *   "added"
+ * | "deleted"
+ * | "edited"
+ * | "edited-indirectly"
+ * | "none"
+ * }
  */
 export type ChangesetStatus =
   | "added"
@@ -1230,6 +1766,17 @@ export type ChangesetStatus =
 
 /**
  * @name ChangesetFileChange
+ * @property {"file"} type
+ * @property {ChangesetStatus} status
+ * @property {false} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {fileId} string
+ * @property {void} pageId
+ * @property {void} layerId
+ * @property {void} colorsId
+ * @property {void} gradientId
+ * @property {void} layerStyleId
+ * @property {void} textStyleId
  */
 export type ChangesetFileChange = {
   type: "file",
@@ -1247,6 +1794,17 @@ export type ChangesetFileChange = {
 
 /**
  * @name ChangesetPageChange
+ * @property {"page"} type
+ * @property {ChangesetStatus} status
+ * @property {false} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {string} fileId
+ * @property {string} pageId
+ * @property {void} hasPreview
+ * @property {void} layerId
+ * @property {void} gradientId
+ * @property {void} layerStyleId
+ * @property {void} textStyleId
  */
 export type ChangesetPageChange = {
   type: "page",
@@ -1264,6 +1822,17 @@ export type ChangesetPageChange = {
 
 /**
  * @name ChangesetLayerChange
+ * @property {"layer" | "symbol" | "artboard"} type
+ * @property {ChangesetStatus} status
+ * @property {boolean} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {string} fileId
+ * @property {string} pageId
+ * @property {string} layerId
+ * @property {void} colorsId
+ * @property {void} gradientId
+ * @property {void} layerStyleId
+ * @property {void} textStyleId
  */
 export type ChangesetLayerChange = {
   type: "layer" | "symbol" | "artboard",
@@ -1281,6 +1850,17 @@ export type ChangesetLayerChange = {
 
 /**
  * @name ChangesetColorsChange
+ * @property {"colors"} type
+ * @property {ChangesetStatus} status
+ * @property {boolean} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {string} fileId
+ * @property {void} pageId
+ * @property {void} layerId
+ * @property {string} colorsId
+ * @property {void} gradientId
+ * @property {void} layerStyleId
+ * @property {void} textStyleId
  */
 export type ChangesetColorsChange = {
   type: "colors",
@@ -1298,6 +1878,17 @@ export type ChangesetColorsChange = {
 
 /**
  * @name ChangesetGradientChange
+ * @property {"gradient"} type
+ * @property {ChangesetStatus} status
+ * @property {boolean} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {string} fileId
+ * @property {void} pageId
+ * @property {void} layerId
+ * @property {void} colorsId
+ * @property {string} gradientId
+ * @property {void} layerStyleId
+ * @property {void} textStyleId
  */
 export type ChangesetGradientChange = {
   type: "gradient",
@@ -1315,6 +1906,17 @@ export type ChangesetGradientChange = {
 
 /**
  * @name ChangesetLayerStyleChange
+ * @property {"layer-style"} type
+ * @property {ChangesetStatus} status
+ * @property {boolean} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {string} fileId
+ * @property {void} pageId
+ * @property {void} layerId
+ * @property {void} colorsId
+ * @property {void} gradientId
+ * @property {string} layerStyleId
+ * @property {void} textStyleId
  */
 export type ChangesetLayerStyleChange = {
   type: "layer-style",
@@ -1332,6 +1934,17 @@ export type ChangesetLayerStyleChange = {
 
 /**
  * @name ChangesetTextStyleChange
+ * @property {"text-style"} type
+ * @property {ChangesetStatus} status
+ * @property {boolean} hasPreview
+ * @property {object} meta { [key: string]: [any, any] }
+ * @property {string} fileId
+ * @property {void} pageId
+ * @property {void} layerId
+ * @property {void} colorsId
+ * @property {void} gradientId
+ * @property {void} layerStyleId
+ * @property {string} textStyleId
  */
 export type ChangesetTextStyleChange = {
   type: "text-style",
@@ -1349,23 +1962,15 @@ export type ChangesetTextStyleChange = {
 
 /**
  * @name ChangesetChange
- * @property {string} type - Type of this change, can be one of
- * <code>file</code>, <code>page</code>, <code>layer</code>, <code>symbol</code>,
- * <code>artboard</code>, <code>colors</code>, <code>gradient</code>,
- * <code>layer-style</code>, <code>text-style</code>
- * @property {string} status - Status of this change,
- * can be one of <code>added</code>, <code>deleted</code>,
- * <code>edited</code>, <code>edited-indirectly</code>, <code>none</code>
- * @property {boolean} hasPreview - Indicates if this change has a visual preview
- * @property {{ [key: string]: [any, any] }} meta - Object
- * containing additional information about this change
- * @property {string} fileId - UUID of the file this change was made against
- * @property {string} pageId - UUID of the page this change was made against
- * @property {string} layerId - UUID of the layer this change was made against
- * @property {string} colorsId - UUID of the color associated with this change
- * @property {string} gradientId - UUID of the gradient associated with this change
- * @property {string} layerStyleId - UUID of the layer style associated with this change
- * @property {string} textStyleId - UUID of the text style associated with this change
+ * @type {
+ *  ChangesetFileChange
+ * | ChangesetPageChange
+ * | ChangesetLayerChange
+ * | ChangesetColorsChange
+ * | ChangesetGradientChange
+ * | ChangesetLayerStyleChange
+ * | ChangesetTextStyleChange
+ * }
  */
 export type ChangesetChange =
   | ChangesetFileChange
@@ -1393,6 +1998,18 @@ export type Changeset = {
   branchId: string
 };
 
+/**
+ * @name SharedItem
+ * @property {string} fileId
+ * @property {string} id
+ * @property {string} libraryId
+ * @property {string} libraryName
+ * @property {string} name
+ * @property {string} projectId
+ * @property {string} sha
+ * @property {string} type
+ * @property {string} version
+ */
 export type SharedItem = {
   fileId: string,
   id: string,
@@ -1463,22 +2080,123 @@ export type Layer = {
   order: number
 };
 
+/**
+ * @name LayerBlendModeNormal
+ * @type {0}
+ */
 export type LayerBlendModeNormal = 0;
+
+/**
+ * @name LayerBlendModeDarken
+ * @type {1}
+ */
 export type LayerBlendModeDarken = 1;
+
+/**
+ * @name LayerBlendModeMultiply
+ * @type {2}
+ */
 export type LayerBlendModeMultiply = 2;
+
+/**
+ * @name LayerBlendModeColorBurn
+ * @type {3}
+ */
 export type LayerBlendModeColorBurn = 3;
+
+/**
+ * @name LayerBlendModeLighten
+ * @type {4}
+ */
 export type LayerBlendModeLighten = 4;
+
+/**
+ * @name LayerBlendModeScreen
+ * @type {5}
+ */
 export type LayerBlendModeScreen = 5;
+
+/**
+ * @name LayerBlendModeAdd
+ * @type {6}
+ */
 export type LayerBlendModeAdd = 6;
+
+/**
+ * @name LayerBlendModeOverlay
+ * @type {7}
+ */
 export type LayerBlendModeOverlay = 7;
+
+/**
+ * @name LayerBlendModeSoftLight
+ * @type {8}
+ */
 export type LayerBlendModeSoftLight = 8;
+
+/**
+ * @name LayerBlendModeHardLight
+ * @type {9}
+ */
 export type LayerBlendModeHardLight = 9;
+
+/**
+ * @name LayerBlendModeDifference
+ * @type {10}
+ */
 export type LayerBlendModeDifference = 10;
+
+/**
+ * @name LayerBlendModeExclusion
+ * @type {11}
+ */
 export type LayerBlendModeExclusion = 11;
+
+/**
+ * @name LayerBlendModeHue
+ * @type {12}
+ */
 export type LayerBlendModeHue = 12;
+
+/**
+ * @name LayerBlendModeSaturation
+ * @type {13}
+ */
 export type LayerBlendModeSaturation = 13;
+
+/**
+ * @name LayerBlendModeColor
+ * @type {14}
+ */
 export type LayerBlendModeColor = 14;
+
+/**
+ * @name LayerBlendModeLuminosity
+ * @type {15}
+ */
 export type LayerBlendModeLuminosity = 15;
+
+/**
+ * @name LayerBlendMode
+ * @type {
+ *  LayerBlendModeNormal
+ * | LayerBlendModeDarken
+ * | LayerBlendModeMultiply
+ * | LayerBlendModeColorBurn
+ * | LayerBlendModeLighten
+ * | LayerBlendModeScreen
+ * | LayerBlendModeAdd
+ * | LayerBlendModeOverlay
+ * | LayerBlendModeSoftLight
+ * | LayerBlendModeHardLight
+ * | LayerBlendModeDifference
+ * | LayerBlendModeExclusion
+ * | LayerBlendModeHue
+ * | LayerBlendModeSaturation
+ * | LayerBlendModeColor
+ * | LayerBlendModeLuminosity
+ * }
+ */
 export type LayerBlendMode =
   | LayerBlendModeNormal
   | LayerBlendModeDarken
@@ -1497,54 +2215,203 @@ export type LayerBlendMode =
   | LayerBlendModeColor
   | LayerBlendModeLuminosity;
 
+/**
+ * @name LayerBorderPositionCenter
+ * @type {0}
+ */
 export type LayerBorderPositionCenter = 0;
+
+/**
+ * @name LayerBorderPositionInside
+ * @type {1}
+ */
 export type LayerBorderPositionInside = 1;
+
+/**
+ * @name LayerBorderPositionOutside
+ * @type {2}
+ */
 export type LayerBorderPositionOutside = 2;
+
+/**
+ * @name LayerBorderPosition
+ * @type {
+ *    LayerBorderPositionCenter
+ *  | LayerBorderPositionInside
+ *  | LayerBorderPositionOutside
+ * }
+ */
 export type LayerBorderPosition =
   | LayerBorderPositionCenter
   | LayerBorderPositionInside
   | LayerBorderPositionOutside;
 
+/**
+ * @name LayerFillTypeSolid
+ * @type {0}
+ */
 export type LayerFillTypeSolid = 0;
+
+/**
+ * @name LayerFillTypeGradient
+ * @type {1}
+ */
 export type LayerFillTypeGradient = 1;
+
+/**
+ * @name LayerFillTypePattern
+ * @type {4}
+ */
 export type LayerFillTypePattern = 4;
+
+/**
+ * @name LayerFillTypeNoise
+ * @type {5}
+ */
 export type LayerFillTypeNoise = 5;
+
+/**
+ * @name LayerFillType
+ * @type {
+ *  LayerFillTypeSolid
+ * | LayerFillTypeGradient
+ * | LayerFillTypePattern
+ * | LayerFillTypeNoise;
+ * }
+ */
 export type LayerFillType =
   | LayerFillTypeSolid
   | LayerFillTypeGradient
   | LayerFillTypePattern
   | LayerFillTypeNoise;
 
+/**
+ * @name LayerTextDecorationLineUnderline
+ * @type {"underline"}
+ */
 export type LayerTextDecorationLineUnderline = "underline";
+
+/**
+ * @name LayerTextDecorationLineStrikethrough
+ * @type {"strikethrough"}
+ */
 export type LayerTextDecorationLineStrikethrough = "strikethrough";
+
+/**
+ * @name LayerTextDecorationLine
+ * @type {
+ *  LayerTextDecorationLineUnderline
+ * | LayerTextDecorationLineStrikethrough
+ * }
+ */
 export type LayerTextDecorationLine =
   | LayerTextDecorationLineUnderline
   | LayerTextDecorationLineStrikethrough;
 
+/**
+ * @name LayerTextDecorationStyleSolid
+ * @type {"solid"}
+ */
 export type LayerTextDecorationStyleSolid = "solid";
+
+/**
+ * @name LayerTextDecorationStyleDouble
+ * @type {"double"}
+ */
 export type LayerTextDecorationStyleDouble = "double";
+
+/**
+ * @name LayerTextDecorationStyle
+ * @type {
+ *  LayerTextDecorationStyleSolid
+ *  | LayerTextDecorationStyleDouble
+ * }
+ */
 export type LayerTextDecorationStyle =
   | LayerTextDecorationStyleSolid
   | LayerTextDecorationStyleDouble;
 
+/**
+ * @name LayerTextDecoration
+ * @property {LayerTextDecorationLine} line
+ * @property {LayerTextDecorationStyle} style
+ */
 export type LayerTextDecoration = {
   line: LayerTextDecorationLine,
   style: LayerTextDecorationStyle
 };
 
+/**
+ * @name LayerTextTransformNone
+ * @type {0}
+ */
 export type LayerTextTransformNone = 0;
+
+/**
+ * @name LayerTextTransformUppercase
+ * @type {1}
+ */
 export type LayerTextTransformUppercase = 1;
+
+/**
+ * @name LayerTextTransformLowercase
+ * @type {2}
+ */
 export type LayerTextTransformLowercase = 2;
+
+/**
+ * @name LayerTextTransform
+ * @type {
+ *  LayerTextTransformNone
+ *  | LayerTextTransformUppercase
+ *  | LayerTextTransformLowercase
+ * }
+ */
 export type LayerTextTransform =
   | LayerTextTransformNone
   | LayerTextTransformUppercase
   | LayerTextTransformLowercase;
 
+/**
+ * @name LayerHorizontalAlignmentLeft
+ * @type {0}
+ */
 export type LayerHorizontalAlignmentLeft = 0;
+
+/**
+ * @name LayerHorizontalAlignmentRight
+ * @type {1}
+ */
 export type LayerHorizontalAlignmentRight = 1;
+
+/**
+ * @name LayerHorizontalAlignmentCenter
+ * @type {2}
+ */
 export type LayerHorizontalAlignmentCenter = 2;
+
+/**
+ * @name LayerHorizontalAlignmentJustify
+ * @type {3}
+ */
 export type LayerHorizontalAlignmentJustify = 3;
+
+/**
+ * @name LayerHorizontalAlignmentNatural
+ * @type {4}
+ */
 export type LayerHorizontalAlignmentNatural = 4;
+
+/**
+ * @name LayerBorderPositionCenter
+ * @type {
+ * LayerHorizontalAlignmentLeft
+ * | LayerHorizontalAlignmentRight
+ * | LayerHorizontalAlignmentCenter
+ * | LayerHorizontalAlignmentJustify
+ * | LayerHorizontalAlignmentNatural
+ * }
+ */
 export type LayerHorizontalAlignment =
   | LayerHorizontalAlignmentLeft
   | LayerHorizontalAlignmentRight
@@ -1552,14 +2419,47 @@ export type LayerHorizontalAlignment =
   | LayerHorizontalAlignmentJustify
   | LayerHorizontalAlignmentNatural;
 
+/**
+ * @name LayerGradientTypeLinear
+ * @type {0}
+ */
 export type LayerGradientTypeLinear = 0;
+
+/**
+ * @name LayerGradientTypeRadial
+ * @type {1}
+ */
 export type LayerGradientTypeRadial = 1;
+
+/**
+ * @name LayerGradientTypeAngular
+ * @type {2}
+ */
 export type LayerGradientTypeAngular = 2;
+
+/**
+ * @name LayerGradientType
+ * @type {
+ * LayerGradientTypeLinear
+ * | LayerGradientTypeRadial
+ * | LayerGradientTypeAngular
+ * }
+ */
 export type LayerGradientType =
   | LayerGradientTypeLinear
   | LayerGradientTypeRadial
   | LayerGradientTypeAngular;
 
+/**
+ * @name LayerColor
+ * @property {string} hex8
+ * @property {string} hex8
+ * @property {object} components
+ * @property {number} components.red
+ * @property {number} components.green
+ * @property {number} components.blue
+ * @property {number} components.alpha
+ */
 export type LayerColor = {
   hex8: string,
   rgba: string,
@@ -1571,11 +2471,23 @@ export type LayerColor = {
   }
 };
 
+/**
+ * @name LayerGradientStop
+ * @property {number} position
+ * @property {LayerColor} color
+ */
 export type LayerGradientStop = {
   position: number,
   color: LayerColor
 };
 
+/**
+ * @name LayerGradientLinear
+ * @property {LayerGradientTypeLinear} gradientType
+ * @property {[number, number]} from
+ * @property {[number, number]} to
+ * @property {LayerGradientStop[]} stops
+ */
 export type LayerGradientLinear = {
   gradientType: LayerGradientTypeLinear,
   from: [number, number],
@@ -1583,6 +2495,14 @@ export type LayerGradientLinear = {
   stops: LayerGradientStop[]
 };
 
+/**
+ * @name LayerGradientRadial
+ * @property {LayerGradientTypeRadial} gradientType
+ * @property {[number, number]} from
+ * @property {[number, number]} to
+ * @property {LayerGradientStop[]} stops
+ * @property {number} ellipseLength
+ */
 export type LayerGradientRadial = {
   gradientType: LayerGradientTypeRadial,
   from: [number, number],
@@ -1591,6 +2511,13 @@ export type LayerGradientRadial = {
   ellipseLength: number
 };
 
+/**
+ * @name LayerGradientAngular
+ * @property {LayerGradientTypeAngular} gradientType
+ * @property {[number, number]} from
+ * @property {[number, number]} to
+ * @property {LayerGradientStop[]} stops
+ */
 export type LayerGradientAngular = {
   gradientType: LayerGradientTypeAngular,
   from: [number, number],
@@ -1598,11 +2525,26 @@ export type LayerGradientAngular = {
   stops: LayerGradientStop[]
 };
 
+/**
+ * @name LayerGradient
+ * @type {
+ * LayerGradientLinear
+ * | LayerGradientRadial
+ * | LayerGradientAngular
+ * }
+ */
 export type LayerGradient =
   | LayerGradientLinear
   | LayerGradientRadial
   | LayerGradientAngular;
 
+/**
+ * @name LayerBorderSolid
+ * @property {LayerFillTypeSolid} fillType
+ * @property {LayerBorderPosition} position
+ * @property {thickness} number
+ * @property {LayerColor} color
+ */
 export type LayerBorderSolid = {|
   fillType: LayerFillTypeSolid,
   position: LayerBorderPosition,
@@ -1610,6 +2552,13 @@ export type LayerBorderSolid = {|
   color: LayerColor
 |};
 
+/**
+ * @name LayerBorderGradient
+ * @property {LayerFillTypeGradient} fillType
+ * @property {LayerBorderPosition} position
+ * @property {number} thickness
+ * @property {LayerGradient} gradient
+ */
 export type LayerBorderGradient = {|
   fillType: LayerFillTypeGradient,
   position: LayerBorderPosition,
@@ -1617,8 +2566,21 @@ export type LayerBorderGradient = {|
   gradient: LayerGradient
 |};
 
+/**
+ * @name LayerBorder
+ * @type {
+ *  LayerBorderSolid | LayerBorderGradient
+ * }
+ */
 export type LayerBorder = LayerBorderSolid | LayerBorderGradient;
 
+/**
+ * @name LayerBorderRadius
+ * @property {number} topLeft
+ * @property {number} topRight
+ * @property {number} bottomRight
+ * @property {number} bottomLeft
+ */
 export type LayerBorderRadius = {
   topLeft: number,
   topRight: number,
@@ -1626,6 +2588,13 @@ export type LayerBorderRadius = {
   bottomLeft: number
 };
 
+/**
+ * @name LayerFillSolid
+ * @property {LayerFillTypeSolid} fillType
+ * @property {LayerBlendMode} blendMode
+ * @property {number} opacity
+ * @property {LayerColor} color
+ */
 export type LayerFillSolid = {
   fillType: LayerFillTypeSolid,
   blendMode: LayerBlendMode,
@@ -1633,6 +2602,13 @@ export type LayerFillSolid = {
   color: LayerColor
 };
 
+/**
+ * @name LayerFillGradient
+ * @property {LayerFillTypeGradient} fillType
+ * @property {LayerBlendMode} blendMode
+ * @property {number} opacity
+ * @property {LayerGradient} gradient
+ */
 export type LayerFillGradient = {
   fillType: LayerFillTypeGradient,
   blendMode: LayerBlendMode,
@@ -1640,16 +2616,57 @@ export type LayerFillGradient = {
   gradient: LayerGradient
 };
 
+/**
+ * @name LayerFillPatternTypeTile
+ * @type {0}
+ */
 export type LayerFillPatternTypeTile = 0;
+
+/**
+ * @name LayerFillPatternTypeFill
+ * @type {1}
+ */
 export type LayerFillPatternTypeFill = 1;
+
+/**
+ * @name LayerFillPatternTypeStretch
+ * @type {2}
+ */
 export type LayerFillPatternTypeStretch = 2;
+
+/**
+ * @name LayerFillPatternTypeFit
+ * @type {3}
+ */
 export type LayerFillPatternTypeFit = 3;
+
+/**
+ * @name LayerFillPatternType
+ * @type {
+ * LayerFillPatternTypeTile
+ * | LayerFillPatternTypeFill
+ * | LayerFillPatternTypeStretch
+ * | LayerFillPatternTypeFit
+ * }
+ */
 export type LayerFillPatternType =
   | LayerFillPatternTypeTile
   | LayerFillPatternTypeFill
   | LayerFillPatternTypeStretch
   | LayerFillPatternTypeFit;
 
+/**
+ * @name LayerFillPattern
+ * @property {LayerFillTypePattern} fillType
+ * @property {LayerBlendMode} blendMode
+ * @property {number} opacity
+ * @property {LayerFillTypePattern} patternFillType
+ * @property {number} patternTileScale
+ * @property {number} patternWidth?
+ * @property {number} patternHeight?
+ * @property {string} imageUrl
+ * @property {string} imageId
+ */
 export type LayerFillPattern = {
   fillType: LayerFillTypePattern,
   blendMode: LayerBlendMode,
@@ -1662,14 +2679,45 @@ export type LayerFillPattern = {
   imageId: string
 };
 
+/**
+ * @name LayerFillNoiseTypeBlack
+ * @type {1}
+ */
 export type LayerFillNoiseTypeBlack = 1;
+
+/**
+ * @name LayerFillNoiseTypeWhite
+ * @type {2}
+ */
 export type LayerFillNoiseTypeWhite = 2;
+
+/**
+ * @name LayerFillNoiseTypeColor
+ * @type {3}
+ */
 export type LayerFillNoiseTypeColor = 3;
+
+/**
+ * @name LayerFillNoiseType
+ * @type {
+ *    LayerFillNoiseTypeBlack
+ * | LayerFillNoiseTypeWhite
+ * | LayerFillNoiseTypeColor
+ * }
+ */
 export type LayerFillNoiseType =
   | LayerFillNoiseTypeBlack
   | LayerFillNoiseTypeWhite
   | LayerFillNoiseTypeColor;
 
+/**
+ * @name LayerFillNoise
+ * @property {LayerFillTypeNoise} fillType
+ * @property {LayerBlendMode} blendMode
+ * @property {number} opacity
+ * @property {LayerFillNoiseType} noiseIndex
+ * @property {number} noiseIntensity
+ */
 export type LayerFillNoise = {
   fillType: LayerFillTypeNoise,
   blendMode: LayerBlendMode,
@@ -1678,14 +2726,35 @@ export type LayerFillNoise = {
   noiseIntensity: number
 };
 
+/**
+ * @name LayerFill
+ * @type {
+ *   LayerFillSolid
+ * | LayerFillGradient
+ * | LayerFillPattern
+ * | LayerFillNoise}
+ */
 export type LayerFill =
   | LayerFillSolid
   | LayerFillGradient
   | LayerFillPattern
   | LayerFillNoise;
 
+/**
+ * @name LayerListStyle
+ * @type {"" | "disc" | "numbered"}
+ */
 export type LayerListStyle = "" | "disc" | "numbered";
 
+/**
+ * @name LayerResizingConstraint
+ * @property {boolean} top?
+ * @property {boolean} right?
+ * @property {boolean} bottom?
+ * @property {boolean} left?
+ * @property {boolean} fixedWidth?
+ * @property {boolean} fixedHeight?
+ */
 export type LayerResizingConstraint = {
   top?: boolean,
   right?: boolean,
@@ -1695,6 +2764,13 @@ export type LayerResizingConstraint = {
   fixedHeight?: boolean
 };
 
+/**
+ * @name LayerShadow
+ * @property {LayerColor} color
+ * @property {number} blurRadius
+ * @property {number} spread
+ * @property {number} y
+ */
 export type LayerShadow = {
   color: LayerColor,
   blurRadius: number,
@@ -1703,11 +2779,32 @@ export type LayerShadow = {
   y: number
 };
 
+/**
+ * @name LayerShadows
+ * @property {LayerShadow[]} outer?
+ * @property {LayerShadow[]} inner?
+ */
 export type LayerShadows = {
   outer?: LayerShadow[],
   inner?: LayerShadow[]
 };
 
+/**
+ * @name LayerTextStyle
+ * @property {string} styleName?
+ * @property {boolean} fixed?
+ * @property {string} fontName?
+ * @property {number} fontSize?
+ * @property {number} lineHeight?
+ * @property {number} characterSpacing?
+ * @property {number} paragraphSpacing?
+ * @property {LayerHorizontalAlignment} horizontalAlignment?
+ * @property {number} verticalAlignment?
+ * @property {LayerColor} color?
+ * @property {LayerListStyle} listStyle?
+ * @property {LayerTextTransform} textTransform?
+ * @property {LayerTextDecoration} textDecoration?
+ */
 export type LayerTextStyle = {
   styleName?: string,
   fixed?: boolean,
@@ -1724,16 +2821,34 @@ export type LayerTextStyle = {
   textDecoration?: LayerTextDecoration
 };
 
+/**
+ * @name LayerOverrideProperties
+ * @see LayerDataProperties
+ * @property {*} overrides
+ */
 export type LayerOverrideProperties = {
   ...$Diff<LayerDataProperties, { overrides: * }> // eslint-disable-line no-use-before-define
 };
 
+/**
+ * @name LayerOverrideData
+ * @property {string} symbolId?
+ * @property {LayerOverrideProperties} properties?
+ * @property {LayerOverrideData} layerId [layerId: string]
+ */
 export type LayerOverrideData = {
   symbolId?: string,
   properties?: LayerOverrideProperties,
   [layerId: string]: LayerOverrideData
 };
 
+/**
+ * @name LayerDataAsset
+ * @property {string} fileFormat
+ * @property {string} formatName
+ * @property {string} namingScheme
+ * @property {string} scale
+ */
 export type LayerDataAsset = {
   fileFormat: string,
   formatName: string,
@@ -1741,6 +2856,35 @@ export type LayerDataAsset = {
   scale: string
 };
 
+/**
+ * @name LayerDataProperties
+ * @property {string} styleName?
+ * @property {string} name
+ * @property {boolean} isVisible
+ * @property {boolean} isLocked
+ * @property {number} width
+ * @property {number} height
+ * @property {number} x
+ * @property {number} y
+ * @property {number} rotation
+ * @property {number} opacity
+ * @property {boolean} hasClippingMask
+ * @property {LayerTextStyle[]} textStyleIndex
+ * @property {LayerColor[]} colorIndex
+ * @property {LayerBlendMode} blendMode
+ * @property {boolean} hasClickThrough?
+ * @property {string} imageId?
+ * @property {string} textContent?
+ * @property {LayerColor} backgroundColor?
+ * @property {LayerBorderRadius} borderRadius?
+ * @property {LayerTextStyle} text?
+ * @property {LayerFill[]} fills?
+ * @property {LayerBorder[]} borders?
+ * @property {LayerShadows} shadows?
+ * @property {LayerResizingConstraint} resizingConstraint?
+ * @property {LayerOverrideData} overrides?
+ * @property {LayerDataAsset[]} assets?
+ */
 export type LayerDataProperties = {
   styleName?: string,
   name: string,
@@ -1870,7 +3014,7 @@ type NotificationBase = {
 
 /**
  * @name NotificationBranchArchived
- * @property {string} messageType
+ * @property {"BRANCH_ARCHIVED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.previousStatus
@@ -1885,7 +3029,7 @@ export type NotificationBranchArchived = NotificationBase & {
 
 /**
  * @name NotificationBranchCreated
- * @property {string} messageType
+ * @property {"BRANCH_CREATED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.branchDescription?
@@ -1900,7 +3044,7 @@ export type NotificationBranchCreated = NotificationBase & {
 
 /**
  * @name NotificationBranchDeleted
- * @property {string} messageType
+ * @property {"BRANCH_DELETED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.previousStatus
@@ -1915,7 +3059,7 @@ export type NotificationBranchDeleted = NotificationBase & {
 
 /**
  * @name NotificationBranchDescriptionUpdated
- * @property {string} messageType
+ * @property {"BRANCH_DESCRIPTION_UPDATED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.branchDescription
@@ -1932,7 +3076,7 @@ export type NotificationBranchDescriptionUpdated = NotificationBase & {
 
 /**
  * @name NotificationBranchRenamed
- * @property {string} messageType
+ * @property {"BRANCH_RENAMED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.previousName
@@ -1947,7 +3091,7 @@ export type NotificationBranchRenamed = NotificationBase & {
 
 /**
  * @name NotificationBranchStatusUpdated
- * @property {string} messageType
+ * @property {"BRANCH_STATUS_UPDATED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.previousStatus
@@ -1964,7 +3108,7 @@ export type NotificationBranchStatusUpdated = NotificationBase & {
 
 /**
  * @name NotificationBranchUnarchived
- * @property {string} messageType
+ * @property {"BRANCH_UNARCHIVED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.status
@@ -1979,7 +3123,7 @@ export type NotificationBranchUnarchived = NotificationBase & {
 
 /**
  * @name NotificationCollectionPublished
- * @property {string} messageType
+ * @property {"COLLECTION_PUBLISHED"} messageType
  * @property {object} payload
  * @property {string} payload.collectionId
  * @property {string} payload.name
@@ -1994,7 +3138,7 @@ export type NotificationCollectionPublished = NotificationBase & {
 
 /**
  * @name NotificationProjectArchived
- * @property {string} messageType
+ * @property {"PROJECT_ARCHIVED"} messageType
  * @property {object} payload
  * @property {string} payload.projectName
  */
@@ -2007,7 +3151,7 @@ export type NotificationProjectArchived = NotificationBase & {
 
 /**
  * @name NotificationProjectCreated
- * @property {string} messageType
+ * @property {"PROJECT_CREATED"} messageType
  * @property {object} payload
  * @property {string} payload.projectName
  */
@@ -2020,7 +3164,7 @@ export type NotificationProjectCreated = NotificationBase & {
 
 /**
  * @name NotificationProjectDeleted
- * @property {string} messageType
+ * @property {"PROJECT_DELETED"} messageType
  * @property {object} payload
  * @property {string} payload.projectName
  */
@@ -2033,7 +3177,7 @@ export type NotificationProjectDeleted = NotificationBase & {
 
 /**
  * @name NotificationProjectDescriptionChanged
- * @property {string} messageType
+ * @property {"PROJECT_DESCRIPTION_CHANGED"} messageType
  * @property {object} payload
  * @property {string} payload.projectName
  */
@@ -2046,7 +3190,7 @@ export type NotificationProjectDescriptionChanged = NotificationBase & {
 
 /**
  * @name NotificationProjectRenamed
- * @property {string} messageType
+ * @property {"PROJECT_RENAMED"} messageType
  * @property {object} payload
  * @property {string} payload.previousName
  * @property {string} payload.newName
@@ -2061,7 +3205,7 @@ export type NotificationProjectRenamed = NotificationBase & {
 
 /**
  * @name NotificationProjectUnarchived
- * @property {string} messageType
+ * @property {"PROJECT_UNARCHIVED"} messageType
  * @property {object} payload
  * @property {string} payload.projectName
  */
@@ -2074,7 +3218,7 @@ export type NotificationProjectUnarchived = NotificationBase & {
 
 /**
  * @name NotificationProjectTransferred
- * @property {string} messageType
+ * @property {"PROJECT_TRANSFERRED"} messageType
  * @property {object} payload
  * @property {string} payload.projectName
  * @property {string} payload.previousOrganizationName
@@ -2107,7 +3251,7 @@ type NotificationCommitCommon = {
 
 /**
  * @name NotificationCommit
- * @property {string} messageType
+ * @property {"COMMIT"} messageType
  * @property {NotificationCommitCommon} payload
  */
 export type NotificationCommit = NotificationBase & {
@@ -2117,7 +3261,7 @@ export type NotificationCommit = NotificationBase & {
 
 /**
  * @name NotificationMergeCommit
- * @property {string} messageType
+ * @property {MERGE_COMMIT} messageType
  * @property {object} payload
  * @property {string} payload.sourceBranchId
  * @property {string} payload.sourceBranchName
@@ -2136,6 +3280,7 @@ export type NotificationMergeCommit = NotificationBase & {
 
 /**
  * @name NotificationUpdateCommit
+ * @property {"UPDATE_COMMIT"} messageType
  * @property {object} payload
  * @property {string} payload.sourceBranchId
  * @property {string} payload.sourceBranchName
@@ -2150,6 +3295,7 @@ export type NotificationUpdateCommit = NotificationBase & {
 
 /**
  * @name NotificationCommentCreated
+ * @property {"COMMENT_CREATED"} messageType
  * @property {object} payload
  * @property {string} payload.reviewId?
  * @property {ReviewStatus} payload.reviewStatus?
@@ -2188,8 +3334,8 @@ export type NotificationCommentCreated = NotificationBase & {
 };
 
 /**
- * @type NotificationReviewRequested
- * @property {string} messageType
+ * @name NotificationReviewRequested
+ * @property {"REVIEW_REQUESTED"} messageType
  * @property {object} payload
  * @property {string} payload.branchName
  * @property {string} payload.reviewerName
@@ -2498,6 +3644,20 @@ export interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
 
+/**
+ * @name ReviewRequest
+ * @property {string} branchId
+ * @property {string} commentId?
+ * @property {string} createdAt
+ * @property {string} id
+ * @property {string} projectId
+ * @property {User} requester
+ * @property {string} requesterId
+ * @property {User} reviewer
+ * @property {string} reviewerId
+ * @property {ReviewStatus} status
+ * @property {string} statusChangedAt
+ */
 export type ReviewRequest = {
   branchId: string,
   commentId?: string,
