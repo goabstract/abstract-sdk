@@ -119,6 +119,22 @@ export default class Projects extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Projects
+   * @param {OrganizationDescriptor} descriptor
+   * @param {NewProject} project
+   * @param  {RequestOptions = {}} requestOptions
+   * @description
+   * Create a new Project
+   * @returns {Promise<Project>}
+   * @example
+   * abstract.projects.create({
+   *  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+   * }, {
+   *  name: "New Project",
+   *  organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9"
+   * });
+   */
   create(
     descriptor: OrganizationDescriptor,
     project: NewProject,
@@ -138,6 +154,22 @@ export default class Projects extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Projects
+   * @param {ProjectDescriptor} descriptor
+   * @param {Project} project
+   * @param {RequestOptions = {}} requestOptions
+   * @returns {Promise<Project>}
+   * @description
+   * Update an existing project
+   * @example
+   * abstract.projects.update({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+   * }, {
+   *  ...existingProject,
+   *  name: "Updated Project Name"
+   * });
+   */
   update(
     descriptor: ProjectDescriptor,
     project: Project,
@@ -160,6 +192,18 @@ export default class Projects extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Projects
+   * @param {ProjectDescriptor} descriptor
+   * @param {RequestOptions = {}} requestOptions
+   * @returns {Promise<void>}
+   * @description
+   * Update a Project
+   * @example
+   * abstract.projects.delete({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+   * });
+   */
   delete(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<void>>({
       api: () => {
@@ -171,6 +215,17 @@ export default class Projects extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Projects
+   * @param {ProjectDescriptor} descriptor
+   * @param {RequestOptions = {}} requestOptions
+   * @returns {Promise<Project>}
+   * @description Archive a project
+   * @example
+   * abstract.projects.achive({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+   * });
+   */
   archive(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Project>>({
       api: () => {
@@ -182,6 +237,17 @@ export default class Projects extends Endpoint {
     });
   }
 
+  /**
+   * @memberof Projects
+   * @param {ProjectDescriptor} descriptor
+   * @param {RequestOptions = {}} requestOptions
+   * @returns {Promise<Project>}
+   * @description Un-archive a project
+   * @example
+   * abstract.projects.unarchive({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+   * });
+   */
   unarchive(
     descriptor: ProjectDescriptor,
     requestOptions: RequestOptions = {}
