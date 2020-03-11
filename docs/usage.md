@@ -25,7 +25,8 @@ The following example demonstrates how to authenticate, configure, then use the 
 
 ```js
 // Import the SDK client
-import * as Abstract from "abstract-sdk";
+const Abstract = require("abstract-sdk");
+
 
 // Create a client
 const client = new Abstract.Client({
