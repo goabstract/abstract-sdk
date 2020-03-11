@@ -205,7 +205,7 @@ describe("branches", () => {
       const response = await API_CLIENT.branches.mergeState({
         branchId: "branch-id",
         projectId: "project-id"
-      }, null);
+      });
 
       expect(response).toEqual({
         state: "CLEAN"
@@ -241,7 +241,7 @@ describe("branches", () => {
       const response = await CLI_CLIENT.branches.mergeState({
         branchId: "branch-id",
         projectId: "project-id"
-      }, null);
+      });
 
       expect(response).toEqual({
         state: "CLEAN"
