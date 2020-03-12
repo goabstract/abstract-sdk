@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.16](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.15...v8.0.0-beta.16) (2020-03-12)
+
+
+### Features
+
+* Add projects changeset support ([#233](https://github.com/goabstract/abstract-sdk/issues/233)) ([9b829b9](https://github.com/goabstract/abstract-sdk/commit/9b829b9))
+
+
+
 ## [8.0.0-beta.15](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.5...v8.0.0-beta.15) (2020-03-10)
 
 
