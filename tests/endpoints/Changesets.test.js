@@ -79,3 +79,21 @@ describe("branch", () => {
     });
   });
 });
+
+describe("project", () => {
+  test("cli", async () => {
+    mockCLI(["projects", "changeset", "project-id"], {
+      changeset: {
+        id: "changeset-id"
+      }
+    });
+
+    const response = await CLI_CLIENT.changesets.project({
+      projectId: "project-id"
+    });
+
+    expect(response).toEqual({
+      id: "changeset-id"
+    });
+  });
+});
