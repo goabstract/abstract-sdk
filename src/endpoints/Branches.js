@@ -83,7 +83,7 @@ export default class Branches extends Endpoint {
     });
   }
 
-  mergeState(descriptor: BranchDescriptor, options: { parent?: string }) {
+  mergeState(descriptor: BranchDescriptor, options?: { parent?: string }) {
     return this.configureRequest<Promise<BranchMergeState>>({
       api: async () => {
         let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}/merge_state`;
