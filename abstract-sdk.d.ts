@@ -1817,7 +1817,7 @@ interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
 
-type AccessToken = ?string | ShareDescriptor;
+type AccessToken = string | ShareDescriptor;
 type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
@@ -1899,10 +1899,10 @@ type WebhookDelivery = {
   webhookId: string
 };
 
-type ErrorData = {|
+type ErrorData = {
   path: string,
-  body: mixed
-|};
+  body: any
+};
 
 type ErrorMap = {
   [mode: string]: Error
