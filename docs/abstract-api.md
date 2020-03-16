@@ -271,7 +271,7 @@ A branch merge state is a description of whether a branch can be cleanly merged 
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.mergeState(BranchDescriptor, string): Promise<BranchMergeState>`
+`branches.mergeState(BranchDescriptor, options?: { parent?: string }): Promise<BranchMergeState>`
 
 Load the merge state for a specific branch in a project.
 
@@ -282,7 +282,7 @@ abstract.branches.mergeState({
 });
 ```
 
-> Note: the optional fields in `BranchMergeState` are only available when using the [API transport](/docs/transports). The API transport only returns states `CLEAN` or `NEEDS_UPDATE`, while the CLI transport may return all three possible states.
+> Note: The API and CLI [transports](/docs/transports) behave differently for merge state. The CLI transport ignores `options.parent`, and _only_ returns one of the three possible merge states (no other fields are included). The API transport includes a value for each field of `BranchMergeState`, and only returns statuses `CLEAN` or `NEEDS_UPDATE`.
 
 ## Changesets
 
