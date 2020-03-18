@@ -260,7 +260,7 @@ A branch merge state is a description of whether a branch can be cleanly merged 
 | Property               | Type     | Description                                                                                       |
 |------------------------|----------|---------------------------------------------------------------------------------------------------|
 | `state`                | `string` | The merge state of the branch relative to its parent branch. May be one of `CLEAN`, `NEEDS_UPDATE`, or `NEEDS_REMOTE_UPDATE` |
-| `parentId`             | `string` | UUID of the parent btanch                                                                         |
+| `parentId`             | `string` | UUID of the parent branch                                                                         |
 | `parentCommit`         | `string` | SHA that represents the latest commit on the parent branch                                        |
 | `branchId`             | `string` | UUID identifier of the branch, or the string "master"                                             |
 | `branchCommit`         | `string` | SHA that represents the latest commit on the branch                                               |
@@ -271,7 +271,7 @@ A branch merge state is a description of whether a branch can be cleanly merged 
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.mergeState(BranchDescriptor, options?: { parent?: string }): Promise<BranchMergeState>`
+`branches.mergeState(BranchDescriptor, { ...RequestOptions, parentId?: string }): Promise<BranchMergeState>`
 
 Load the merge state for a specific branch in a project.
 
@@ -282,7 +282,7 @@ abstract.branches.mergeState({
 });
 ```
 
-> Note: The API and CLI [transports](/docs/transports) behave differently for merge state. The CLI transport ignores `options.parent`, and _only_ returns one of the three possible merge states (no other fields are included). The API transport includes a value for each field of `BranchMergeState`, and only returns statuses `CLEAN` or `NEEDS_UPDATE`.
+> Note: The API and CLI [transports](/docs/transports) behave differently for merge state. The CLI transport ignores `options.parentId`, and _only_ returns one of the three possible merge states (no other fields are included). The API transport includes a value for each field of `BranchMergeState`, and only returns statuses `CLEAN` or `NEEDS_UPDATE`.
 
 ## Changesets
 

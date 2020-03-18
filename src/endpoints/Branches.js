@@ -83,16 +83,18 @@ export default class Branches extends Endpoint {
     });
   }
 
-  mergeState(descriptor: BranchDescriptor, options?: { parent?: string }) {
+  mergeState(
+    descriptor: BranchDescriptor,
+    options?: { ...RequestOptions, parentId?: string } = {}
+  ) {
+    const { parentId, ...requestOptions } = options;
+
     return this.configureRequest<Promise<BranchMergeState>>({
       api: async () => {
         let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}/merge_state`;
-        if (options) {
-          const { parent } = options;
-          if (parent) {
-            const query = querystring.stringify({ parentId: parent });
-            requestUrl = `${requestUrl}?${query}`;
-          }
+        if (parentId) {
+          const query = querystring.stringify({ parentId });
+          requestUrl = `${requestUrl}?${query}`;
         }
         const response = await this.apiRequest(requestUrl, { headers });
         return wrap(response.data, response);
@@ -107,7 +109,9 @@ export default class Branches extends Endpoint {
         ]);
 
         return wrap(response, response);
-      }
+      },
+
+      requestOptions
     });
   }
 }
