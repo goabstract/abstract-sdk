@@ -246,7 +246,7 @@ describe("branches", () => {
           branchId: "branch-id",
           projectId: "project-id"
         },
-        { parent: "parent-id" }
+        { parentId: "parent-id" }
       );
       expect(response).toEqual({
         state: "CLEAN"
