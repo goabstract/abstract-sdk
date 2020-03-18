@@ -153,6 +153,7 @@ interface Branches extends Endpoint {
     descriptor?: ProjectDescriptor,
     options?: RequestOptions & { filter?: "active" | "archived" | "mine", search?: string }
   ): Promise<Branch[]>;
+  mergeState(descriptor: BranchDescriptor, options?: { parent?: string }): Promise<BranchMergeState>;
 }
 
 interface Changesets extends Endpoint {

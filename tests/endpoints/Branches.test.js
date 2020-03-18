@@ -193,4 +193,82 @@ describe("branches", () => {
       }
     });
   });
+
+  describe("mergeState", () => {
+    test("api - without options", async () => {
+      mockAPI("/projects/project-id/branches/branch-id/merge_state", {
+        data: {
+          state: "CLEAN"
+        }
+      });
+
+      const response = await API_CLIENT.branches.mergeState({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+    });
+
+    test("api - with options", async () => {
+      mockAPI("/projects/project-id/branches/branch-id/merge_state", {
+        data: {
+          state: "CLEAN"
+        }
+      });
+
+      const response = await API_CLIENT.branches.mergeState(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {}
+      );
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+    });
+
+    test("api - with options and parent", async () => {
+      mockAPI(
+        "/projects/project-id/branches/branch-id/merge_state?parentId=parent-id",
+        {
+          data: {
+            state: "CLEAN"
+          }
+        }
+      );
+
+      const response = await API_CLIENT.branches.mergeState(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        { parent: "parent-id" }
+      );
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+    });
+
+    test("cli", async () => {
+      mockCLI(
+        ["branches", "merge-state", "branch-id", "--project-id=project-id"],
+        {
+          state: "CLEAN"
+        }
+      );
+
+      const response = await CLI_CLIENT.branches.mergeState({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+
+      expect(response).toEqual({
+        state: "CLEAN"
+      });
+    });
+  });
 });
