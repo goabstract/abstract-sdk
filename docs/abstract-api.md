@@ -271,7 +271,7 @@ A branch merge state is a description of whether a branch can be cleanly merged 
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.mergeState(BranchDescriptor, options?: { parentId?: string }): Promise<BranchMergeState>`
+`branches.mergeState(BranchDescriptor, { ...RequestOptions, parentId?: string }): Promise<BranchMergeState>`
 
 Load the merge state for a specific branch in a project.
 
