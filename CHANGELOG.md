@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.18](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.17...v8.0.0-beta.18) (2020-03-18)
+
+
+### Bug Fixes
+
+* Respect transportMode for branches.mergeState ([#236](https://github.com/goabstract/abstract-sdk/issues/236)) ([5805c51](https://github.com/goabstract/abstract-sdk/commit/5805c51))
+
+
+
 ## [8.0.0-beta.17](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.16...v8.0.0-beta.17) (2020-03-18)
 
 
