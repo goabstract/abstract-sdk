@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.19](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.18...v8.0.0-beta.19) (2020-03-19)
+
+
+### Bug Fixes
+
+* Return branch merge state at top level of CLI response ([#237](https://github.com/goabstract/abstract-sdk/issues/237)) ([4dc001a](https://github.com/goabstract/abstract-sdk/commit/4dc001a))
+
+
+
 ## [8.0.0-beta.18](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.17...v8.0.0-beta.18) (2020-03-18)
 
 
