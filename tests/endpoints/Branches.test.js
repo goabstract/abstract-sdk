@@ -257,7 +257,9 @@ describe("branches", () => {
       mockCLI(
         ["branches", "merge-state", "branch-id", "--project-id=project-id"],
         {
-          state: "CLEAN"
+          data: {
+            state: "CLEAN"
+          }
         }
       );
 
