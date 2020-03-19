@@ -108,7 +108,7 @@ export default class Branches extends Endpoint {
           `--project-id=${descriptor.projectId}`
         ]);
 
-        return wrap(response, response);
+        return wrap(response.data, response);
       },
 
       requestOptions
