@@ -40,6 +40,26 @@ describe("branches", () => {
         id: "branch-id"
       });
     });
+
+    test("cli with networkReadOps", async () => {
+      mockCLI(["branches", "get", "branch-id", "--project-id=project-id"], {
+        id: "branch-id"
+      });
+
+      const response = await CLI_CLIENT.branches.info(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          networkReadOps: true
+        }
+      );
+
+      expect(response).toEqual({
+        id: "branch-id"
+      });
+    });
   });
 
   describe("list", () => {

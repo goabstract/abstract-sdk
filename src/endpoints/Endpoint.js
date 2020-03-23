@@ -138,19 +138,17 @@ export default class Endpoint {
     return apiValue;
   }
 
-  async cliRequest(args: string[]) {
+  async cliRequest(args: string[], networkReadOps: boolean = false) {
     const token = await this._getAccessToken();
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 
+    if (!networkReadOps) {
+      args.unshift("--skip-network-read-ops");
+    }
+
     const spawnArgs = [
       cliPath,
-      [
-        ...tokenArgs,
-        "--api-url",
-        await this.options.apiUrl,
-        "--skip-network-read-ops",
-        ...args
-      ]
+      [...tokenArgs, "--api-url", await this.options.apiUrl, ...args]
     ];
 
     /* istanbul ignore next */

@@ -18,7 +18,15 @@ const headers = {
 };
 
 export default class Branches extends Endpoint {
-  info(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
+  info(
+    descriptor: BranchDescriptor,
+    options: {
+      ...RequestOptions,
+      networkReadOps?: boolean
+    } = {}
+  ) {
+    const { networkReadOps, ...requestOptions } = options;
+
     return this.configureRequest<Promise<Branch>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -31,12 +39,15 @@ export default class Branches extends Endpoint {
       },
 
       cli: async () => {
-        const response = await this.cliRequest([
-          "branches",
-          "get",
-          descriptor.branchId,
-          `--project-id=${descriptor.projectId}`
-        ]);
+        const response = await this.cliRequest(
+          [
+            "branches",
+            "get",
+            descriptor.branchId,
+            `--project-id=${descriptor.projectId}`
+          ],
+          networkReadOps
+        );
         return wrap(response);
       },
 
@@ -69,6 +80,7 @@ export default class Branches extends Endpoint {
         if (!descriptor) {
           throw new BranchSearchCLIError();
         }
+
         const response = await this.cliRequest([
           "branches",
           "list",
