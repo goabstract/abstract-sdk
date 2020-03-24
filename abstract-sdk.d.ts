@@ -699,6 +699,7 @@ type User = {
   createdAt: string,
   updatedAt: string,
   deletedAt: string,
+  lastActiveAt: string,
   username: string,
   name: string,
   avatarUrl: string
@@ -718,7 +719,8 @@ type Membership = {
   createdAt: string,
   organizationId: string,
   projectId?: string,
-  role: string,
+  role: "guest" | "member" | "owner",
+  subscriptionRole: "viewer" | "contributor",
   user: User,
   userId: string
 };
