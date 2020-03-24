@@ -28,6 +28,7 @@ const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
 export default class Endpoint {
+  name: string;
   client: Client;
   options: CommandOptions;
 
@@ -78,6 +79,7 @@ export default class Endpoint {
   }
 
   async apiRequest(
+    method: string,
     url: string,
     fetchOptions: Object = {},
     apiOptions: ApiRequestOptions = {}
@@ -97,7 +99,7 @@ export default class Endpoint {
     const end = new Date();
     if (this.options.analyticsCallback) {
       this.options.analyticsCallback({
-        type: url,
+        type: `${this.name}#${method}`,
         duration: end - start,
         transportMode: "api"
       });
@@ -147,7 +149,7 @@ export default class Endpoint {
     return apiValue;
   }
 
-  async cliRequest(args: string[]) {
+  async cliRequest(method: string, args: string[]) {
     const token = await this._getAccessToken();
     const tokenArgs = typeof token === "string" ? ["--user-token", token] : [];
 
@@ -166,7 +168,12 @@ export default class Endpoint {
     logCLIRequest.enabled && logCLIRequest(spawnArgs);
     const start = new Date();
 
-    return this._createStreamPromise(spawn(...spawnArgs), spawnArgs, start);
+    return this._createStreamPromise(
+      spawn(...spawnArgs),
+      spawnArgs,
+      method,
+      start
+    );
   }
 
   createCursor<T>(
@@ -200,7 +207,12 @@ export default class Endpoint {
     return (createPromise(): T);
   }
 
-  _createStreamPromise(response: any, spawnArgs: any[], start: Date) {
+  _createStreamPromise(
+    response: any,
+    spawnArgs: any[],
+    method: string,
+    start: Date
+  ) {
     return new Promise<any>((resolve, reject) => {
       let errBuffer = Buffer.from("");
       let outBuffer = Buffer.from("");
@@ -235,7 +247,7 @@ export default class Endpoint {
 
         this.options.analyticsCallback &&
           this.options.analyticsCallback({
-            type: "cli",
+            type: `${this.name}#${method}`,
             transportMode: "cli",
             duration: end - start
           });
