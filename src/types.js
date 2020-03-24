@@ -168,7 +168,13 @@ export type UserDescriptor = {|
 
 export type AssetDescriptor = {|
   assetId: string,
-  projectId: string
+  projectId: string,
+  branchId: string,
+  sha: string,
+  url: string,
+  filename: string,
+  output: string,
+  expand: boolean
 |};
 
 export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";

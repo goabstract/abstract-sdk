@@ -14,7 +14,7 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
-  info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
+  async info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Asset>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -22,6 +22,7 @@ export default class Assets extends Endpoint {
         );
         return wrap(response);
       },
+
       requestOptions
     });
   }
@@ -48,8 +49,11 @@ export default class Assets extends Endpoint {
     });
   }
 
-  file(descriptor: FileDescriptor, options: ListOptions = {}) {
+  async file(descriptor: FileDescriptor, options: ListOptions = {}) {
     const { limit, offset, ...requestOptions } = options;
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
 
     return this.createCursor<Promise<Asset[]>>(
       (nextOffset = offset) => ({
@@ -64,14 +68,30 @@ export default class Assets extends Endpoint {
             `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/assets?${query}`
           );
         },
+        cli: async () => {
+          const response = await this.cliRequest([
+            "assets",
+            "export",
+            latestDescriptor.fileId,
+            `--branch-id=${latestDescriptor.branchId || "master"}`,
+            `--project-id=${latestDescriptor.projectId}`,
+            `--sha=${latestDescriptor.sha || "latest"}`
+          ]);
+
+          console.log(typeof response);
+          return wrap(response, response);
+        },
         requestOptions
       }),
       response => wrap(response.data, response)
     );
   }
 
-  raw(descriptor: AssetDescriptor, options: RawOptions = {}) {
+  async raw(descriptor: AssetDescriptor, options: RawOptions = {}) {
     const { disableWrite, filename, ...requestOptions } = options;
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
 
     return this.configureRequest<Promise<ArrayBuffer>>({
       api: async () => {
@@ -106,7 +126,68 @@ export default class Assets extends Endpoint {
 
         return arrayBuffer;
       },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "assets",
+          "download",
+          `--urls=${latestDescriptor.url}`,
+          `--filenames=${latestDescriptor.filename}`,
+          `--output=${latestDescriptor.output || "asset"}`,
+          `--sha=${latestDescriptor.sha}`,
+          latestDescriptor.expand ? `--expand` : ``
+        ]);
+
+        return wrap(response, response);
+      },
+
       requestOptions
     });
+  }
+
+  async hasChanges(descriptor: AssetDescriptor, options: RawOptions = {}) {
+    const { disableWrite, filename, ...requestOptions } = options;
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
+
+    return this.configureRequest<Promise<ArrayBuffer>>({
+      cli: async () => {
+        const response = await this.cliRequest([
+          "assets",
+          "has-changes",
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`
+        ]);
+
+        return wrap(response, response);
+      },
+
+      requestOptions
+    });
+  }
+
+  async fileChanged(descriptor: FileDescriptor, options: ListOptions = {}) {
+    const { limit, offset, ...requestOptions } = options;
+    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
+      descriptor
+    );
+
+    return this.createCursor<Promise<Asset[]>>(
+      (nextOffset = offset) => ({
+        cli: async () => {
+          const response = await this.cliRequest([
+            "assets",
+            "export-changed",
+            `--project-id=${latestDescriptor.projectId}`,
+            `--sha=${latestDescriptor.sha || "latest"}`
+          ]);
+
+          return wrap(response, response);
+        },
+        requestOptions
+      }),
+      response => wrap(response, response)
+    );
   }
 }
