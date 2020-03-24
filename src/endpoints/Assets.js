@@ -134,7 +134,6 @@ export default class Assets extends Endpoint {
           `--urls=${latestDescriptor.url}`,
           `--filenames=${latestDescriptor.filename}`,
           `--output=${latestDescriptor.output || "asset"}`,
-          `--sha=${latestDescriptor.sha}`,
           latestDescriptor.expand ? `--expand` : ``
         ]);
 
