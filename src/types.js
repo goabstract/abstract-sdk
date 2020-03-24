@@ -143,8 +143,15 @@ export type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
+export type EndpointAnalytic = {
+  type: string,
+  duration: number,
+  transportMode: "api" | "cli"
+};
+
 export type CommandOptions = {
   accessToken: AccessTokenOption,
+  analyticsCallback: EndpointAnalytic => mixed,
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,

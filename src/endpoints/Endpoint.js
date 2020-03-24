@@ -92,7 +92,16 @@ export default class Endpoint {
     /* istanbul ignore next */
     logAPIRequest.enabled && logAPIRequest(args);
 
+    const start = new Date();
     const response = await fetch(...args);
+    const end = new Date();
+    if (this.options.analyticsCallback) {
+      this.options.analyticsCallback({
+        type: url,
+        duration: end - start,
+        transportMode: "api"
+      });
+    }
     !response.ok && (await throwAPIError(response, url, fetchOptions.body));
     if (response.status === 204) {
       return (undefined: any);
@@ -155,8 +164,9 @@ export default class Endpoint {
 
     /* istanbul ignore next */
     logCLIRequest.enabled && logCLIRequest(spawnArgs);
+    const start = new Date();
 
-    return this._createStreamPromise(spawn(...spawnArgs), spawnArgs);
+    return this._createStreamPromise(spawn(...spawnArgs), spawnArgs, start);
   }
 
   createCursor<T>(
@@ -190,7 +200,7 @@ export default class Endpoint {
     return (createPromise(): T);
   }
 
-  _createStreamPromise(response: any, spawnArgs: any[]) {
+  _createStreamPromise(response: any, spawnArgs: any[], start: Date) {
     return new Promise<any>((resolve, reject) => {
       let errBuffer = Buffer.from("");
       let outBuffer = Buffer.from("");
@@ -206,6 +216,8 @@ export default class Endpoint {
       response.on("error", reject);
 
       response.on("close", errCode => {
+        const end = new Date();
+
         if (errCode !== 0) {
           const response = JSON.parse(errBuffer.toString());
           try {
@@ -220,6 +232,13 @@ export default class Endpoint {
 
         /* istanbul ignore next */
         logCLIResponse.enabled && logCLIResponse(cliResponse);
+
+        this.options.analyticsCallback &&
+          this.options.analyticsCallback({
+            type: "cli",
+            transportMode: "cli",
+            duration: end - start
+          });
 
         resolve(cliResponse);
       });
