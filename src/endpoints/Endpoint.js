@@ -37,7 +37,7 @@ export default class Endpoint {
     this.options = options;
   }
 
-  configureRequest<T>(name: string, config: RequestConfig<T>): T {
+  configureRequest<T>(requestName: string, config: RequestConfig<T>): T {
     const makeRequest = async () => {
       let response;
       const errors = {};
@@ -62,7 +62,7 @@ export default class Endpoint {
           const end = performance.now();
           if (this.options.analyticsCallback) {
             this.options.analyticsCallback({
-              type: `${this.name}#${name}`,
+              type: `${this.name}#${requestName}`,
               duration: end - start,
               transportMode: mode
             });
@@ -171,7 +171,7 @@ export default class Endpoint {
   }
 
   createCursor<T>(
-    name: string,
+    requestName: string,
     getConfig: (nextOffset?: number) => RequestConfig<any>,
     getValue: (response: any) => any
   ): T {
@@ -184,7 +184,7 @@ export default class Endpoint {
         }
 
         return this.configureRequest<any>(
-          name,
+          requestName,
           getConfig(response && response.meta.nextOffset)
         );
       });
