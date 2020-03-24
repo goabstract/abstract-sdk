@@ -438,7 +438,8 @@ export type Membership = {
   createdAt: string,
   organizationId: string,
   projectId?: string,
-  role: string,
+  role: "guest" | "member" | "owner",
+  subscriptionRole: "viewer" | "contributor",
   user: User,
   userId: string
 };
