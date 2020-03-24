@@ -1,6 +1,5 @@
 // @flow
-import { mockAPI, API_CLIENT, CLIENT_CONFIG } from "../../src/util/testing";
-import Client from "../../src/Client";
+import { mockAPI, API_CLIENT } from "../../src/util/testing";
 
 describe("activities", () => {
   describe("info", () => {
@@ -16,28 +15,6 @@ describe("activities", () => {
       expect(response).toEqual({
         id: "activity-id"
       });
-    });
-
-    test("analytics", async () => {
-      let analyticsResult;
-
-      const client = new Client({
-        ...CLIENT_CONFIG,
-        analyticsCallback: analytics => (analyticsResult = analytics)
-      });
-      mockAPI("/activities/activity-id", {
-        id: "activity-id"
-      });
-
-      await client.activities.info({
-        activityId: "activity-id"
-      });
-
-      if (!analyticsResult) {
-        throw new Error("analytics should be defined");
-      }
-      expect(analyticsResult.type).toEqual("activities#info");
-      expect(analyticsResult.transportMode).toEqual("api");
     });
   });
 
