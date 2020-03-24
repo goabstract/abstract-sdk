@@ -14,6 +14,8 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Commits extends Endpoint {
+  name = "commits";
+
   info(
     descriptor:
       | BranchCommitDescriptor
@@ -22,7 +24,7 @@ export default class Commits extends Endpoint {
       | LayerVersionDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Commit>>({
+    return this.configureRequest<Promise<Commit>>("info", {
       api: async () => {
         // loading commits with a share token requires a branchId so this
         // route is maintained for that circumstance
@@ -59,7 +61,7 @@ export default class Commits extends Endpoint {
   ) {
     const { limit, startSha, endSha, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<Commit[]>>({
+    return this.configureRequest<Promise<Commit[]>>("list", {
       api: async () => {
         const query = querystring.stringify({
           limit,

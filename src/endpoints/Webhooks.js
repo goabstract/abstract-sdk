@@ -14,11 +14,13 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Users extends Endpoint {
+  name = "webhooks";
+
   list(
     descriptor: OrganizationDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Webhook[]>>({
+    return this.configureRequest<Promise<Webhook[]>>("list", {
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks`
@@ -30,7 +32,7 @@ export default class Users extends Endpoint {
   }
 
   info(descriptor: WebhookDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Webhook>>({
+    return this.configureRequest<Promise<Webhook>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}`
@@ -45,7 +47,7 @@ export default class Users extends Endpoint {
     descriptor: OrganizationDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<WebhookEvent[]>>({
+    return this.configureRequest<Promise<WebhookEvent[]>>("events", {
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/events`
@@ -61,7 +63,7 @@ export default class Users extends Endpoint {
     webhook: NewWebhook,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Webhook>>({
+    return this.configureRequest<Promise<Webhook>>("create", {
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/subscribe`,
@@ -83,7 +85,7 @@ export default class Users extends Endpoint {
     webhook: Webhook,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Webhook>>({
+    return this.configureRequest<Promise<Webhook>>("update", {
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/subscribe`,
@@ -101,7 +103,7 @@ export default class Users extends Endpoint {
   }
 
   delete(descriptor: WebhookDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<void>>("delete", {
       api: () => {
         return this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}/unsubscribe`,
@@ -113,7 +115,7 @@ export default class Users extends Endpoint {
   }
 
   ping(descriptor: WebhookDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<void>>("ping", {
       api: () => {
         return this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}/ping`,
@@ -128,7 +130,7 @@ export default class Users extends Endpoint {
     descriptor: WebhookDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<WebhookDelivery[]>>({
+    return this.configureRequest<Promise<WebhookDelivery[]>>("deliveries", {
       api: async () => {
         const response = await this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}/deliveries`
@@ -143,7 +145,7 @@ export default class Users extends Endpoint {
     descriptor: WebhookDeliveryDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<void>>("redeliver", {
       api: () => {
         return this.apiRequest(
           `organizations/${descriptor.organizationId}/webhooks/${descriptor.webhookId}/deliveries/${descriptor.deliveryId}/redeliver`,
@@ -160,7 +162,7 @@ export default class Users extends Endpoint {
     signingKey: string,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<boolean>>({
+    return this.configureRequest<Promise<boolean>>("verify", {
       api: async () => {
         const signature = sha256.hmac(signingKey, JSON.stringify(payload));
         return signature === expectedSignature;

@@ -10,12 +10,14 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Pages extends Endpoint {
+  name = "pages";
+
   async info(descriptor: PageDescriptor, requestOptions: RequestOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
 
-    return this.configureRequest<Promise<Page>>({
+    return this.configureRequest<Promise<Page>>("info", {
       api: async () => {
         const { pageId, ...fileDescriptor } = latestDescriptor;
         const pages = await this.list(fileDescriptor);
@@ -45,7 +47,7 @@ export default class Pages extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Page[]>>({
+    return this.configureRequest<Promise<Page[]>>("list", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files/${latestDescriptor.fileId}/pages`

@@ -15,6 +15,8 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Comments extends Endpoint {
+  name = "comments";
+
   async create(
     descriptor:
       | BranchDescriptor
@@ -33,7 +35,7 @@ export default class Comments extends Endpoint {
       );
     }
 
-    return this.configureRequest<Promise<Comment>>({
+    return this.configureRequest<Promise<Comment>>("create", {
       api: async () => {
         const body = {
           ...comment,
@@ -53,7 +55,7 @@ export default class Comments extends Endpoint {
   }
 
   info(descriptor: CommentDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Comment>>({
+    return this.configureRequest<Promise<Comment>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `comments/${descriptor.commentId}`
@@ -80,6 +82,7 @@ export default class Comments extends Endpoint {
     }
 
     return this.createCursor<Promise<Comment[]>>(
+      "list",
       (nextOffset = offset) => ({
         api: () => {
           const query = querystring.stringify({

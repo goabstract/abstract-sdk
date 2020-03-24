@@ -14,8 +14,10 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
+  name = "assets";
+
   info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Asset>>({
+    return this.configureRequest<Promise<Asset>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/assets/${descriptor.assetId}`
@@ -34,7 +36,7 @@ export default class Assets extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Asset[]>>({
+    return this.configureRequest<Promise<Asset[]>>("commit", {
       api: async () => {
         const query = querystring.stringify({ sha: latestDescriptor.sha });
 
@@ -52,6 +54,7 @@ export default class Assets extends Endpoint {
     const { limit, offset, ...requestOptions } = options;
 
     return this.createCursor<Promise<Asset[]>>(
+      "file",
       (nextOffset = offset) => ({
         api: () => {
           const query = querystring.stringify({
@@ -73,7 +76,7 @@ export default class Assets extends Endpoint {
   raw(descriptor: AssetDescriptor, options: RawOptions = {}) {
     const { disableWrite, filename, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<ArrayBuffer>>({
+    return this.configureRequest<Promise<ArrayBuffer>>("raw", {
       api: async () => {
         const asset = await this.info(descriptor);
         const assetUrl = await this.options.objectUrl;

@@ -8,6 +8,8 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Data extends Endpoint {
+  name = "data";
+
   async info(
     descriptor: LayerVersionDescriptor,
     requestOptions: RequestOptions = {}
@@ -16,7 +18,7 @@ export default class Data extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<LayerDataset>>({
+    return this.configureRequest<Promise<LayerDataset>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}/data`

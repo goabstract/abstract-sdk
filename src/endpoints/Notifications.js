@@ -11,11 +11,13 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Notifications extends Endpoint {
+  name = "notifications";
+
   info(
     descriptor: NotificationDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Notification>>({
+    return this.configureRequest<Promise<Notification>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `notifications/${descriptor.notificationId}`
@@ -30,6 +32,7 @@ export default class Notifications extends Endpoint {
     const { limit, offset, ...requestOptions } = options;
 
     return this.createCursor<Promise<Notification[]>>(
+      "list",
       (nextOffset = offset) => ({
         api: () => {
           const query = querystring.stringify({

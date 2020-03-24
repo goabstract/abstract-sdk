@@ -17,6 +17,8 @@ type LayersListOptions = {
 };
 
 export default class Layers extends Endpoint {
+  name = "layers";
+
   async info(
     descriptor: LayerVersionDescriptor,
     requestOptions: RequestOptions = {}
@@ -25,7 +27,7 @@ export default class Layers extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Layer>>({
+    return this.configureRequest<Promise<Layer>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/files/${latestDescriptor.fileId}/layers/${latestDescriptor.layerId}`
@@ -60,7 +62,7 @@ export default class Layers extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Layer[]>>({
+    return this.configureRequest<Promise<Layer[]>>("list", {
       api: async () => {
         const query = querystring.stringify({
           ...latestDescriptor,
