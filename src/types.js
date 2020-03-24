@@ -418,6 +418,7 @@ export type User = {
   createdAt: string,
   updatedAt: string,
   deletedAt: string,
+  lastActiveAt: string,
   username: string,
   name: string,
   avatarUrl: string
