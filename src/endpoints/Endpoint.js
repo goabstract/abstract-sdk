@@ -62,8 +62,9 @@ export default class Endpoint {
           const end = performance.now();
           if (this.options.analyticsCallback) {
             this.options.analyticsCallback({
-              type: `${this.name}#${requestName}`,
               duration: end - start,
+              endpoint: this.name,
+              request: requestName,
               transportMode: mode
             });
           }

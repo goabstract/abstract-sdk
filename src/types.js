@@ -144,8 +144,9 @@ export type AccessTokenOption =
   | (() => Promise<AccessToken>);
 
 export type EndpointAnalytic = {
-  type: string,
   duration: number,
+  endpoint: string,
+  request: string,
   transportMode: "api" | "cli"
 };
 
