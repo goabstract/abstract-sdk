@@ -14,8 +14,9 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Activities extends Endpoint {
+  name = "activities";
   info(descriptor: ActivityDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Activity>>({
+    return this.configureRequest<Promise<Activity>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `activities/${descriptor.activityId}`
@@ -33,6 +34,7 @@ export default class Activities extends Endpoint {
     const { limit, offset, ...requestOptions } = options;
 
     return this.createCursor<CursorPromise<Activity[]>>(
+      "list",
       (nextOffset = offset) => ({
         api: () => {
           const query = querystring.stringify({
