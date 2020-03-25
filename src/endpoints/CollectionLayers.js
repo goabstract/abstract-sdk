@@ -11,6 +11,8 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class CollectionLayers extends Endpoint {
+  name = "collectionLayers";
+
   add(
     descriptor: CollectionDescriptor,
     layer: NewCollectionLayer,
@@ -18,7 +20,7 @@ export default class CollectionLayers extends Endpoint {
   ) {
     layer = { ...layer, collectionId: descriptor.collectionId };
 
-    return this.configureRequest<Promise<CollectionLayer>>({
+    return this.configureRequest<Promise<CollectionLayer>>("add", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collection_layers`,
@@ -44,7 +46,7 @@ export default class CollectionLayers extends Endpoint {
       return { ...collectionLayer, id: layerId };
     });
 
-    return this.configureRequest<Promise<CollectionLayer>>({
+    return this.configureRequest<Promise<CollectionLayer>>("addMany", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collection_layers/create_many`,
@@ -67,7 +69,7 @@ export default class CollectionLayers extends Endpoint {
     descriptor: CollectionLayerDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<void>>("remove", {
       api: () => {
         return this.apiRequest(
           `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,
@@ -86,7 +88,7 @@ export default class CollectionLayers extends Endpoint {
     order: number,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<CollectionLayer[]>>({
+    return this.configureRequest<Promise<CollectionLayer[]>>("move", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}/move`,
@@ -107,7 +109,7 @@ export default class CollectionLayers extends Endpoint {
     layer: UpdatedCollectionLayer,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<CollectionLayer>>({
+    return this.configureRequest<Promise<CollectionLayer>>("update", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collection_layers/${descriptor.collectionLayerId}`,

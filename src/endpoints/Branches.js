@@ -18,8 +18,10 @@ const headers = {
 };
 
 export default class Branches extends Endpoint {
+  name = "branches";
+
   info(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Branch>>({
+    return this.configureRequest<Promise<Branch>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}`,
@@ -54,7 +56,7 @@ export default class Branches extends Endpoint {
   ) {
     const { limit, offset, filter, search, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<Branch[]>>({
+    return this.configureRequest<Promise<Branch[]>>("list", {
       api: async () => {
         const query = querystring.stringify({ limit, offset, filter, search });
         const requestUrl = descriptor
@@ -89,7 +91,7 @@ export default class Branches extends Endpoint {
   ) {
     const { parentId, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<BranchMergeState>>({
+    return this.configureRequest<Promise<BranchMergeState>>("mergeState", {
       api: async () => {
         let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}/merge_state`;
         if (parentId) {

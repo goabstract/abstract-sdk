@@ -9,8 +9,10 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Stars extends Endpoint {
+  name = "stars";
+
   list(requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Star[]>>({
+    return this.configureRequest<Promise<Star[]>>("list", {
       api: async () => {
         const response = await this.apiRequest("starred");
         return wrap(response);
@@ -27,7 +29,7 @@ export default class Stars extends Endpoint {
       descriptor.sectionId === undefined
         ? descriptor.projectId
         : descriptor.sectionId;
-    return this.configureRequest<Promise<Star>>({
+    return this.configureRequest<Promise<Star>>("create", {
       api: async () => {
         const response = await this.apiRequest(`starred/${starrableId}`, {
           method: "PUT"
@@ -46,7 +48,7 @@ export default class Stars extends Endpoint {
       descriptor.sectionId === undefined
         ? descriptor.projectId
         : descriptor.sectionId;
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<void>>("delete", {
       api: () => {
         return this.apiRequest(`starred/${starrableId}`, { method: "DELETE" });
       },

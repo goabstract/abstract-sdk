@@ -17,12 +17,14 @@ import { wrap } from "../util/helpers";
 const API_VERSION = 16;
 
 export default class Collections extends Endpoint {
+  name = "collections";
+
   create(
     descriptor: ProjectDescriptor,
     collection: NewCollection,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Collection>>({
+    return this.configureRequest<Promise<Collection>>("create", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collections`,
@@ -47,7 +49,7 @@ export default class Collections extends Endpoint {
   ) {
     const { layersPerCollection, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<Collection>>({
+    return this.configureRequest<Promise<Collection>>("info", {
       api: async () => {
         const query = querystring.stringify({ layersPerCollection });
         const response = await this.apiRequest(
@@ -91,7 +93,7 @@ export default class Collections extends Endpoint {
       ...requestOptions
     } = options;
 
-    return this.configureRequest<Promise<Collection[]>>({
+    return this.configureRequest<Promise<Collection[]>>("list", {
       api: async () => {
         const { projectId, ...sanitizedDescriptor } = descriptor;
         const query = querystring.stringify({
@@ -141,7 +143,7 @@ export default class Collections extends Endpoint {
     collection: UpdatedCollection,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Collection>>({
+    return this.configureRequest<Promise<Collection>>("update", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/collections/${descriptor.collectionId}`,

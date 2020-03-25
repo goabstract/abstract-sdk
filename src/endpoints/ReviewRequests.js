@@ -10,11 +10,13 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class ReviewRequests extends Endpoint {
+  name = "reviewRequeasts";
+
   list(
     descriptor: OrganizationDescriptor | ProjectDescriptor | BranchDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<ReviewRequest[]>>({
+    return this.configureRequest<Promise<ReviewRequest[]>>("list", {
       api: async () => {
         let url = "";
 

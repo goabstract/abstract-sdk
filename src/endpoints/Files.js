@@ -15,12 +15,14 @@ const EXPORT_STATUS_CHECK_INTERVAL = 2000;
 const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
 
 export default class Files extends Endpoint {
+  name = "files";
+
   async info(descriptor: FileDescriptor, requestOptions: RequestOptions = {}) {
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
 
-    return this.configureRequest<Promise<File>>({
+    return this.configureRequest<Promise<File>>("info", {
       api: async () => {
         const { fileId, ...branchDescriptor } = latestDescriptor;
         const files = await this.list(branchDescriptor);
@@ -55,7 +57,7 @@ export default class Files extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<File[]>>({
+    return this.configureRequest<Promise<File[]>>("list", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files`
@@ -85,7 +87,7 @@ export default class Files extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<ArrayBuffer | void>>({
+    return this.configureRequest<Promise<ArrayBuffer | void>>("raw", {
       api: async () => {
         const exportRequest = (exportId?: string) => {
           return this.apiRequest(

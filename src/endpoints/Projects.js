@@ -15,8 +15,10 @@ const headers = {
 };
 
 export default class Projects extends Endpoint {
+  name = "projects";
+
   info(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Project>>({
+    return this.configureRequest<Promise<Project>>("info", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}`,
@@ -39,7 +41,7 @@ export default class Projects extends Endpoint {
   ) {
     const { filter, sectionId, ...requestOptions } = options;
 
-    return this.configureRequest<Promise<Project[]>>({
+    return this.configureRequest<Promise<Project[]>>("list", {
       api: async () => {
         const query = querystring.stringify({
           ...descriptor,
@@ -69,7 +71,7 @@ export default class Projects extends Endpoint {
   ) {
     project.about = (project: any).description;
 
-    return this.configureRequest<Promise<Project>>({
+    return this.configureRequest<Promise<Project>>("create", {
       api: async () => {
         const response = await this.apiRequest(`projects`, {
           method: "POST",
@@ -88,7 +90,7 @@ export default class Projects extends Endpoint {
   ) {
     project.about = (project: any).description;
 
-    return this.configureRequest<Promise<Project>>({
+    return this.configureRequest<Promise<Project>>("update", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}`,
@@ -104,7 +106,7 @@ export default class Projects extends Endpoint {
   }
 
   delete(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<void>>({
+    return this.configureRequest<Promise<void>>("delete", {
       api: () => {
         return this.apiRequest(`projects/${descriptor.projectId}`, {
           method: "DELETE"
@@ -115,7 +117,7 @@ export default class Projects extends Endpoint {
   }
 
   archive(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Project>>({
+    return this.configureRequest<Promise<Project>>("archive", {
       api: () => {
         return this.apiRequest(`projects/${descriptor.projectId}/archive`, {
           method: "PUT"
@@ -129,7 +131,7 @@ export default class Projects extends Endpoint {
     descriptor: ProjectDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Project>>({
+    return this.configureRequest<Promise<Project>>("unarchive", {
       api: () => {
         return this.apiRequest(`projects/${descriptor.projectId}/unarchive`, {
           method: "PUT"

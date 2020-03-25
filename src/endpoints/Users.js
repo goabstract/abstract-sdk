@@ -10,8 +10,10 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Users extends Endpoint {
+  name = "users";
+
   info(descriptor: UserDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<User>>({
+    return this.configureRequest<Promise<User>>("info", {
       api: async () => {
         const response = await this.apiRequest(`users/${descriptor.userId}`);
         return wrap(response);
@@ -24,7 +26,7 @@ export default class Users extends Endpoint {
     descriptor: OrganizationDescriptor | ProjectDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<User[]>>({
+    return this.configureRequest<Promise<User[]>>("list", {
       api: async () => {
         let url = "";
 

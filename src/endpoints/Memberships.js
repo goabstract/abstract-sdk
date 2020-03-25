@@ -11,11 +11,13 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class Memberships extends Endpoint {
+  name = "memberships";
+
   info(
     descriptor: OrganizationMembershipDescriptor | ProjectMembershipDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Membership>>({
+    return this.configureRequest<Promise<Membership>>("info", {
       api: async () => {
         let url = "";
 
@@ -38,7 +40,7 @@ export default class Memberships extends Endpoint {
     descriptor: OrganizationDescriptor | ProjectDescriptor,
     requestOptions: RequestOptions = {}
   ) {
-    return this.configureRequest<Promise<Membership[]>>({
+    return this.configureRequest<Promise<Membership[]>>("list", {
       api: async () => {
         let url = "";
 

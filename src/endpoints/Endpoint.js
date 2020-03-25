@@ -1,5 +1,5 @@
 /* @flow */
-/* global fetch */
+/* global fetch, performance */
 import { Readable } from "stream";
 import "cross-fetch/polyfill";
 import { spawn } from "child_process";
@@ -28,6 +28,7 @@ const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
 
 export default class Endpoint {
+  name: string;
   client: Client;
   options: CommandOptions;
 
@@ -36,7 +37,7 @@ export default class Endpoint {
     this.options = options;
   }
 
-  configureRequest<T>(config: RequestConfig<T>): T {
+  configureRequest<T>(requestName: string, config: RequestConfig<T>): T {
     const makeRequest = async () => {
       let response;
       const errors = {};
@@ -51,11 +52,22 @@ export default class Endpoint {
       for (const mode of transportMode) {
         let requestError;
         try {
-          if (!config[mode]) {
+          const request = config[mode];
+          if (!request) {
             throw new EndpointUndefinedError(mode);
           }
-          const operation = config[mode].call(this);
+          const start = performance.now();
+          const operation = request.call(this);
           response = await operation;
+          const end = performance.now();
+          if (this.options.analyticsCallback) {
+            this.options.analyticsCallback({
+              duration: end - start,
+              endpoint: this.name,
+              request: requestName,
+              transportMode: mode
+            });
+          }
         } catch (error) {
           requestError = error;
         }
@@ -160,6 +172,7 @@ export default class Endpoint {
   }
 
   createCursor<T>(
+    requestName: string,
     getConfig: (nextOffset?: number) => RequestConfig<any>,
     getValue: (response: any) => any
   ): T {
@@ -172,6 +185,7 @@ export default class Endpoint {
         }
 
         return this.configureRequest<any>(
+          requestName,
           getConfig(response && response.meta.nextOffset)
         );
       });

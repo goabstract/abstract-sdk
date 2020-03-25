@@ -12,6 +12,8 @@ import { isNodeEnvironment } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Previews extends Endpoint {
+  name = "previews";
+
   async info(
     descriptor: LayerVersionDescriptor,
     requestOptions: RequestOptions = {}
@@ -20,7 +22,7 @@ export default class Previews extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<PreviewMeta>>({
+    return this.configureRequest<Promise<PreviewMeta>>("info", {
       api: async () => ({
         webUrl: `${await this.options.webUrl}/projects/${
           latestDescriptor.projectId
@@ -38,7 +40,7 @@ export default class Previews extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<ArrayBuffer>>({
+    return this.configureRequest<Promise<ArrayBuffer>>("raw", {
       api: async () => {
         const previewUrl = await this.options.previewUrl;
         const arrayBuffer = await this.apiRequest(

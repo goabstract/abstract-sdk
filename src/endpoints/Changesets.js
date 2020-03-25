@@ -14,6 +14,8 @@ const headers = {
 };
 
 export default class Changesets extends Endpoint {
+  name = "changesets";
+
   async commit(
     descriptor: BranchCommitDescriptor,
     requestOptions: RequestOptions = {}
@@ -22,7 +24,7 @@ export default class Changesets extends Endpoint {
       descriptor
     );
 
-    return this.configureRequest<Promise<Changeset>>({
+    return this.configureRequest<Promise<Changeset>>("commit", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.sha}/changeset`,
@@ -46,7 +48,7 @@ export default class Changesets extends Endpoint {
   }
 
   branch(descriptor: BranchDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Changeset>>({
+    return this.configureRequest<Promise<Changeset>>("branch", {
       api: async () => {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}/branches/${descriptor.branchId}/changeset`,
@@ -70,7 +72,7 @@ export default class Changesets extends Endpoint {
   }
 
   project(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
-    return this.configureRequest<Promise<Changeset>>({
+    return this.configureRequest<Promise<Changeset>>("project", {
       cli: async () => {
         const response = await this.cliRequest([
           "projects",
