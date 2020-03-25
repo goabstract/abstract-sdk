@@ -143,7 +143,7 @@ export type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
-export type EndpointAnalytic = {
+export type EndpointMetric = {
   duration: number,
   endpoint: string,
   request: string,
@@ -152,7 +152,7 @@ export type EndpointAnalytic = {
 
 export type CommandOptions = {
   accessToken: AccessTokenOption,
-  analyticsCallback: EndpointAnalytic => mixed,
+  analyticsCallback: EndpointMetric => mixed,
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,

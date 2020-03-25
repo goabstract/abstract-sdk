@@ -1826,7 +1826,7 @@ type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
-type EndpointAnalytic = {
+type EndpointMetric = {
   duration: number,
   endpoint: string,
   request: string,
@@ -1836,7 +1836,7 @@ type EndpointAnalytic = {
 type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
-  analyticsCallback: (analytics: EndpointAnalytic) => any,
+  analyticsCallback: (analytics: EndpointMetric) => any,
   assetUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   transportMode: ("api" | "cli")[],

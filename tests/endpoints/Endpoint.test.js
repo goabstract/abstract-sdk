@@ -2,7 +2,7 @@
 import { CLIENT_CONFIG } from "../../src/util/testing";
 import Client from "../../src/Client";
 import Endpoint from "../../src/endpoints/Endpoint";
-import type { EndpointAnalytic } from "../../src/types";
+import type { EndpointMetric } from "../../src/types";
 
 function sleep(ms: number) {
   return new Promise(resolve => {
@@ -28,7 +28,7 @@ class ExampleEndpoint extends Endpoint {
 describe("endpoint", () => {
   describe("analyticsCallback", () => {
     test("api", async () => {
-      let analyticsResult: ?EndpointAnalytic;
+      let analyticsResult: ?EndpointMetric;
       const options = {
         ...CLIENT_CONFIG,
         analyticsCallback: analytics => (analyticsResult = analytics)
@@ -53,7 +53,7 @@ describe("endpoint", () => {
     });
 
     test("cli", async () => {
-      let analyticsResult: ?EndpointAnalytic;
+      let analyticsResult: ?EndpointMetric;
       const options = {
         ...CLIENT_CONFIG,
         analyticsCallback: analytics => (analyticsResult = analytics)
