@@ -3,6 +3,7 @@ import querystring from "query-string";
 import type {
   Branch,
   BranchDescriptor,
+  BranchMergeState,
   ListOptions,
   ProjectDescriptor,
   RequestOptions
@@ -24,6 +25,9 @@ const headers = {
  * we encourage branches to be created for logical chunks of work
  * – for example designing a new feature.
  * @extends {Endpoint}
+ * @see [BranchDescriptor](#branchdescriptor)
+ * @see [BranchMergeState](#branchMergeState)
+ * @see [Branch](#branch)
  */
 export default class Branches extends Endpoint {
   /**
@@ -79,7 +83,6 @@ export default class Branches extends Endpoint {
    * <div class="banner banner-warning">
    *  Note: Searching for branches is only available when using the API transport.
    * </div>
-   * @returns {Promise<Branch[]>}
    * @example
    * // List the active branches for a project
    * abstract.branches.list({
@@ -127,6 +130,62 @@ export default class Branches extends Endpoint {
         ]);
 
         return wrap(response.branches, response);
+      },
+
+      requestOptions
+    });
+  }
+
+  /**
+   * @memberof Branches
+   * @param {BranchDescriptor} [descriptor]
+   * @param {object} options
+   * @param {object} options.RequestOptions - spread operator
+   * @param {("active" | "archived" | "mine")} options.filter
+   * @param {string} options.search
+   * @returns {Promise<BranchMergeState[]>}
+   * @description
+   * A branch merge state is a description of whether a branch can be cleanly merged to its parent branch.
+   * <div class="banner banner-warning">
+   * Note: The API and CLI transports behave differently for merge state.
+   * The CLI transport ignores options.parentId, and only returns one of
+   * the three possible merge states (no other fields are included).
+   * The API transport includes a value for each field of BranchMergeState,
+   * and only returns statuses CLEAN or NEEDS_UPDATE.
+   * </div>
+   * @example
+   * // Load the merge state for a specific branch in a project
+   * abstract.branches.mergeState({
+   *  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+   *  branchId: "252e9141-5cfc-4f4e-823b-a85f4cfd9a32"
+   * });
+   */
+  mergeState(
+    descriptor: BranchDescriptor,
+    options?: { ...RequestOptions, parentId?: string } = {}
+  ) {
+    const { parentId, ...requestOptions } = options;
+
+    return this.configureRequest<Promise<BranchMergeState>>({
+      api: async () => {
+        let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}/merge_state`;
+        if (parentId) {
+          const query = querystring.stringify({ parentId });
+          requestUrl = `${requestUrl}?${query}`;
+        }
+        const response = await this.apiRequest(requestUrl, { headers });
+        return wrap(response.data, response);
+      },
+
+      cli: async () => {
+        const response = await this.cliRequest([
+          "branches",
+          "merge-state",
+          descriptor.branchId,
+          `--project-id=${descriptor.projectId}`
+        ]);
+
+        return wrap(response.data, response);
       },
 
       requestOptions

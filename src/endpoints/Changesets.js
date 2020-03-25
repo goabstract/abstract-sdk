@@ -1,5 +1,6 @@
 // @flow
 import type {
+  ProjectDescriptor,
   BranchDescriptor,
   Changeset,
   BranchCommitDescriptor,
@@ -14,6 +15,9 @@ const headers = {
 
 /**
  * @class Changesets
+ * @see [BranchCommitDescriptor](#branchCommitDescriptor)
+ * @see [BranchDescriptor](#branchDescriptor)
+ * @see [ProjectDescriptor](#projectDescriptor)
  * @description
  * A changeset is a group of changes that together form a single,
  * indivisible modification to a project.
@@ -103,6 +107,20 @@ export default class Changesets extends Endpoint {
         return wrap(response.changeset, response);
       },
 
+      requestOptions
+    });
+  }
+
+  project(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
+    return this.configureRequest<Promise<Changeset>>({
+      cli: async () => {
+        const response = await this.cliRequest([
+          "projects",
+          "changeset",
+          descriptor.projectId
+        ]);
+        return wrap(response.changeset, response);
+      },
       requestOptions
     });
   }

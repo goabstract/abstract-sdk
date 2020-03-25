@@ -19,6 +19,10 @@ const headers = {
  * @export
  * @class Shares
  * @extends {Endpoint}
+ * @see [Share](#share)
+ * @see [ShareInput](#shareInput)
+ * @see [ShareDescriptor](#shareDescriptor)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
  * @description
  * A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
  * <div class="banner banner-yellow">

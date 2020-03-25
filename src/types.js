@@ -1748,6 +1748,34 @@ export type Branch = {
 };
 
 /**
+ * @name MergeState
+ */
+export type MergeState = "CLEAN" | "NEEDS_UPDATE" | "NEEDS_REMOTE_UPDATE";
+
+/**
+ * @name BranchMergeState
+ * @property {MergeState} state
+ * The merge state of the branch relative to its parent branch.
+ * May be one of <code>CLEAN</code>, <code>NEEDS_UPDATE</code>, or
+ * <code>NEEDS_REMOTE_UPDATE</code>
+ * @property {string} parentId? UUID of the parent branch
+ * @property {string} parentCommit? SHA that represents the latest commit on the parent branch
+ * @property {string} branchId? UUID identifier of the branch, or the string "master"
+ * @property {string} branchCommit? SHA that represents the latest commit on the branch
+ * @property {number} ahead? The number of commits that the branch is ahead of its parent
+ * @property {number} behind? The number of commits that the branch is behind its parent
+ */
+export type BranchMergeState = {
+  state: MergeState,
+  parentId?: string,
+  parentCommit?: string,
+  branchId?: string,
+  branchCommit?: string,
+  ahead?: number,
+  behind?: number
+};
+
+/**
  * @name ChangesetStatus
  * @type {
  *   "added"

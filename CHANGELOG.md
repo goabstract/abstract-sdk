@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.19](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.18...v8.0.0-beta.19) (2020-03-19)
+
+
+### Bug Fixes
+
+* Return branch merge state at top level of CLI response ([#237](https://github.com/goabstract/abstract-sdk/issues/237)) ([4dc001a](https://github.com/goabstract/abstract-sdk/commit/4dc001a))
+
+
+
+## [8.0.0-beta.18](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.17...v8.0.0-beta.18) (2020-03-18)
+
+
+### Bug Fixes
+
+* Respect transportMode for branches.mergeState ([#236](https://github.com/goabstract/abstract-sdk/issues/236)) ([5805c51](https://github.com/goabstract/abstract-sdk/commit/5805c51))
+
+
+
+## [8.0.0-beta.17](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.16...v8.0.0-beta.17) (2020-03-18)
+
+
+### Bug Fixes
+
+* Type ErrorData in abstract-sdk.d.ts ([#227](https://github.com/goabstract/abstract-sdk/issues/227)) ([4b45070](https://github.com/goabstract/abstract-sdk/commit/4b45070))
+
+
+### Features
+
+* branches merge state ([#232](https://github.com/goabstract/abstract-sdk/issues/232)) ([024c5a2](https://github.com/goabstract/abstract-sdk/commit/024c5a2))
+
+
+
+## [8.0.0-beta.16](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.15...v8.0.0-beta.16) (2020-03-12)
+
+
+### Features
+
+* Add projects changeset support ([#233](https://github.com/goabstract/abstract-sdk/issues/233)) ([9b829b9](https://github.com/goabstract/abstract-sdk/commit/9b829b9))
+
+
+
 ## [8.0.0-beta.15](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.5...v8.0.0-beta.15) (2020-03-10)
 
 

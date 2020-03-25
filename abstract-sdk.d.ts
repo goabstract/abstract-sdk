@@ -153,6 +153,7 @@ interface Branches extends Endpoint {
     descriptor?: ProjectDescriptor,
     options?: RequestOptions & { filter?: "active" | "archived" | "mine", search?: string }
   ): Promise<Branch[]>;
+  mergeState(descriptor: BranchDescriptor, options?: { parent?: string }): Promise<BranchMergeState>;
 }
 
 interface Changesets extends Endpoint {
@@ -698,6 +699,7 @@ type User = {
   createdAt: string,
   updatedAt: string,
   deletedAt: string,
+  lastActiveAt: string,
   username: string,
   name: string,
   avatarUrl: string
@@ -717,7 +719,8 @@ type Membership = {
   createdAt: string,
   organizationId: string,
   projectId?: string,
-  role: string,
+  role: "guest" | "member" | "owner",
+  subscriptionRole: "viewer" | "contributor",
   user: User,
   userId: string
 };
@@ -1817,7 +1820,7 @@ interface CursorPromise<T> extends Promise<T> {
   next(): CursorPromise<T>;
 }
 
-type AccessToken = ?string | ShareDescriptor;
+type AccessToken = string | ShareDescriptor;
 type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
@@ -1899,10 +1902,10 @@ type WebhookDelivery = {
   webhookId: string
 };
 
-type ErrorData = {|
+type ErrorData = {
   path: string,
-  body: mixed
-|};
+  body: any
+};
 
 type ErrorMap = {
   [mode: string]: Error

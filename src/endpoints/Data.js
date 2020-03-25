@@ -11,6 +11,8 @@ import { wrap } from "../util/helpers";
  *
  * @export
  * @class Data
+ * @see [LayerDataset](#layerDataset)
+ * @see [LayerVersionDescriptor](#layerVersionDescriptor)
  * @extends {Endpoint}
  */
 export default class Data extends Endpoint {

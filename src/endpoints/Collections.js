@@ -19,6 +19,13 @@ const API_VERSION = 16;
 /**
  * @class Collections
  * @extends Endpoint
+ * @see [ProjectDescriptor](#projectDescriptor)
+ * @see [BranchDescriptor](#branchDescriptor)
+ * @see [NewCollection](#newCollection)
+ * @see [Collection](#collection)
+ * @see [CollectionDescriptor](#collectionDescriptor)
+ * @see [UpdatedCollection](#updatedCollection)
+ * @see [CollectionsListOptions](#collectionsListOptions)
  * @description
  * A collection is a set of layers at the same or different commits on a branch,
  * they can be created in the desktop or web app and are used to group work together

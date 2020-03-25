@@ -18,6 +18,13 @@ import { wrap } from "../util/helpers";
  *
  * @export
  * @class Comments
+ * @see [Comment](#comment)
+ * @see [NewComment](#newComment)
+ * @see [CommentDescriptor](#commentDescriptor)
+ * @see [BranchDescriptor](#branchDescriptor)
+ * @see [BranchCommitDescriptor](#branchCommitDescriptor)
+ * @see [PageDescriptor](#pageDescriptor)
+ * @see [LayerVersionDescriptor](#layerVersionDescriptor)
  * @description
  * A comment in Abstract can be left on a branch, commit, or layer.
  * Comments on layers can also include an optional annotation that

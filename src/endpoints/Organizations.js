@@ -10,6 +10,8 @@ import { wrap } from "../util/helpers";
 /**
  *
  * @class Organizations
+ * @see [Organization](#organization)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
  * @description
  * Organizations contain users and projects.
  * @extends {Endpoint}
