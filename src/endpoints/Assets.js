@@ -50,7 +50,7 @@ export default class Assets extends Endpoint {
     });
   }
 
-  async file(descriptor: FileDescriptor, options: ListOptions = {}) {
+  file(descriptor: FileDescriptor, options: ListOptions = {}) {
     const { limit, offset, ...requestOptions } = options;
 
     return this.createCursor<Promise<Asset[]>>(
