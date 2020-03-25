@@ -119,7 +119,9 @@ export type ListOptions = {
 export type RawOptions = {
   ...RequestOptions,
   disableWrite?: boolean,
-  filename?: string
+  filename?: string,
+  output?: string,
+  expand?: boolean
 };
 
 export type RawProgressOptions = {
@@ -166,19 +168,8 @@ export type UserDescriptor = {|
   userId: string
 |};
 
-export type AssetDescriptor = {
+export type AssetDescriptor = {|
   assetId: string,
-  projectId: string,
-  branchId: string,
-  sha: string,
-  url: string,
-  filename: string,
-  output: string,
-  expand: boolean | false
-};
-
-export type AssetHasChanges = {|
-  sha: string,
   projectId: string
 |};
 
