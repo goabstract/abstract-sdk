@@ -5,7 +5,6 @@ import { isNodeEnvironment, wrap } from "../util/helpers";
 import type {
   Asset,
   AssetDescriptor,
-  AssetHasChanges,
   BranchCommitDescriptor,
   FileDescriptor,
   ListOptions,
@@ -16,7 +15,7 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
-  async info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
+  info(descriptor: AssetDescriptor, requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Asset>>({
       api: async () => {
         const response = await this.apiRequest(
@@ -117,9 +116,9 @@ export default class Assets extends Endpoint {
           "assets",
           "download",
           `--urls=${latestDescriptor.url}`,
-          `--filenames=${latestDescriptor.filename}`,
-          `--output=${latestDescriptor.output}`,
-          latestDescriptor.expand ? `--expand` : ``
+          `--filenames=${options.filename}`,
+          `--output=${options.output}`,
+          options.expand ? `--expand` : ``
         ]);
 
         return wrap(response, response);
@@ -128,7 +127,10 @@ export default class Assets extends Endpoint {
     });
   }
 
-  async hasChanges(descriptor: AssetHasChanges, options: RawOptions = {}) {
+  async hasChanges(
+    descriptor: BranchCommitDescriptor,
+    options: RawOptions = {}
+  ) {
     const { disableWrite, filename, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
