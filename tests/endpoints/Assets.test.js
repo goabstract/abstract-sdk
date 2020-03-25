@@ -1,5 +1,11 @@
 // @flow
-import { mockAPI, mockObjectAPI, API_CLIENT } from "../../src/util/testing";
+import {
+  mockObjectAPI,
+  mockAPI,
+  mockCLI,
+  API_CLIENT,
+  CLI_CLIENT
+} from "../../src/util/testing";
 
 describe("assets", () => {
   describe("info", () => {
@@ -50,6 +56,21 @@ describe("assets", () => {
       );
 
       expect(response).toBeInstanceOf(ArrayBuffer);
+
+      // test("cli", async () => {
+      //   mockCLI(["assets", "download", "--urls=url", "--filenames=filename"], {
+      //     success: true
+      //   });
+
+      //   const response = await CLI_CLIENT.assets.raw({
+      //     url: "url",
+      //     filename: "filename"
+      //   });
+
+      //   expect(response).toEqual({
+      //     success: true
+      //   });
+      // });
     });
 
     test("api - browser", async () => {
@@ -126,6 +147,26 @@ describe("assets", () => {
           id: "asset-id"
         }
       ]);
+    });
+  });
+
+  describe("hasChanges", () => {
+    test("cli", async () => {
+      mockCLI(
+        ["assets", "has-changes", "--project-id=project-id", "--sha=sha"],
+        {
+          hasChangedAssets: false
+        }
+      );
+
+      const response = await CLI_CLIENT.assets.hasChanges({
+        projectId: "project-id",
+        sha: "sha"
+      });
+
+      expect(response).toEqual({
+        hasChangedAssets: false
+      });
     });
   });
 });
