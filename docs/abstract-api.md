@@ -135,7 +135,7 @@ abstract.assets.commit({
 
 ### Export an asset file
 
-![API][api-icon]
+![API][api-icon] ![CLI][cli-icon]
 
 `asset.raw(AssetDescriptor, RawOptions}): Promise<ArrayBuffer>`
 
@@ -151,18 +151,48 @@ abstract.assets.raw({
 The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. For example, it's possible to write the image to disk manually after post-processing it:
 
 ```js
-const arrayBuffer = await abstract.assets.raw({
-  assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
-  projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
-}, {
-  disableWrite: true
-});
+const arrayBuffer = await abstract.assets.raw(
+  {
+    assetId: "fcd67bab-e5c3-4679-b879-daa5d5746cc2",
+    projectId: "b8bf5540-6e1e-11e6-8526-2d315b6ef48f"
+  },
+  {
+    disableWrite: true
+  }
+);
 
 processedBuffer = postProcess(arrayBuffer);
 
-fs.writeFile("asset.png", Buffer.from(processedBuffer), (err) => {
+fs.writeFile("asset.png", Buffer.from(processedBuffer), err => {
   if (err) throw err;
   console.log("Asset image written!");
+});
+```
+
+### Check for local changes in asset
+
+![CLI][cli-icon]
+
+`asset.hasChanges(AssetHasChanges, RawOptions}): Promise<AssetHasChangesBool>`
+
+```js
+// Check if assets have been changed
+const assets = await abstract.assets.file({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  sha: "latest"
+});
+```
+
+### Export only changed assets
+
+![CLI][cli-icon]
+
+`asset.exportChanged(AssetDescriptor, RawOptions}): Promise<AssetGenerateProgress[]>`
+
+```js
+const assets = await abstract.assets.exportChanged({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  sha: "latest"
 });
 ```
 
