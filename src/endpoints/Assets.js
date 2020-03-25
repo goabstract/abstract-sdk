@@ -5,11 +5,13 @@ import { isNodeEnvironment, wrap } from "../util/helpers";
 import type {
   Asset,
   AssetDescriptor,
+  AssetHasChanges,
   BranchCommitDescriptor,
   FileDescriptor,
   ListOptions,
   RawOptions,
-  RequestOptions
+  RequestOptions,
+  AssetGenerateProgress
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
@@ -51,9 +53,6 @@ export default class Assets extends Endpoint {
 
   async file(descriptor: FileDescriptor, options: ListOptions = {}) {
     const { limit, offset, ...requestOptions } = options;
-    const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
-      descriptor
-    );
 
     return this.createCursor<Promise<Asset[]>>(
       (nextOffset = offset) => ({
@@ -67,19 +66,6 @@ export default class Assets extends Endpoint {
           return this.apiRequest(
             `projects/${descriptor.projectId}/branches/${descriptor.branchId}/files/${descriptor.fileId}/assets?${query}`
           );
-        },
-        cli: async () => {
-          const response = await this.cliRequest([
-            "assets",
-            "export",
-            latestDescriptor.fileId,
-            `--branch-id=${latestDescriptor.branchId || "master"}`,
-            `--project-id=${latestDescriptor.projectId}`,
-            `--sha=${latestDescriptor.sha || "latest"}`
-          ]);
-
-          console.log(typeof response);
-          return wrap(response, response);
         },
         requestOptions
       }),
@@ -126,25 +112,23 @@ export default class Assets extends Endpoint {
 
         return arrayBuffer;
       },
-
       cli: async () => {
         const response = await this.cliRequest([
           "assets",
           "download",
           `--urls=${latestDescriptor.url}`,
           `--filenames=${latestDescriptor.filename}`,
-          `--output=${latestDescriptor.output || "asset"}`,
+          `--output=${latestDescriptor.output}`,
           latestDescriptor.expand ? `--expand` : ``
         ]);
 
         return wrap(response, response);
       },
-
       requestOptions
     });
   }
 
-  async hasChanges(descriptor: AssetDescriptor, options: RawOptions = {}) {
+  async hasChanges(descriptor: AssetHasChanges, options: RawOptions = {}) {
     const { disableWrite, filename, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
@@ -166,13 +150,13 @@ export default class Assets extends Endpoint {
     });
   }
 
-  async fileChanged(descriptor: FileDescriptor, options: ListOptions = {}) {
+  async exportChanged(descriptor: AssetDescriptor, options: ListOptions = {}) {
     const { limit, offset, ...requestOptions } = options;
     const latestDescriptor = await this.client.descriptors.getLatestDescriptor(
       descriptor
     );
 
-    return this.createCursor<Promise<Asset[]>>(
+    return this.createCursor<Promise<AssetGenerateProgress[]>>(
       (nextOffset = offset) => ({
         cli: async () => {
           const response = await this.cliRequest([

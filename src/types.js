@@ -166,7 +166,7 @@ export type UserDescriptor = {|
   userId: string
 |};
 
-export type AssetDescriptor = {|
+export type AssetDescriptor = {
   assetId: string,
   projectId: string,
   branchId: string,
@@ -174,7 +174,24 @@ export type AssetDescriptor = {|
   url: string,
   filename: string,
   output: string,
-  expand: boolean
+  expand: boolean | false
+};
+
+export type AssetHasChanges = {|
+  sha: string,
+  projectId: string
+|};
+
+export type AssetGenerateProgress = {|
+  type: "GENERATE_ASSETS_PROGRESS",
+  stepName: string,
+  completed: number,
+  total: number,
+  percentage: number
+|};
+
+export type AssetHasChangesBool = {|
+  hasChangedAssets: boolean
 |};
 
 export type ReviewStatus = "REQUESTED" | "REJECTED" | "APPROVED";
