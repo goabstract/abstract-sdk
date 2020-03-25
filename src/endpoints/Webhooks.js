@@ -18,6 +18,12 @@ import { wrap } from "../util/helpers";
  *
  * @export
  * @class Webhooks
+ * @see [Webhook](#webhook)
+ * @see [WebhookDescriptor](#webhookDescriptor)
+ * @see [WebhookEvent](#webhookEvent)
+ * @see [NewWebhook](#newWebhook)
+ * @see [WebhookType](#webhookType)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
  * @extends {Endpoint}
  * @description
  * Webhooks make it easy to efficiently subscribe to events across the Abstract platform.

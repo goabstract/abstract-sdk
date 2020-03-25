@@ -51,7 +51,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "^24.1.0",
     "documentation": "^12.1.4",
-    "docjs-theme": "berezovskycom/documentj-theme",
+    "docjs-theme": "berezovskycom/documentjs-theme",
     "eslint": "^4.8.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",

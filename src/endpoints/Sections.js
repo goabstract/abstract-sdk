@@ -9,6 +9,8 @@ import { wrap } from "../util/helpers";
  * @export
  * @class Sections
  * @extends {Endpoint}
+ * @see [Section](#section)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
  * @description
  * A section is a group of projects that belong to a given organization.
  * Sections are used to group similar or related projects together and

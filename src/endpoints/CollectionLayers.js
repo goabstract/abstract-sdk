@@ -14,6 +14,10 @@ import { wrap } from "../util/helpers";
  *
  * @class CollectionLayers
  * @extends Endpoint
+ * @see [CollectionDescriptor](#collectionDescriptor)
+ * @see [NewCollectionLayer](#newCollectionDescriptor)
+ * @see [CollectionLayerDescriptor](#collectionLayerDescriptor)
+ * @see [UpdatedCollectionLayer](#updatedCollectionLayer)
  * @description
  * A collection layer represents an underlying layer within a collection.
  * Collection layers can be added to, removed from,

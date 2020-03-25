@@ -18,6 +18,11 @@ import { wrap } from "../util/helpers";
  * @export
  * @class Commits
  * @extends {Endpoint}
+ * @see [Commit](#commit)
+ * @see [BranchCommitDescriptor](#branchCommitDescriptor)
+ * @see [CommitDescriptor](#commitDescriptor)
+ * @see [FileDescriptor](#fileDescriptor)
+ * @see [LayerVersionDescriptor](#layerVersionDescriptor)
  * @description
  * A commit represents a point in time – contributors can create commits
  * in the desktop app to save their work at different stages.

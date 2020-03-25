@@ -16,6 +16,10 @@ import Endpoint from "../endpoints/Endpoint";
 /**
  * @class Assets
  * @extends Endpoint
+ * @see [AssetDescriptor](#sssetDescriptor)
+ * @see [Asset](#asset)
+ * @see [BranchCommitDescriptor](#branchCommitDescriptor)
+ * @see [FileDescriptor](#fileDescriptor)
  * @description
  * An asset represents a resource exported from a design file.
  * Assets are automatically updated and available for new commits.

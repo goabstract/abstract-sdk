@@ -14,6 +14,9 @@ import { wrap } from "../util/helpers";
  *
  * @export
  * @class Notifications
+ * @see [Notification](#notification)
+ * @see [NotificationDescriptor](#notificationDescriptor)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
  * @description
  * A notification is a user-facing message triggered by an underlying activity.
  * Notifications are both viewable and dismissable in the desktop application.

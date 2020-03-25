@@ -18,6 +18,9 @@ const headers = {
  *
  * @export
  * @class Projects
+ * @see [Project](#project)
+ * @see [ProjectDescriptor](#projectDescriptor)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
  * @extends {Endpoint}
  * @description
  * A project is a container for files, it belongs to an organization.

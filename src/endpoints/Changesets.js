@@ -15,6 +15,9 @@ const headers = {
 
 /**
  * @class Changesets
+ * @see [BranchCommitDescriptor](#branchCommitDescriptor)
+ * @see [BranchDescriptor](#branchDescriptor)
+ * @see [ProjectDescriptor](#projectDescriptor)
  * @description
  * A changeset is a group of changes that together form a single,
  * indivisible modification to a project.

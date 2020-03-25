@@ -19,6 +19,10 @@ const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
  *
  * @export
  * @class Files
+ * @see [File](#file)
+ * @see [FileDescriptor](#fileDescriptor)
+ * @see [BranchCommitDescriptor](#branchCommitDescriptor)
+ * @see [RawProgressOptions](#rawProgressOptions)
  * @extends {Endpoint}
  * @description
  * A file represents a standard file – in Abstract a file is always

@@ -16,6 +16,8 @@ import Endpoint from "../endpoints/Endpoint";
  *
  * @export
  * @class Previews
+ * @see [Preview](#preview)
+ * @see [LayerVersionDescriptor](#layerVersionDescriptor)
  * @extends {Endpoint}
  * @description
  * A preview is an image file that represents the rendered version of a layer.

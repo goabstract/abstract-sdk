@@ -21,6 +21,11 @@ type LayersListOptions = {
  * @export
  * @class Layers
  * @extends {Endpoint}
+ * @see [Layer](#layer)
+ * @see [LayerVersionDescriptor](#layerVersionDescriptor)
+ * @see [LayersListOptions](#layersListOptions)
+ * @see [FileDescriptor](#fileDescriptor)
+ * @see [PageDescriptor](#pageDescriptor)
  * @description
  * A layer is a container for designs.
  * In Sketch a layer usually represents an artboard however
@@ -81,7 +86,7 @@ export default class Layers extends Endpoint {
 
   /**
    *
-   * @param {FileDescriptor | PageDescriptor}descriptor
+   * @param {FileDescriptor | PageDescriptor} descriptor
    * @param {LayersListOptions} [options={}]
    * @memberof Layers
    * @returns {Promise<Layer[]>}

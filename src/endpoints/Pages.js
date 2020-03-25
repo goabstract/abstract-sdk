@@ -14,6 +14,9 @@ import { wrap } from "../util/helpers";
  *
  * @export
  * @class Pages
+ * @see [Page](#page)
+ * @see [PageDescriptor](#pageDescriptor)
+ * @see [FileDescriptor](#fileDescriptor)
  * @description
  * A page is a container for layers, often a file will have several pages to organize design work.
  * @extends {Endpoint}

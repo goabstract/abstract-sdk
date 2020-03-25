@@ -14,6 +14,11 @@ import { wrap } from "../util/helpers";
  *
  * Memberships Desc
  * @class Memberships
+ * @see [Membership](#membership)
+ * @see [OrganizationMembershipDescriptor](#organizationMembershipDescriptor)
+ * @see [ProjectMembershipDescriptor](#projectMembershipDescriptor)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
+ * @see [ProjectDescriptor](#projectDescriptor)
  * @description
  * A membership contains information about a user's role within an organization
  * or a project. A membership is created when a user joins an organization or is

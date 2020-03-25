@@ -13,6 +13,10 @@ import { wrap } from "../util/helpers";
  *
  *
  * @export
+ * @see [User](#user)
+ * @see [UserDescriptor](#userDescriptor)
+ * @see [OrganizationDescriptor](#organizationDescriptor)
+ * @see [ProjectDescriptor](#projectDescriptor)
  * @class Users
  * @extends {Endpoint}
  * @description
@@ -77,10 +81,7 @@ export default class Users extends Endpoint {
         }
 
         const response = await this.apiRequest(url);
-        return wrap(
-          response.data.map(membership => membership.user),
-          response
-        );
+        return wrap(response.data.map(membership => membership.user), response);
       },
       requestOptions
     });

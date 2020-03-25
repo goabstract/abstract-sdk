@@ -4,7 +4,6 @@ import Endpoint from "../endpoints/Endpoint";
 
 /**
  *
- * Descriptors Desc
  * @export
  * @class Descriptors
  * @extends {Endpoint}

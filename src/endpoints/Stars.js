@@ -13,6 +13,9 @@ import { wrap } from "../util/helpers";
  *
  * @export
  * @class Stars
+ * @see [Star](#star)
+ * @see [ProjectDescriptor](#projectDescriptor)
+ * @see [SectionDescriptor](#sectionDescriptor)
  * @extends {Endpoint}
  * @description
  * A star represents an underlying project or section of projects,
