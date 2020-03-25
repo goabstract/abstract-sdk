@@ -1,5 +1,6 @@
 // @flow
 import type {
+  ProjectDescriptor,
   BranchDescriptor,
   Changeset,
   BranchCommitDescriptor,
@@ -103,6 +104,20 @@ export default class Changesets extends Endpoint {
         return wrap(response.changeset, response);
       },
 
+      requestOptions
+    });
+  }
+
+  project(descriptor: ProjectDescriptor, requestOptions: RequestOptions = {}) {
+    return this.configureRequest<Promise<Changeset>>({
+      cli: async () => {
+        const response = await this.cliRequest([
+          "projects",
+          "changeset",
+          descriptor.projectId
+        ]);
+        return wrap(response.changeset, response);
+      },
       requestOptions
     });
   }
