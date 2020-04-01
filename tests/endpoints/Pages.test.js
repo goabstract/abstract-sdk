@@ -54,7 +54,7 @@ describe("pages", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["files", "project-id", "sha"], {
+      mockCLI(["files", "list", "--project-id=project-id", "--sha=sha"], {
         pages: [
           {
             id: "page-id"
@@ -76,7 +76,7 @@ describe("pages", () => {
     });
 
     test("cli - not found", async () => {
-      mockCLI(["files", "project-id", "sha"], {
+      mockCLI(["files", "list", "--project-id=project-id", "--sha=sha"], {
         pages: [
           {
             id: "not-found"
@@ -123,7 +123,7 @@ describe("pages", () => {
     });
 
     test("cli", async () => {
-      mockCLI(["files", "project-id", "sha"], {
+      mockCLI(["files", "list", "--project-id=project-id", "--sha=sha"], {
         pages: [
           {
             id: "page-id"

@@ -59,8 +59,9 @@ export default class Pages extends Endpoint {
       cli: async () => {
         const response = await this.cliRequest([
           "files",
-          latestDescriptor.projectId,
-          latestDescriptor.sha
+          "list",
+          `--project-id=${latestDescriptor.projectId}`,
+          `--sha=${latestDescriptor.sha}`
         ]);
 
         return wrap(response.pages, response);
