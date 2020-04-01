@@ -2,7 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<<<<<<< HEAD
 ## [8.0.0-beta.19](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.18...v8.0.0-beta.19) (2020-03-19)
 
 
@@ -27,14 +26,10 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * Type ErrorData in abstract-sdk.d.ts ([#227](https://github.com/goabstract/abstract-sdk/issues/227)) ([4b45070](https://github.com/goabstract/abstract-sdk/commit/4b45070))
-=======
-## [8.0.0-beta.14](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.7...v8.0.0-beta.14) (2020-03-06)
->>>>>>> chore(release): 8.0.0-beta.14
 
 
 ### Features
 
-<<<<<<< HEAD
 * branches merge state ([#232](https://github.com/goabstract/abstract-sdk/issues/232)) ([024c5a2](https://github.com/goabstract/abstract-sdk/commit/024c5a2))
 
 
@@ -49,19 +44,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 
 ## [8.0.0-beta.15](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.5...v8.0.0-beta.15) (2020-03-10)
-=======
-* add ability to manage project and section stars ([bc8a31f](https://github.com/goabstract/abstract-sdk/commit/bc8a31fb22fd1f52808ff648df98e72e6968d0ab))
-* add layer dependency filtering options ([#207](https://github.com/goabstract/abstract-sdk/issues/207)) ([88705e8](https://github.com/goabstract/abstract-sdk/commit/88705e88390fcbcbbd57c014ad905321e86b0516))
-* add layer filtering options to cli transport ([#209](https://github.com/goabstract/abstract-sdk/issues/209)) ([42006ab](https://github.com/goabstract/abstract-sdk/commit/42006abca14bc1c6288ea6558ff0fb9aeea79ec0))
-* add review requests to API transport ([09b64c8](https://github.com/goabstract/abstract-sdk/commit/09b64c846af6723b03c4eea062eb0595a222d7cc))
-* support full project CRUD ([#201](https://github.com/goabstract/abstract-sdk/issues/201)) ([a000ca6](https://github.com/goabstract/abstract-sdk/commit/a000ca6b8049ea7f14f1a393e3051869b88c0202))
-* update collections list parameters ([#214](https://github.com/goabstract/abstract-sdk/issues/214)) ([dcb290a](https://github.com/goabstract/abstract-sdk/commit/dcb290a258008d6c56b0ec09ff2b07d029c182e0))
->>>>>>> chore(release): 8.0.0-beta.14
 
 
 ### Bug Fixes
 
-<<<<<<< HEAD
 * Allow abstract.com domain for share links and expose inferShareId ([#217](https://github.com/goabstract/abstract-sdk/issues/217)) ([7789a92](https://github.com/goabstract/abstract-sdk/commit/7789a92))
 * data endpoint needs to pass branch id to cli ([#208](https://github.com/goabstract/abstract-sdk/issues/208)) ([328e5ef](https://github.com/goabstract/abstract-sdk/commit/328e5ef))
 * embed generator ([#213](https://github.com/goabstract/abstract-sdk/issues/213)) ([42f466d](https://github.com/goabstract/abstract-sdk/commit/42f466d))
@@ -85,12 +71,6 @@ All notable changes to this project will be documented in this file. See [standa
 * api file export (#199)
 
 
-=======
-* Allow abstract.com domain for share links and expose inferShareId ([#217](https://github.com/goabstract/abstract-sdk/issues/217)) ([7789a92](https://github.com/goabstract/abstract-sdk/commit/7789a927636c2307b6c3cd6734ff0464165061e1))
-* data endpoint needs to pass branch id to cli ([#208](https://github.com/goabstract/abstract-sdk/issues/208)) ([328e5ef](https://github.com/goabstract/abstract-sdk/commit/328e5ef24f2bd1ebba3d0637ad8d6c103d1d1a3c))
-* embed generator ([#213](https://github.com/goabstract/abstract-sdk/issues/213)) ([42f466d](https://github.com/goabstract/abstract-sdk/commit/42f466d43ea631c0aa0a993ea659506e4b009085))
-* support branch pagination ([#221](https://github.com/goabstract/abstract-sdk/issues/221)) ([34e6a42](https://github.com/goabstract/abstract-sdk/commit/34e6a42c51efe494f8c20f2988356e38a38cb2f6))
->>>>>>> chore(release): 8.0.0-beta.14
 
 ## [8.0.0-beta.13](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.7...v8.0.0-beta.13) (2020-03-02)
 
