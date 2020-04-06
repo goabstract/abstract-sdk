@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.1-ie11-support.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0...v8.0.1-ie11-support.0) (2020-04-06)
+
+
+
 ## [8.0.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-ie11-support.1...v8.0.0) (2020-04-06)
 
 
