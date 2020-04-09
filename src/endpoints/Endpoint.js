@@ -60,8 +60,8 @@ export default class Endpoint {
           const operation = request.call(this);
           response = await operation;
           const end = performance.now();
-          if (this.options.analyticsCallback) {
-            this.options.analyticsCallback({
+          if (this.client.analyticsCallback) {
+            this.client.analyticsCallback({
               duration: end - start,
               endpoint: this.name,
               request: requestName,

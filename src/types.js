@@ -150,9 +150,11 @@ export type EndpointMetric = {
   transportMode: "api" | "cli"
 };
 
+export type AnalyticsCallback = EndpointMetric => mixed;
+
 export type CommandOptions = {
   accessToken: AccessTokenOption,
-  analyticsCallback: EndpointMetric => mixed,
+  analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
