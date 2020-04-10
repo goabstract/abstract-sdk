@@ -51,7 +51,7 @@ export default class Client {
   users: Users;
   webhooks: Webhooks;
 
-  analyticsCallback: ?AnalyticsCallback;
+  _analyticsCallback: ?AnalyticsCallback;
 
   constructor(options: $Shape<CommandOptions> = {}) {
     options = {
@@ -65,7 +65,7 @@ export default class Client {
       ...options
     };
 
-    this.analyticsCallback = options.analyticsCallback;
+    this._analyticsCallback = options.analyticsCallback;
     this.activities = new Activities(this, options);
     this.assets = new Assets(this, options);
     this.branches = new Branches(this, options);
