@@ -23,7 +23,7 @@ import Shares from "./endpoints/Shares";
 import Stars from "./endpoints/Stars";
 import Users from "./endpoints/Users";
 import Webhooks from "./endpoints/Webhooks";
-import type { CommandOptions } from "./types";
+import type { CommandOptions, AnalyticsCallback } from "./types";
 
 export default class Client {
   activities: Activities;
@@ -51,6 +51,8 @@ export default class Client {
   users: Users;
   webhooks: Webhooks;
 
+  _analyticsCallback: ?AnalyticsCallback;
+
   constructor(options: $Shape<CommandOptions> = {}) {
     options = {
       accessToken: process.env.ABSTRACT_TOKEN,
@@ -63,6 +65,7 @@ export default class Client {
       ...options
     };
 
+    this._analyticsCallback = options.analyticsCallback;
     this.activities = new Activities(this, options);
     this.assets = new Assets(this, options);
     this.branches = new Branches(this, options);
