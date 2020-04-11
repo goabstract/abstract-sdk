@@ -25,9 +25,7 @@ const headers = {
  * @see [OrganizationDescriptor](#organizationDescriptor)
  * @description
  * A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
- * <div class="banner banner-yellow">
- *  Note: The format of a share url is <code>https://share.goabstract.com/<UUID></code>.
- * </div>
+ * Note: The format of a share url is {@link https://share.goabstract.com/|UUID}
  */
 export default class Shares extends Endpoint {
   /**

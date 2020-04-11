@@ -38,6 +38,7 @@
     "prepublish": "yarn build",
     "release": "standard-version",
     "build-doc": "documentation build src/index.js --config documentation.yml -f html -o docjs --theme node_modules/docjs-theme",
+    "build-json-doc": "documentation build src/index.js --config documentation.yml --format json --output website-json/src/doc.json --github=true",
     "serve-doc": "documentation serve --watch src/index.js --config documentation.yml --theme node_modules/docjs-theme"
   },
   "devDependencies": {

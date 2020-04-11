@@ -16,8 +16,7 @@ import { wrap } from "../util/helpers";
 /**
  * @class Activities
  * @extends Endpoint
- * @description
- * An activity represents a designated type of event within a project.
+ * @description An activity represents a designated type of event within a project.
  * These events can be specific to the project itself,
  * or they can be specific to a collection, a branch, a commit,
  * or a review within the project.

@@ -15,7 +15,11 @@ import { wrap } from "../util/helpers";
 
 /**
  *
- *
+ * `Webhooks` make it easy to efficiently subscribe to events across the Abstract platform.
+ * Webhooks live at the organization level, and organization administrators can
+ * create new webhooks within an organization's settings in the web application.
+ * Note: Additional information on webhooks can be found {@link https://www.abstract.com/webhook/|here}
+ * 
  * @export
  * @class Webhooks
  * @see [Webhook](#webhook)
@@ -25,13 +29,6 @@ import { wrap } from "../util/helpers";
  * @see [WebhookType](#webhookType)
  * @see [OrganizationDescriptor](#organizationDescriptor)
  * @extends {Endpoint}
- * @description
- * Webhooks make it easy to efficiently subscribe to events across the Abstract platform.
- * Webhooks live at the organization level, and organization administrators can
- * create new webhooks within an organization's settings in the web application.
- * <div class="banner banner-warning">
- *  Note: Additional information on webhooks can be found <a href="#webhook">here</a>.
- * </div>
  */
 export default class Users extends Endpoint {
   /**

@@ -27,7 +27,7 @@ import { wrap } from "../util/helpers";
  * A commit represents a point in time – contributors can create commits
  * in the desktop app to save their work at different stages.
  * When loading data from the Abstract SDK you will almost always need
- * to provide a commit <strong>SHA</strong> to identify
+ * to provide a commit `SHA` to identify
  * which version of the object you would like.
  */
 export default class Commits extends Endpoint {

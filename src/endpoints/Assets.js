@@ -16,17 +16,15 @@ import Endpoint from "../endpoints/Endpoint";
 /**
  * @class Assets
  * @extends Endpoint
- * @see [AssetDescriptor](#sssetDescriptor)
+ * @see [AssetDescriptor](#assetDescriptor)
  * @see [Asset](#asset)
  * @see [BranchCommitDescriptor](#branchCommitDescriptor)
  * @see [FileDescriptor](#fileDescriptor)
  * @description
  * An asset represents a resource exported from a design file.
  * Assets are automatically updated and available for new commits.
- * <div class="banner banner-warning">
  * Note: Assets are only supported when using a Business or Enterprise plan.
- * More information on Abstract plan types can be found <a href="https://www.abstract.com/pricing/">here</a>.
- * </div>
+ * More information on Abstract plan types can be found {@link https://www.abstract.com/pricing/|here}
  * @example
  * // Save all assets for a given file
  *

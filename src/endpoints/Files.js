@@ -26,7 +26,7 @@ const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
  * @extends {Endpoint}
  * @description
  * A file represents a standard file – in Abstract a file is always
- * loaded from a specific commit <strong>SHA</strong>, or point in time.
+ * loaded from a specific commit `SHA`, or point in time.
  */
 export default class Files extends Endpoint {
   /**

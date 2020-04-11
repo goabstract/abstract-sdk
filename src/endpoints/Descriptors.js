@@ -2,12 +2,6 @@
 import type { ObjectDescriptor, RequestOptions } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
-/**
- *
- * @export
- * @class Descriptors
- * @extends {Endpoint}
- */
 export default class Descriptors extends Endpoint {
   async getLatestDescriptor<T: ObjectDescriptor>(
     descriptor: T,
