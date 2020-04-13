@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  background-color: black;
+  color: #ffffff;
+  overflow: auto;
+}
+
+aside h1 {
+  font-size: 1.75rem;
+}
+
+aside a {
+  font-size: 1rem;
+  color: inherit;
+  text-decoration: none;
+  line-height: 1.75;
+}
+
+aside .overflow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 8px;
+}
+
+aside .overflow > span {
+  font-size: 1.5rem;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+
+main {
+  box-sizing: border-box;
+  margin-left: 20%;
+}

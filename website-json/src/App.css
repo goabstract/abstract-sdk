@@ -8,7 +8,7 @@
 }
 
 .Document {
-  border: 3px solid black;
-  margin: 10px 8px;
+  background-color: rgba(0,0,0,.05);
+  margin: 12px 8px 32px 6px;
   padding: 12px 10px;
 }

@@ -46,15 +46,17 @@ function App() {
   return (
     <div className="layout">
       <aside>
-        <h1>Abstract SDK</h1>
-          {
-            JsonData.map(type => {
-              if (type.kind && type.kind === 'note') {
-                return (<span href={`#${makeHref(type.name)}`} style={{fontSize: '24px', display: 'block'}} key={`note-${makeHref(type.name)}`}>{type.name}</span>);
-              }
-              return (<a href={`#${makeHref(type.name)}`} style={{fontSize: '12px', display: 'block'}}>{type.name}</a>)
-            })
-          }
+        <div class="overflow">
+          <h1>Abstract SDK</h1>
+            {
+              JsonData.map(type => {
+                if (type.kind && type.kind === 'note') {
+                return (<span>{type.name}</span>)
+                }
+              return (<a href={`#${makeHref(type.name)}`}>{type.name}</a>)
+              })
+            }
+        </div>
       </aside>
 
       <main>
@@ -82,7 +84,7 @@ function App() {
                   <p className="Document__Description">
                     {
                       documentedCode.description.children !== undefined && documentedCode.description.children.length > 0 && documentedCode.description.children.map(desc =>
-                        desc.children.map(child => chooseChildType(child))
+                        desc.type === 'html' ? <span>{desc.value}</span> : desc.children.map(child => chooseChildType(child))
                       )
                     }
                   </p>
@@ -120,8 +122,8 @@ function App() {
                     }
                   </div>
                   <div>
-                  {/* {
-                    documentedCode.sees !== undefined && (
+                  {
+                    documentedCode.sees.length > 0 && (
                       <div>
                         <h5>See</h5>
                         <ul>
@@ -135,7 +137,7 @@ function App() {
                         </ul>
                       </div>
                     )
-                  } */}
+                  }
                   </div>
                   <br /><br />
                 </section>
@@ -145,20 +147,22 @@ function App() {
                     {documentedCode.name}
                     {/* <a href={makeHref(documentedCode.name)}></a> */}
                   </h3>
-                  {
+                  {/* {
                     console.log(documentedCode)
-                  }
+                  } */}
                   {
-                    documentedCode.description.length > 0 ? (
-                      documentedCode.description.children != undefined &&
-                      documentedCode.description.children.length > 0 &&
+                    documentedCode.description && (
                       documentedCode.description.children.map(desc =>
-                        <p className="Document__Description">{desc.children.map(child => chooseChildType(child))}</p>
+                        desc.type === 'html' ? <p dangerouslySetInnerHTML={{ __html: desc.value}} /> : (
+                          <p className="Document__Description">{desc.children.map(child => chooseChildType(child))}</p>
+                        )
                       )
-                    ) : ''
+                    )
                   }
                   <div class="Document__Members">
-                    <h5>Params:</h5>
+                    {
+                      documentedCode.properties.length > 0 && <h5>Params:</h5>
+                    }
                     <ul>
                       {
                         documentedCode.properties.length > 0 && documentedCode.properties.map((prop, i) => (
