@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.23](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.22...v8.0.0-beta.23) (2020-04-13)
+
+
+### Features
+
+* add Abstract.MultiError ([d70227d](https://github.com/goabstract/abstract-sdk/commit/d70227d))
+
+
+
 ## [8.0.0-beta.19](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.18...v8.0.0-beta.19) (2020-03-19)
 
 
