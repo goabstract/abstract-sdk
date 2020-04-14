@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.24](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.21...v8.0.0-beta.24) (2020-04-14)
+
+
+### Features
+
+* add script for checking types in abstract.d.ts ([75658a2](https://github.com/goabstract/abstract-sdk/commit/75658a2))
+
+
+
 ## [8.0.0-beta.19](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.18...v8.0.0-beta.19) (2020-03-19)
 
 
