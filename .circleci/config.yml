@@ -53,6 +53,19 @@ jobs:
           keys:
             - v2-yarn-dependencies-{{ checksum "yarn.lock" }}
             - v2-yarn-dependencies- # fallback to latest cache if no exact match is found
+      - run: DEBUG=abstract:* yarn check-ts-types
+
+  lint:
+    docker:
+      - image: circleci/node:12-browsers
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restore_cache:
+          keys:
+            - v2-yarn-dependencies-{{ checksum "yarn.lock" }}
+            - v2-yarn-dependencies- # fallback to latest cache if no exact match is found
       - run: DEBUG=abstract:* yarn lint
 
   test:
