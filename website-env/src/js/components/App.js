@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import JsonData from './doc.json';
+import JsonData from '../../doc.json';
 import Highlight from 'react-highlight.js';
 
 const makeHref = sentence => sentence !==  undefined && sentence.replace('/\W/g', '-');
