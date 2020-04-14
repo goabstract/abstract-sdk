@@ -30,6 +30,7 @@
   },
   "repository": "github:goabstract/abstract-sdk",
   "scripts": {
+    "check-ts-types": "tsc abstract-sdk.d.ts --lib es2017,dom,esnext.asynciterable",
     "prepare": "./scripts/install-types.sh",
     "lint": "eslint . --ignore-path .gitignore",
     "test": "jest --coverage --runInBand",
