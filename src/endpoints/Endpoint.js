@@ -3,6 +3,8 @@
 import { Readable } from "stream";
 import "cross-fetch/polyfill";
 import { spawn } from "child_process";
+// $FlowFixMe
+import { performance } from "perf_hooks";
 import uuid from "uuid/v4";
 import { version } from "../../package.json";
 import Client from "../Client";
