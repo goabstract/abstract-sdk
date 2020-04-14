@@ -2,39 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [8.0.1-ie11-support.1](https://github.com/goabstract/abstract-sdk/compare/v8.0.1-ie11-support.0...v8.0.1-ie11-support.1) (2020-04-06)
-
-
-
-### [8.0.1-ie11-support.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0...v8.0.1-ie11-support.0) (2020-04-06)
-
-
-
-## [8.0.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-ie11-support.1...v8.0.0) (2020-04-06)
-
-
-
-## [8.0.0-ie11-support.1](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-ie11-support.0...v8.0.0-ie11-support.1) (2020-04-06)
-
-
-### Bug Fixes
-
-* update yarn lock to pass cicle ci test ([157ac2c](https://github.com/goabstract/abstract-sdk/commit/157ac2c))
-
-
-
-## [8.0.0-ie11-support.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.20...v8.0.0-ie11-support.0) (2020-04-06)
-
-
-### Bug Fixes
-
-* Prefer "files list" over deprecated "files". ([#244](https://github.com/goabstract/abstract-sdk/issues/244)) ([e0693cf](https://github.com/goabstract/abstract-sdk/commit/e0693cf))
+## [8.0.0-beta.23](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.22...v8.0.0-beta.23) (2020-04-13)
 
 
 ### Features
 
-* add regenerator runtime polyfill for ie11 ([aacc231](https://github.com/goabstract/abstract-sdk/commit/aacc231))
-
+* add Abstract.MultiError ([d70227d](https://github.com/goabstract/abstract-sdk/commit/d70227d))
 
 
 ## [8.0.0-beta.19](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.18...v8.0.0-beta.19) (2020-03-19)
