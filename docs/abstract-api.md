@@ -2044,8 +2044,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
   projectId: string,
   branchId: string | "master",
   fileId: string,
-  layerId: string,
-  sha?: string | "latest"
+  layerId: string
 }
 ```
 
