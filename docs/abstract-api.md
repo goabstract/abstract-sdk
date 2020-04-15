@@ -779,7 +779,7 @@ abstract.commits.info({
 | `libraryName` | `string`          | The name of the library file this layer is from |
 | `parentId`    | `string`          | UUID of the parent layer, if any                |
 | `properties`  | `LayerProperties` | Layer properties (to be documented)             |
-| `symbolId`    | `string`          | UUID of the parent symbol, if any               |
+| `symbolId`    | `string`          | UUID of symbol master, if any                   |
 | `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
 
 
@@ -2044,8 +2044,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
   projectId: string,
   branchId: string | "master",
   fileId: string,
-  layerId: string,
-  sha?: string | "latest"
+  layerId: string
 }
 ```
 

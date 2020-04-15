@@ -1833,10 +1833,12 @@ type EndpointMetric = {
   transportMode: "api" | "cli"
 };
 
+type AnalyticsCallback = (metric: EndpointMetric) => any
+
 type CommandOptions = {
   accessToken: AccessTokenOption,
   apiUrl: string | Promise<string>,
-  analyticsCallback: (analytics: EndpointMetric) => any,
+  analyticsCallback: AnalyticsCallback,
   assetUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   transportMode: ("api" | "cli")[],
