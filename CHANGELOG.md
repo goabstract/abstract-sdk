@@ -2,10 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+
 ## [8.0.0-beta.25](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.24...v8.0.0-beta.25) (2020-04-14)
 
 
 ### Features
+
 
 * add check-ts-types to circleCI ([bd3c9b4](https://github.com/goabstract/abstract-sdk/commit/bd3c9b4))
 
@@ -17,6 +19,9 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * add script for checking types in abstract.d.ts ([75658a2](https://github.com/goabstract/abstract-sdk/commit/75658a2))
+
+* add Abstract.MultiError ([d70227d](https://github.com/goabstract/abstract-sdk/commit/d70227d))
+
 
 
 
