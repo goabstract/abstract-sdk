@@ -159,7 +159,7 @@ describe("branches", () => {
 
     test("cli - filter", async () => {
       mockCLI(
-        ["branches", "list", "--project-id=project-id", "--filter", "mine"],
+        ["branches", "list", "--project-id=project-id", "--filter", "workedOn"],
         {
           branches: [
             {
@@ -174,7 +174,7 @@ describe("branches", () => {
           projectId: "project-id"
         },
         {
-          filter: "mine"
+          filter: "active"
         }
       );
 
