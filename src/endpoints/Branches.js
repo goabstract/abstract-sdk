@@ -69,11 +69,16 @@ export default class Branches extends Endpoint {
         if (!descriptor) {
           throw new BranchSearchCLIError();
         }
+
+        let normalizedFilter = filter;
+        if (filter === "active") {
+          normalizedFilter = "workedOn";
+        }
         const response = await this.cliRequest([
           "branches",
           "list",
           `--project-id=${descriptor.projectId}`,
-          ...(filter ? ["--filter", filter] : [])
+          ...(normalizedFilter ? ["--filter", normalizedFilter] : [])
         ]);
 
         return wrap(response.branches, response);
