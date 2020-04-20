@@ -56,12 +56,19 @@ export default class Endpoint {
           if (!request) {
             throw new EndpointUndefinedError(mode);
           }
-          const start = performance.now();
+
+          let start: number;
+          const { _analyticsCallback } = this.client;
+          if (performance && _analyticsCallback) {
+            start = performance.now();
+          }
+
           const operation = request.call(this);
           response = await operation;
-          const end = performance.now();
-          if (this.client._analyticsCallback) {
-            this.client._analyticsCallback({
+
+          if (start && performance && _analyticsCallback) {
+            const end = performance.now();
+            _analyticsCallback({
               duration: end - start,
               endpoint: this.name,
               request: requestName,
