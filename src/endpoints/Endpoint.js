@@ -1,5 +1,5 @@
 /* @flow */
-/* global fetch, performance */
+/* global fetch,window */
 import { Readable } from "stream";
 import "cross-fetch/polyfill";
 import { spawn } from "child_process";
@@ -26,6 +26,11 @@ const logAPIResponse = log.extend("AbstractAPI:response");
 const logCLIRequest = log.extend("AbstractCLI:request");
 const logCLIResponse = log.extend("AbstractCLI:response");
 const minorVersion = version.split(".", 2).join(".");
+
+// only attempt to use `performance` in a browser environment
+/* istanbul ignore next */
+const performance =
+  typeof window === "undefined" ? undefined : window.performance;
 
 export default class Endpoint {
   name: string;
