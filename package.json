@@ -1,6 +1,6 @@
 {
   "name": "abstract-sdk",
-  "version": "8.0.0-beta.25",
+  "version": "8.0.0-beta.26",
   "description": "Universal JavaScript bindings for the Abstract API and CLI",
   "keywords": [
     "abstract",
@@ -44,6 +44,7 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-regenerator": "^7.8.7",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@elasticprojects/eslint-config-abstract": "^4.1.0",
@@ -104,20 +105,20 @@
       [
         "@babel/preset-env",
         {
+          "debug": true,
           "corejs": 2,
           "useBuiltIns": "usage",
           "targets": {
-            "node": 10
-          },
-          "exclude": [
-            "transform-regenerator"
-          ]
+            "node": 10,
+            "ie": 11
+          }
         }
       ]
     ],
     "plugins": [
       "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-proposal-class-properties"
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-transform-regenerator"
     ]
   }
 }

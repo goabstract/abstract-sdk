@@ -2,8 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.25](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.22...v8.0.0-beta.25) (2020-04-15)
 
-## [8.0.0-beta.25](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.24...v8.0.0-beta.25) (2020-04-14)
+
+### Features
+
+* add Abstract.MultiError ([#250](https://github.com/goabstract/abstract-sdk/issues/250)) ([be99dae](https://github.com/goabstract/abstract-sdk/commit/be99dae))
+* add regenerator runtime polyfill for ie11 ([aacc231](https://github.com/goabstract/abstract-sdk/commit/aacc231))
+
+
+
+## [8.0.0-beta.24](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.22...v8.0.0-beta.24) (2020-04-15)
+
+
+### Features
+
+* add Abstract.MultiError ([#250](https://github.com/goabstract/abstract-sdk/issues/250)) ([be99dae](https://github.com/goabstract/abstract-sdk/commit/be99dae))
+* add regenerator runtime polyfill for ie11 ([aacc231](https://github.com/goabstract/abstract-sdk/commit/aacc231))
+
+
+
+## [8.0.0-beta.23](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.22...v8.0.0-beta.23) (2020-04-13)
 
 
 ### Features
