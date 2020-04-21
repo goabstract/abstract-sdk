@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 const config = require('./webpack.config.js');
 const options = {
-  contentBase: './dist',
+  contentBase: './dist/assets',
   hot: true,
   host: 'localhost',
   inline: true
@@ -14,5 +14,5 @@ const compiler = webpack(config);
 const server = new webpackDevServer(compiler, options);
 
 server.listen(5000, 'localhost', () => {
-  console.log('dev server listening on port 5000')
+  console.log('dev server listening on port 5000');
 });
