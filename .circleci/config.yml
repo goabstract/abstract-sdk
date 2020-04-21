@@ -53,7 +53,7 @@ jobs:
           keys:
             - v2-yarn-dependencies-{{ checksum "yarn.lock" }}
             - v2-yarn-dependencies- # fallback to latest cache if no exact match is found
-      - run: DEBUG=abstract:* yarn lint
+      - run: DEBUG=abstract:* yarn lint  && yarn check-ts-types
 
   test:
     docker:

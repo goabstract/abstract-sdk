@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.27](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.25...v8.0.0-beta.27) (2020-04-21)
+
+
+### Bug Fixes
+
+* 'active' filter with latest CLI only filters to specifically active branches ([#257](https://github.com/goabstract/abstract-sdk/issues/257)) ([52c194c](https://github.com/goabstract/abstract-sdk/commit/52c194c))
+* Add perfomance from  perf_hooks (Node v8.5.0+) ([#251](https://github.com/goabstract/abstract-sdk/issues/251)) ([6773642](https://github.com/goabstract/abstract-sdk/commit/6773642)), closes [#252](https://github.com/goabstract/abstract-sdk/issues/252)
+* edit config.yml so yarn check-ts-types would not override flow ([02ae3de](https://github.com/goabstract/abstract-sdk/commit/02ae3de))
+
+
+### Features
+
+* add Abstract.MultiError ([#250](https://github.com/goabstract/abstract-sdk/issues/250)) ([be99dae](https://github.com/goabstract/abstract-sdk/commit/be99dae))
+* Add func generators support ([#245](https://github.com/goabstract/abstract-sdk/issues/245)) ([b61cd55](https://github.com/goabstract/abstract-sdk/commit/b61cd55))
+
+
+
+## [8.0.0-beta.22](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.21...v8.0.0-beta.22) (2020-04-10)
+
+
+### Features
+
+* allow analytics callback to be set on Client ([#248](https://github.com/goabstract/abstract-sdk/issues/248)) ([28d3d9b](https://github.com/goabstract/abstract-sdk/commit/28d3d9b))
+
+
+
 ## [8.0.0-beta.25](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.22...v8.0.0-beta.25) (2020-04-15)
 
 
@@ -27,7 +53,20 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
+
+* add check-ts-types to circleCI ([bd3c9b4](https://github.com/goabstract/abstract-sdk/commit/bd3c9b4))
+
+
+
+## [8.0.0-beta.24](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.21...v8.0.0-beta.24) (2020-04-14)
+
+
+### Features
+
+* add script for checking types in abstract.d.ts ([75658a2](https://github.com/goabstract/abstract-sdk/commit/75658a2))
+
 * add Abstract.MultiError ([d70227d](https://github.com/goabstract/abstract-sdk/commit/d70227d))
+
 
 
 
