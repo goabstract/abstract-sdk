@@ -778,9 +778,258 @@ abstract.commits.info({
 | `libraryId`   | `string`          | UUID of the library file this layer is from     |
 | `libraryName` | `string`          | The name of the library file this layer is from |
 | `parentId`    | `string`          | UUID of the parent layer, if any                |
-| `properties`  | `LayerProperties` | Layer properties (to be documented)             |
+| `properties`  | `LayerDataProperties` | Layer properties             |
 | `symbolId`    | `string`          | UUID of symbol master, if any                   |
 | `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
+
+#### LayerDataProperties
+
+| Property                | Type                         | Description                                                               |
+|-------------------------|------------------------------|---------------------------------------------------------------------------|
+| `styleName`             | `string[]`                   | Array of UUID's for the layers children, if any                           |
+| `name`                  | `string`                     | UUID of the chid layer                                                    |
+| `isVisible`             | `boolean`                    | UUID of the library file this layer is from                               |
+| `isLocked`              | `boolean`                    | The name of the library file this layer is from                           |
+| `width`                 | `number`                     | The width of the layer in pixels                                          |
+| `height`                | `number`                     | The height of the layer in pixels                                         |
+| `x`                     | `number`                     | The horizontal position of the layer on the page, measured from the left  |
+| `y`                     | `number`                     | The vertical position of the layer on the page, measured from the top     |
+| `rotation`              | `number`                     | The rotation of the Layer in degrees                                      |
+| `opacity`               | `number`                     | Opacity from 0 to 100                                                     |
+| `hasClippingMask`       | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
+| `underClippingMask`     | `boolean`                    | Ensures whether a layer is under clipping mask or not                     |
+| `textStyleIndex`        | `LayerTextStyle[]`           | Styles of Text. Refer to [LayerTextStyle](#LayerTextStyle)                | 
+| `colorIndex`            | `LayerColor[]`               | Colors. Refer to [LayerColor](#LayerColor)                                |
+| `blendMode`             | `LayerBlendMode`             | Refer to [BlendMode](#BlendMode)                                          | 
+| `hasClickThrough`       | `boolean`                    |                                                                           |
+| `imageId`               | `string`                     | An id of an image                                                         |
+| `textContent`           | `string`                     | Inner text of a layer                                                     |
+| `backgroundColor`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#LayerColor)           |
+| `borderRadius`          | `LayerBorderRadius`          | The value of layer's border radius. Refer to [LayerBorderRadius](#LayerBorderRadius) |
+| `text`                  | `LayerTextStyle`             | The style of text in a layer. Refer to [LayerTextStyle](#LayerTextStyle)  |
+| `fills`                 | `LayerFill[]`                | An integral part of a shape’s style. Refer to [LayerFill](#LayerFill)     |
+| `borders`               | `LayerBorder[]`              | Styles for borders. Refer to [LayerBorder](#LayerBorder)                  |
+| `shadows`               | `LayerShadows`               | Shadow values. Refer to [LayerShadows](#LayerShadows)                     |
+| `resizingConstraint`    | `LayerResizingConstraint`    | Refer to [LayerResizingConstraint](#LayerResizingConstraint)              | 
+| `overrides`             | `LayerOverrideData`          | Refer to [LayerOverrideData](#LayerOverrideData)                          | 
+| `assets`                | `LayerDataAsset[]`           | A list of assets in a layer. Refer to [LayerDataAsset](#LayerDataAsset)   |
+
+
+
+
+
+
+#### LayerTextStyle
+
+| Property                 | Type                        | Description                                     |
+|--------------------------|-----------------------------|-------------------------------------------------|
+| `styleName`              | `string`                    | Style name for text                             |
+| `fixed`                  | `boolean`                   | Is the text fixed or not                        |
+| `fontName`               | `string`                    | Font Name that gets used                        |
+| `fontSize`               | `number`                    | Font Size                                       |
+| `lineHeight`             | `number`                    | Line Height of text                             |
+| `characterSpacing`       | `number`                    | Spacing between Characters                      |
+| `paragraphSpacing`       | `number`                    | Spacing between Paragraphs                      |
+| `horizontalAlignment`    | `LayerHorizontalAlignment`  | Horizontal Alignment of a text                  |
+| `verticalAlignment`      | `number`                    | Vertical Alignment of a text                    |
+| `color`                  | `LayerColor`                | Refer to [LayerColor](#LayerColor)              |
+| `listStyle`              | `LayerListStyle`            | One of `""`, `disc` or `numbered`               |
+| `textTransform`          | `LayerTextTransform`        | `0` for none, `1` is for uppercase and `2` is for lowercase |
+| `textDecoration`         | `LayerTextDecoration`       | Refer to [LayerTextDecoration](#LayerTextDecoration) |
+
+#### LayerTextDecoration
+
+| Property      | Type              | Description                                     |
+|---------------|-------------------|-------------------------------------------------|
+| `line`        | `string`          | `underline` or `strikethrough`                  |
+| `style`       | `string`          | `solid` or `double`                             |
+
+#### LayerColor
+
+| Property            | Type              | Description                                     |
+|---------------------|-------------------|-------------------------------------------------|
+| `hex8`              | `string`          | color in `HEX` (e.g. #000)                      |
+| `rgba`              | `string`          | `rgba` of color                                 |
+| `components`        | `object`          | UUID of the library file this layer is from     |
+| `components.red`    | `number`          | Set value of red (`0` to `255`)                 |
+| `components.green`  | `number`          | Set value of green (`0` to `255`)               |
+| `components.blue`   | `number`          | Set value of blue (`0` to `255`)                |
+| `components.alpha`  | `number`          | Set the alpha of color                          |
+
+#### LayerBlendMode
+
+Can be one of there numbers:
+
+| Name                        | Value        | Description                                     |
+|-----------------------------|--------------|-------------------------------------------------|
+| `LayerBlendModeNormal`      | `0`          | Normal Blend Mode                               |
+| `LayerBlendModeDarken`      | `1`          | Darken Blend Mode                               |
+| `LayerBlendModeMultiply`    | `2`          | Multiply Blend Mode                             |
+| `LayerBlendModeColorBurn`   | `3`          | Color burn Blend Mode                           |
+| `LayerBlendModeLighten`     | `4`          | Lighten Blend Mode                              |
+| `LayerBlendModeScreen`      | `5`          | Screen in Blend Mode                            |
+| `LayerBlendModeAdd`         | `6`          | Add Blend Mode                                  |
+| `LayerBlendModeOverlay`     | `7`          | Overlay                                         |
+| `LayerBlendModeSoftLight`   | `8`          | Soft light                                      |
+| `LayerBlendModeHardLight`   | `9`          | Hard light                                      |
+| `LayerBlendModeDifference`  | `10`         | Difference in Blend Mode                        |
+| `LayerBlendModeExclusion`   | `11`         | Exclusion in Blend Mode                         |
+| `LayerBlendModeHue`         | `12`         | Hue in Blend Mode                               |
+| `LayerBlendModeSaturation`  | `13`         | Saturation in Blend Mode                        |
+| `LayerBlendModeColor`       | `14`         | Color in Blend Mode                             |
+| `LayerBlendModeLuminosity`  | `15`         | Luminosity in Blend Mode                        |
+
+#### LayerBorderRadius
+
+| Property      | Type              |
+|---------------|-------------------|
+| `topLeft`     | `number`          |
+| `topRight`    | `number`          |
+| `bottomRight` | `number`          |
+| `bottomLeft`  | `number`          |
+
+#### LayerFill
+
+Can be either of there Objects:
+
+- [LayerFillSolid](#LayerFillSolid)
+- [LayerFillGradient](#LayerFillGradient)
+- [LayerFillPattern](#LayerFillPattern)
+- [LayerFillNoise](#LayerFillNoise)
+
+#### LayerFillSolid
+
+| Property      | Value             | Description                                     |
+|---------------|-------------------|-------------------------------------------------|
+| `fillType`    | `number`          | Value: `0`                                      |
+| `blendMode`   | `LayerBlendMode`  | Refer to [LayerBlendMode](#LayerBlendMode)      |
+| `opacity`     | `number`          | `0` to `100` opacity level of filling solid     |
+| `color`       | `LayerColor`      | Refer to [LayerColor](#LayerColor)              |
+
+#### LayerFillGradient
+
+| Property      | Value                     | Description                                     |
+|---------------|---------------------------|-------------------------------------------------|
+| `fillType`    | `LayerFillTypeGradient`   | Value: `1`                                      |
+| `blendMode`   | `LayerBlendMode`          | Refer to [LayerBlendMode](#LayerBlendMode)      |
+| `opacity`     | `number`                  | `0` to `100` opacity level of filling gradient  |
+| `gradient`    | `LayerGradient`           | refer to [LayerGradient](#LayerGradient)        |
+
+#### LayerFillPattern
+
+| Property              | Value             | Description                                             |
+|-----------------------|-------------------|---------------------------------------------------------|
+| `fillType`            | `number`          | value: `4`                                              |
+| `blendMode`           | `LayerBlendMode`  | Refer to [LayerBlendMode](#LayerBlendMode)              |
+| `opacity`             | `number`          | `0` to `100` opacity level of filling pattern           |
+| `patternFillType`     | `number`          | One of `0` (tile), `1` (fill), `2` (stretch), `3` (fit) |
+| `patternTileScale`    | `number`          | UUID of the chid layer                                  |
+| `patternWidth?`       | `number`          | Width of a pattern                                      |
+| `patternHeight?`      | `number`          | Height of a pattern                                     |
+| `imageUrl`            | `string`          | Image url of a fill                                     |
+| `imageId`             | `string`          | Image id of a fill                                      |
+
+#### LayerFillNoise
+
+| Property          | Value                  | Description                                     |
+|-------------------|------------------------|-------------------------------------------------|
+| `fillType`        | `LayerFillTypeNoise`   | Value: `5`                                      |
+| `blendMode`       | `LayerBlendMode`       | Refer to [LayerBlendMode](#LayerBlendMode)      |
+| `opacity`         | `number`               | `0` to `100` opacity level of filling noise     |
+| `noiseIndex`      | `number`               | One of `1` (black), `2` (white), `3` (color)    |
+| `noiseIntensity`  | `number`               | `0` to `100` intensity level of filling noise   |
+
+#### LayerBorder
+
+Can be either one of these objects:
+
+- [LayerBorderSolid](#LayerBorderSolid)
+- [LayerBorderGradient](#LayerBorderGradient)
+
+#### LayerBorderSolid
+
+| Property      | Value                      | Description                                          |
+|---------------|----------------------------|------------------------------------------------------|
+| `fillType`    | `LayerFillTypeGradient`    | Value: `1`                                           |
+| `position`    | `LayerBorderPosition`      | Refer to [LayerBorderPosition](#LayerBorderPosition) |
+| `thickness`   | `number`                   | How thick the border shall be                        |
+| `color`       | `LayerColor`               | Refer to [LayerColor](#LayerColor)                   |
+
+#### LayerBorderGradient
+
+| Property      | Value                      | Description                                          |
+|---------------|----------------------------|------------------------------------------------------|
+| `fillType`    | `LayerFillTypeGradient`    | Value: `1`                                           |
+| `position`    | `LayerBorderPosition`      | Refer to [LayerBorderPosition](#LayerBorderPosition) |
+| `thickness`   | `number`                   | How thick the border shall be                        |
+| `color`       | `LayerGradient`            | Refer to [LayerGradient](#LayerGradient)             |
+
+#### LayerBorderPosition
+
+Can be `0` for center, `1` for inside and `2` for outside.
+
+#### LayerGradient
+
+| Property             | Value                 | Description                                             |
+|----------------------|-----------------------|---------------------------------------------------------|
+| `gradientType`       | `number`              | Value: `0` for linear, `1`, for radial, `2` for angular |
+| `from`               | `[number, number]`    | Coords from where to start a gradient                   |
+| `to`                 | `[number, number]`    | Coords from where to end a gradient                     |
+| `stops`              | `object`              | Where gradient might want to be different               |
+| `stops.position`     | `number`              | At which position value the gradient want to be changed |
+| `stops.color`        | `LayerColor`          | What color will it get changed to                       |
+| `ellipseLength`      | `number`              | Length of a gradient ellipse                            |
+
+
+#### LayerShadows
+
+| Property      | Value                   | Description                                     |
+|---------------|-------------------------|-------------------------------------------------|
+| `outer?`      | `LayerShadow[]`         | Shadow outside of layer                         |
+| `inner?`      | `LayerShadow[]`         | Shadow inside of layer                          |
+
+#### LayerShadow
+
+| Property          | Value               | Description                                     |
+|-------------------|---------------------|-------------------------------------------------|
+| `color`           | `LayerColor`        | Coloring of a shadow                            |
+| `blurRadius`      | `number`            | Radius of blur                                  |
+| `spread`          | `number`            | Spread value of a shadow                        |
+| `x`               | `number`            | Horizontal coords of a shadow                   |
+| `y`               | `number`            | Vertical coords of a shadow                     |
+
+#### LayerResizingConstraint
+
+| Property      | Value                 |
+|---------------|-----------------------|
+| `top?`             | `boolean`        |
+| `right?`           | `boolean`        |
+| `bottom?`          | `boolean`        |
+| `left?`            | `boolean`        |
+| `fixedWidth?`      | `boolean`        |
+| `fixedHeight?`     | `boolean`        |
+
+#### LayerOverrideData
+| Property                | Value                                        | Description                                     |
+|-------------------------|----------------------------------------------|-------------------------------------------------|
+| `symbolId`              | `boolean`                                    | The id of a symbol that gets overwritten        |
+| `properties`            | `object`                                     | Properties that the layer will overwrite        |
+| `[layerId: string]?`    | `string/Object/LayerOverrideData`            | An id of a layer that will be overwritten       |
+
+#### LayerDataAsset
+
+| Property            | Value           | Description                                     |
+|---------------------|-----------------|-------------------------------------------------|
+| `fileFormat`        | `string`        | Format of a file                                |
+| `formatName`        | `string`        | Name of format of an asset                      |
+| `namingScheme`      | `string`        | Naming scheme for an asset                      |
+| `scale`             | `string`        | Scale of an asset                               |
+
+
+
+
+
+
 
 
 ### Retrieve layer data
