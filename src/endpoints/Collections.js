@@ -112,7 +112,7 @@ export default class Collections extends Endpoint {
           `projects/${projectId}/collections?${query}`,
           {
             headers: {
-              "Abstract-Api-Version": requestOptions._version || 25 // 25 includes `branches` as part of the response
+              "Abstract-Api-Version": requestOptions._version || 26 // 26 includes `branches` as part of the response
             }
           }
         );
