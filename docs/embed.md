@@ -78,6 +78,29 @@ Sometimes it's preferable to hide Abstract-specific UI components within an embe
 
 `https://app.goabstract.com/embed/c53e8159-2e24-4118-b02b-6fe4b3a3afee?chromeless`
 
+## Fix asset scalling in iframe
+
+In some cases scalling can work not as expected due different asset aspect ratios, which means that your embed might look a bit small.
+This can be solved by maintaining aspect ratios.
+
+#### Example of an aspect ratio fix
+
+```html
+<div style="position: relative; padding-top: 75%; min-width: 400px;">
+  <iframe
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+    src="https://app.goabstract.com/embed/c53e8159-2e24-4118-b02b-6fe4b3a3afee"
+    frameborder="0"
+    allowfullscreen
+  >
+  </iframe>
+</div>
+```
+Embed should have a wrapper, full width and height, so it would inherit the container size.
+In this case `padding-top` is responsible for an aspect ratio, and to get a value you have to divide height on width and multiply by 100 (`height / width * 100`), which means that `3 / 4 * 100 = 75` - is our `padding-top` value.
+
+More details can also be found [here](https://jameshfisher.com/2017/08/30/how-do-i-make-a-full-width-iframe/).
+
 ## Examples
 
 The following examples demonstrate both layer and collection embeds created from the above share link.
