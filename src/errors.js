@@ -10,8 +10,8 @@ export class BaseError extends Error {
     super(message);
     this.name = this.constructor.name;
 
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor);
+    if (Error.captureStackTrace) { 
+      Error.captureStackTrace(this, this.constructor); // This is a Node API that helps stack trace readability
     }
   }
 }
