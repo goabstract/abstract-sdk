@@ -782,26 +782,28 @@ abstract.commits.info({
 | `symbolId`    | `string`          | UUID of symbol master, if any                   |
 | `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
 
+
+
 #### LayerDataProperties
 
 | Property                | Type                         | Description                                                               |
 |-------------------------|------------------------------|---------------------------------------------------------------------------|
-| `styleName`             | `string[]`                   | Array of UUID's for the layers children, if any                           |
-| `name`                  | `string`                     | UUID of the chid layer                                                    |
-| `isVisible`             | `boolean`                    | UUID of the library file this layer is from                               |
-| `isLocked`              | `boolean`                    | The name of the library file this layer is from                           |
-| `width`                 | `number`                     | The width of the layer in pixels                                          |
-| `height`                | `number`                     | The height of the layer in pixels                                         |
+| `styleName`             | `string[]`                   | Custom name for a layer                                                   |
+| `name`                  | `string`                     | Name of the layer                                                         |
+| `isVisible`             | `boolean`                    | Is layer visible in the artboard                                          |
+| `isLocked`              | `boolean`                    | Determines whether layer is locked or not                                 |
+| `width`                 | `number`                     | The width of layer in pixels                                              |
+| `height`                | `number`                     | The height of layer in pixels                                             |
 | `x`                     | `number`                     | The horizontal position of the layer on the page, measured from the left  |
 | `y`                     | `number`                     | The vertical position of the layer on the page, measured from the top     |
-| `rotation`              | `number`                     | The rotation of the Layer in degrees                                      |
+| `rotation`              | `number`                     | The rotation of the layer in degrees                                      |
 | `opacity`               | `number`                     | Opacity from 0 to 100                                                     |
 | `hasClippingMask`       | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
 | `underClippingMask`     | `boolean`                    | Ensures whether a layer is under clipping mask or not                     |
 | `textStyleIndex`        | `LayerTextStyle[]`           | Styles of Text. Refer to [LayerTextStyle](#LayerTextStyle)                | 
 | `colorIndex`            | `LayerColor[]`               | Colors. Refer to [LayerColor](#LayerColor)                                |
 | `blendMode`             | `LayerBlendMode`             | Refer to [BlendMode](#BlendMode)                                          | 
-| `hasClickThrough`       | `boolean`                    |                                                                           |
+| `hasClickThrough`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
 | `imageId`               | `string`                     | An id of an image                                                         |
 | `textContent`           | `string`                     | Inner text of a layer                                                     |
 | `backgroundColor`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#LayerColor)           |
@@ -813,10 +815,6 @@ abstract.commits.info({
 | `resizingConstraint`    | `LayerResizingConstraint`    | Refer to [LayerResizingConstraint](#LayerResizingConstraint)              | 
 | `overrides`             | `LayerOverrideData`          | Refer to [LayerOverrideData](#LayerOverrideData)                          | 
 | `assets`                | `LayerDataAsset[]`           | A list of assets in a layer. Refer to [LayerDataAsset](#LayerDataAsset)   |
-
-
-
-
 
 
 #### LayerTextStyle
@@ -848,13 +846,13 @@ abstract.commits.info({
 
 | Property            | Type              | Description                                     |
 |---------------------|-------------------|-------------------------------------------------|
-| `hex8`              | `string`          | color in `HEX` (e.g. #000)                      |
-| `rgba`              | `string`          | `rgba` of color                                 |
-| `components`        | `object`          | UUID of the library file this layer is from     |
-| `components.red`    | `number`          | Set value of red (`0` to `255`)                 |
-| `components.green`  | `number`          | Set value of green (`0` to `255`)               |
-| `components.blue`   | `number`          | Set value of blue (`0` to `255`)                |
-| `components.alpha`  | `number`          | Set the alpha of color                          |
+| `hex8`              | `string`          | Color in `HEX` (e.g. #000)                      |
+| `rgba`              | `string`          | `rgba` of color (e.g. rgba(0, 0, 0, 0)          |
+| `components`        | `object`          | A list rgba color values                        |
+| `components.red`    | `number`          | Value of red (`0` to `1`)                       |
+| `components.green`  | `number`          | Value of green (`0` to `1`)                     |
+| `components.blue`   | `number`          | Value of blue (`0` to `1`)                      |
+| `components.alpha`  | `number`          | Alpha of color (`0` to `1`)                     |
 
 #### LayerBlendMode
 
@@ -890,7 +888,7 @@ Can be one of there numbers:
 
 #### LayerFill
 
-Can be either of there Objects:
+Can be either of these Objects:
 
 - [LayerFillSolid](#LayerFillSolid)
 - [LayerFillGradient](#LayerFillGradient)
@@ -903,17 +901,17 @@ Can be either of there Objects:
 |---------------|-------------------|-------------------------------------------------|
 | `fillType`    | `number`          | Value: `0`                                      |
 | `blendMode`   | `LayerBlendMode`  | Refer to [LayerBlendMode](#LayerBlendMode)      |
-| `opacity`     | `number`          | `0` to `100` opacity level of filling solid     |
+| `opacity`     | `number`          | `0` to `100` opacity level                      |
 | `color`       | `LayerColor`      | Refer to [LayerColor](#LayerColor)              |
 
 #### LayerFillGradient
 
 | Property      | Value                     | Description                                     |
 |---------------|---------------------------|-------------------------------------------------|
-| `fillType`    | `LayerFillTypeGradient`   | Value: `1`                                      |
+| `fillType`    | `number`                  | Value: `1`                                      |
 | `blendMode`   | `LayerBlendMode`          | Refer to [LayerBlendMode](#LayerBlendMode)      |
 | `opacity`     | `number`                  | `0` to `100` opacity level of filling gradient  |
-| `gradient`    | `LayerGradient`           | refer to [LayerGradient](#LayerGradient)        |
+| `gradient`    | `LayerGradient`           | Refer to [LayerGradient](#LayerGradient)        |
 
 #### LayerFillPattern
 
@@ -923,7 +921,7 @@ Can be either of there Objects:
 | `blendMode`           | `LayerBlendMode`  | Refer to [LayerBlendMode](#LayerBlendMode)              |
 | `opacity`             | `number`          | `0` to `100` opacity level of filling pattern           |
 | `patternFillType`     | `number`          | One of `0` (tile), `1` (fill), `2` (stretch), `3` (fit) |
-| `patternTileScale`    | `number`          | UUID of the chid layer                                  |
+| `patternTileScale`    | `number`          | Scale value of fill                                     |
 | `patternWidth?`       | `number`          | Width of a pattern                                      |
 | `patternHeight?`      | `number`          | Height of a pattern                                     |
 | `imageUrl`            | `string`          | Image url of a fill                                     |
@@ -950,7 +948,7 @@ Can be either one of these objects:
 
 | Property      | Value                      | Description                                          |
 |---------------|----------------------------|------------------------------------------------------|
-| `fillType`    | `LayerFillTypeGradient`    | Value: `1`                                           |
+| `fillType`    | `LayerFillTypeSolid`       | Value: `0`                                           |
 | `position`    | `LayerBorderPosition`      | Refer to [LayerBorderPosition](#LayerBorderPosition) |
 | `thickness`   | `number`                   | How thick the border shall be                        |
 | `color`       | `LayerColor`               | Refer to [LayerColor](#LayerColor)                   |
@@ -1024,11 +1022,6 @@ Can be `0` for center, `1` for inside and `2` for outside.
 | `formatName`        | `string`        | Name of format of an asset                      |
 | `namingScheme`      | `string`        | Naming scheme for an asset                      |
 | `scale`             | `string`        | Scale of an asset                               |
-
-
-
-
-
 
 
 
