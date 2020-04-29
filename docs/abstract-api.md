@@ -789,7 +789,7 @@ abstract.commits.info({
 
 | Property                | Type                         | Description                                                               |
 |-------------------------|------------------------------|---------------------------------------------------------------------------|
-| `styleName`             | `string[]`                   | Custom name for a layer                                                   |
+| `styleName`             | `string`                   | Custom name for a layer                                                   |
 | `name`                  | `string`                     | Name of the layer                                                         |
 | `isVisible`             | `boolean`                    | Is layer visible in the artboard                                          |
 | `isLocked`              | `boolean`                    | Determines whether layer is locked or not                                 |
