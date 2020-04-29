@@ -847,7 +847,7 @@ abstract.commits.info({
 
 | Property            | Type              | Description                                     |
 |---------------------|-------------------|-------------------------------------------------|
-| `hex8`              | `string`          | Color in `HEX` (e.g. #000)                      |
+| `hex8`              | `string`          | Color in `HEX8` (e.g. #RRGGBBAA)                      |
 | `rgba`              | `string`          | `rgba` of color (e.g. rgba(0, 0, 0, 0)          |
 | `components`        | `object`          | A list rgba color values                        |
 | `components.red`    | `number`          | Value of red (`0` to `1`)                       |
