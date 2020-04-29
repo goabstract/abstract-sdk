@@ -824,7 +824,7 @@ abstract.commits.info({
 |--------------------------|-----------------------------|-------------------------------------------------|
 | `styleName`              | `string`                    | Style name for text                             |
 | `fixed`                  | `boolean`                   | Is the text fixed or not                        |
-| `fontName`               | `string`                    | Font Name that gets used                        |
+| `fontName`               | `string`                    | PostScript Font Name                        |
 | `fontSize`               | `number`                    | Font Size                                       |
 | `lineHeight`             | `number`                    | Line Height of text                             |
 | `characterSpacing`       | `number`                    | Spacing between Characters                      |
