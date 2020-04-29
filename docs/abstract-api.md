@@ -940,7 +940,7 @@ Can be either of these Objects:
 
 #### LayerBorder
 
-Can be either one of these objects:
+Can be either one of these border types:
 
 - [LayerBorderSolid](#layerbordersolid)
 - [LayerBorderGradient](#layerbordergradient)
