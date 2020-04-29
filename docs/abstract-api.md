@@ -929,12 +929,21 @@ Can be either of these Objects:
 | `fillType`            | `number`          | value: `4`                                              |
 | `blendMode`           | `LayerBlendMode`  | Refer to [LayerBlendMode](#layerblendmode)              |
 | `opacity`             | `number`          | `0` to `100` opacity level of filling pattern           |
-| `patternFillType`     | `number`          | One of `0` (tile), `1` (fill), `2` (stretch), `3` (fit) |
+| `patternFillType`     | `number`          | Refer to [LayerFillPatternType](#layerfillpatterntype)  |
 | `patternTileScale`    | `number`          | Scale value of fill                                     |
 | `patternWidth?`       | `number`          | Width of a pattern                                      |
 | `patternHeight?`      | `number`          | Height of a pattern                                     |
 | `imageUrl`            | `string`          | Image url of a fill                                     |
 | `imageId`             | `string`          | Image id of a fill                                      |
+
+#### LayerFillPatternType
+
+| Value | Description            |
+|-------|------------------------|
+| `0`   | Tile                   |
+| `1`   | Fill                   |
+| `2`   | Stretch                |
+| `3`   | Fit                    |
 
 #### LayerFillNoise
 
