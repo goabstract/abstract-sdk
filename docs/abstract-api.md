@@ -795,8 +795,8 @@ abstract.commits.info({
 | `isLocked`              | `boolean`                    | Determines whether layer is locked or not                                 |
 | `width`                 | `number`                     | The width of layer in pixels                                              |
 | `height`                | `number`                     | The height of layer in pixels                                             |
-| `x`                     | `number`                     | The horizontal position of the layer on the page, measured from the left  |
-| `y`                     | `number`                     | The vertical position of the layer on the page, measured from the top     |
+| `x`                     | `number`                     | The relative horizontal position of the layer on the page, measured from the left  |
+| `y`                     | `number`                     | The relative vertical position of the layer on the page, measured from the top     |
 | `rotation`              | `number`                     | The rotation of the layer in degrees                                      |
 | `opacity`               | `number`                     | Opacity from 0 to 100                                                     |
 | `hasClippingMask`       | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
