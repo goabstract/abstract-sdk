@@ -857,7 +857,7 @@ abstract.commits.info({
 
 #### LayerBlendMode
 
-Can be one of there numbers:
+Can be one of these blend modes:
 
 | Name                        | Value        | Description                                     |
 |-----------------------------|--------------|-------------------------------------------------|
