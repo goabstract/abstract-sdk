@@ -867,24 +867,24 @@ Can be `solid` or `double`.
 
 Can be one of there numbers:
 
-| Name                        | Value        | Description                                     |
-|-----------------------------|--------------|-------------------------------------------------|
-| `LayerBlendModeNormal`      | `0`          | Normal Blend Mode                               |
-| `LayerBlendModeDarken`      | `1`          | Darken Blend Mode                               |
-| `LayerBlendModeMultiply`    | `2`          | Multiply Blend Mode                             |
-| `LayerBlendModeColorBurn`   | `3`          | Color burn Blend Mode                           |
-| `LayerBlendModeLighten`     | `4`          | Lighten Blend Mode                              |
-| `LayerBlendModeScreen`      | `5`          | Screen in Blend Mode                            |
-| `LayerBlendModeAdd`         | `6`          | Add Blend Mode                                  |
-| `LayerBlendModeOverlay`     | `7`          | Overlay                                         |
-| `LayerBlendModeSoftLight`   | `8`          | Soft light                                      |
-| `LayerBlendModeHardLight`   | `9`          | Hard light                                      |
-| `LayerBlendModeDifference`  | `10`         | Difference in Blend Mode                        |
-| `LayerBlendModeExclusion`   | `11`         | Exclusion in Blend Mode                         |
-| `LayerBlendModeHue`         | `12`         | Hue in Blend Mode                               |
-| `LayerBlendModeSaturation`  | `13`         | Saturation in Blend Mode                        |
-| `LayerBlendModeColor`       | `14`         | Color in Blend Mode                             |
-| `LayerBlendModeLuminosity`  | `15`         | Luminosity in Blend Mode                        |
+| Name                        | Value        | Description                     |
+|-----------------------------|--------------|---------------------------------|
+| `LayerBlendModeNormal`      | `0`          | Normal                          |
+| `LayerBlendModeDarken`      | `1`          | Darken                          |
+| `LayerBlendModeMultiply`    | `2`          | Multiply                        |
+| `LayerBlendModeColorBurn`   | `3`          | Color burn                      |
+| `LayerBlendModeLighten`     | `4`          | Lighten                         |
+| `LayerBlendModeScreen`      | `5`          | Screen                          |
+| `LayerBlendModeAdd`         | `6`          | Add                             |
+| `LayerBlendModeOverlay`     | `7`          | Overlay                         |
+| `LayerBlendModeSoftLight`   | `8`          | Soft light                      |
+| `LayerBlendModeHardLight`   | `9`          | Hard light                      |
+| `LayerBlendModeDifference`  | `10`         | Difference                      |
+| `LayerBlendModeExclusion`   | `11`         | Exclusion                       |
+| `LayerBlendModeHue`         | `12`         | Hue                             |
+| `LayerBlendModeSaturation`  | `13`         | Saturation                      |
+| `LayerBlendModeColor`       | `14`         | Color                           |
+| `LayerBlendModeLuminosity`  | `15`         | Luminosity                      |
 
 #### LayerBorderRadius
 
