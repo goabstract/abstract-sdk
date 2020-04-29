@@ -789,7 +789,7 @@ abstract.commits.info({
 
 | Property                | Type                         | Description                                                               |
 |-------------------------|------------------------------|---------------------------------------------------------------------------|
-| `styleName`             | `string`                   | Custom name for a layer                                                   |
+| `styleName?`             | `string`                     | Custom name for a layer                                                   |
 | `name`                  | `string`                     | Name of the layer                                                         |
 | `isVisible`             | `boolean`                    | Is layer visible in the artboard                                          |
 | `isLocked`              | `boolean`                    | Determines whether layer is locked or not                                 |
@@ -804,37 +804,37 @@ abstract.commits.info({
 | `textStyleIndex`        | `LayerTextStyle[]`           | Styles of Text. Refer to [LayerTextStyle](#layertextstyle)                | 
 | `colorIndex`            | `LayerColor[]`               | Colors. Refer to [LayerColor](#layercolor)                                |
 | `blendMode`             | `LayerBlendMode`             | Refer to [LayerBlendMode](#layerblendmode)                                | 
-| `hasClickThrough`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
-| `imageId`               | `string`                     | An id to image when layer is a bitmap                                                     |
-| `textContent`           | `string`                     | Inner text of a layer                                                     |
-| `backgroundColor`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#layercolor)           |
-| `borderRadius`          | `LayerBorderRadius`          | The value of layer's border radius. Refer to [LayerBorderRadius](#layerborderradius) |
-| `text`                  | `LayerTextStyle`             | The style of text in a layer. Refer to [LayerTextStyle](#layertextstyle)  |
-| `fills`                 | `LayerFill[]`                | The fill styles for a layer. Refer to [LayerFill](#layerfill)     |
-| `borders`               | `LayerBorder[]`              | Styles for borders. Refer to [LayerBorder](#layerborder)                  |
-| `shadows`               | `LayerShadows`               | Shadow values. Refer to [LayerShadows](#layershadows)                     |
-| `resizingConstraint`    | `LayerResizingConstraint`    | Refer to [LayerResizingConstraint](#layerresizingconstraint)              | 
-| `overrides`             | `LayerOverrideData`          | Refer to [LayerOverrideData](#layeroverridedata)                          | 
-| `assets`                | `LayerDataAsset[]`           | A list of assets in a layer. Refer to [LayerDataAsset](#layerdataasset)   |
+| `hasClickThrough?`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
+| `imageId?`               | `string`                     | An id to image when layer is a bitmap                                     |
+| `textContent?`           | `string`                     | Inner text of a layer                                                     |
+| `backgroundColor?`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#layercolor)           |
+| `borderRadius?`          | `LayerBorderRadius`          | The value of layer's border radius. Refer to [LayerBorderRadius](#layerborderradius) |
+| `text?`                  | `LayerTextStyle`             | The style of text in a layer. Refer to [LayerTextStyle](#layertextstyle)  |
+| `fills?`                 | `LayerFill[]`                | The fill styles for a layer. Refer to [LayerFill](#layerfill)             |
+| `borders?`               | `LayerBorder[]`              | Styles for borders. Refer to [LayerBorder](#layerborder)                  |
+| `shadows?`               | `LayerShadows`               | Shadow values. Refer to [LayerShadows](#layershadows)                     |
+| `resizingConstraint?`    | `LayerResizingConstraint`    | Refer to [LayerResizingConstraint](#layerresizingconstraint)              | 
+| `overrides?`             | `LayerOverrideData`          | Refer to [LayerOverrideData](#layeroverridedata)                          | 
+| `assets?`                | `LayerDataAsset[]`           | A list of assets in a layer. Refer to [LayerDataAsset](#layerdataasset)   |
 
 
 #### LayerTextStyle
 
 | Property                 | Type                        | Description                                     |
 |--------------------------|-----------------------------|-------------------------------------------------|
-| `styleName`              | `string`                    | Style name for text                             |
-| `fixed`                  | `boolean`                   | Is the text fixed or not                        |
-| `fontName`               | `string`                    | PostScript Font Name                        |
+| `styleName?`              | `string`                    | Style name for text                             |
+| `fixed?`                  | `boolean`                   | Is the text fixed or not                        |
+| `fontName?`               | `string`                    | PostScript Font Name                        |
 | `fontSize`               | `number`                    | Font Size                                       |
 | `lineHeight`             | `number`                    | Line Height of text                             |
-| `characterSpacing`       | `number`                    | Spacing between Characters                      |
-| `paragraphSpacing`       | `number`                    | Spacing between Paragraphs                      |
-| `horizontalAlignment`    | `LayerHorizontalAlignment`  | Horizontal Alignment of a text                  |
-| `verticalAlignment`      | `number`                    | Vertical Alignment of a text                    |
-| `color`                  | `LayerColor`                | Refer to [LayerColor](#layercolor)              |
-| `listStyle`              | `LayerListStyle`            | One of `""`, `disc` or `numbered`               |
-| `textTransform`          | `LayerTextTransform`        | `0` for none, `1` is for uppercase and `2` is for lowercase |
-| `textDecoration`         | `LayerTextDecoration`       | Refer to [LayerTextDecoration](#layertextdecoration) |
+| `characterSpacing?`       | `number`                    | Spacing between Characters                      |
+| `paragraphSpacing?`       | `number`                    | Spacing between Paragraphs                      |
+| `horizontalAlignment?`    | `LayerHorizontalAlignment`  | Horizontal Alignment of a text                  |
+| `verticalAlignment?`      | `number`                    | Vertical Alignment of a text                    |
+| `color?`                  | `LayerColor`                | Refer to [LayerColor](#layercolor)              |
+| `listStyle?`              | `LayerListStyle`            | One of `""`, `disc` or `numbered`               |
+| `textTransform?`          | `LayerTextTransform`        | `0` for none, `1` is for uppercase and `2` is for lowercase |
+| `textDecoration?`         | `LayerTextDecoration`       | Refer to [LayerTextDecoration](#layertextdecoration) |
 
 #### LayerTextDecoration
 
@@ -845,11 +845,17 @@ abstract.commits.info({
 
 #### LayerTextDecorationLine
 
-Can be either `underline` or `strikethrough`.
+| Value             |
+|-------------------|
+| `underline`       |
+| `strikethrough`   |
 
 #### LayerTextDecorationStyle
 
-Can be `solid` or `double`.
+| Value             |
+|-------------------|
+| `solid`           |
+| `double`          |
 
 #### LayerColor
 
@@ -982,7 +988,11 @@ Can be either one of these border types:
 
 #### LayerBorderPosition
 
-Can be `0` for center, `1` for inside and `2` for outside.
+| Value   | Description                 |
+|---------|-----------------------------|
+| `0`     | Center                      |
+| `1`     | Inside                      |
+| `2`     | Outside                     |
 
 #### LayerGradient
 
@@ -1026,11 +1036,12 @@ Can be `0` for center, `1` for inside and `2` for outside.
 | `fixedHeight?`     | `boolean`        |
 
 #### LayerOverrideData
-| Property                | Value                                        | Description                                     |
-|-------------------------|----------------------------------------------|-------------------------------------------------|
-| `symbolId`              | `boolean`                                    | The id of a symbol that gets overwritten        |
-| `properties`            | `object`                                     | Properties that the layer will overwrite        |
-| `[layerId: string]?`    | `string/Object/LayerOverrideData`            | An id of a layer that will be overwritten       |
+
+| Property                | Value                               | Description                                     |
+|-------------------------|-------------------------------------|-------------------------------------------------|
+| `symbolId`              | `boolean`                           | The id of a symbol that gets overwritten        |
+| `properties`            | `object`                            | Properties that the layer will overwrite        |
+| `[layerId: string]`    | `string/Object/LayerOverrideData`   | An id of a layer that will be overwritten       |
 
 #### LayerDataAsset
 
