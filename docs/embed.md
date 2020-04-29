@@ -86,7 +86,7 @@ Sometimes it's preferable to hide Abstract-specific UI components within an embe
 		This can be solved by maintaining aspect ratios.
 		
 
-		#### Example of an aspect ratio fix
+		#### Example
 		
 
 		```html
