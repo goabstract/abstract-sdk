@@ -789,14 +789,14 @@ abstract.commits.info({
 
 | Property                | Type                         | Description                                                               |
 |-------------------------|------------------------------|---------------------------------------------------------------------------|
-| `styleName`             | `string[]`                   | Custom name for a layer                                                   |
+| `styleName`             | `string`                   | Custom name for a layer                                                   |
 | `name`                  | `string`                     | Name of the layer                                                         |
 | `isVisible`             | `boolean`                    | Is layer visible in the artboard                                          |
 | `isLocked`              | `boolean`                    | Determines whether layer is locked or not                                 |
 | `width`                 | `number`                     | The width of layer in pixels                                              |
 | `height`                | `number`                     | The height of layer in pixels                                             |
-| `x`                     | `number`                     | The horizontal position of the layer on the page, measured from the left  |
-| `y`                     | `number`                     | The vertical position of the layer on the page, measured from the top     |
+| `x`                     | `number`                     | The relative horizontal position of the layer on the page, measured from the left  |
+| `y`                     | `number`                     | The relative vertical position of the layer on the page, measured from the top     |
 | `rotation`              | `number`                     | The rotation of the layer in degrees                                      |
 | `opacity`               | `number`                     | Opacity from 0 to 100                                                     |
 | `hasClippingMask`       | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
@@ -805,12 +805,12 @@ abstract.commits.info({
 | `colorIndex`            | `LayerColor[]`               | Colors. Refer to [LayerColor](#layercolor)                                |
 | `blendMode`             | `LayerBlendMode`             | Refer to [LayerBlendMode](#layerblendmode)                                | 
 | `hasClickThrough`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
-| `imageId`               | `string`                     | An id of an image                                                         |
+| `imageId`               | `string`                     | An id to image when layer is a bitmap                                                     |
 | `textContent`           | `string`                     | Inner text of a layer                                                     |
 | `backgroundColor`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#layercolor)           |
 | `borderRadius`          | `LayerBorderRadius`          | The value of layer's border radius. Refer to [LayerBorderRadius](#layerborderradius) |
 | `text`                  | `LayerTextStyle`             | The style of text in a layer. Refer to [LayerTextStyle](#layertextstyle)  |
-| `fills`                 | `LayerFill[]`                | An integral part of a shape’s style. Refer to [LayerFill](#layerfill)     |
+| `fills`                 | `LayerFill[]`                | The fill styles for a layer. Refer to [LayerFill](#layerfill)     |
 | `borders`               | `LayerBorder[]`              | Styles for borders. Refer to [LayerBorder](#layerborder)                  |
 | `shadows`               | `LayerShadows`               | Shadow values. Refer to [LayerShadows](#layershadows)                     |
 | `resizingConstraint`    | `LayerResizingConstraint`    | Refer to [LayerResizingConstraint](#layerresizingconstraint)              | 
@@ -824,7 +824,7 @@ abstract.commits.info({
 |--------------------------|-----------------------------|-------------------------------------------------|
 | `styleName`              | `string`                    | Style name for text                             |
 | `fixed`                  | `boolean`                   | Is the text fixed or not                        |
-| `fontName`               | `string`                    | Font Name that gets used                        |
+| `fontName`               | `string`                    | PostScript Font Name                        |
 | `fontSize`               | `number`                    | Font Size                                       |
 | `lineHeight`             | `number`                    | Line Height of text                             |
 | `characterSpacing`       | `number`                    | Spacing between Characters                      |
@@ -855,7 +855,7 @@ Can be `solid` or `double`.
 
 | Property            | Type              | Description                                     |
 |---------------------|-------------------|-------------------------------------------------|
-| `hex8`              | `string`          | Color in `HEX` (e.g. #000)                      |
+| `hex8`              | `string`          | Color in `HEX8` (e.g. #RRGGBBAA)                      |
 | `rgba`              | `string`          | `rgba` of color (e.g. rgba(0, 0, 0, 0)          |
 | `components`        | `object`          | A list rgba color values                        |
 | `components.red`    | `number`          | Value of red (`0` to `1`)                       |
@@ -865,7 +865,7 @@ Can be `solid` or `double`.
 
 #### LayerBlendMode
 
-Can be one of there numbers:
+Can be one of these blend modes:
 
 | Name                        | Value        | Description                     |
 |-----------------------------|--------------|---------------------------------|
@@ -897,7 +897,7 @@ Can be one of there numbers:
 
 #### LayerFill
 
-Can be either of these Objects:
+Can be either of these fill types:
 
 - [LayerFillSolid](#layerfillsolid)
 - [LayerFillGradient](#layerfillgradient)
@@ -957,7 +957,7 @@ Can be either of these Objects:
 
 #### LayerBorder
 
-Can be either one of these objects:
+Can be either one of these border types:
 
 - [LayerBorderSolid](#layerbordersolid)
 - [LayerBorderGradient](#layerbordergradient)
