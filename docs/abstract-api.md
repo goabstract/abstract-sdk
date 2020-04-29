@@ -810,7 +810,7 @@ abstract.commits.info({
 | `backgroundColor`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#layercolor)           |
 | `borderRadius`          | `LayerBorderRadius`          | The value of layer's border radius. Refer to [LayerBorderRadius](#layerborderradius) |
 | `text`                  | `LayerTextStyle`             | The style of text in a layer. Refer to [LayerTextStyle](#layertextstyle)  |
-| `fills`                 | `LayerFill[]`                | An integral part of a shape’s style. Refer to [LayerFill](#layerfill)     |
+| `fills`                 | `LayerFill[]`                | The fill styles for a layer. Refer to [LayerFill](#layerfill)     |
 | `borders`               | `LayerBorder[]`              | Styles for borders. Refer to [LayerBorder](#layerborder)                  |
 | `shadows`               | `LayerShadows`               | Shadow values. Refer to [LayerShadows](#layershadows)                     |
 | `resizingConstraint`    | `LayerResizingConstraint`    | Refer to [LayerResizingConstraint](#layerresizingconstraint)              | 
