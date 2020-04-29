@@ -805,7 +805,7 @@ abstract.commits.info({
 | `colorIndex`            | `LayerColor[]`               | Colors. Refer to [LayerColor](#layercolor)                                |
 | `blendMode`             | `LayerBlendMode`             | Refer to [LayerBlendMode](#layerblendmode)                                | 
 | `hasClickThrough`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
-| `imageId`               | `string`                     | An id of an image                                                         |
+| `imageId`               | `string`                     | An id to image when layer is a bitmap                                                     |
 | `textContent`           | `string`                     | Inner text of a layer                                                     |
 | `backgroundColor`       | `LayerColor`                 | Background color of a layer. Refer to [LayerColor](#layercolor)           |
 | `borderRadius`          | `LayerBorderRadius`          | The value of layer's border radius. Refer to [LayerBorderRadius](#layerborderradius) |
