@@ -838,10 +838,18 @@ abstract.commits.info({
 
 #### LayerTextDecoration
 
-| Property      | Type              | Description                                     |
-|---------------|-------------------|-------------------------------------------------|
-| `line`        | `string`          | `underline` or `strikethrough`                  |
-| `style`       | `string`          | `solid` or `double`                             |
+| Property      | Type              | Description                                                                    |
+|---------------|-------------------|--------------------------------------------------------------------------------|
+| `line`        | `string`          | Refer to [LayerTextDecorationLine](#layertextdecorationline)                   |
+| `style`       | `string`          | Refer to [LayerTextDecorationStyle](#layertextdecorationstyle)                 |
+
+#### LayerTextDecorationLine
+
+Can be either `underline` or `strikethrough`.
+
+#### LayerTextDecorationStyle
+
+Can be `solid` or `double`.
 
 #### LayerColor
 
