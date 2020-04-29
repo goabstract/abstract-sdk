@@ -889,7 +889,7 @@ Can be one of these blend modes:
 
 #### LayerFill
 
-Can be either of these Objects:
+Can be either of these fill types:
 
 - [LayerFillSolid](#layerfillsolid)
 - [LayerFillGradient](#layerfillgradient)
