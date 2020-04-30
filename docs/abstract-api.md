@@ -779,7 +779,7 @@ abstract.commits.info({
 | `libraryId`   | `string`          | UUID of the library file this layer is from     |
 | `libraryName` | `string`          | The name of the library file this layer is from |
 | `parentId`    | `string`          | UUID of the parent layer, if any                |
-| `properties`  | `LayerDataProperties` | Layer properties             |
+| `properties`  | `LayerDataProperties` | Layer properties                            |
 | `symbolId`    | `string`          | UUID of symbol master, if any                   |
 | `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
 
@@ -787,23 +787,23 @@ abstract.commits.info({
 
 #### LayerDataProperties
 
-| Property                | Type                         | Description                                                               |
-|-------------------------|------------------------------|---------------------------------------------------------------------------|
-| `styleName?`             | `string`                     | Custom name for a layer                                                   |
-| `name`                  | `string`                     | Name of the layer                                                         |
-| `isVisible`             | `boolean`                    | Is layer visible in the artboard                                          |
-| `isLocked`              | `boolean`                    | Determines whether layer is locked or not                                 |
-| `width`                 | `number`                     | The width of layer in pixels                                              |
-| `height`                | `number`                     | The height of layer in pixels                                             |
-| `x`                     | `number`                     | The relative horizontal position of the layer on the page, measured from the left  |
-| `y`                     | `number`                     | The relative vertical position of the layer on the page, measured from the top     |
-| `rotation`              | `number`                     | The rotation of the layer in degrees                                      |
-| `opacity`               | `number`                     | Opacity from 0 to 100                                                     |
-| `hasClippingMask`       | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
-| `underClippingMask`     | `boolean`                    | Ensures whether a layer is under clipping mask or not                     |
-| `textStyleIndex`        | `LayerTextStyle[]`           | Styles of Text. Refer to [LayerTextStyle](#layertextstyle)                | 
-| `colorIndex`            | `LayerColor[]`               | Colors. Refer to [LayerColor](#layercolor)                                |
-| `blendMode`             | `LayerBlendMode`             | Refer to [LayerBlendMode](#layerblendmode)                                | 
+| Property                 | Type                         | Description                                                               |
+|--------------------------|------------------------------|---------------------------------------------------------------------------|
+| `name`                   | `string`                     | Name of the layer                                                         |
+| `isVisible`              | `boolean`                    | Is layer visible in the artboard                                          |
+| `isLocked`               | `boolean`                    | Determines whether layer is locked or not                                 |
+| `width`                  | `number`                     | The width of layer in pixels                                              |
+| `height`                 | `number`                     | The height of layer in pixels                                             |
+| `x`                      | `number`                     | The relative horizontal position of the layer on the page, measured from the left  |
+| `y`                      | `number`                     | The relative vertical position of the layer on the page, measured from the top     |
+| `rotation`               | `number`                     | The rotation of the layer in degrees                                      |
+| `opacity`                | `number`                     | Opacity from 0 to 100                                                     |
+| `hasClippingMask`        | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
+| `underClippingMask`      | `boolean`                    | Ensures whether a layer is under clipping mask or not                     |
+| `textStyleIndex`         | `LayerTextStyle[]`           | Styles of Text. Refer to [LayerTextStyle](#layertextstyle)                | 
+| `colorIndex`             | `LayerColor[]`               | Colors. Refer to [LayerColor](#layercolor)                                |
+| `blendMode`              | `LayerBlendMode`             | Refer to [LayerBlendMode](#layerblendmode)                                | 
+| `styleName?`             | `string`                     | Name of layer styles applies to layer                                     |
 | `hasClickThrough?`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
 | `imageId?`               | `string`                     | An id to image when layer is a bitmap                                     |
 | `textContent?`           | `string`                     | Inner text of a layer                                                     |
@@ -820,13 +820,13 @@ abstract.commits.info({
 
 #### LayerTextStyle
 
-| Property                 | Type                        | Description                                     |
-|--------------------------|-----------------------------|-------------------------------------------------|
+| Property                  | Type                        | Description                                     |
+|---------------------------|-----------------------------|-------------------------------------------------|
 | `styleName?`              | `string`                    | Style name for text                             |
 | `fixed?`                  | `boolean`                   | Is the text fixed or not                        |
-| `fontName?`               | `string`                    | PostScript Font Name                        |
-| `fontSize`               | `number`                    | Font Size                                       |
-| `lineHeight`             | `number`                    | Line Height of text                             |
+| `fontName?`               | `string`                    | PostScript Font Name                            |
+| `fontSize?`               | `number`                    | Font Size                                       |
+| `lineHeight?`             | `number`                    | Line Height of text                             |
 | `characterSpacing?`       | `number`                    | Spacing between Characters                      |
 | `paragraphSpacing?`       | `number`                    | Spacing between Paragraphs                      |
 | `horizontalAlignment?`    | `LayerHorizontalAlignment`  | Horizontal Alignment of a text                  |
@@ -838,10 +838,10 @@ abstract.commits.info({
 
 #### LayerTextDecoration
 
-| Property      | Type              | Description                                                                    |
-|---------------|-------------------|--------------------------------------------------------------------------------|
-| `line`        | `string`          | Refer to [LayerTextDecorationLine](#layertextdecorationline)                   |
-| `style`       | `string`          | Refer to [LayerTextDecorationStyle](#layertextdecorationstyle)                 |
+| Property      | Type                             | Description                                                                    |
+|---------------|----------------------------------|--------------------------------------------------------------------------------|
+| `line`        | `LayerTextDecorationLine`        | Refer to [LayerTextDecorationLine](#layertextdecorationline)                   |
+| `style`       | `LayerTextDecorationStyle`       | Refer to [LayerTextDecorationStyle](#layertextdecorationstyle)                 |
 
 #### LayerTextDecorationLine
 
@@ -861,8 +861,8 @@ abstract.commits.info({
 
 | Property            | Type              | Description                                     |
 |---------------------|-------------------|-------------------------------------------------|
-| `hex8`              | `string`          | Color in `HEX8` (e.g. #RRGGBBAA)                      |
-| `rgba`              | `string`          | `rgba` of color (e.g. rgba(0, 0, 0, 0)          |
+| `hex8`              | `string`          | Color in `HEX8` (e.g. #RRGGBBAA)                |
+| `rgba`              | `string`          | `rgba` of color (e.g. rgba(0, 0, 0, 0))         |
 | `components.red`    | `number`          | Value of red (`0` to `1`)                       |
 | `components.green`  | `number`          | Value of green (`0` to `1`)                     |
 | `components.blue`   | `number`          | Value of blue (`0` to `1`)                      |
@@ -973,7 +973,7 @@ Can be either one of these border types:
 |---------------|----------------------------|------------------------------------------------------|
 | `fillType`    | `LayerFillTypeSolid`       | Value: `0`                                           |
 | `position`    | `LayerBorderPosition`      | Refer to [LayerBorderPosition](#layerborderposition) |
-| `thickness`   | `number`                   | How thick the border shall be                        |
+| `thickness`   | `number`                   | Size of the border stroke                            |
 | `color`       | `LayerColor`               | Refer to [LayerColor](#layercolor)                   |
 
 #### LayerBorderGradient
@@ -982,7 +982,7 @@ Can be either one of these border types:
 |---------------|----------------------------|------------------------------------------------------|
 | `fillType`    | `LayerFillTypeGradient`    | Value: `1`                                           |
 | `position`    | `LayerBorderPosition`      | Refer to [LayerBorderPosition](#layerborderposition) |
-| `thickness`   | `number`                   | How thick the border shall be                        |
+| `thickness`   | `number`                   | Size of the border stroke                            |
 | `color`       | `LayerGradient`            | Refer to [LayerGradient](#layergradient)             |
 
 #### LayerBorderPosition
@@ -1000,10 +1000,16 @@ Can be either one of these border types:
 | `gradientType`       | `number`              | Value: `0` for linear, `1`, for radial, `2` for angular |
 | `from`               | `[number, number]`    | Coords from where to start a gradient                   |
 | `to`                 | `[number, number]`    | Coords from where to end a gradient                     |
-| `stops`              | `object`              | Where gradient might want to be different               |
-| `stops.position`     | `number`              | At which position value the gradient want to be changed |
-| `stops.color`        | `LayerColor`          | What color will it get changed to                       |
+| `stops`              | `LayerGradientStop[]` | List of colors stops for the gradient                   |
 | `ellipseLength`      | `number`              | Length of a gradient ellipse                            |
+
+#### LayerGradientStop
+
+| Property      | Value                | Description                                               |
+|---------------|----------------------|-----------------------------------------------------------|
+| `position`    | `number`             | At which position value the gradient want to be changed   |
+| `color`       | `LayerColor`         | What color will it get changed to                         |
+
 
 
 #### LayerShadows
@@ -1038,9 +1044,17 @@ Can be either one of these border types:
 
 | Property                | Value                               | Description                                     |
 |-------------------------|-------------------------------------|-------------------------------------------------|
-| `symbolId`              | `boolean`                           | The id of a symbol that gets overwritten        |
-| `properties`            | `object`                            | Properties that the layer will overwrite        |
-| `[layerId: string]`    | `string/Object/LayerOverrideData`   | An id of a layer that will be overwritten       |
+| `symbolId?`             | `boolean`                           | The id of a symbol that gets overwritten        |
+| `properties?`           | `LayerOverrideProperties`           | Properties that the layer will overwrite        |
+| `[layerId: string]`     | `string/Object/LayerOverrideData`   | An id of a layer that will be overwritten       |
+
+#### LayerOverrideProperties
+
+```js
+  type LayerOverrideProperties = {
+    ...$Diff<LayerDataProperties, { overrides: * }>
+  };
+```
 
 #### LayerDataAsset
 
