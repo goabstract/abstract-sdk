@@ -67,8 +67,9 @@
     "standard-version": "^6.0.1"
   },
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.3.4",
+    "@babel/runtime-corejs3": "^7.9.6",
     "@elasticprojects/abstract-cli": "^4.3.0",
+    "core-js": "^3.6.5",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
     "js-sha256": "^0.9.0",
@@ -105,12 +106,12 @@
       [
         "@babel/preset-env",
         {
-          "debug": true,
-          "corejs": 2,
+          "corejs": 3,
           "useBuiltIns": "usage",
           "targets": {
             "node": 10,
-            "ie": 11
+            "ie": 11,
+            "chrome": 65
           }
         }
       ]
