@@ -143,6 +143,9 @@ export type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
+export type ShareToken = ?string | ShareDescriptor;
+export type ShareTokenOption = () => Promise<ShareToken>;
+
 export type EndpointMetric = {
   duration: number,
   endpoint: string,
@@ -158,6 +161,7 @@ export type CommandOptions = {
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
+  shareToken?: ShareTokenOption,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>
 };
