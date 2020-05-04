@@ -2267,7 +2267,13 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ### ShareDescriptor
 
 ```js
-{ url: string } | { shareId: string }
+{ shareId: string }
+```
+
+### ShareUrlDescriptor
+
+```js
+{ url: string }
 ```
 
 ### BranchDescriptor
