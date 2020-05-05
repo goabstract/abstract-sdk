@@ -11,7 +11,7 @@ import {
   CLIENT_CONFIG,
   CLI_CLIENT
 } from "../src/util/testing";
-import type { AccessToken, RequestOptions } from "../src/types";
+import type { RequestOptions } from "../src/types";
 
 const Client = require("../src/Client").default;
 
@@ -108,7 +108,7 @@ describe("Client", () => {
 
     const client = new Client({
       ...CLIENT_CONFIG,
-      accessToken: { shareId: "share-id" }
+      shareId: async () => ({ shareId: "share-id" })
     });
 
     mockAPI("/projects/project-id/branches/?", {
@@ -145,7 +145,7 @@ describe("Client", () => {
   test("shareDescriptor access token - cli", async () => {
     const client = new Client({
       ...CLIENT_CONFIG,
-      accessToken: (() => ({ shareId: "share-id" }): () => AccessToken)
+      shareId: async () => ({ shareId: "share-id" })
     });
 
     const spawnSpy = mockCLI(["branches", "list", "--project-id=project-id"], {

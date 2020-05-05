@@ -137,7 +137,7 @@ export type CollectionsListOptions = {
   userId?: string
 };
 
-export type AccessToken = ?string | ShareDescriptor;
+export type AccessToken = ?string;
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate

@@ -259,11 +259,11 @@ export default class Endpoint {
   }
 
   async _getFetchHeaders(customHeaders?: { [key: string]: string }) {
-    const token = await this._getAccessToken();
-    const tokenHeader =
-      typeof token === "string"
-        ? { Authorization: `Bearer ${token}` }
-        : { "Abstract-Share-Id": token && inferShareId(token) };
+    let accessTokenHeader;
+    const accessToken = await this._getAccessToken();
+    if (accessToken) {
+      accessTokenHeader = { Authorization: `Bearer ${accessToken}` };
+    }
 
     let shareIdHeader;
     const shareId = this.options.shareId
@@ -282,7 +282,7 @@ export default class Endpoint {
       "User-Agent": `Abstract SDK ${minorVersion}`,
       "X-Amzn-Trace-Id": `Root=1-${new Date().getTime()}-${uuid()}`,
       "Abstract-Api-Version": "8",
-      ...tokenHeader,
+      ...accessTokenHeader,
       ...shareIdHeader,
       ...customHeaders
     };
