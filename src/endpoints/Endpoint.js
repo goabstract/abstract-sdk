@@ -265,14 +265,14 @@ export default class Endpoint {
         ? { Authorization: `Bearer ${token}` }
         : { "Abstract-Share-Id": token && inferShareId(token) };
 
-    let shareHeader;
-    const shareToken = this.options.shareToken
-      ? await this.options.shareToken()
+    let shareIdHeader;
+    const shareId = this.options.shareId
+      ? await this.options.shareId()
       : undefined;
-    if (shareToken) {
-      shareHeader = {
+    if (shareId) {
+      shareIdHeader = {
         "Abstract-Share-Id":
-          typeof shareToken === "string" ? shareToken : inferShareId(shareToken)
+          typeof shareId === "string" ? shareId : inferShareId(shareId)
       };
     }
 
@@ -283,7 +283,7 @@ export default class Endpoint {
       "X-Amzn-Trace-Id": `Root=1-${new Date().getTime()}-${uuid()}`,
       "Abstract-Api-Version": "8",
       ...tokenHeader,
-      ...shareHeader,
+      ...shareIdHeader,
       ...customHeaders
     };
 
