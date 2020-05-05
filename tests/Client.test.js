@@ -137,6 +137,9 @@ describe("Client", () => {
     ]);
 
     expect(fetchSpy.mock.calls.length).toBe(1);
+    expect(fetchSpy.mock.calls[0][1].headers["Authorization"]).toBe(
+      `Bearer ${CLIENT_CONFIG.accessToken}`
+    );
     expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
       "share-id"
     );
@@ -172,7 +175,7 @@ describe("Client", () => {
     ]);
     expect((spawnSpy: any).mock.calls.length).toBe(1);
     expect((spawnSpy: any).mock.calls[0][1].includes("--user-token")).toBe(
-      false
+      true
     );
   });
 
