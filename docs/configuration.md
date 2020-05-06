@@ -41,6 +41,10 @@ _Default value: `https://previews.goabstract.com`_
 
 This option can be used to specify a custom URL that points to an instance of the Abstract preview service. This is used when building preview image URLs used by the [API transport](/docs/transports). This option is useful if HTTP requests should be routed locally or through a proxy server.
 
+### `shareId`
+
+This option can be used to pass a share identifier (`string`, [`ShareDescriptor`](/docs/abstract-api/#sharedescriptor), or [`ShareUrlDescriptor`](/docs/abstract-api/#shareurldescriptor)) to access objects associated with a public [share](/docs/abstract-api/#shares) without having to authenticate with an `accessToken`.
+
 ### `transportMode`
 
 _Default value: `["api"]`_
