@@ -143,7 +143,7 @@ export type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
-export type ShareIdentifier = ?string | ShareDescriptor;
+export type ShareIdentifier = string | ShareDescriptor;
 export type ShareIdOption = () => Promise<ShareIdentifier>;
 
 export type EndpointMetric = {
