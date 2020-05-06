@@ -1838,8 +1838,7 @@ type AccessTokenOption =
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
 
-type ShareIdentifier = string | ShareDescriptor;
-type ShareIdOption = () => Promise<ShareIdentifier>;
+type ShareIdOption = () => Promise<string | ShareDescriptor>;
 
 type EndpointMetric = {
   duration: number,
