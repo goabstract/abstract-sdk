@@ -103,7 +103,7 @@ describe("Client", () => {
     ]);
   });
 
-  test("shareDescriptor access token - api", async () => {
+  test("shareDescriptor shareId - api", async () => {
     const fetchSpy = jest.spyOn(global, "fetch");
 
     const client = new Client({
@@ -142,6 +142,42 @@ describe("Client", () => {
     );
     expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
       "share-id"
+    );
+  });
+
+  test("shareDescriptor shareId and no accessToken - api", async () => {
+    const { accessToken, ...options } = CLIENT_CONFIG;
+    const client = new Client({
+      ...options,
+      shareId: async () => ({ shareId: "only-share-id" })
+    });
+
+    mockAPI("/projects/project-id/branches/?", {
+      data: {
+        branches: [
+          {
+            id: "branch-id"
+          }
+        ]
+      }
+    });
+
+    const fetchSpy = jest.spyOn(client.branches, "apiRequest");
+
+    await client.branches.list(
+      {
+        projectId: "project-id"
+      },
+      {
+        transportMode: ["api"]
+      }
+    );
+
+    expect(fetchSpy.mock.calls[0][1].headers).not.toHaveProperty(
+      "Authorization"
+    );
+    expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
+      "only-share-id"
     );
   });
 
