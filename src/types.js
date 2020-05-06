@@ -146,11 +146,6 @@ export type AccessTokenOption =
 export type ShareIdentifier = ?string | ShareDescriptor;
 export type ShareIdOption = () => Promise<ShareIdentifier>;
 
-type AuthenticationOptions = {
-  accessToken?: AccessTokenOption,
-  shareId?: ShareIdOption
-};
-
 export type EndpointMetric = {
   duration: number,
   endpoint: string,
@@ -161,11 +156,12 @@ export type EndpointMetric = {
 export type AnalyticsCallback = EndpointMetric => mixed;
 
 export type CommandOptions = {
-  ...AuthenticationOptions,
+  accessToken?: AccessTokenOption,
   analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
+  shareId?: ShareIdOption,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>
 };

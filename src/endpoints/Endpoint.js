@@ -259,22 +259,20 @@ export default class Endpoint {
   }
 
   async _getFetchHeaders(customHeaders?: { [key: string]: string }) {
-    let authorizationHeader;
     const accessToken = await this._getAccessToken();
-    if (accessToken) {
-      authorizationHeader = { Authorization: `Bearer ${accessToken}` };
-    }
+    const authorizationHeader = accessToken
+      ? { Authorization: `Bearer ${accessToken}` }
+      : undefined;
 
-    let shareIdHeader;
     const shareId = this.options.shareId
       ? await this.options.shareId()
       : undefined;
-    if (shareId) {
-      shareIdHeader = {
-        "Abstract-Share-Id":
-          typeof shareId === "string" ? shareId : inferShareId(shareId)
-      };
-    }
+    const shareIdHeader = shareId
+      ? {
+          "Abstract-Share-Id":
+            typeof shareId === "string" ? shareId : inferShareId(shareId)
+        }
+      : undefined;
 
     const headers = {
       Accept: "application/json",
