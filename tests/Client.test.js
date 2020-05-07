@@ -103,77 +103,140 @@ describe("Client", () => {
     ]);
   });
 
-  test("shareDescriptor access token - api", async () => {
-    const fetchSpy = jest.spyOn(global, "fetch");
+  describe("authentication methods", () => {
+    const projectDescriptor = { projectId: "project-id" };
 
-    const client = new Client({
-      ...CLIENT_CONFIG,
-      accessToken: { shareId: "share-id" }
+    describe("api", () => {
+      const requestOptions = { transportMode: ["api"] };
+
+      beforeEach(() => {
+        mockAPI("/projects/project-id/branches/?", {
+          data: {
+            branches: [
+              {
+                id: "branch-id"
+              }
+            ]
+          }
+        });
+      });
+
+      describe("authenticated", () => {
+        test("shareId: ShareDescriptor", async () => {
+          const client = new Client({
+            ...CLIENT_CONFIG,
+            accessToken: async (): Promise<AccessToken> =>
+              CLIENT_CONFIG.accessToken,
+            shareId: async () => ({ shareId: "share-id" })
+          });
+
+          const fetchSpy = jest.spyOn(client.branches, "apiRequest");
+
+          const response = await client.branches.list(
+            projectDescriptor,
+            requestOptions
+          );
+
+          expect(response).toEqual([{ id: "branch-id" }]);
+
+          expect(fetchSpy.mock.calls.length).toBe(1);
+          expect(fetchSpy.mock.calls[0][1].headers["Authorization"]).toBe(
+            `Bearer ${CLIENT_CONFIG.accessToken}`
+          );
+          expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
+            "share-id"
+          );
+        });
+
+        test("shareId: string", async () => {
+          const client = new Client({
+            ...CLIENT_CONFIG,
+            shareId: async () => "share-id-string"
+          });
+
+          const fetchSpy = jest.spyOn(client.branches, "apiRequest");
+
+          await client.branches.list(projectDescriptor, requestOptions);
+
+          expect(fetchSpy.mock.calls[0][1].headers["Authorization"]).toBe(
+            `Bearer ${CLIENT_CONFIG.accessToken}`
+          );
+          expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
+            "share-id-string"
+          );
+        });
+      });
+
+      test("public access (not authenticated) and shareId: ShareDescriptor", async () => {
+        const { accessToken, ...options } = CLIENT_CONFIG;
+        const client = new Client({
+          ...options,
+          shareId: async () => ({ shareId: "only-share-id" })
+        });
+
+        const fetchSpy = jest.spyOn(client.branches, "apiRequest");
+
+        await client.branches.list(projectDescriptor, requestOptions);
+
+        expect(fetchSpy.mock.calls[0][1].headers).not.toHaveProperty(
+          "Authorization"
+        );
+        expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
+          "only-share-id"
+        );
+      });
     });
 
-    mockAPI("/projects/project-id/branches/?", {
-      data: {
-        branches: [
+    describe("cli", () => {
+      let spawnSpy;
+      const requestOptions = { transportMode: ["cli"] };
+
+      beforeEach(() => {
+        spawnSpy = mockCLI(["branches", "list", "--project-id=project-id"], {
+          branches: [
+            {
+              id: "branch-id"
+            }
+          ]
+        });
+      });
+
+      test("authenticated and shareId: ShareDescriptor", async () => {
+        const client = new Client({
+          ...CLIENT_CONFIG,
+          shareId: async () => ({ shareId: "share-id" })
+        });
+
+        const response = await client.branches.list(
+          projectDescriptor,
+          requestOptions
+        );
+
+        expect(response).toEqual([
           {
             id: "branch-id"
           }
-        ]
-      }
+        ]);
+        expect((spawnSpy: any).mock.calls.length).toBe(1);
+        expect((spawnSpy: any).mock.calls[0][1].includes("--user-token")).toBe(
+          true
+        );
+      });
+
+      test("not authenticated and shareId: ShareDescriptor", async () => {
+        const { accessToken, ...options } = CLIENT_CONFIG;
+        const client = new Client({
+          ...options,
+          shareId: async () => ({ shareId: "share-id" })
+        });
+
+        await client.branches.list(projectDescriptor, requestOptions);
+
+        expect((spawnSpy: any).mock.calls[0][1].includes("--user-token")).toBe(
+          false
+        );
+      });
     });
-
-    const response = await client.branches.list(
-      {
-        projectId: "project-id"
-      },
-      {
-        transportMode: ["api"]
-      }
-    );
-
-    expect(response).toEqual([
-      {
-        id: "branch-id"
-      }
-    ]);
-
-    expect(fetchSpy.mock.calls.length).toBe(1);
-    expect(fetchSpy.mock.calls[0][1].headers["Abstract-Share-Id"]).toBe(
-      "share-id"
-    );
-  });
-
-  test("shareDescriptor access token - cli", async () => {
-    const client = new Client({
-      ...CLIENT_CONFIG,
-      accessToken: (() => ({ shareId: "share-id" }): () => AccessToken)
-    });
-
-    const spawnSpy = mockCLI(["branches", "list", "--project-id=project-id"], {
-      branches: [
-        {
-          id: "branch-id"
-        }
-      ]
-    });
-
-    const response = await client.branches.list(
-      {
-        projectId: "project-id"
-      },
-      {
-        transportMode: ["cli"]
-      }
-    );
-
-    expect(response).toEqual([
-      {
-        id: "branch-id"
-      }
-    ]);
-    expect((spawnSpy: any).mock.calls.length).toBe(1);
-    expect((spawnSpy: any).mock.calls[0][1].includes("--user-token")).toBe(
-      false
-    );
   });
 
   test("undefined request options", async () => {

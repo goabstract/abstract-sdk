@@ -140,10 +140,13 @@ export type CollectionsListOptions = {
 };
 
 export type AccessToken = ?string | ShareDescriptor | ShareUrlDescriptor;
+
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
+
+export type ShareIdOption = () => Promise<string | ShareDescriptor>;
 
 export type EndpointMetric = {
   duration: number,
@@ -155,11 +158,12 @@ export type EndpointMetric = {
 export type AnalyticsCallback = EndpointMetric => mixed;
 
 export type CommandOptions = {
-  accessToken: AccessTokenOption,
+  accessToken?: AccessTokenOption,
   analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
+  shareId?: ShareIdOption,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>
 };
