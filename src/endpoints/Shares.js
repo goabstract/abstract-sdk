@@ -5,6 +5,7 @@ import type {
   RequestOptions,
   Share,
   ShareDescriptor,
+  ShareUrlDescriptor,
   ShareInput
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
@@ -39,7 +40,7 @@ export default class Shares extends Endpoint {
   }
 
   info<T: Share>(
-    descriptor: ShareDescriptor,
+    descriptor: ShareDescriptor | ShareUrlDescriptor,
     requestOptions: RequestOptions = {}
   ) {
     return this.configureRequest<Promise<T>>("info", {
