@@ -122,7 +122,7 @@ describe("Client", () => {
       });
 
       describe("authenticated", () => {
-        test("authenticated and shareId: ShareDescriptor", async () => {
+        test("shareId: ShareDescriptor", async () => {
           const client = new Client({
             ...CLIENT_CONFIG,
             accessToken: async (): Promise<AccessToken> =>
@@ -148,7 +148,7 @@ describe("Client", () => {
           );
         });
 
-        test("authenticated and shareId: string", async () => {
+        test("shareId: string", async () => {
           const client = new Client({
             ...CLIENT_CONFIG,
             shareId: async () => "share-id-string"
