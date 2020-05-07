@@ -249,6 +249,7 @@ export default class Endpoint {
           logCLIResponse.enabled && logCLIResponse(cliResponse);
           resolve(cliResponse);
         } catch (error) {
+          /* istanbul ignore next */
           reject(error);
         }
       });
