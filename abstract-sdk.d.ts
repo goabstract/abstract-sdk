@@ -1835,12 +1835,11 @@ interface CursorPromise<T> extends Promise<T> {
 }
 
 type AccessToken = string;
+
 type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
   | (() => Promise<AccessToken>);
-
-type ShareIdOption = () => Promise<string | ShareDescriptor>;
 
 type EndpointMetric = {
   duration: number,
@@ -1857,7 +1856,7 @@ type CommandOptions = {
   analyticsCallback: AnalyticsCallback,
   assetUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
-  shareId?: ShareIdOption,
+  shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor>,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>
 };
