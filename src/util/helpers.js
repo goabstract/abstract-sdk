@@ -1,11 +1,13 @@
 // @flow
-import type { ShareDescriptor } from "../types";
+import type { ShareDescriptor, ShareUrlDescriptor } from "../types";
 
 function parseShareURL(url: string): ?string {
   return url.split(/share\.(?:go)?abstract\.com\//)[1];
 }
 
-export function inferShareId(shareDescriptor: ShareDescriptor): string {
+export function inferShareId(
+  shareDescriptor: ShareDescriptor | ShareUrlDescriptor
+): string {
   let shareId;
 
   if (shareDescriptor.url) {

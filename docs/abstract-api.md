@@ -1834,7 +1834,7 @@ A share is a shareable url to an object in Abstract. You can use the desktop or 
 
 ![API][api-icon]
 
-`shares.info(ShareDescriptor, RequestOptions): Promise<Share>`
+`shares.info(ShareDescriptor | ShareUrlDescriptor, RequestOptions): Promise<Share>`
 
 ```js
 abstract.shares.info({
@@ -1854,12 +1854,12 @@ abstract.shares.info({
 
 ![API][api-icon]
 
-`shares.info(ShareDescriptor, RequestOptions): Promise<Share>`
+`shares.info(ShareDescriptor | ShareUrlDescriptor, RequestOptions): Promise<Share>`
 
 List all files for branch's share url
 
 ```js
-const branchShare = await abstract.share.info({
+const branchShare = await abstract.shares.info({
   url: 'https://share.goabstract.com/49b1f582-a8b4-46ca-8c86-bbc675fe27c4'
 })
 
@@ -2267,7 +2267,13 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ### ShareDescriptor
 
 ```js
-{ url: string } | { shareId: string }
+{ shareId: string }
+```
+
+### ShareUrlDescriptor
+
+```js
+{ url: string }
 ```
 
 ### BranchDescriptor

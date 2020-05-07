@@ -422,7 +422,9 @@ type LayerDescriptor = {
   layerId: string
 };
 
-type ShareDescriptor = { url: string } | { shareId: string };
+type ShareDescriptor = { shareId: string };
+
+type ShareUrlDescriptor =  { url: string };
 
 type UserDescriptor = {
   userId: string

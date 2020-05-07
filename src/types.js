@@ -77,7 +77,9 @@ export type LayerVersionDescriptor = {|
   layerId: string
 |};
 
-export type ShareDescriptor = {| url: string |} | {| shareId: string |};
+export type ShareDescriptor = {| shareId: string |};
+
+export type ShareUrlDescriptor = {| url: string |};
 
 export type ErrorData = {|
   path: string,
@@ -137,7 +139,8 @@ export type CollectionsListOptions = {
   userId?: string
 };
 
-export type AccessToken = ?string;
+export type AccessToken = ?string | ShareDescriptor | ShareUrlDescriptor;
+
 export type AccessTokenOption =
   | AccessToken // TODO: Deprecate?
   | (() => AccessToken) // TODO: Deprecate
