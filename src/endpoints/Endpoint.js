@@ -233,8 +233,8 @@ export default class Endpoint {
 
       response.on("close", errCode => {
         if (errCode !== 0) {
-          const response = JSON.parse(errBuffer.toString());
           try {
+            const response = JSON.parse(errBuffer.toString());
             throwCLIError(response, spawnArgs[0], { ...(spawnArgs[1]: any) });
           } catch (error) {
             reject(error);
@@ -242,12 +242,15 @@ export default class Endpoint {
           return;
         }
 
-        const cliResponse = JSON.parse(outBuffer.toString());
+        try {
+          const cliResponse = JSON.parse(outBuffer.toString());
 
-        /* istanbul ignore next */
-        logCLIResponse.enabled && logCLIResponse(cliResponse);
-
-        resolve(cliResponse);
+          /* istanbul ignore next */
+          logCLIResponse.enabled && logCLIResponse(cliResponse);
+          resolve(cliResponse);
+        } catch (error) {
+          reject(error);
+        }
       });
     });
   }
