@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.29](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.28...v8.0.0-beta.29) (2020-05-07)
+
+
+### Bug Fixes
+
+* Optional Error.captureStackTrace ([#259](https://github.com/goabstract/abstract-sdk/issues/259)) ([5fb24fd](https://github.com/goabstract/abstract-sdk/commit/5fb24fd))
+
+
+### Features
+
+* Add ability to set a shareId ([#267](https://github.com/goabstract/abstract-sdk/issues/267)) ([23f9ed0](https://github.com/goabstract/abstract-sdk/commit/23f9ed0))
+* **docs:** add description for an iframe aspect ratio fix ([#263](https://github.com/goabstract/abstract-sdk/issues/263)) ([9f19c3f](https://github.com/goabstract/abstract-sdk/commit/9f19c3f))
+* **docs:** document layer properties ([#264](https://github.com/goabstract/abstract-sdk/issues/264)) ([9dbeea7](https://github.com/goabstract/abstract-sdk/commit/9dbeea7))
+
+
+
 ## [8.0.0-beta.27](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.25...v8.0.0-beta.27) (2020-04-21)
 
 
