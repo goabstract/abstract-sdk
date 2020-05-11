@@ -161,7 +161,7 @@ export type CommandOptions = {
   apiUrl: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
-  shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor>,
+  shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>
 };
