@@ -40,7 +40,8 @@ export type ObjectDescriptor = {
 export type BranchCommitDescriptor = {|
   sha: string,
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master",
+  commitId?: string | "latest"
 |};
 
 export type CommitDescriptor = {|
