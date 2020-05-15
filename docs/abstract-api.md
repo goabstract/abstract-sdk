@@ -1094,6 +1094,7 @@ A file represents a standard file – in Abstract a file is always loaded from a
 |------------------------------|-----------|-----------------------------------------------------------------|
 | `applicationDocumentVersion` | `number`  | The application (eg Sketch's) version of the file               |
 | `applicationVersion`         | `string`  | The version of the application the file was created with        |
+| `commitId`                   | `string`  | ID of a commit                                                  |
 | `id`                         | `string`  | UUID identifier for the file                                    |
 | `isLibrary`                  | `boolean` | Is this file a library file or not                              |
 | `lastChangedAtSha`           | `string`  | SHA that represents the commit where this file was last changed |
@@ -1116,6 +1117,16 @@ abstract.files.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
   sha: "latest"
+});
+```
+
+List the files for a specific commit
+
+```js
+abstract.files.list({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  commitId: "38977cf997915aca6f1f9707bc982314fb30f6f2"
 });
 ```
 
