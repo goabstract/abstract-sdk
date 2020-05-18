@@ -59,16 +59,14 @@ export default class Files extends Endpoint {
 
     return this.configureRequest<Promise<File[]>>("list", {
       api: async () => {
-        let response = await this.apiRequest(
-          `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files`
-        );
-
-        if (latestDescriptor.commitId) {
-          response = await this.apiRequest(
+      const response = latestDescriptor.commitId
+        ? await this.apiRequest(
             `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/commits/${latestDescriptor.commitId}/files`
-          );
-        }
-
+          )
+        : await this.apiRequest(
+            `projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files``projects/${latestDescriptor.projectId}/branches/${latestDescriptor.branchId}/files`
+         );
+ 
         return wrap(response.files, response);
       },
 
