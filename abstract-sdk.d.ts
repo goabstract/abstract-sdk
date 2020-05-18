@@ -394,7 +394,7 @@ type BranchCommitDescriptor = {
   sha: string,
   projectId: string,
   branchId: string | "master",
-  commitId?: string | "latest"
+  commitId?: string
 };
 
 type BranchDescriptor = {
