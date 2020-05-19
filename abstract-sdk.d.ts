@@ -391,10 +391,9 @@ type ObjectDescriptor = {
 };
 
 type BranchCommitDescriptor = {
-  sha: string,
+  sha: string | "latest",
   projectId: string,
   branchId: string | "master",
-  commitId?: string
 };
 
 type BranchDescriptor = {
