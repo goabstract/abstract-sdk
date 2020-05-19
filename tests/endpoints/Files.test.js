@@ -77,7 +77,7 @@ describe("files", () => {
 
   describe("list", () => {
     test("api", async () => {
-      mockAPI("/projects/project-id/branches/branch-id/files", {
+      mockAPI("/projects/project-id/branches/branch-id/commits/sha/files", {
         files: [
           {
             id: "file-id"
@@ -88,32 +88,6 @@ describe("files", () => {
       const response = await API_CLIENT.files.list({
         branchId: "branch-id",
         projectId: "project-id",
-        sha: "sha"
-      });
-
-      expect(response).toEqual([
-        {
-          id: "file-id"
-        }
-      ]);
-    });
-
-    test("api - commit", async () => {
-      mockAPI(
-        "/projects/project-id/branches/branch-id/commits/commit-id/files",
-        {
-          files: [
-            {
-              id: "file-id"
-            }
-          ]
-        }
-      );
-
-      const response = await API_CLIENT.files.list({
-        branchId: "branch-id",
-        projectId: "project-id",
-        commitId: "commit-id",
         sha: "sha"
       });
 
