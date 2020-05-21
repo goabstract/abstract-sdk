@@ -11,7 +11,7 @@ import { NotFoundError, FileExportError } from "../../src/errors";
 describe("files", () => {
   describe("info", () => {
     test("api", async () => {
-      mockAPI("/projects/project-id/branches/branch-id/files", {
+      mockAPI("/projects/project-id/branches/branch-id/commits/sha/files", {
         files: [
           {
             id: "file-id"
@@ -32,7 +32,7 @@ describe("files", () => {
     });
 
     test("api - not found", async () => {
-      mockAPI("/projects/project-id/branches/branch-id/files", {
+      mockAPI("/projects/project-id/branches/branch-id/commits/sha/files", {
         files: [
           {
             id: "not-found"
@@ -136,7 +136,7 @@ describe("files", () => {
     });
 
     test("api - node with progress", async () => {
-      mockAPI("/projects/project-id/branches/branch-id/files", {
+      mockAPI("/projects/project-id/branches/branch-id/commits/sha/files", {
         files: [
           {
             id: "file-id"
@@ -193,7 +193,7 @@ describe("files", () => {
       global.setTimeout = cb => {
         cb();
       };
-      mockAPI("/projects/project-id/branches/branch-id/files", {
+      mockAPI("/projects/project-id/branches/branch-id/commits/sha/files", {
         files: [
           {
             id: "file-id"
