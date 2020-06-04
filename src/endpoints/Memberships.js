@@ -1,4 +1,6 @@
 // @flow
+import querystring from "querystring";
+import { pick } from "lodash";
 import type {
   Membership,
   OrganizationDescriptor,
@@ -9,6 +11,16 @@ import type {
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
+
+type MembershipsListOptions = {
+  ...RequestOptions,
+  limit?: number,
+  offset?: number
+};
+
+const headers = {
+  "Abstract-Api-Version": "20"
+};
 
 export default class Memberships extends Endpoint {
   name = "memberships";
@@ -38,24 +50,28 @@ export default class Memberships extends Endpoint {
 
   list(
     descriptor: OrganizationDescriptor | ProjectDescriptor,
-    requestOptions: RequestOptions = {}
+    requestOptions: MembershipsListOptions = {}
   ) {
+    const { limit, offset, ...restOptions } = requestOptions;
+    const options = pick(requestOptions, ["limit", "offset"]);
+    const query = querystring.stringify(options);
+
     return this.configureRequest<Promise<Membership[]>>("list", {
       api: async () => {
         let url = "";
 
         if (descriptor.organizationId) {
-          url = `organizations/${descriptor.organizationId}/memberships`;
+          url = `organizations/${descriptor.organizationId}/memberships?${query}`;
         }
 
         if (descriptor.projectId) {
-          url = `projects/${descriptor.projectId}/memberships`;
+          url = `projects/${descriptor.projectId}/memberships?${query}`;
         }
 
-        const response = await this.apiRequest(url);
+        const response = await this.apiRequest(url, { headers });
         return wrap(response.data, response);
       },
-      requestOptions
+      restOptions
     });
   }
 }

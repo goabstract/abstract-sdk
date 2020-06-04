@@ -42,7 +42,7 @@ describe("memberships", () => {
 
   describe("list", () => {
     test("api - project", async () => {
-      mockAPI("/projects/project-id/memberships", {
+      mockAPI("/projects/project-id/memberships?", {
         data: [
           {
             userId: "user-id"
@@ -62,7 +62,7 @@ describe("memberships", () => {
     });
 
     test("api - organization", async () => {
-      mockAPI("/organizations/org-id/memberships", {
+      mockAPI("/organizations/org-id/memberships?", {
         data: [
           {
             userId: "user-id"
