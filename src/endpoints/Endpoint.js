@@ -90,7 +90,7 @@ export default class Endpoint {
         }
       }
 
-      if (Object.keys(errors).length > 1) {
+      if (Object.keys(errors).length === transportMode.length) {
         throw new MultiError(errors);
       }
 
