@@ -4,7 +4,6 @@
 /website/build/
 /website/i18n/
 coverage
-flow-typed
 node_modules
 npm-debug.log
 package-lock.json
