@@ -91,10 +91,6 @@ export default class Endpoint {
       }
 
       if (Object.keys(errors).length === transportMode.length) {
-        if (process.env.NODE_ENV === "test") {
-          throw errors.api || errors.cli;
-        }
-
         throw new MultiError(errors);
       }
 
