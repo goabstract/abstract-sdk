@@ -1318,14 +1318,24 @@ export type LayerData = {
   properties: LayerDataProperties
 };
 
-export type LayerDataset = {
+export type LayerDataset = {|
   projectId: string,
   branchId: string,
   sha: string,
   fileId: string,
   layerId: string,
   layers: { [layerId: string]: LayerData }
-};
+|};
+
+export type FileDataset = {|
+  projectId: string,
+  branchId: string,
+  fileId: string,
+  layerStyles: { [styleId: string]: LayerDataProperties },
+  textStyles: { [styleId: string]: LayerTextStyle }
+|};
+
+export type Dataset = LayerDataset | FileDataset;
 
 type NotificationBase = {
   branchId: string,
