@@ -62,6 +62,24 @@ export default class Data extends Endpoint {
         }
       },
 
+      cli: async () => {
+        if (latestDescriptor.layerId) {
+          const response = await this.cliRequest([
+            "layers",
+            "inspect",
+            latestDescriptor.layerId,
+            `--project-id=${latestDescriptor.projectId}`,
+            `--branch-id=${latestDescriptor.branchId}`,
+            `--sha=${latestDescriptor.sha}`,
+            `--file-id=${latestDescriptor.fileId}`
+          ]);
+          return wrap(response);
+        } else {
+          const { layerId, ...fileDescriptor } = latestDescriptor;
+          throw Error("Not support yet");
+        }
+      },
+
       requestOptions
     });
   }
