@@ -764,7 +764,7 @@ abstract.commits.info({
 
 ![API][api-icon]
 
-`data.info (FileDescriptor, RequestOptions): Promise<FileDataset>`
+`data.info(FileDescriptor, RequestOptions): Promise<FileDataset>`
 
 Load layer styles and text styles for a file
 
