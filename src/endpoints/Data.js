@@ -45,7 +45,7 @@ export default class Data extends Endpoint {
           const layerStyles = [];
           const textStyles = [];
 
-          layerDatasets.forEach((layerDataset: Dataset) => {
+          layerDatasets.forEach(layerDataset => {
             if (!layerDataset.layers) return;
             const rootLayer = layerDataset.layers[layerDataset.layerId];
 
