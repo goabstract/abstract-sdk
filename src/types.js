@@ -1319,20 +1319,14 @@ export type LayerData = {
 };
 
 export type LayerDataset = {|
-  projectId: string,
-  branchId: string,
-  sha: string,
-  fileId: string,
-  layerId: string,
+  ...LayerDescriptor,
   layers: { [layerId: string]: LayerData }
 |};
 
 export type FileDataset = {|
-  projectId: string,
-  branchId: string,
-  fileId: string,
-  layerStyles: { [styleId: string]: LayerDataProperties },
-  textStyles: { [styleId: string]: LayerTextStyle }
+  ...FileDescriptor,
+  layerStyles: LayerDataProperties[],
+  textStyles: LayerTextStyle[]
 |};
 
 export type Dataset = LayerDataset | FileDataset;
