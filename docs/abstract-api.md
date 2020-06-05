@@ -762,7 +762,7 @@ abstract.commits.info({
 
 ### Retrieve data for file
 
-![CLI][cli-icon]
+![API][api-icon]
 
 `data.info (FileDescriptor, RequestOptions): Promise<FileDataset>`
 
@@ -772,7 +772,8 @@ Load layer styles and text styles for a file
 abstract.data.info({
   projectId: "a36daa90-1736-11e8-b8b0-8d1fec7aef70",
   fileId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2" // optional
+  branchId: "master", 
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
 });
 ```
 
@@ -783,8 +784,8 @@ abstract.data.info({
 | `projectId`  | `string`    | UUID of the project that this file is contained within              |
 | `branchId`   | `string`    | UUID of the branch that this file is contained within               |
 | `fileId`     | `string`    | UUID of the file                                                    |
-| `textStyles` | `{[styleId: string]: LayerTextStyle }` | [LayerTextStyle](https://sdk.goabstract.com/docs/abstract-api/#layertextstyle)|
-| `layerStyles`| `{[styleId: string]: LayerDataProperties }` | [LayerDataProperties](https://sdk.goabstract.com/docs/abstract-api/#layerdataproperties)|
+| `textStyles` | `LayerTextStyle[]` | [LayerTextStyle](https://sdk.goabstract.com/docs/abstract-api/#layertextstyle)|
+| `layerStyles`| `LayerDataProperties[]` | [LayerDataProperties](https://sdk.goabstract.com/docs/abstract-api/#layerdataproperties)|
 
 ### Retrieve data for layer
 
