@@ -7,7 +7,10 @@ import type {
   OrganizationMembershipDescriptor,
   ProjectDescriptor,
   ProjectMembershipDescriptor,
-  RequestOptions
+  RequestOptions,
+  OrganizationRole,
+  SubscriptionRole,
+  ProjectRoleFilter
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
@@ -15,7 +18,11 @@ import { wrap } from "../util/helpers";
 type MembershipsListOptions = {
   ...RequestOptions,
   limit?: number,
-  offset?: number
+  offset?: number,
+  organizationRole?: OrganizationRole,
+  subscriptionRole?: SubscriptionRole,
+  projectRole?: ProjectRoleFilter,
+  query?: string
 };
 
 const headers = {
@@ -52,20 +59,47 @@ export default class Memberships extends Endpoint {
     descriptor: OrganizationDescriptor | ProjectDescriptor,
     requestOptions: MembershipsListOptions = {}
   ) {
-    const { limit, offset, ...restOptions } = requestOptions;
+    const {
+      limit,
+      offset,
+      organizationRole,
+      projectRole,
+      subscriptionRole,
+      query,
+      ...restOptions
+    } = requestOptions;
     const options = pick(requestOptions, ["limit", "offset"]);
-    const query = querystring.stringify(options);
 
     return this.configureRequest<Promise<Membership[]>>("list", {
       api: async () => {
         let url = "";
 
         if (descriptor.organizationId) {
-          url = `organizations/${descriptor.organizationId}/memberships?${query}`;
+          if (organizationRole) {
+            options.role = organizationRole;
+          }
+          if (subscriptionRole) {
+            options.subscription_role = subscriptionRole;
+          }
+          if (query) {
+            options.search = query;
+          }
+          url = `organizations/${
+            descriptor.organizationId
+          }/memberships?${querystring.stringify(options)}`;
+          console.log(url);
         }
 
         if (descriptor.projectId) {
-          url = `projects/${descriptor.projectId}/memberships?${query}`;
+          if (projectRole) {
+            options.role = projectRole;
+          }
+          if (query) {
+            options.search = query;
+          }
+          url = `projects/${
+            descriptor.projectId
+          }/memberships?${querystring.stringify(options)}`;
         }
 
         const response = await this.apiRequest(url, { headers });

@@ -448,6 +448,11 @@ export type OrganizationMembershipDescriptor = {|
   organizationId: string
 |};
 
+export type OrganizationRole = "member" | "owner" | "guest";
+export type SubscriptionRole = "viewer" | "contributor";
+export type ProjectMembershipRole = "member" | "admin";
+export type ProjectRoleFilter = ProjectMembershipRole | "guest";
+
 export type Membership = {
   createdAt: string,
   organizationId: string,
