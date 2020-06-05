@@ -59,7 +59,14 @@ describe("data", () => {
           {
             layers: [
               {
-                id: "layer-id",
+                id: "layer-1-id",
+                projectId: "project-id",
+                fileId: "file-id",
+                libraryId: "libraryId",
+                sha: "sha"
+              },
+              {
+                id: "layer-2-id",
                 projectId: "project-id",
                 fileId: "file-id",
                 libraryId: "libraryId",
@@ -70,15 +77,27 @@ describe("data", () => {
         );
 
         mockAPI(
-          "/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-id/data",
+          "/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-1-id/data",
           {
-            layerId: "layer-id",
+            layerId: "layer-1-id",
             layers: {
-              "layer-id": {
-                id: "layer-id",
-                properties: { textStyleIndex: [{ styleName: "Testing" }] }
-              },
-              "nested-layer-id": { id: "nested-layer-id" }
+              "layer-1-id": {
+                id: "layer-1-id",
+                properties: { textStyleIndex: [{ styleName: "Testing 1" }] }
+              }
+            }
+          }
+        );
+
+        mockAPI(
+          "/projects/project-id/branches/branch-id/commits/sha/files/file-id/layers/layer-2-id/data",
+          {
+            layerId: "layer-2-id",
+            layers: {
+              "layer-2-id": {
+                id: "layer-2-id",
+                properties: { textStyleIndex: [{ styleName: "Testing 2" }] }
+              }
             }
           }
         );
@@ -96,7 +115,7 @@ describe("data", () => {
           fileId: "file-id",
           sha: "sha",
           layerStyles: [],
-          textStyles: [{ styleName: "Testing" }]
+          textStyles: [{ styleName: "Testing 1" }, { styleName: "Testing 2" }]
         });
       });
     });
