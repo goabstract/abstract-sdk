@@ -1156,6 +1156,7 @@ abstract.files.raw({
 The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. For example, it's possible to write the file to disk manually after post-processing it:
 
 ```js
+const fs = require("fs");
 const arrayBuffer = await abstract.files.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   branchId: "master",
@@ -1165,9 +1166,7 @@ const arrayBuffer = await abstract.files.raw({
   disableWrite: true
 });
 
-processedBuffer = postProcess(arrayBuffer);
-
-fs.writeFile("file.sketch", Buffer.from(processedBuffer), (err) => {
+fs.writeFile("file.sketch", Buffer.from(arrayBuffer), (err) => {
   if (err) throw err;
   console.log("File written!");
 });
