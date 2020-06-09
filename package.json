@@ -32,7 +32,7 @@
   "scripts": {
     "check-ts-types": "tsc abstract-sdk.d.ts --lib es2017,dom,esnext.asynciterable",
     "prepare": "./scripts/install-types.sh",
-    "lint": "eslint . --ignore-path .gitignore",
+    "lint": "eslint . --ignore-path .gitignore --ignore-pattern /website/static/js/marketo.js",
     "test": "jest --coverage --runInBand",
     "prebuild": "rm -rf dist && flow-copy-source -i **/testing.js src dist",
     "build": "babel src -d dist --ignore **/testing.js",
