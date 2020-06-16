@@ -10,7 +10,7 @@ import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
 export default class ReviewRequests extends Endpoint {
-  name = "reviewRequeasts";
+  name = "reviewRequests";
 
   list(
     descriptor: OrganizationDescriptor | ProjectDescriptor | BranchDescriptor,
