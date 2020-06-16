@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 (function() {
   var didInit = false;
   function initMunchkin() {
@@ -11,7 +12,7 @@
   s.async = true;
   s.src = "//munchkin.marketo.net/munchkin.js";
   s.onreadystatechange = function() {
-    if (this.readyState == "complete" || this.readyState == "loaded") {
+    if (this.readyState === "complete" || this.readyState === "loaded") {
       initMunchkin();
     }
   };
