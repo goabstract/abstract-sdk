@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.6",
-    "@elasticprojects/abstract-cli": "^11.1.1",
+    "@elasticprojects/abstract-cli": "^11.1.0",
     "core-js": "^3.6.5",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
