@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.31](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.30...v8.0.0-beta.31) (2020-06-26)
+
+
+### Bug Fixes
+
+* typo in name ([#283](https://github.com/goabstract/abstract-sdk/issues/283)) ([6748cff](https://github.com/goabstract/abstract-sdk/commit/6748cff))
+
+
+### Features
+
+* add marketo analytics to documentation website ([#281](https://github.com/goabstract/abstract-sdk/issues/281)) ([05c1b57](https://github.com/goabstract/abstract-sdk/commit/05c1b57))
+* list files from a commit ([#275](https://github.com/goabstract/abstract-sdk/issues/275)) ([cc97e76](https://github.com/goabstract/abstract-sdk/commit/cc97e76))
+* update cli ([#284](https://github.com/goabstract/abstract-sdk/issues/284)) ([e24b149](https://github.com/goabstract/abstract-sdk/commit/e24b149))
+
+
+
 ## [8.0.0-beta.29](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.28...v8.0.0-beta.29) (2020-05-07)
 
 
