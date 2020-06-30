@@ -12,7 +12,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* add marketo analytics to documentation website ([#281](https://github.com/goabstract/abstract-sdk/issues/281)) ([05c1b57](https://github.com/goabstract/abstract-sdk/commit/05c1b57))
 * list files from a commit ([#275](https://github.com/goabstract/abstract-sdk/issues/275)) ([cc97e76](https://github.com/goabstract/abstract-sdk/commit/cc97e76))
 * update cli ([#284](https://github.com/goabstract/abstract-sdk/issues/284)) ([e24b149](https://github.com/goabstract/abstract-sdk/commit/e24b149))
 
