@@ -1385,7 +1385,6 @@ Organizations contain users and projects.
 
 | Property                   | Type       | Description                                                                              |
 |----------------------------|------------|------------------------------------------------------------------------------------------|
-| `features`                 | `{[feature: string]: boolean}` | Map of feature flags enabled for this organization                   |
 | `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
 | `id`                       | `string`   | UUID                                                                                     |
 | `isUsernameOrganization`   | `boolean`  | A username organization is a free organization included with every user account          |
