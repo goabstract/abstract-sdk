@@ -159,9 +159,11 @@ export type CommandOptions = {
   accessToken?: AccessTokenOption,
   analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
+  clientSecret?: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
+  redirectUri?: string | Promise<string>,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>
 };
