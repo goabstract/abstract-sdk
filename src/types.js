@@ -459,7 +459,6 @@ export type Membership = {
 };
 
 export type Organization = {
-  features: { [feature: string]: boolean },
   hasBillingInfo?: boolean,
   id: string,
   isUsernameOrganization?: boolean,

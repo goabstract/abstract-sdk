@@ -7,6 +7,11 @@ import type {
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
 
+// Version 27 does not return features for organizations
+const headers = {
+  "Abstract-Api-Version": "27"
+};
+
 export default class Organizations extends Endpoint {
   name = "organizations";
 
@@ -17,7 +22,10 @@ export default class Organizations extends Endpoint {
     return this.configureRequest<Promise<Organization>>("info", {
       api: async () => {
         const response = await this.apiRequest(
-          `organizations/${descriptor.organizationId}`
+          `organizations/${descriptor.organizationId}`,
+          {
+            headers
+          }
         );
 
         return wrap(response.data, response);
@@ -29,7 +37,9 @@ export default class Organizations extends Endpoint {
   list(requestOptions: RequestOptions = {}) {
     return this.configureRequest<Promise<Organization[]>>("list", {
       api: async () => {
-        const response = await this.apiRequest("organizations");
+        const response = await this.apiRequest("organizations", {
+          headers
+        });
         return wrap(response.data, response);
       },
       requestOptions
