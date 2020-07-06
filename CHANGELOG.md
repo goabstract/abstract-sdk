@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.32](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.28...v8.0.0-beta.32) (2020-07-06)
+
+
+### Bug Fixes
+
+* Correctly handle error when CLI response is unparsable ([#269](https://github.com/goabstract/abstract-sdk/issues/269)) ([ffd5618](https://github.com/goabstract/abstract-sdk/commit/ffd5618))
+* Optional Error.captureStackTrace ([#259](https://github.com/goabstract/abstract-sdk/issues/259)) ([5fb24fd](https://github.com/goabstract/abstract-sdk/commit/5fb24fd))
+* typo in name ([#283](https://github.com/goabstract/abstract-sdk/issues/283)) ([6748cff](https://github.com/goabstract/abstract-sdk/commit/6748cff))
+
+
+### Features
+
+* Add ability to set a shareId ([#267](https://github.com/goabstract/abstract-sdk/issues/267)) ([23f9ed0](https://github.com/goabstract/abstract-sdk/commit/23f9ed0))
+* add marketo analytics to documentation website ([#281](https://github.com/goabstract/abstract-sdk/issues/281)) ([05c1b57](https://github.com/goabstract/abstract-sdk/commit/05c1b57))
+* list files from a commit ([#275](https://github.com/goabstract/abstract-sdk/issues/275)) ([cc97e76](https://github.com/goabstract/abstract-sdk/commit/cc97e76))
+* update cli ([#284](https://github.com/goabstract/abstract-sdk/issues/284)) ([e24b149](https://github.com/goabstract/abstract-sdk/commit/e24b149))
+* **docs:** add description for an iframe aspect ratio fix ([#263](https://github.com/goabstract/abstract-sdk/issues/263)) ([9f19c3f](https://github.com/goabstract/abstract-sdk/commit/9f19c3f))
+* **docs:** document layer properties ([#264](https://github.com/goabstract/abstract-sdk/issues/264)) ([9dbeea7](https://github.com/goabstract/abstract-sdk/commit/9dbeea7))
+
+
+
 ## [8.0.0-beta.31](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.30...v8.0.0-beta.31) (2020-06-26)
 
 
