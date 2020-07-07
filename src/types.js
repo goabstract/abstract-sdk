@@ -159,6 +159,7 @@ export type CommandOptions = {
   accessToken?: AccessTokenOption,
   analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
+  clientId?: string,
   clientSecret?: string | Promise<string>,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
