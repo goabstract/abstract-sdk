@@ -48,6 +48,14 @@ export class EndpointUndefinedError extends BaseError {
   }
 }
 
+export class OAuthCredentialsUndefinedError extends BaseError {
+  constructor() {
+    super(
+      "Client credentials are missing. Please doublecheck clientId, redirectUri and state"
+    );
+  }
+}
+
 export class InternalServerError extends BaseError {
   data: ErrorData;
 

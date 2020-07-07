@@ -1675,3 +1675,9 @@ export type ReviewRequest = {
   status: ReviewStatus,
   statusChangedAt: string
 };
+
+export type OAuthURLqueries = {
+  clientId: string,
+  redirectUri: string,
+  state: string
+};

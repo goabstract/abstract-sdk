@@ -13,6 +13,7 @@ import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
 import Memberships from "./endpoints/Memberships";
 import Notifications from "./endpoints/Notifications";
+import Oauth from "./endpoints/Oauth";
 import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
 import Previews from "./endpoints/Previews";
@@ -40,6 +41,7 @@ export default class Client {
   layers: Layers;
   memberships: Memberships;
   notifications: Notifications;
+  oauth: Oauth;
   organizations: Organizations;
   pages: Pages;
   previews: Previews;
@@ -80,6 +82,7 @@ export default class Client {
     this.layers = new Layers(this, options);
     this.memberships = new Memberships(this, options);
     this.notifications = new Notifications(this, options);
+    this.oauth = new Oauth(this, options);
     this.organizations = new Organizations(this, options);
     this.pages = new Pages(this, options);
     this.previews = new Previews(this, options);
