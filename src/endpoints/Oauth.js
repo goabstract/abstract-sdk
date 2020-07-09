@@ -1,5 +1,5 @@
 // @flow
-import { OAuthCredentialsUndefinedError } from "../errors";
+import { BaseError } from "../errors";
 import type { OAuthURLqueries } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
@@ -12,7 +12,9 @@ export default class Oauth extends Endpoint {
     let redirectUri = descriptor.redirectUri || this.options.redirectUri;
 
     if (!clientId || !state || !redirectUri) {
-      throw new OAuthCredentialsUndefinedError();
+      throw new BaseError(
+        "Client credentials are missing. Please doublecheck clientId, redirectUri and state"
+      );
     }
 
     redirectUri = encodeURIComponent(redirectUri);
