@@ -13,7 +13,6 @@ import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
 import Memberships from "./endpoints/Memberships";
 import Notifications from "./endpoints/Notifications";
-import OAuth from "./endpoints/OAuth";
 import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
 import Previews from "./endpoints/Previews";
@@ -24,6 +23,7 @@ import Shares from "./endpoints/Shares";
 import Stars from "./endpoints/Stars";
 import Users from "./endpoints/Users";
 import Webhooks from "./endpoints/Webhooks";
+import { generateAuthorizeUrl } from "./util/helpers";
 import type { CommandOptions, AnalyticsCallback } from "./types";
 
 export default class Client {
@@ -41,7 +41,6 @@ export default class Client {
   layers: Layers;
   memberships: Memberships;
   notifications: Notifications;
-  oauth: OAuth;
   organizations: Organizations;
   pages: Pages;
   previews: Previews;
@@ -52,6 +51,7 @@ export default class Client {
   stars: Stars;
   users: Users;
   webhooks: Webhooks;
+  generateAuthorizeUrl: function;
 
   _analyticsCallback: ?AnalyticsCallback;
 
@@ -82,7 +82,6 @@ export default class Client {
     this.layers = new Layers(this, options);
     this.memberships = new Memberships(this, options);
     this.notifications = new Notifications(this, options);
-    this.oauth = new OAuth(this, options);
     this.organizations = new Organizations(this, options);
     this.pages = new Pages(this, options);
     this.previews = new Previews(this, options);
@@ -93,6 +92,7 @@ export default class Client {
     this.stars = new Stars(this, options);
     this.users = new Users(this, options);
     this.webhooks = new Webhooks(this, options);
+    this.generateAuthorizeUrl = generateAuthorizeUrl.bind({ options });
   }
 
   unwrap(value: any) {

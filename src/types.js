@@ -1676,7 +1676,7 @@ export type ReviewRequest = {
   statusChangedAt: string
 };
 
-export type OAuthURLqueries = {
+export type OAuthAuthorizeInput = {
   clientId: string,
   redirectUri: string,
   state: string

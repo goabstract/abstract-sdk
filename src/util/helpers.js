@@ -1,5 +1,11 @@
 // @flow
-import type { ShareDescriptor, ShareUrlDescriptor } from "../types";
+import type {
+  ShareDescriptor,
+  ShareUrlDescriptor,
+  OAuthAuthorizeInput
+} from "../types";
+
+import { BaseError } from "../errors";
 
 function parseShareURL(url: string): ?string {
   return url.split(/share\.(?:go)?abstract\.com\//)[1];
@@ -44,4 +50,20 @@ export function wrap(value: any, response?: any) {
     value: Array.isArray(response) ? [...response] : { ...(response: {}) }
   });
   return value;
+}
+
+export function generateAuthorizeUrl(input: OAuthAuthorizeInput): string {
+  const clientId = input.clientId || this.options.clientId;
+  const state = input.state;
+  let redirectUri = input.redirectUri || this.options.redirectUri;
+
+  if (!clientId || !state || !redirectUri) {
+    throw new BaseError(
+      "Client credentials are missing. Please doublecheck clientId, redirectUri and state"
+    );
+  }
+
+  redirectUri = encodeURIComponent(redirectUri);
+
+  return `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=all&state=${state}`;
 }

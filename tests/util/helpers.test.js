@@ -34,4 +34,18 @@ describe("helpers", () => {
     const response = { ...value, baz: "qux" };
     expect(API_CLIENT.unwrap(utils.wrap(value, response))).toEqual(response);
   });
+
+  test("generateAuthUrl", () => {
+    const [clientId, redirectUri, state] = ["clientId", "redirectUri", "state"];
+
+    const url = API_CLIENT.generateAuthorizeUrl({
+      clientId,
+      redirectUri,
+      state
+    });
+
+    expect(url).toEqual(
+      `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=all&state=${state}`
+    );
+  });
 });
