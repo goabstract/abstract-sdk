@@ -4,7 +4,7 @@ import type { AuthorizeToken, TokenResponseData } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import Client from "../Client";
 
-export default class Oauth extends Endpoint {
+export default class OAuth extends Endpoint {
   name = "oauth";
 
   getToken(descriptor: AuthorizeToken) {
