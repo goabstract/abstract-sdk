@@ -51,7 +51,7 @@ export default class Client {
   stars: Stars;
   users: Users;
   webhooks: Webhooks;
-  generateAuthorizeUrl: function;
+  generateAuthorizeUrl: typeof generateAuthorizeUrl;
 
   _analyticsCallback: ?AnalyticsCallback;
 
