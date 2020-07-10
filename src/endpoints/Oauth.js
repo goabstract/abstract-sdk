@@ -3,7 +3,7 @@ import { BaseError } from "../errors";
 import type { OAuthURLqueries } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 
-export default class Oauth extends Endpoint {
+export default class OAuth extends Endpoint {
   name = "oauth";
 
   generateUrl(descriptor: OAuthURLqueries) {
