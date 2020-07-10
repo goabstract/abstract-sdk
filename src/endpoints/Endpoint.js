@@ -109,7 +109,7 @@ export default class Endpoint {
     const { customHostname, raw, onProgress } = apiOptions;
     const hostname = customHostname || (await this.options.apiUrl);
 
-    fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
+    // fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
     fetchOptions.headers = await this._getFetchHeaders(fetchOptions.headers);
     const args = [`${hostname}/${url}`, fetchOptions];
 
@@ -117,7 +117,7 @@ export default class Endpoint {
     logAPIRequest.enabled && logAPIRequest(args);
 
     const response = await fetch(...args);
-    !response.ok && (await throwAPIError(response, url, fetchOptions.body));
+    // !response.ok && (await throwAPIError(response, url, fetchOptions.body));
     if (response.status === 204) {
       return (undefined: any);
     }

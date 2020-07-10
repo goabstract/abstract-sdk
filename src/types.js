@@ -1681,3 +1681,19 @@ export type OAuthURLqueries = {
   redirectUri: string,
   state: string
 };
+
+export type AuthorizeToken = {
+  redirectUri: string,
+  clientSecret: string,
+  clientId: string,
+  authorizationCode: string
+};
+
+export type TokenResponseData = {
+  access_token: string,
+  client_id: string,
+  created_at: string,
+  id: string,
+  scope: string,
+  user_id: string
+};
