@@ -117,7 +117,7 @@ export default class Endpoint {
     logAPIRequest.enabled && logAPIRequest(args);
 
     const response = await fetch(...args);
-    // !response.ok && (await throwAPIError(response, url, fetchOptions.body));
+    !response.ok && (await throwAPIError(response, url, fetchOptions.body));
     if (response.status === 204) {
       return (undefined: any);
     }
