@@ -55,7 +55,7 @@ export function wrap(value: any, response?: any) {
 export function generateAuthorizeUrl(input: OAuthAuthorizeInput): string {
   const clientId = input.clientId || this.options.clientId;
   const state = input.state;
-  let redirectUri = input.redirectUri || this.options.redirectUri;
+  const redirectUri = input.redirectUri || this.options.redirectUri;
 
   if (!clientId || !state || !redirectUri) {
     throw new BaseError(
@@ -63,7 +63,5 @@ export function generateAuthorizeUrl(input: OAuthAuthorizeInput): string {
     );
   }
 
-  redirectUri = encodeURIComponent(redirectUri);
-
-  return `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=all&state=${state}`;
+  return `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=all&state=${state}`;
 }
