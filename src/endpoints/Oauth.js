@@ -1,6 +1,10 @@
 // @flow
 import { BaseError } from "../errors";
-import type { AuthorizeToken, TokenResponseData } from "../types";
+import type {
+  OAuthAuthorizeInput,
+  AuthorizeToken,
+  TokenResponseData
+} from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import Client from "../Client";
 
@@ -51,5 +55,21 @@ export default class OAuth extends Endpoint {
       ...this.options,
       accessToken
     });
+  }
+
+  generateAuthorizeUrl(input: OAuthAuthorizeInput): string {
+    const clientId = input.clientId || this.options.clientId;
+    const state = input.state;
+    const redirectUri = input.redirectUri || this.options.redirectUri;
+
+    if (!clientId || !state || !redirectUri) {
+      throw new BaseError(
+        "Client credentials are missing. Please doublecheck clientId, redirectUri and state"
+      );
+    }
+
+    return `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}&response_type=code&scope=all&state=${state}`;
   }
 }
