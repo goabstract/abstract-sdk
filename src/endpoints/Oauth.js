@@ -25,7 +25,7 @@ export default class OAuth extends Endpoint {
     body.append("grant_type", "authorization_code");
     body.append("redirect_uri", redirectUri);
 
-    return this.configureRequest<Promise<TokenResponseData>>("info", {
+    return this.configureRequest<Promise<TokenResponseData>>("getToken", {
       api: async () => {
         const response = await this.apiRequest(
           `auth/tokens`,
