@@ -2,7 +2,7 @@
 import { BaseError } from "../errors";
 import type {
   OAuthAuthorizeInput,
-  AuthorizeToken,
+  OAuthOnAuthorizeToken,
   TokenResponseData
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
@@ -11,11 +11,11 @@ import Client from "../Client";
 export default class OAuth extends Endpoint {
   name = "oauth";
 
-  getToken(descriptor: AuthorizeToken) {
-    const clientId = descriptor.clientId || this.options.clientId;
-    const clientSecret = descriptor.clientSecret || this.options.clientSecret;
-    let redirectUri = descriptor.redirectUri || this.options.redirectUri;
-    const { authorizationCode } = descriptor;
+  getToken(input: OAuthOnAuthorizeToken) {
+    const clientId = input.clientId || this.options.clientId;
+    const clientSecret = input.clientSecret || this.options.clientSecret;
+    let redirectUri = input.redirectUri || this.options.redirectUri;
+    const { authorizationCode } = input;
 
     const body = new URLSearchParams();
 

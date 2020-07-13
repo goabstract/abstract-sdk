@@ -1682,7 +1682,7 @@ export type OAuthAuthorizeInput = {
   state: string
 };
 
-export type AuthorizeToken = {
+export type OAuthOnAuthorizeToken = {
   redirectUri: string,
   clientSecret: string,
   clientId: string,
