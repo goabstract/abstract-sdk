@@ -59,20 +59,30 @@ export default class Branches extends Endpoint {
 
     return this.configureRequest<Promise<Branch[]>>("list", {
       api: async () => {
-        const query = querystring.stringify({
-          limit,
-          offset,
-          filter,
-          search,
-          userId:
-            descriptor && descriptor.userId ? descriptor.userId : undefined
-        });
-        const requestUrl =
-          descriptor && descriptor.projectId
-            ? `projects/${descriptor.projectId}/branches/?${query}`
-            : `branches/?${query}`;
+        const queryOptions = { limit, offset, filter, search };
+        let query = querystring.stringify(queryOptions);
+        let response = null;
 
-        const response = await this.apiRequest(requestUrl, { headers });
+        if (descriptor && descriptor.userId) {
+          query = querystring.stringify({
+            ...queryOptions,
+            userId: descriptor.userId
+          });
+
+          response = await this.apiRequest(`branches/?${query}`, {
+            headers
+          });
+        } else if (descriptor && descriptor.projectId) {
+          response = await this.apiRequest(
+            `projects/${descriptor.projectId}/branches/?${query}`,
+            { headers }
+          );
+        } else {
+          response = await this.apiRequest(`branches/?${query}`, {
+            headers
+          });
+        }
+
         return wrap(response.data.branches, response);
       },
 
