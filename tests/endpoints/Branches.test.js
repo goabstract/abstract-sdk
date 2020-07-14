@@ -137,6 +137,26 @@ describe("branches", () => {
       ]);
     });
 
+    test("api - all branches for a user", async () => {
+      mockAPI("/branches/?userId=1234", {
+        data: {
+          branches: [
+            {
+              id: "branch-id"
+            }
+          ]
+        }
+      });
+
+      const response = await API_CLIENT.branches.list({ userId: "1234" });
+
+      expect(response).toEqual([
+        {
+          id: "branch-id"
+        }
+      ]);
+    });
+
     test("cli", async () => {
       mockCLI(["branches", "list", "--project-id=project-id"], {
         branches: [
