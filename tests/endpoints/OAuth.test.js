@@ -18,13 +18,23 @@ describe("oauth", () => {
       );
 
       const response = await API_CLIENT.oauth.getToken({
-        client_id: "client_id",
-        client_secret: "client_secret",
-        redirect_uri: "redirect_uri",
-        authorization_code: "authorization_code"
+        clientId: "client_id",
+        clientSecret: "client_secret",
+        redirectUri: "redirect_uri",
+        authorizationCode: "authorization_code"
       });
 
       expect(response).toEqual("access_token");
+    });
+
+    test("api - without data", async () => {
+      expect(() =>
+        API_CLIENT.oauth.getToken({
+          clientSecret: "client_secret",
+          redirectUri: "redirect_uri",
+          authorizationCode: "authorization_code"
+        })
+      ).toThrowError();
     });
   });
 
