@@ -19,11 +19,15 @@ export default class OAuth extends Endpoint {
 
     const body = new URLSearchParams();
 
+    // $FlowFixMe
     body.append("client_id", clientId);
+    // $FlowFixMe
     body.append("client_secret", clientSecret);
+    // $FlowFixMe
+    body.append("redirect_uri", redirectUri);
+
     body.append("code", authorizationCode);
     body.append("grant_type", "authorization_code");
-    body.append("redirect_uri", redirectUri);
 
     return this.configureRequest<Promise<TokenResponseData>>("getToken", {
       api: async () => {
@@ -41,11 +45,7 @@ export default class OAuth extends Endpoint {
           }
         );
 
-        if (!!response.error) {
-          throw new BaseError(`Error: ${response.error}`);
-        } else {
-          return response.access_token;
-        }
+        return response.access_token;
       }
     });
   }

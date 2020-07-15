@@ -71,6 +71,15 @@ export function mockAPI(
   (nock("http://apiurl"): any)[method](url).reply(code, response);
 }
 
+export function mockAuth(
+  url: string,
+  response: Object,
+  code: number = 200,
+  method: string = "get"
+) {
+  (nock("https://auth.goabstract.com"): any)[method](url).reply(code, response);
+}
+
 export function mockPreviewAPI(
   url: string,
   response: Object,
