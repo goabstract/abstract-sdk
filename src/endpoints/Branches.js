@@ -68,11 +68,8 @@ export default class Branches extends Endpoint {
             ...queryOptions,
             userId: descriptor.userId
           });
-
-          response = await this.apiRequest(`branches/?${query}`, {
-            headers
-          });
-        } else if (descriptor && descriptor.projectId) {
+        }
+        if (descriptor && descriptor.projectId) {
           response = await this.apiRequest(
             `projects/${descriptor.projectId}/branches/?${query}`,
             { headers }
