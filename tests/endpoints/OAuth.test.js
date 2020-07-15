@@ -2,6 +2,12 @@ import { mockAuth, API_CLIENT } from "../../src/util/testing";
 
 describe("oauth", () => {
   describe("getToken", () => {
+    const [clientId, clientSecret, redirectUri, authorizationCode] = [
+      "client_id",
+      "client_secret",
+      "redirect_uri",
+      "authorization_code"
+    ];
     test("api - with data", async () => {
       mockAuth(
         "/auth/tokens",
@@ -27,12 +33,42 @@ describe("oauth", () => {
       expect(response).toEqual("access_token");
     });
 
-    test("api - without data", async () => {
+    test("api - without clientId", async () => {
       expect(() =>
         API_CLIENT.oauth.getToken({
-          clientSecret: "client_secret",
-          redirectUri: "redirect_uri",
-          authorizationCode: "authorization_code"
+          clientSecret,
+          redirectUri,
+          authorizationCode
+        })
+      ).toThrowError();
+    });
+
+    test("api - without clientSecret", async () => {
+      expect(() =>
+        API_CLIENT.oauth.getToken({
+          clientId,
+          redirectUri,
+          authorizationCode
+        })
+      ).toThrowError();
+    });
+
+    test("api - without redirectUri", async () => {
+      expect(() =>
+        API_CLIENT.oauth.getToken({
+          clientId,
+          clientSecret,
+          authorizationCode
+        })
+      ).toThrowError();
+    });
+
+    test("api - without authorizationCode", async () => {
+      expect(() =>
+        API_CLIENT.oauth.getToken({
+          clientId,
+          clientSecret,
+          redirectUri
         })
       ).toThrowError();
     });

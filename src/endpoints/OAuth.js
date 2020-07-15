@@ -14,12 +14,12 @@ export default class OAuth extends Endpoint {
   getToken(input: OAuthTokenInput) {
     const clientId = input.clientId || this.options.clientId;
     const clientSecret = input.clientSecret || this.options.clientSecret;
-    let redirectUri = input.redirectUri || this.options.redirectUri;
+    const redirectUri = input.redirectUri || this.options.redirectUri;
     const { authorizationCode } = input;
 
     const body = new URLSearchParams();
 
-    if (!clientId || !clientSecret || !redirectUri) {
+    if (!clientId || !clientSecret || !redirectUri || !authorizationCode) {
       throw new Error("OAuthTokenInput required");
     }
 
