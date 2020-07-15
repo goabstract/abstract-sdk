@@ -160,7 +160,7 @@ export type CommandOptions = {
   analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
   clientId?: string,
-  clientSecret?: string | Promise<string>,
+  clientSecret?: string,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
@@ -462,7 +462,6 @@ export type Membership = {
 };
 
 export type Organization = {
-  features: { [feature: string]: boolean },
   hasBillingInfo?: boolean,
   id: string,
   isUsernameOrganization?: boolean,
@@ -1682,7 +1681,7 @@ export type OAuthAuthorizeInput = {
   state: string
 };
 
-export type OAuthOnAuthorizeToken = {
+export type OAuthTokenInput = {
   redirectUri: string,
   clientSecret: string,
   clientId: string,

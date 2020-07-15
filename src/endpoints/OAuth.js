@@ -2,7 +2,7 @@
 import { BaseError } from "../errors";
 import type {
   OAuthAuthorizeInput,
-  OAuthOnAuthorizeToken,
+  OAuthTokenInput,
   TokenResponseData
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
@@ -11,7 +11,7 @@ import Client from "../Client";
 export default class OAuth extends Endpoint {
   name = "oauth";
 
-  getToken(input: OAuthOnAuthorizeToken) {
+  getToken(input: OAuthTokenInput) {
     const clientId = input.clientId || this.options.clientId;
     const clientSecret = input.clientSecret || this.options.clientSecret;
     let redirectUri = input.redirectUri || this.options.redirectUri;
@@ -19,11 +19,12 @@ export default class OAuth extends Endpoint {
 
     const body = new URLSearchParams();
 
-    // $FlowFixMe
+    if (!clientId || !clientSecret || !redirectUri) {
+      throw new Error("OAuthTokenInput required");
+    }
+
     body.append("client_id", clientId);
-    // $FlowFixMe
     body.append("client_secret", clientSecret);
-    // $FlowFixMe
     body.append("redirect_uri", redirectUri);
 
     body.append("code", authorizationCode);
