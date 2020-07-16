@@ -6,7 +6,8 @@ import type {
   BranchMergeState,
   ListOptions,
   ProjectDescriptor,
-  RequestOptions
+  RequestOptions,
+  UserDescriptor
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
@@ -47,7 +48,7 @@ export default class Branches extends Endpoint {
   }
 
   list(
-    descriptor?: ProjectDescriptor,
+    descriptor?: ProjectDescriptor | UserDescriptor,
     options: {
       ...ListOptions,
       filter?: "active" | "archived" | "mine",
@@ -58,17 +59,34 @@ export default class Branches extends Endpoint {
 
     return this.configureRequest<Promise<Branch[]>>("list", {
       api: async () => {
-        const query = querystring.stringify({ limit, offset, filter, search });
-        const requestUrl = descriptor
-          ? `projects/${descriptor.projectId}/branches/?${query}`
-          : `branches/?${query}`;
+        let queryOptions = { limit, offset, filter, search };
+        let response = null;
 
-        const response = await this.apiRequest(requestUrl, { headers });
+        if (descriptor && descriptor.userId) {
+          queryOptions = {
+            ...queryOptions,
+            userId: descriptor.userId
+          };
+        }
+
+        const query = querystring.stringify(queryOptions);
+
+        if (descriptor && descriptor.projectId) {
+          response = await this.apiRequest(
+            `projects/${descriptor.projectId}/branches/?${query}`,
+            { headers }
+          );
+        } else {
+          response = await this.apiRequest(`branches/?${query}`, {
+            headers
+          });
+        }
+
         return wrap(response.data.branches, response);
       },
 
       cli: async () => {
-        if (!descriptor) {
+        if (!descriptor || (descriptor && !descriptor.projectId)) {
           throw new BranchSearchCLIError();
         }
 

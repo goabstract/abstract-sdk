@@ -150,7 +150,7 @@ interface Assets extends Endpoint {
 interface Branches extends Endpoint {
   info(descriptor: BranchDescriptor, requestOptions?: RequestOptions): Promise<Branch>;
   list(
-    descriptor?: ProjectDescriptor,
+    descriptor?: ProjectDescriptor | UserDescriptor | ProjectMembershipDescriptor,
     options?: RequestOptions & { filter?: "active" | "archived" | "mine", search?: string }
   ): Promise<Branch[]>;
   mergeState(descriptor: BranchDescriptor, options?: { parent?: string }): Promise<BranchMergeState>;
