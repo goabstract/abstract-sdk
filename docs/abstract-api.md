@@ -226,6 +226,25 @@ abstract.branches.list({
 });
 ```
 
+List all branches for a user in a project
+
+```js
+abstract.branches.list({
+  userId: "48b5d670-2002-45ea-929d-4b00863778e4",
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+}, {
+  filter: "active"
+});
+```
+
+List all branches for a user across all organizations
+
+```js
+abstract.branches.list({
+  userId: "48b5d670-2002-45ea-929d-4b00863778e4"
+});
+```
+
 Search for a branch by name across all projects 
 
 ```js
@@ -2390,7 +2409,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 }
 ```
 
-### OrganizationProjectDescriptor
+### ProjectMembershipDescriptor
 
 ```js
 {
@@ -2399,7 +2418,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 }
 ```
 
-### ProjectMembershipDescriptor
+### OrganizationMembershipDescriptor
 
 ```js
 {
