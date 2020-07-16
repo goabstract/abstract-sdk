@@ -226,7 +226,7 @@ abstract.branches.list({
 });
 ```
 
-List all branches for a user in a project
+List all active branches for a user in a project
 
 ```js
 abstract.branches.list({
