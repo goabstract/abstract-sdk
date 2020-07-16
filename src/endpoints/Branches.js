@@ -59,16 +59,18 @@ export default class Branches extends Endpoint {
 
     return this.configureRequest<Promise<Branch[]>>("list", {
       api: async () => {
-        const queryOptions = { limit, offset, filter, search };
-        let query = querystring.stringify(queryOptions);
+        let queryOptions = { limit, offset, filter, search };
         let response = null;
 
         if (descriptor && descriptor.userId) {
-          query = querystring.stringify({
+          queryOptions = {
             ...queryOptions,
             userId: descriptor.userId
-          });
+          };
         }
+
+        const query = querystring.stringify(queryOptions);
+
         if (descriptor && descriptor.projectId) {
           response = await this.apiRequest(
             `projects/${descriptor.projectId}/branches/?${query}`,
