@@ -17,7 +17,7 @@ const Client = require("../src/Client").default;
 
 describe("Client", () => {
   test("no transports specified", async () => {
-    expect.assertions(1);
+    expect.assertions(2);
 
     try {
       await API_CLIENT.organizations.list({
@@ -236,6 +236,13 @@ describe("Client", () => {
           false
         );
       });
+    });
+
+    describe("setToken", () => {
+      expect(API_CLIENT.setToken("token")).toHaveProperty(
+        "accessToken",
+        "token"
+      );
     });
   });
 

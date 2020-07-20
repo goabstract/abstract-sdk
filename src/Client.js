@@ -27,6 +27,7 @@ import Webhooks from "./endpoints/Webhooks";
 import type { CommandOptions, AnalyticsCallback } from "./types";
 
 export default class Client {
+  options: CommandOptions;
   activities: Activities;
   assets: Assets;
   branches: Branches;
@@ -56,7 +57,7 @@ export default class Client {
   _analyticsCallback: ?AnalyticsCallback;
 
   constructor(options: $Shape<CommandOptions> = {}) {
-    options = {
+    this.options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
       objectUrl: "https://objects.goabstract.com",
@@ -67,32 +68,37 @@ export default class Client {
       ...options
     };
 
-    this._analyticsCallback = options.analyticsCallback;
-    this.activities = new Activities(this, options);
-    this.assets = new Assets(this, options);
-    this.branches = new Branches(this, options);
-    this.changesets = new Changesets(this, options);
-    this.collectionLayers = new CollectionLayers(this, options);
-    this.collections = new Collections(this, options);
-    this.comments = new Comments(this, options);
-    this.commits = new Commits(this, options);
-    this.data = new Data(this, options);
-    this.descriptors = new Descriptors(this, options);
-    this.files = new Files(this, options);
-    this.layers = new Layers(this, options);
-    this.memberships = new Memberships(this, options);
-    this.notifications = new Notifications(this, options);
-    this.oauth = new OAuth(this, options);
-    this.organizations = new Organizations(this, options);
-    this.pages = new Pages(this, options);
-    this.previews = new Previews(this, options);
-    this.projects = new Projects(this, options);
-    this.reviewRequests = new ReviewRequests(this, options);
-    this.sections = new Sections(this, options);
-    this.shares = new Shares(this, options);
-    this.stars = new Stars(this, options);
-    this.users = new Users(this, options);
-    this.webhooks = new Webhooks(this, options);
+    this._analyticsCallback = this.options.analyticsCallback;
+    this.activities = new Activities(this, this.options);
+    this.assets = new Assets(this, this.options);
+    this.branches = new Branches(this, this.options);
+    this.changesets = new Changesets(this, this.options);
+    this.collectionLayers = new CollectionLayers(this, this.options);
+    this.collections = new Collections(this, this.options);
+    this.comments = new Comments(this, this.options);
+    this.commits = new Commits(this, this.options);
+    this.data = new Data(this, this.options);
+    this.descriptors = new Descriptors(this, this.options);
+    this.files = new Files(this, this.options);
+    this.layers = new Layers(this, this.options);
+    this.memberships = new Memberships(this, this.options);
+    this.notifications = new Notifications(this, this.options);
+    this.oauth = new OAuth(this, this.options);
+    this.organizations = new Organizations(this, this.options);
+    this.pages = new Pages(this, this.options);
+    this.previews = new Previews(this, this.options);
+    this.projects = new Projects(this, this.options);
+    this.reviewRequests = new ReviewRequests(this, this.options);
+    this.sections = new Sections(this, this.options);
+    this.shares = new Shares(this, this.options);
+    this.stars = new Stars(this, this.options);
+    this.users = new Users(this, this.options);
+    this.webhooks = new Webhooks(this, this.options);
+  }
+
+  setToken(accessToken: string) {
+    this.options.accessToken = accessToken;
+    return this.options;
   }
 
   unwrap(value: any) {
