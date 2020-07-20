@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.33](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.32...v8.0.0-beta.33) (2020-07-20)
+
+
+
 ## [8.0.0-beta.32](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.28...v8.0.0-beta.32) (2020-07-06)
 
 
