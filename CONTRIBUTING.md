@@ -92,16 +92,20 @@ New package versions of `abstract-sdk` are automatically published to the public
 
 1. Bump the version and submit a pull request.
     ```sh
-    $ yarn release
+    $ yarn release --prerelease
     $ git push origin <new_tag_version>
     ```
 2. Once the PR lands, push the new tag to the repository.
     ```sh
     $ git push origin <new_tag_version>
     ```
+    or
+    ```sh
+    $ git push --follow-tags
+    ``` 
 3. Lastly, update the documentation.
     ```sh
-    $ git checkout docs
+    $ git checkout -t origin/docs -b docs
     $ git rebase master
     $ git push origin docs -f
     ```
