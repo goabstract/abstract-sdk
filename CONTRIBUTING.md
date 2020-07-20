@@ -99,10 +99,6 @@ New package versions of `abstract-sdk` are automatically published to the public
    ```sh
    $ git push origin <new_tag_version>
    ```
-   or
-   ```sh
-   $ git push --follow-tags
-   ```
 3. Lastly, update the documentation.
    ```sh
    $ git checkout -t origin/docs -b docs
