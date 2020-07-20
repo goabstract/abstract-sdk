@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.33](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.32...v8.0.0-beta.33) (2020-07-20)
+
+### Features
+
+* Allows listing of branches for user of an organization and project ([#293](https://github.com/goabstract/abstract-sdk/pull/293)) ([0849b63](https://github.com/goabstract/abstract-sdk/commit/0849b63dcc08e8adff55abd2e8e50338efe1053f))
+
 ## [8.0.0-beta.32](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.28...v8.0.0-beta.32) (2020-07-06)
 
 
