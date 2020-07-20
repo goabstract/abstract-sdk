@@ -109,7 +109,15 @@ export default class Endpoint {
     const { customHostname, raw, onProgress } = apiOptions;
     const hostname = customHostname || (await this.options.apiUrl);
 
-    // fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
+    if (
+      fetchOptions.headers &&
+      fetchOptions.headers["Content-Type"] !==
+        "application/x-www-form-urlencoded"
+    ) {
+      fetchOptions.body =
+        fetchOptions.body && JSON.stringify(fetchOptions.body);
+    }
+
     fetchOptions.headers = await this._getFetchHeaders(fetchOptions.headers);
     const args = [`${hostname}/${url}`, fetchOptions];
 
