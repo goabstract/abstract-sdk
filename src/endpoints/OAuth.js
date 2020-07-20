@@ -51,13 +51,6 @@ export default class OAuth extends Endpoint {
     });
   }
 
-  setToken(accessToken: string) {
-    return new Client({
-      ...this.options,
-      accessToken
-    });
-  }
-
   generateAuthorizeUrl(input: OAuthAuthorizeInput): string {
     const clientId = input.clientId || this.options.clientId;
     const state = input.state;

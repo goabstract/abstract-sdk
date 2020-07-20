@@ -74,13 +74,6 @@ describe("oauth", () => {
     });
   });
 
-  describe("setToken", () => {
-    test("set Client with new accessToken", () => {
-      const client = API_CLIENT.oauth.setToken("accessToken");
-      expect(client).toEqual(API_CLIENT);
-    });
-  });
-
   describe("generateAuthUrl", () => {
     test("options are passed", () => {
       const [clientId, redirectUri, state] = [
