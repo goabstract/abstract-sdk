@@ -61,7 +61,7 @@ export default class OAuth extends Endpoint {
       );
     }
 
-    return `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+    return `https://app.abstract.com/signin/auth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
       redirectUri
     )}&response_type=code&scope=all&state=${state}`;
   }
