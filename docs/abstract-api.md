@@ -755,6 +755,14 @@ abstract.commits.info({
 });
 ```
 
+## Client
+
+### Set Token
+Adds accessToken to `Client.options`. Used when [authenticating](/docs/authentication#oauth).
+
+```js
+abstract.setToken(accessToken: string)
+```
 
 ## Data
 
@@ -1376,6 +1384,48 @@ abstract.notifications.info({
 });
 ```
 
+## OAuth
+This endpoint is used for authentication. View [oauth installation giude](/installation/oauth)
+
+### Generate Authorization Url
+
+`generateAuthorizeUrl(input: OAuthAuthorizeInput): string`
+
+```js
+type OAuthAuthorizeInput = {
+  clientId: string,
+  redirectUri: string,
+  state: string
+};
+```
+
+### Example
+
+```js
+abstract.oauth.generateAuthorizeUrl({ state: "somestate" })
+```
+
+
+### Get Token
+
+Exchanges `authorizationCode` with `accessToken` on Abstract server.
+
+`getToken(input: OAuthTokenInput): accessToken`
+
+```js
+OAuthTokenInput = {
+  redirectUri: string,
+  clientSecret: string,
+  clientId: string,
+  authorizationCode: string
+};
+```
+
+### Example
+
+```js
+await abstract.oauth.getToken({ authorizationCode: code })
+```
 
 ## Organizations
 
@@ -1385,7 +1435,6 @@ Organizations contain users and projects.
 
 | Property                   | Type       | Description                                                                              |
 |----------------------------|------------|------------------------------------------------------------------------------------------|
-| `features`                 | `{[feature: string]: boolean}` | Map of feature flags enabled for this organization                   |
 | `hasBillingInfo`           | `boolean`  | Whether this organization has billing information on file                                |
 | `id`                       | `string`   | UUID                                                                                     |
 | `isUsernameOrganization`   | `boolean`  | A username organization is a free organization included with every user account          |
