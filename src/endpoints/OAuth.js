@@ -57,7 +57,7 @@ export default class OAuth extends Endpoint {
 
     if (!clientId || !state || !redirectUri) {
       throw new BaseError(
-        "Client credentials are missing. Please doublecheck clientId, redirectUri and state"
+        "Client credentials are missing. Please double check clientId, redirectUri and state"
       );
     }
 
