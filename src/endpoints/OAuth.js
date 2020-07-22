@@ -54,6 +54,7 @@ export default class OAuth extends Endpoint {
     const clientId = input.clientId || this.options.clientId;
     const state = input.state;
     const redirectUri = input.redirectUri || this.options.redirectUri;
+    const scope = "all";
 
     if (!clientId || !redirectUri) {
       throw new BaseError(
@@ -63,6 +64,6 @@ export default class OAuth extends Endpoint {
 
     return `https://app.abstract.com/signin/auth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
       redirectUri
-    )}&response_type=code&scope=all&state=${state}`;
+    )}&response_type=code&scope=${scope}&state=${state}`;
   }
 }
