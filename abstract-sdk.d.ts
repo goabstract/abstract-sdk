@@ -1855,7 +1855,7 @@ type CommandOptions = {
   apiUrl: string | Promise<string>,
   analyticsCallback: AnalyticsCallback,
   assetUrl: string | Promise<string>,
-  clientSecret?: string | Promise<string>,
+  clientSecret?: string,
   previewUrl: string | Promise<string>,
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
   redirectUri?: string | Promise<string>,
