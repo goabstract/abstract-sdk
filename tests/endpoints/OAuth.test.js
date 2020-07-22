@@ -89,7 +89,7 @@ describe("oauth", () => {
       });
 
       expect(url).toEqual(
-        `https://app.abstract.com/signin/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=all&state=${state}`
+        `https://app.abstract.com/signin/auth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=all&state=${state}`
       );
     });
 
