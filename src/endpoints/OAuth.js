@@ -55,7 +55,7 @@ export default class OAuth extends Endpoint {
     const state = input.state;
     const redirectUri = input.redirectUri || this.options.redirectUri;
 
-    if (!clientId || !state || !redirectUri) {
+    if (!clientId || !redirectUri) {
       throw new BaseError(
         "Client credentials are missing. Please double check clientId, redirectUri and state"
       );
