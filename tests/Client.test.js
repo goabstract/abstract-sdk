@@ -239,10 +239,8 @@ describe("Client", () => {
     });
 
     describe("setToken", () => {
-      expect(API_CLIENT.setToken("token")).toHaveProperty(
-        "accessToken",
-        "token"
-      );
+      API_CLIENT.setToken("token");
+      expect(API_CLIENT.options).toMatchObject({ accessToken: "token" });
     });
   });
 

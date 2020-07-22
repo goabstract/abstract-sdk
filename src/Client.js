@@ -98,7 +98,6 @@ export default class Client {
 
   setToken(accessToken: string) {
     this.options.accessToken = accessToken;
-    return this.options;
   }
 
   unwrap(value: any) {
