@@ -110,7 +110,8 @@ export default class Endpoint {
     const hostname = customHostname || (await this.options.apiUrl);
 
     if (
-      !fetchOptions.headers || fetchOptions.headers["Content-Type"] !==
+      !fetchOptions.headers ||
+      fetchOptions.headers["Content-Type"] !==
         "application/x-www-form-urlencoded"
     ) {
       fetchOptions.body =
