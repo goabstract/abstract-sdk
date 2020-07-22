@@ -37,9 +37,9 @@ export default class Endpoint {
   client: Client;
   options: CommandOptions;
 
-  constructor(client: Client, options: CommandOptions) {
+  constructor(client: Client, options?: CommandOptions) {
     this.client = client;
-    this.options = options;
+    this.options = options ? options : this.client.options;
   }
 
   configureRequest<T>(requestName: string, config: RequestConfig<T>): T {

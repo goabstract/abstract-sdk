@@ -69,31 +69,31 @@ export default class Client {
     };
 
     this._analyticsCallback = this.options.analyticsCallback;
-    this.activities = new Activities(this, this.options);
-    this.assets = new Assets(this, this.options);
-    this.branches = new Branches(this, this.options);
-    this.changesets = new Changesets(this, this.options);
-    this.collectionLayers = new CollectionLayers(this, this.options);
-    this.collections = new Collections(this, this.options);
-    this.comments = new Comments(this, this.options);
-    this.commits = new Commits(this, this.options);
-    this.data = new Data(this, this.options);
-    this.descriptors = new Descriptors(this, this.options);
-    this.files = new Files(this, this.options);
-    this.layers = new Layers(this, this.options);
-    this.memberships = new Memberships(this, this.options);
-    this.notifications = new Notifications(this, this.options);
-    this.oauth = new OAuth(this, this.options);
-    this.organizations = new Organizations(this, this.options);
-    this.pages = new Pages(this, this.options);
-    this.previews = new Previews(this, this.options);
-    this.projects = new Projects(this, this.options);
-    this.reviewRequests = new ReviewRequests(this, this.options);
-    this.sections = new Sections(this, this.options);
-    this.shares = new Shares(this, this.options);
-    this.stars = new Stars(this, this.options);
-    this.users = new Users(this, this.options);
-    this.webhooks = new Webhooks(this, this.options);
+    this.activities = new Activities(this);
+    this.assets = new Assets(this);
+    this.branches = new Branches(this);
+    this.changesets = new Changesets(this);
+    this.collectionLayers = new CollectionLayers(this);
+    this.collections = new Collections(this);
+    this.comments = new Comments(this);
+    this.commits = new Commits(this);
+    this.data = new Data(this);
+    this.descriptors = new Descriptors(this);
+    this.files = new Files(this);
+    this.layers = new Layers(this);
+    this.memberships = new Memberships(this);
+    this.notifications = new Notifications(this);
+    this.oauth = new OAuth(this);
+    this.organizations = new Organizations(this);
+    this.pages = new Pages(this);
+    this.previews = new Previews(this);
+    this.projects = new Projects(this);
+    this.reviewRequests = new ReviewRequests(this);
+    this.sections = new Sections(this);
+    this.shares = new Shares(this);
+    this.stars = new Stars(this);
+    this.users = new Users(this);
+    this.webhooks = new Webhooks(this);
   }
 
   setToken(accessToken: string) {
