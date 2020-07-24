@@ -54,7 +54,7 @@ export default class OAuth extends Endpoint {
     const clientId = input.clientId || this.options.clientId;
     const state = input.state;
     const redirectUri = input.redirectUri || this.options.redirectUri;
-    const scope = "all";
+    const scope = input.scope || "all";
 
     if (!clientId || !redirectUri) {
       throw new BaseError(
