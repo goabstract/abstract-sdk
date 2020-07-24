@@ -74,10 +74,11 @@ export default class Projects extends Endpoint {
     return this.configureRequest<Promise<Project>>("create", {
       api: async () => {
         const response = await this.apiRequest(`projects`, {
+          headers,
           method: "POST",
           body: project
         });
-        return wrap(response);
+        return wrap(response.data.project, response);
       },
       requestOptions
     });
@@ -95,11 +96,12 @@ export default class Projects extends Endpoint {
         const response = await this.apiRequest(
           `projects/${descriptor.projectId}`,
           {
+            headers,
             method: "PUT",
             body: project
           }
         );
-        return wrap(response);
+        return wrap(response.data.project, response);
       },
       requestOptions
     });
