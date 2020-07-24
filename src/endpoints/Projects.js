@@ -78,7 +78,7 @@ export default class Projects extends Endpoint {
           method: "POST",
           body: project
         });
-        return wrap(response.data.project, response);
+        return wrap(response);
       },
       requestOptions
     });
@@ -101,7 +101,7 @@ export default class Projects extends Endpoint {
             body: project
           }
         );
-        return wrap(response.data.project, response);
+        return wrap(response);
       },
       requestOptions
     });
