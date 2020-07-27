@@ -112,7 +112,7 @@ export class ServiceUnavailableError extends BaseError {
 export class ValidationError extends BaseError {
   data: ErrorData;
 
-  constructor(path: string, body: Object) {
+  constructor(path: string, body: mixed) {
     super("Validation failed.");
     this.data = { path, body };
   }
