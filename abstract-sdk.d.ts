@@ -756,7 +756,7 @@ type Project = {
   pushedAt: string,
   isNew: boolean,
   repoCreatedAt: string,
-  type: "cloud" | "",
+  type: "cloud" | null,
   visibility: "organization" | "specific",
   sizeInBytes: number,
   assetAutoGeneration: AssetAutoGenerationOption
@@ -771,7 +771,7 @@ type NewProject = {
   color?: string,
   sectionId?: string,
   createdAt?: string,
-  type?: "cloud" | "",
+  type?: "cloud",
   visibility?: "organization" | "specific",
   assetAutoGeneration?: AssetAutoGenerationOption
 };
