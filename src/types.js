@@ -489,7 +489,8 @@ export type Project = {
   pushedAt: string,
   isNew: boolean,
   repoCreatedAt: string,
-  visibility: "organization" | "project",
+  type: "cloud" | void,
+  visibility: "organization" | "specific",
   sizeInBytes: number,
   assetAutoGeneration: AssetAutoGenerationOption
 };
@@ -501,7 +502,8 @@ export type NewProject = {
   color?: string,
   sectionId?: string,
   createdAt?: string,
-  visibility?: "organization" | "project",
+  type?: "cloud",
+  visibility?: "organization" | "specific",
   assetAutoGeneration?: AssetAutoGenerationOption
 };
 
