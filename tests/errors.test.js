@@ -10,6 +10,7 @@ import {
   UnauthorizedError,
   throwAPIError,
   InternalServerError,
+  ValidationError,
   throwCLIError
 } from "../src/errors";
 
@@ -82,6 +83,14 @@ describe("errors", () => {
         await throwAPIError(getResponse({ status: 503 }), "url", "body");
       } catch (error) {
         expect(error).toBeInstanceOf(ServiceUnavailableError);
+      }
+    });
+
+    test("ValidationError", async () => {
+      try {
+        await throwAPIError(getResponse({ status: 422 }), "url", "body");
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
       }
     });
 
@@ -162,6 +171,14 @@ describe("errors", () => {
         );
       } catch (error) {
         expect(error).toBeInstanceOf(ServiceUnavailableError);
+      }
+    });
+
+    test("ValidationError", async () => {
+      try {
+        await throwCLIError(({ code: "validation_error" }: any), "cliPath", {});
+      } catch (error) {
+        expect(error).toBeInstanceOf(ValidationError);
       }
     });
 

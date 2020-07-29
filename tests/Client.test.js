@@ -33,7 +33,7 @@ describe("Client", () => {
 
     try {
       await API_CLIENT.organizations.list({
-        transportMode: ["cli"]
+        transportMode: ["api", "cli"]
       });
     } catch (error) {
       expect(error).toBeInstanceOf(MultiError);

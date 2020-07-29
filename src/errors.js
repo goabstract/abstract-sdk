@@ -109,6 +109,15 @@ export class ServiceUnavailableError extends BaseError {
   }
 }
 
+export class ValidationError extends BaseError {
+  data: ErrorData;
+
+  constructor(path: string, body: mixed) {
+    super("Validation failed.");
+    this.data = { path, body };
+  }
+}
+
 export class FileExportError extends BaseError {
   constructor(fileId: string, exportId: string) {
     super(
@@ -132,6 +141,8 @@ export async function throwAPIError(
       throw new ForbiddenError(url, body);
     case 404:
       throw new NotFoundError(url, body);
+    case 422:
+      throw new ValidationError(url, body);
     case 429:
       throw new RateLimitError(url, body, response);
     case 500:
@@ -162,6 +173,8 @@ export function throwCLIError(
       throw new RateLimitError(cliPath, args);
     case "service_unavailable":
       throw new ServiceUnavailableError(cliPath, args);
+    case "validation_error":
+      throw new ValidationError(cliPath, args);
     default:
       throw new Error(response.message);
   }
