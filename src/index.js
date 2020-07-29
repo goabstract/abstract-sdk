@@ -15,7 +15,8 @@ import {
   NotFoundError,
   RateLimitError,
   ServiceUnavailableError,
-  UnauthorizedError
+  UnauthorizedError,
+  ValidationError
 } from "./errors";
 
 export {
@@ -33,6 +34,7 @@ export {
   RateLimitError,
   ServiceUnavailableError,
   UnauthorizedError,
+  ValidationError,
   // Utilities
   inferShareId,
   paginate,
