@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.34](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.32...v8.0.0-beta.34) (2020-07-29)
+
+
+### Bug Fixes
+
+* Add ValidationError class ([#301](https://github.com/goabstract/abstract-sdk/issues/301)) ([2d4f9c5](https://github.com/goabstract/abstract-sdk/commit/2d4f9c5)), closes [#279](https://github.com/goabstract/abstract-sdk/issues/279)
+* Incorrect enum for project visibility ([#299](https://github.com/goabstract/abstract-sdk/issues/299)) ([cdbf2a4](https://github.com/goabstract/abstract-sdk/commit/cdbf2a4))
+* Update API version passed to project create/update ([#300](https://github.com/goabstract/abstract-sdk/issues/300)) ([2e2b381](https://github.com/goabstract/abstract-sdk/commit/2e2b381))
+
+
+
 ## [8.0.0-beta.33](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.32...v8.0.0-beta.33) (2020-07-20)
 
 ### Features
