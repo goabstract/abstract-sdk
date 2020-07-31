@@ -17,12 +17,14 @@ describe("helpers", () => {
   });
 
   test("inferShareId throws", () => {
+    let error;
     try {
       utils.inferShareId(({}: any));
-    } catch (error) {
-      expect(error).toBeInstanceOf(Error);
-      expect(error.message).toContain("Could not infer share id");
+    } catch (e) {
+      error = e;
     }
+    expect(error).toBeInstanceOf(Error);
+    expect(error && error.message).toContain("Could not infer share id");
   });
 
   test("isNodeEnvironment", () => {

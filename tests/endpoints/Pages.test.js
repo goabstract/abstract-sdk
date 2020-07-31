@@ -49,7 +49,7 @@ describe("pages", () => {
           sha: "sha"
         });
       } catch (error) {
-        expect(error.errors.api).toBeInstanceOf(NotFoundError);
+        expect(error).toBeInstanceOf(NotFoundError);
       }
     });
 
@@ -84,6 +84,7 @@ describe("pages", () => {
         ]
       });
 
+      let error;
       try {
         await CLI_CLIENT.pages.info({
           branchId: "branch-id",
@@ -92,9 +93,10 @@ describe("pages", () => {
           projectId: "project-id",
           sha: "sha"
         });
-      } catch (error) {
-        expect(error.errors.cli).toBeInstanceOf(NotFoundError);
+      } catch (e) {
+        error = e;
       }
+      expect(error).toBeInstanceOf(NotFoundError);
     });
   });
 

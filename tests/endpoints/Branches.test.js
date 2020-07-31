@@ -206,11 +206,13 @@ describe("branches", () => {
     });
 
     test("cli - no descriptor", async () => {
+      let error;
       try {
         await CLI_CLIENT.branches.list(undefined);
-      } catch (error) {
-        expect(error.errors.cli).toBeInstanceOf(BranchSearchCLIError);
+      } catch (e) {
+        error = e;
       }
+      expect(error).toBeInstanceOf(BranchSearchCLIError);
     });
   });
 
