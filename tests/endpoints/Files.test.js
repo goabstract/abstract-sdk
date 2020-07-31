@@ -48,7 +48,7 @@ describe("files", () => {
           sha: "sha"
         });
       } catch (error) {
-        expect(error.errors.api).toBeInstanceOf(NotFoundError);
+        expect(error).toBeInstanceOf(NotFoundError);
       }
     });
 
@@ -221,7 +221,7 @@ describe("files", () => {
           sha: "sha"
         });
       } catch (error) {
-        expect(error.errors.api).toBeInstanceOf(FileExportError);
+        expect(error).toBeInstanceOf(FileExportError);
       }
     });
 

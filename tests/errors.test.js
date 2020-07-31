@@ -122,7 +122,7 @@ describe("errors", () => {
       try {
         await CLI_CLIENT.projects.list({ organizationId: "org-id" });
       } catch (error) {
-        expect(error.errors.cli).toBeInstanceOf(EndpointUndefinedError);
+        expect(error).toBeInstanceOf(EndpointUndefinedError);
       }
     });
 

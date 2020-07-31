@@ -209,7 +209,7 @@ describe("branches", () => {
       try {
         await CLI_CLIENT.branches.list(undefined);
       } catch (error) {
-        expect(error.errors.cli).toBeInstanceOf(BranchSearchCLIError);
+        expect(error).toBeInstanceOf(BranchSearchCLIError);
       }
     });
   });

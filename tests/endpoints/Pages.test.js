@@ -49,7 +49,7 @@ describe("pages", () => {
           sha: "sha"
         });
       } catch (error) {
-        expect(error.errors.api).toBeInstanceOf(NotFoundError);
+        expect(error).toBeInstanceOf(NotFoundError);
       }
     });
 
@@ -93,7 +93,7 @@ describe("pages", () => {
           sha: "sha"
         });
       } catch (error) {
-        expect(error.errors.cli).toBeInstanceOf(NotFoundError);
+        expect(error).toBeInstanceOf(NotFoundError);
       }
     });
   });
