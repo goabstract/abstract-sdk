@@ -40,6 +40,7 @@ describe("files", () => {
         ]
       });
 
+      let error;
       try {
         await API_CLIENT.files.info({
           branchId: "branch-id",
@@ -47,9 +48,10 @@ describe("files", () => {
           projectId: "project-id",
           sha: "sha"
         });
-      } catch (error) {
-        expect(error).toBeInstanceOf(NotFoundError);
+      } catch (e) {
+        error = e;
       }
+      expect(error).toBeInstanceOf(NotFoundError);
     });
 
     test("cli", async () => {
@@ -213,6 +215,7 @@ describe("files", () => {
         );
       });
 
+      let error;
       try {
         await API_CLIENT.files.raw({
           branchId: "branch-id",
@@ -220,9 +223,10 @@ describe("files", () => {
           projectId: "project-id",
           sha: "sha"
         });
-      } catch (error) {
-        expect(error).toBeInstanceOf(FileExportError);
+      } catch (e) {
+        error = e;
       }
+      expect(error).toBeInstanceOf(FileExportError);
     });
 
     test("cli - exports file", async () => {

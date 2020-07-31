@@ -19,26 +19,50 @@ describe("Client", () => {
   test("no transports specified", async () => {
     expect.assertions(1);
 
+    let error;
     try {
       await API_CLIENT.organizations.list({
         transportMode: []
       });
-    } catch (error) {
-      expect(error).toBeInstanceOf(EndpointUndefinedError);
+    } catch (e) {
+      error = e;
     }
+    expect(error).toBeInstanceOf(EndpointUndefinedError);
   });
 
   test("endpoint undefined in all transports", async () => {
     expect.assertions(2);
 
+    let error;
     try {
       await API_CLIENT.organizations.list({
         transportMode: ["api", "cli"]
       });
-    } catch (error) {
-      expect(error).toBeInstanceOf(MultiError);
-      expect(error.errors.cli).toBeInstanceOf(EndpointUndefinedError);
+    } catch (e) {
+      error = e;
     }
+    expect(error).toBeInstanceOf(MultiError);
+    expect(error && error.errors.cli).toBeInstanceOf(EndpointUndefinedError);
+  });
+
+  test("individual transport throws", async () => {
+    mockAPI("/projects/project-id/branches/?", { ok: false }, 404);
+
+    let error;
+    try {
+      await API_CLIENT.branches.list(
+        {
+          projectId: "project-id"
+        },
+        {
+          transportMode: ["api"]
+        }
+      );
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toBeInstanceOf(NotFoundError);
   });
 
   test("all transports throw", async () => {
@@ -48,6 +72,7 @@ describe("Client", () => {
       code: "not_found"
     });
 
+    let error;
     try {
       await API_CLIENT.branches.list(
         {
@@ -57,11 +82,13 @@ describe("Client", () => {
           transportMode: ["api", "cli"]
         }
       );
-    } catch (error) {
-      expect(error).toBeInstanceOf(MultiError);
-      expect(error.errors.api).toBeInstanceOf(NotFoundError);
-      expect(error.errors.cli).toBeInstanceOf(NotFoundError);
+    } catch (e) {
+      error = e;
     }
+
+    expect(error).toBeInstanceOf(MultiError);
+    expect(error && error.errors.api).toBeInstanceOf(NotFoundError);
+    expect(error && error.errors.cli).toBeInstanceOf(NotFoundError);
   });
 
   test("attempts all transports in order", async () => {
