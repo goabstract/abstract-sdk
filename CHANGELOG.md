@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.36](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.35...v8.0.0-beta.36) (2020-07-31)
+
+
+### Bug Fixes
+
+* Broken error handling ([#302](https://github.com/goabstract/abstract-sdk/issues/302)) ([c48321c](https://github.com/goabstract/abstract-sdk/commit/c48321c))
+
+
+
 ## [8.0.0-beta.35](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.34...v8.0.0-beta.35) (2020-07-29)
 
 
