@@ -1,4 +1,4 @@
-<img src="https://www.abstract.com/wp-content/uploads/abstract-black-wordmark-rgb.png" width="136" height="auto" />
+<img src="https://assets-global.website-files.com/5e9d939b6c7f32259d33c1cc/5eb9b98ae22fd020fb368ad1_abstract-black-wordmark-rgb.png" width="136" height="auto" />
 
 The Abstract SDK provides universal JavaScript bindings for both the Abstract API and the Abstract CLI.
 
