@@ -20,6 +20,8 @@ import type {
   RequestConfig
 } from "../types";
 
+type Headers = { [key: string]: string };
+
 const cliPath = require("@elasticprojects/abstract-cli");
 const logAPIRequest = log.extend("AbstractAPI:request");
 const logAPIResponse = log.extend("AbstractAPI:response");
@@ -266,34 +268,34 @@ export default class Endpoint {
       : this.options.accessToken;
   }
 
-  async _getFetchHeaders(customHeaders?: { [key: string]: string }) {
+  async _getFetchHeaders(customHeaders?: Headers) {
     const accessToken = await this._getAccessToken();
-    const authorizationHeader = accessToken
-      ? { Authorization: `Bearer ${accessToken}` }
-      : undefined;
 
     const shareId = this.options.shareId
       ? await this.options.shareId()
       : undefined;
-    const shareIdHeader = shareId
-      ? {
-          "Abstract-Share-Id":
-            typeof shareId === "string" ? shareId : inferShareId(shareId)
-        }
-      : undefined;
 
-    const headers = {
+    const headers: { [key: string]: string } = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": `Abstract SDK ${minorVersion}`,
       "X-Amzn-Trace-Id": `Root=1-${new Date().getTime()}-${uuid()}`,
-      "Abstract-Api-Version": "8",
-      ...authorizationHeader,
-      ...shareIdHeader,
-      ...customHeaders
+      "Abstract-Api-Version": "8"
     };
 
-    Object.keys(headers).forEach(key => {
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+
+    if (shareId) {
+      headers["Abstract-Share-Id"] =
+        typeof shareId === "string" ? shareId : inferShareId(shareId);
+    }
+
+    Object.keys({
+      ...headers,
+      ...customHeaders
+    }).forEach(key => {
       headers[key] === undefined && delete headers[key];
     });
 
