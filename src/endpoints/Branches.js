@@ -193,7 +193,7 @@ export default class Branches extends Endpoint {
 
         const response = await this.cliRequest(args);
 
-        return wrap(response.branches, response);
+        return wrap(response.data, response);
       },
 
       requestOptions
