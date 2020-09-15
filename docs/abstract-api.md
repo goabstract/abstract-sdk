@@ -303,7 +303,7 @@ abstract.branches.mergeState({
 
 > Note: The API and CLI [transports](/docs/transports) behave differently for merge state. The CLI transport ignores `options.parentId`, and _only_ returns one of the three possible merge states (no other fields are included). The API transport includes a value for each field of `BranchMergeState`, and only returns statuses `CLEAN` or `NEEDS_UPDATE`.
 
-### Update a collection
+### Update a branch
 
 ![CLI][cli-icon] ![API][api-icon]
 
