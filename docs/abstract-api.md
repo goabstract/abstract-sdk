@@ -303,6 +303,27 @@ abstract.branches.mergeState({
 
 > Note: The API and CLI [transports](/docs/transports) behave differently for merge state. The CLI transport ignores `options.parentId`, and _only_ returns one of the three possible merge states (no other fields are included). The API transport includes a value for each field of `BranchMergeState`, and only returns statuses `CLEAN` or `NEEDS_UPDATE`.
 
+### Update a collection
+
+![CLI][cli-icon] ![API][api-icon]
+
+`branches.update(BranchDescriptor, BranchUpdateOptions, RequestOptions): Promise<Branch>`
+
+Update an existing branch
+
+```js
+abstract.branches.update({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master"
+}, {
+  name: "New name",
+  description: "New description"
+});
+```
+
+
+
+
 ## Changesets
 
 A changeset is a group of changes that together form a single, indivisible modification to a project. Changesets include data on all visual and nonvisual changes and provide insight into the differences between two versions of a project.
