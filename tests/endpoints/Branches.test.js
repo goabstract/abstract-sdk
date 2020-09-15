@@ -356,7 +356,7 @@ describe("branches", () => {
       });
     });
 
-    test("cli", async () => {
+    test("cli - with all attributes", async () => {
       mockCLI(
         [
           "branches",
@@ -385,6 +385,28 @@ describe("branches", () => {
           status: "wip",
           description: "branch-description"
         }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+
+    test("cli - with no attributes", async () => {
+      mockCLI(["branches", "update", "branch-id", "--project-id=project-id"], {
+        data: {
+          branchId: "branch-id",
+          projectId: "project-id"
+        }
+      });
+
+      const response = await CLI_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {}
       );
 
       expect(response).toEqual({

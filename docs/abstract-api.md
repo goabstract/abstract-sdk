@@ -307,7 +307,7 @@ abstract.branches.mergeState({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`branches.update(BranchDescriptor, BranchUpdateOptions, RequestOptions): Promise<Branch>`
+`branches.update(BranchDescriptor, BranchUpdateOptions): Promise<Branch>`
 
 Update an existing branch
 
