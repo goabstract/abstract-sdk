@@ -129,6 +129,14 @@ export type RawProgressOptions = {
   onProgress?: ProgressCallback
 };
 
+export type BranchUpdateOptions = {
+  ...RequestOptions,
+  name?: string,
+  description?: string,
+  status?: string,
+  canUseAbstractd?: boolean
+};
+
 export type CollectionsListOptions = {
   ...ListOptions,
   branchStatus?: string,

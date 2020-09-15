@@ -6,6 +6,7 @@ import type {
   BranchMergeState,
   ListOptions,
   ProjectDescriptor,
+  BranchUpdateOptions,
   RequestOptions,
   UserDescriptor
 } from "../types";
@@ -134,6 +135,65 @@ export default class Branches extends Endpoint {
         ]);
 
         return wrap(response.data, response);
+      },
+
+      requestOptions
+    });
+  }
+
+  update(descriptor: BranchDescriptor, options: BranchUpdateOptions) {
+    const {
+      name,
+      description,
+      status,
+      canUseAbstractd = false,
+      ...requestOptions
+    } = options;
+
+    return this.configureRequest<Promise<Branch>>("update", {
+      api: async () => {
+        let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}`;
+
+        const response = await this.apiRequest(requestUrl, {
+          headers,
+          method: "PUT",
+          body: {
+            name,
+            description,
+            status
+          }
+        });
+
+        return wrap(response.data, response);
+      },
+
+      cli: async () => {
+        const args = [
+          "branches",
+          "update",
+          descriptor.branchId,
+          `--project-id=${descriptor.projectId}`
+        ];
+
+        if (name) {
+          args.push(`--name=${name}`);
+        }
+
+        if (status) {
+          args.push(`--status=${status}`);
+        }
+
+        if (description) {
+          args.push(`--description=${description}`);
+        }
+
+        if (canUseAbstractd) {
+          args.push(`--abstractd`);
+        }
+
+        const response = await this.cliRequest(args);
+
+        return wrap(response.branches, response);
       },
 
       requestOptions
