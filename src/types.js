@@ -133,8 +133,7 @@ export type BranchUpdateOptions = {
   ...RequestOptions,
   name?: string,
   description?: string,
-  status?: string,
-  canUseAbstractd?: boolean
+  status?: string
 };
 
 export type CollectionsListOptions = {

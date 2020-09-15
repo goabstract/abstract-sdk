@@ -316,7 +316,8 @@ describe("branches", () => {
           projectId: "project-id"
         },
         {
-          name: "branch-name"
+          name: "branch-name",
+          descripption: "branch-description"
         }
       );
 
@@ -326,7 +327,7 @@ describe("branches", () => {
       });
     });
 
-    test("api - with new name attribute", async () => {
+    test("api - with new status attribute", async () => {
       mockAPI(
         "/projects/project-id/branches/branch-id",
         {
@@ -362,6 +363,8 @@ describe("branches", () => {
           "update",
           "branch-id",
           "--project-id=project-id",
+          "--name=branch-name",
+          "--status=wip",
           "--description=branch-description"
         ],
         {
@@ -378,6 +381,8 @@ describe("branches", () => {
           projectId: "project-id"
         },
         {
+          name: "branch-name",
+          status: "wip",
           description: "branch-description"
         }
       );

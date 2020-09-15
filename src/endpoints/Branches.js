@@ -142,13 +142,7 @@ export default class Branches extends Endpoint {
   }
 
   update(descriptor: BranchDescriptor, options: BranchUpdateOptions) {
-    const {
-      name,
-      description,
-      status,
-      canUseAbstractd = false,
-      ...requestOptions
-    } = options;
+    const { name, description, status, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Branch>>("update", {
       api: async () => {
@@ -185,10 +179,6 @@ export default class Branches extends Endpoint {
 
         if (description) {
           args.push(`--description=${description}`);
-        }
-
-        if (canUseAbstractd) {
-          args.push(`--abstractd`);
         }
 
         const response = await this.cliRequest(args);

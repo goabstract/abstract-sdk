@@ -317,11 +317,10 @@ abstract.branches.update({
   branchId: "master"
 }, {
   name: "New name",
-  description: "New description"
+  description: "New description",
+  status: "development"
 });
 ```
-
-
 
 
 ## Changesets
