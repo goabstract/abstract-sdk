@@ -295,4 +295,97 @@ describe("branches", () => {
       });
     });
   });
+
+  describe("update", () => {
+    test("api - with new name attribute", async () => {
+      mockAPI(
+        "/projects/project-id/branches/branch-id",
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        },
+        201,
+        "put"
+      );
+
+      const response = await API_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          name: "branch-name"
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+
+    test("api - with new name attribute", async () => {
+      mockAPI(
+        "/projects/project-id/branches/branch-id",
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        },
+        201,
+        "put"
+      );
+
+      const response = await API_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          status: "wip"
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+
+    test("cli", async () => {
+      mockCLI(
+        [
+          "branches",
+          "update",
+          "branch-id",
+          "--project-id=project-id",
+          "--description=branch-description"
+        ],
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        }
+      );
+
+      const response = await CLI_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          description: "branch-description"
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+  });
 });
