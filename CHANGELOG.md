@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.37](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.36...v8.0.0-beta.37) (2020-09-17)
+
+
+### Features
+
+* adds branches.update info to sdk docs ([eb4852b](https://github.com/goabstract/abstract-sdk/commit/eb4852b9d319c52ffcee8a0af3da3f91e5c93cc9))
+* adds tests for branches.update method ([b1ee544](https://github.com/goabstract/abstract-sdk/commit/b1ee544313423a653a033e2e70d5d5d43b6345aa))
+* adds update method to Branch endpoint ([1eef2f0](https://github.com/goabstract/abstract-sdk/commit/1eef2f07c638cfef9016b919e7c5a7a082a27376))
+
+
+### Bug Fixes
+
+* Broken wordmark image in README ([#306](https://github.com/goabstract/abstract-sdk/issues/306)) ([3507f65](https://github.com/goabstract/abstract-sdk/commit/3507f65dc556c4842de78477a542bad379a36ac1))
+
 ## [8.0.0-beta.36](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.35...v8.0.0-beta.36) (2020-07-31)
 
 
