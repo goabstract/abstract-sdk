@@ -735,10 +735,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@elasticprojects/abstract-cli@^11.1.0":
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/@elasticprojects/abstract-cli/-/abstract-cli-11.1.0.tgz#8dd39c9813f69088c36aca0bec877f8dfbc0d204"
-  integrity sha512-xqkUXIoyCEqUG5/K2BUPsjQoLfCZevj0czNvIwgmcsQ+wOLBXWnDSjhRAEpOuIFG00jWRp52boiQYZDJe781+Q==
+"@elasticprojects/abstract-cli@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@elasticprojects/abstract-cli/-/abstract-cli-12.2.0.tgz#7383c7efc846f17bcb45582f7eb7df2db6d669c0"
+  integrity sha512-io/azS/Ox/To4jAz8A8OIC0NPhkxecvgBvwp1b5L/A5AWyHFXktSJ7D28kFaGEeVXbkKn8MPMgOWUzX/DPR3uw==
 
 "@elasticprojects/eslint-config-abstract@^4.1.0":
   version "4.1.0"
