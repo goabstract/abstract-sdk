@@ -129,13 +129,6 @@ export type RawProgressOptions = {
   onProgress?: ProgressCallback
 };
 
-export type BranchUpdateOptions = {
-  ...RequestOptions,
-  name?: string,
-  description?: string,
-  status?: string
-};
-
 export type CollectionsListOptions = {
   ...ListOptions,
   branchStatus?: string,
@@ -819,6 +812,12 @@ export type BranchMergeState = {
   branchCommit?: string,
   ahead?: number,
   behind?: number
+};
+
+export type UpdatedBranch = {
+  name?: string,
+  description?: string,
+  status?: string
 };
 
 export type ChangesetStatus =

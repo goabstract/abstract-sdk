@@ -1,4 +1,5 @@
 // @flow
+import invariant from "invariant";
 import querystring from "query-string";
 import type {
   Branch,
@@ -6,9 +7,10 @@ import type {
   BranchMergeState,
   ListOptions,
   ProjectDescriptor,
-  BranchUpdateOptions,
   RequestOptions,
-  UserDescriptor
+  UpdatedBranch,
+  UserDescriptor,
+  User
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
@@ -141,8 +143,16 @@ export default class Branches extends Endpoint {
     });
   }
 
-  update(descriptor: BranchDescriptor, options: BranchUpdateOptions) {
-    const { name, description, status, ...requestOptions } = options;
+  update(
+    descriptor: BranchDescriptor,
+    branch: UpdatedBranch,
+    options: {
+      ...RequestOptions,
+      user?: User
+    }
+  ) {
+    const { name, description, status } = branch;
+    const { user, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Branch>>("update", {
       api: async () => {
@@ -162,11 +172,15 @@ export default class Branches extends Endpoint {
       },
 
       cli: async () => {
+        invariant(user, "user option required for cli");
+
         const args = [
           "branches",
           "update",
           descriptor.branchId,
-          `--project-id=${descriptor.projectId}`
+          `--project-id=${descriptor.projectId}`,
+          `--user-id=${user.id}`,
+          `--user-name=${user.name}`
         ];
 
         if (name) {
