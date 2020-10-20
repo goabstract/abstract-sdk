@@ -295,4 +295,159 @@ describe("branches", () => {
       });
     });
   });
+
+  describe("update", () => {
+    test("api - with new name attribute", async () => {
+      mockAPI(
+        "/projects/project-id/branches/branch-id",
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        },
+        201,
+        "put"
+      );
+
+      const response = await API_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          name: "branch-name",
+          descripption: "branch-description"
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+
+    test("api - with new status attribute", async () => {
+      mockAPI(
+        "/projects/project-id/branches/branch-id",
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        },
+        201,
+        "put"
+      );
+
+      const response = await API_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          status: "wip"
+        },
+        {
+          transportMode: ["api"]
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+
+    const user = {
+      id: "user-id",
+      name: "user-name",
+      avatarUrl: "user-avatar",
+      createdAt: "",
+      deletedAt: "",
+      lastActiveAt: "",
+      primaryEmailId: "user-email-id",
+      updatedAt: "",
+      username: "user-username"
+    };
+
+    test("cli - with all attributes", async () => {
+      mockCLI(
+        [
+          "branches",
+          "update",
+          "branch-id",
+          "--project-id=project-id",
+          "--user-id=user-id",
+          "--user-name=user-name",
+          "--name=branch-name",
+          "--status=wip",
+          "--description=branch-description"
+        ],
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        }
+      );
+
+      const response = await CLI_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {
+          name: "branch-name",
+          status: "wip",
+          description: "branch-description"
+        },
+        {
+          transportMode: ["cli"],
+          user
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+
+    test("cli - with no attributes", async () => {
+      mockCLI(
+        [
+          "branches",
+          "update",
+          "branch-id",
+          "--project-id=project-id",
+          "--user-id=user-id",
+          "--user-name=user-name"
+        ],
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
+        }
+      );
+
+      const response = await CLI_CLIENT.branches.update(
+        {
+          branchId: "branch-id",
+          projectId: "project-id"
+        },
+        {},
+        {
+          transportMode: ["cli"],
+          user
+        }
+      );
+
+      expect(response).toEqual({
+        branchId: "branch-id",
+        projectId: "project-id"
+      });
+    });
+  });
 });

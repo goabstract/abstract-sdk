@@ -814,6 +814,12 @@ export type BranchMergeState = {
   behind?: number
 };
 
+export type BranchInput = {
+  name?: string,
+  description?: string,
+  status?: string
+};
+
 export type ChangesetStatus =
   | "added"
   | "deleted"

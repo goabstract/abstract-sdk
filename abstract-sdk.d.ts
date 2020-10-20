@@ -154,6 +154,11 @@ interface Branches extends Endpoint {
     options?: RequestOptions & { filter?: "active" | "archived" | "mine", search?: string }
   ): Promise<Branch[]>;
   mergeState(descriptor: BranchDescriptor, options?: { parent?: string }): Promise<BranchMergeState>;
+  update(
+    descriptor: BranchDescriptor,
+    branchInput: BranchInput,
+    options?: RequestOptions & { user?: User }
+  ): Promise<Branch>;
 }
 
 interface Changesets extends Endpoint {
@@ -1057,6 +1062,12 @@ export type BranchMergeState = {
   branchCommit?: string,
   ahead?: number,
   behind?: number
+};
+
+type BranchInput = {
+  name?: string,
+  description?: string,
+  status?: string
 };
 
 type ChangesetStatus =

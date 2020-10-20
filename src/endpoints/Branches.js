@@ -1,4 +1,5 @@
 // @flow
+import invariant from "invariant";
 import querystring from "query-string";
 import type {
   Branch,
@@ -7,7 +8,9 @@ import type {
   ListOptions,
   ProjectDescriptor,
   RequestOptions,
-  UserDescriptor
+  BranchInput,
+  UserDescriptor,
+  User
 } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
@@ -132,6 +135,67 @@ export default class Branches extends Endpoint {
           descriptor.branchId,
           `--project-id=${descriptor.projectId}`
         ]);
+
+        return wrap(response.data, response);
+      },
+
+      requestOptions
+    });
+  }
+
+  update(
+    descriptor: BranchDescriptor,
+    branchInput: BranchInput,
+    options?: {
+      ...RequestOptions,
+      user?: User
+    } = {}
+  ) {
+    const { name, description, status } = branchInput;
+    const { user, ...requestOptions } = options;
+
+    return this.configureRequest<Promise<Branch>>("update", {
+      api: async () => {
+        let requestUrl = `projects/${descriptor.projectId}/branches/${descriptor.branchId}`;
+
+        const response = await this.apiRequest(requestUrl, {
+          headers,
+          method: "PUT",
+          body: {
+            name,
+            description,
+            status
+          }
+        });
+
+        return wrap(response.data, response);
+      },
+
+      cli: async () => {
+        invariant(user, "user option required for cli");
+
+        const args = [
+          "branches",
+          "update",
+          descriptor.branchId,
+          `--project-id=${descriptor.projectId}`,
+          `--user-id=${user.id}`,
+          `--user-name=${user.name}`
+        ];
+
+        if (name) {
+          args.push(`--name=${name}`);
+        }
+
+        if (status) {
+          args.push(`--status=${status}`);
+        }
+
+        if (description) {
+          args.push(`--description=${description}`);
+        }
+
+        const response = await this.cliRequest(args);
 
         return wrap(response.data, response);
       },
