@@ -814,7 +814,7 @@ export type BranchMergeState = {
   behind?: number
 };
 
-export type UpdatedBranch = {
+export type BranchInput = {
   name?: string,
   description?: string,
   status?: string

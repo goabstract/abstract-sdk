@@ -8,7 +8,7 @@ import type {
   ListOptions,
   ProjectDescriptor,
   RequestOptions,
-  UpdatedBranch,
+  BranchInput,
   UserDescriptor,
   User
 } from "../types";
@@ -145,13 +145,13 @@ export default class Branches extends Endpoint {
 
   update(
     descriptor: BranchDescriptor,
-    branch: UpdatedBranch,
+    branchInput: BranchInput,
     options?: {
       ...RequestOptions,
       user?: User
     } = {}
   ) {
-    const { name, description, status } = branch;
+    const { name, description, status } = branchInput;
     const { user, ...requestOptions } = options;
 
     return this.configureRequest<Promise<Branch>>("update", {

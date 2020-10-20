@@ -7,9 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* adds branches.update info to sdk docs ([eb4852b](https://github.com/goabstract/abstract-sdk/commit/eb4852b9d319c52ffcee8a0af3da3f91e5c93cc9))
-* adds tests for branches.update method ([b1ee544](https://github.com/goabstract/abstract-sdk/commit/b1ee544313423a653a033e2e70d5d5d43b6345aa))
-* adds update method to Branch endpoint ([1eef2f0](https://github.com/goabstract/abstract-sdk/commit/1eef2f07c638cfef9016b919e7c5a7a082a27376))
+* adds update method to Branch endpoint ([1eef2f0](https://github.com/goabstract/abstract-sdk/commit/1eef2f07c638cfef9016b919e7c5a7a082a27376)), adds respective tests ([b1ee544](https://github.com/goabstract/abstract-sdk/commit/b1ee544313423a653a033e2e70d5d5d43b6345aa)), and updates sdk docs ([eb4852b](https://github.com/goabstract/abstract-sdk/commit/eb4852b9d319c52ffcee8a0af3da3f91e5c93cc9))
 
 
 ### Bug Fixes
