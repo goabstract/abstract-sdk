@@ -2,11 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<<<<<<< HEAD
 ## [8.1.0-0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.36...v8.1.0-0) (2020-10-20)
+=======
+## [8.0.0-beta.38](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.37...v8.0.0-beta.38) (2020-10-20)
+>>>>>>> 8e09088... "chore(release): 8.0.0-beta.38"
 
 
 ### Features
 
+<<<<<<< HEAD
 * adds update method to Branch endpoint ([#309](https://github.com/goabstract/abstract-sdk/issues/309)) ([a5375fc](https://github.com/goabstract/abstract-sdk/commit/a5375fc3a06268a77539e704a98eddfb10461cae))
 
 
@@ -25,6 +30,10 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * Broken wordmark image in README ([#306](https://github.com/goabstract/abstract-sdk/issues/306)) ([3507f65](https://github.com/goabstract/abstract-sdk/commit/3507f65dc556c4842de78477a542bad379a36ac1))
+=======
+* passes user params to cli request to enable it ([eed942b](https://github.com/goabstract/abstract-sdk/commit/eed942b68937625ccfc3de8fe1ab41370d7c497a))
+* updates branches.update tests ([b0b858a](https://github.com/goabstract/abstract-sdk/commit/b0b858a58be07b613441b540d99917f260d4b739))
+>>>>>>> 8e09088... "chore(release): 8.0.0-beta.38"
 
 ## [8.0.0-beta.37](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.36...v8.0.0-beta.37) (2020-09-17)
 
