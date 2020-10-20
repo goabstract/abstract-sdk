@@ -347,6 +347,9 @@ describe("branches", () => {
         },
         {
           status: "wip"
+        },
+        {
+          transportMode: ["api"]
         }
       );
 
@@ -356,6 +359,18 @@ describe("branches", () => {
       });
     });
 
+    const user = {
+      id: "user-id",
+      name: "user-name",
+      avatarUrl: "user-avatar",
+      createdAt: "",
+      deletedAt: "",
+      lastActiveAt: "",
+      primaryEmailId: "user-email-id",
+      updatedAt: "",
+      username: "user-username"
+    };
+
     test("cli - with all attributes", async () => {
       mockCLI(
         [
@@ -363,6 +378,8 @@ describe("branches", () => {
           "update",
           "branch-id",
           "--project-id=project-id",
+          "--user-id=user-id",
+          "--user-name=user-name",
           "--name=branch-name",
           "--status=wip",
           "--description=branch-description"
@@ -384,6 +401,10 @@ describe("branches", () => {
           name: "branch-name",
           status: "wip",
           description: "branch-description"
+        },
+        {
+          transportMode: ["cli"],
+          user
         }
       );
 
@@ -394,19 +415,33 @@ describe("branches", () => {
     });
 
     test("cli - with no attributes", async () => {
-      mockCLI(["branches", "update", "branch-id", "--project-id=project-id"], {
-        data: {
-          branchId: "branch-id",
-          projectId: "project-id"
+      mockCLI(
+        [
+          "branches",
+          "update",
+          "branch-id",
+          "--project-id=project-id",
+          "--user-id=user-id",
+          "--user-name=user-name"
+        ],
+        {
+          data: {
+            branchId: "branch-id",
+            projectId: "project-id"
+          }
         }
-      });
+      );
 
       const response = await CLI_CLIENT.branches.update(
         {
           branchId: "branch-id",
           projectId: "project-id"
         },
-        {}
+        {},
+        {
+          transportMode: ["cli"],
+          user
+        }
       );
 
       expect(response).toEqual({

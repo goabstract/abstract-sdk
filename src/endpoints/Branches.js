@@ -146,10 +146,10 @@ export default class Branches extends Endpoint {
   update(
     descriptor: BranchDescriptor,
     branch: UpdatedBranch,
-    options: {
+    options?: {
       ...RequestOptions,
       user?: User
-    }
+    } = {}
   ) {
     const { name, description, status } = branch;
     const { user, ...requestOptions } = options;
