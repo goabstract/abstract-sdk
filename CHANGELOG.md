@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0-beta.38](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.37...v8.0.0-beta.38) (2020-10-20)
+
+
+### Features
+
+* passes user params to cli request to enable it ([eed942b](https://github.com/goabstract/abstract-sdk/commit/eed942b68937625ccfc3de8fe1ab41370d7c497a))
+* updates branches.update tests ([b0b858a](https://github.com/goabstract/abstract-sdk/commit/b0b858a58be07b613441b540d99917f260d4b739))
+
 ## [8.0.0-beta.37](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.36...v8.0.0-beta.37) (2020-09-17)
 
 
