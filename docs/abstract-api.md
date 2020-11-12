@@ -2337,7 +2337,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master"
+  sha: string
 }
 ```
 
