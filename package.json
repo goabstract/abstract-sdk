@@ -26,7 +26,8 @@
   "browser": {
     "@elasticprojects/abstract-cli": false,
     "child_process": false,
-    "fs": false
+    "fs": false,
+    "stream": false
   },
   "repository": "github:goabstract/abstract-sdk",
   "scripts": {
