@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.1.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.36...v8.1.0) (2020-11-16)
+
+
+### Features
+
+* adds update method to Branch endpoint ([#309](https://github.com/goabstract/abstract-sdk/issues/309)) ([a5375fc](https://github.com/goabstract/abstract-sdk/commit/a5375fc3a06268a77539e704a98eddfb10461cae))
+
+
+### Bug Fixes
+
+* Add missing invariant to deps ([#318](https://github.com/goabstract/abstract-sdk/issues/318)) ([0041fd3](https://github.com/goabstract/abstract-sdk/commit/0041fd38d06623fac5dc31ca8e0a4efc38090290)), closes [#316](https://github.com/goabstract/abstract-sdk/issues/316)
+* Broken wordmark image in README ([#306](https://github.com/goabstract/abstract-sdk/issues/306)) ([3507f65](https://github.com/goabstract/abstract-sdk/commit/3507f65dc556c4842de78477a542bad379a36ac1))
+* Mark stream dep as node only ([#319](https://github.com/goabstract/abstract-sdk/issues/319)) ([20bc063](https://github.com/goabstract/abstract-sdk/commit/20bc0636b369ab4b181f837098dffec2a6b9e2d6))
+
 ## [8.0.0-beta.38](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.37...v8.0.0-beta.38) (2020-10-20)
 
 
