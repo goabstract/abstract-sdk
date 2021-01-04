@@ -20,8 +20,7 @@ const siteConfig = {
   organizationName: "goabstract",
   headerLinks: [
     { doc: "installation", label: "Getting started" },
-    { doc: "abstract-api", label: "API Reference" },
-    { href: "https://spectrum.chat/abstract/developers", label: "Community" }
+    { doc: "abstract-api", label: "API Reference" }
   ],
 
   gaTrackingId: "UA-102434873-3",

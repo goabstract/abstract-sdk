@@ -22,7 +22,6 @@ Complete SDK documentation can be found at [https://developer.abstract.com](http
 The following community resources are available to help you get started quickly with the SDK:
 
 - [Documentation website](https://developer.abstract.com)
-- [Spectrum chat](https://spectrum.chat/abstract)
 - [Abstract help center](https://www.abstract.com/help/)
 - [Abstract support](https://www.abstract.com/help/contact/)
 - Still stuck? [File an issue!](https://github.com/goabstract/abstract-sdk/issues/new)
