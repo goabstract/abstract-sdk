@@ -203,7 +203,7 @@ describe("files", () => {
         ]
       });
 
-      [...Array(20)].forEach(() => {
+      [...Array(300)].forEach(() => {
         mockAPI(
           "/projects/project-id/branches/branch-id/files/file-id/export",
           {
