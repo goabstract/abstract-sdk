@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.1](https://github.com/goabstract/abstract-sdk/compare/v8.1.0...v8.1.1) (2021-04-05)
+
+
+### Bug Fixes
+
+* increase file export timeout for api transport ([#329](https://github.com/goabstract/abstract-sdk/issues/329)) ([a4b51d3](https://github.com/goabstract/abstract-sdk/commit/a4b51d3c6951d6bc9c9d16d47ea25eb9c58eb7f0))
+
 ## [8.1.0](https://github.com/goabstract/abstract-sdk/compare/v8.0.0-beta.36...v8.1.0) (2020-11-16)
 
 
