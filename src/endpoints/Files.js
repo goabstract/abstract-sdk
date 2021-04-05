@@ -11,8 +11,8 @@ import { FileExportError, NotFoundError } from "../errors";
 import { isNodeEnvironment, wrap } from "../util/helpers";
 import Endpoint from "../endpoints/Endpoint";
 
-const EXPORT_STATUS_CHECK_INTERVAL = 2000;
-const MAX_EXPORT_DURATION = EXPORT_STATUS_CHECK_INTERVAL * 15;
+const EXPORT_STATUS_CHECK_INTERVAL = 2000; // 2 seconds
+const MAX_EXPORT_DURATION = 1000 * 60 * 5; // 5 minutes
 
 export default class Files extends Endpoint {
   name = "files";
