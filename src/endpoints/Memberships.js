@@ -1,4 +1,6 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   Membership,
   OrganizationDescriptor,
@@ -7,8 +9,6 @@ import type {
   ProjectMembershipDescriptor,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Memberships extends Endpoint {
   name = "memberships";

@@ -1,4 +1,6 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   OrganizationDescriptor,
   ProjectDescriptor,
@@ -6,8 +8,6 @@ import type {
   User,
   UserDescriptor
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Users extends Endpoint {
   name = "users";
@@ -39,7 +39,10 @@ export default class Users extends Endpoint {
         }
 
         const response = await this.apiRequest(url);
-        return wrap(response.data.map(membership => membership.user), response);
+        return wrap(
+          response.data.map(membership => membership.user),
+          response
+        );
       },
       requestOptions
     });

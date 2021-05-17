@@ -1,5 +1,7 @@
 // @flow
 import querystring from "query-string";
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   ListOptions,
   Notification,
@@ -7,8 +9,6 @@ import type {
   OrganizationDescriptor,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Notifications extends Endpoint {
   name = "notifications";

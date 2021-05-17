@@ -1,4 +1,6 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   CollectionDescriptor,
   CollectionLayer,
@@ -7,8 +9,6 @@ import type {
   RequestOptions,
   UpdatedCollectionLayer
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class CollectionLayers extends Endpoint {
   name = "collectionLayers";

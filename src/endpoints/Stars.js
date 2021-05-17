@@ -1,12 +1,12 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   ProjectDescriptor,
   RequestOptions,
   SectionDescriptor,
   Star
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Stars extends Endpoint {
   name = "stars";

@@ -1,6 +1,9 @@
 // @flow
 import invariant from "invariant";
 import querystring from "query-string";
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
+import { BranchSearchCLIError } from "../errors";
 import type {
   Branch,
   BranchDescriptor,
@@ -12,9 +15,6 @@ import type {
   UserDescriptor,
   User
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
-import { BranchSearchCLIError } from "../errors";
 
 // Version 17 returns policies for branches
 const headers = {

@@ -115,6 +115,8 @@ export default class Endpoint {
 
     fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
     fetchOptions.headers = await this._getFetchHeaders(fetchOptions.headers);
+    fetchOptions.agent = this.options.proxyAgent;
+
     const args = [`${hostname}/${url}`, fetchOptions];
 
     /* istanbul ignore next */

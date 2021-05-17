@@ -1,5 +1,7 @@
 // @flow
 import sha256 from "js-sha256";
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   NewWebhook,
   OrganizationDescriptor,
@@ -10,8 +12,6 @@ import type {
   WebhookDescriptor,
   WebhookEvent
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Users extends Endpoint {
   name = "webhooks";

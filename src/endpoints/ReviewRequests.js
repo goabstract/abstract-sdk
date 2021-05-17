@@ -1,4 +1,6 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   BranchDescriptor,
   OrganizationDescriptor,
@@ -6,8 +8,6 @@ import type {
   RequestOptions,
   ReviewRequest
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class ReviewRequests extends Endpoint {
   name = "reviewRequests";

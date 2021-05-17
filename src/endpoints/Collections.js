@@ -1,5 +1,7 @@
 // @flow
 import querystring from "query-string";
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   BranchDescriptor,
   Collection,
@@ -10,8 +12,6 @@ import type {
   RequestOptions,
   UpdatedCollection
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 // Version 16 returns cached thumbnails
 const API_VERSION = 16;
