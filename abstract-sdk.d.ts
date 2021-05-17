@@ -1,4 +1,5 @@
 // errors.js
+import http from "http";
 
 export class BaseError extends Error {}
 
@@ -1870,7 +1871,8 @@ type CommandOptions = {
   previewUrl: string | Promise<string>,
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
   transportMode: ("api" | "cli")[],
-  webUrl: string | Promise<string>
+  webUrl: string | Promise<string>,
+  proxyAgent?: http.Agent
 };
 
 

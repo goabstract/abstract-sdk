@@ -165,7 +165,7 @@ export type CommandOptions = {
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>,
-  proxyAgent: ?http.Agent
+  proxyAgent?: http.Agent
 };
 
 export type Star = {
