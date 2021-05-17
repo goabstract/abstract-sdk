@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.2-0](https://github.com/goabstract/abstract-sdk/compare/v8.1.1...v8.1.2-0) (2021-05-17)
+
+
+### Bug Fixes
+
+* Pipe optional proxy agent param to fetch ([179246f](https://github.com/goabstract/abstract-sdk/commit/179246fe2ee7412e7cc2218dc1db0033ef75050d))
+
 ### [8.1.1](https://github.com/goabstract/abstract-sdk/compare/v8.1.0...v8.1.1) (2021-04-05)
 
 
