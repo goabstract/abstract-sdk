@@ -1,11 +1,11 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   OrganizationDescriptor,
   Organization,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 // Version 27 does not return features for organizations
 const headers = {

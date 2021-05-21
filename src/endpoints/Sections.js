@@ -1,7 +1,7 @@
 // @flow
-import type { OrganizationDescriptor, RequestOptions, Section } from "../types";
 import Endpoint from "../endpoints/Endpoint";
 import { wrap } from "../util/helpers";
+import type { OrganizationDescriptor, RequestOptions, Section } from "../types";
 
 export default class Sections extends Endpoint {
   name = "sections";

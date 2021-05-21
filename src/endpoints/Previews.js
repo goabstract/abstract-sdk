@@ -2,14 +2,14 @@
 /* global Blob */
 import { promises as fs } from "fs";
 import { FileAPIError } from "../errors";
+import { isNodeEnvironment } from "../util/helpers";
+import Endpoint from "../endpoints/Endpoint";
 import type {
   LayerVersionDescriptor,
   PreviewMeta,
   RawOptions,
   RequestOptions
 } from "../types";
-import { isNodeEnvironment } from "../util/helpers";
-import Endpoint from "../endpoints/Endpoint";
 
 export default class Previews extends Endpoint {
   name = "previews";

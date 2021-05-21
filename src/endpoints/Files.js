@@ -1,5 +1,8 @@
 // @flow
 import { promises as fs } from "fs";
+import { FileExportError, NotFoundError } from "../errors";
+import { isNodeEnvironment, wrap } from "../util/helpers";
+import Endpoint from "../endpoints/Endpoint";
 import type {
   BranchCommitDescriptor,
   File,
@@ -7,9 +10,6 @@ import type {
   RawProgressOptions,
   RequestOptions
 } from "../types";
-import { FileExportError, NotFoundError } from "../errors";
-import { isNodeEnvironment, wrap } from "../util/helpers";
-import Endpoint from "../endpoints/Endpoint";
 
 const EXPORT_STATUS_CHECK_INTERVAL = 2000; // 2 seconds
 const MAX_EXPORT_DURATION = 1000 * 60 * 5; // 5 minutes

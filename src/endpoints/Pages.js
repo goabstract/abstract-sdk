@@ -1,13 +1,13 @@
 // @flow
+import { NotFoundError } from "../errors";
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   FileDescriptor,
   Page,
   PageDescriptor,
   RequestOptions
 } from "../types";
-import { NotFoundError } from "../errors";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Pages extends Endpoint {
   name = "pages";

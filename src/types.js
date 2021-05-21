@@ -1,5 +1,6 @@
 // @flow
 /* istanbul ignore file */
+import { Agent } from "http";
 
 export type OrganizationDescriptor = {|
   organizationId: string
@@ -163,7 +164,8 @@ export type CommandOptions = {
   previewUrl: string | Promise<string>,
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
   transportMode: ("api" | "cli")[],
-  webUrl: string | Promise<string>
+  webUrl: string | Promise<string>,
+  proxyAgent?: Agent
 };
 
 export type Star = {

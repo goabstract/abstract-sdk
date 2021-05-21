@@ -1,4 +1,6 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   ProjectDescriptor,
   BranchDescriptor,
@@ -6,8 +8,6 @@ import type {
   BranchCommitDescriptor,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 const headers = {
   "Abstract-Api-Version": "19"

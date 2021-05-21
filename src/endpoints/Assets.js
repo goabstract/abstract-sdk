@@ -2,6 +2,7 @@
 import { promises as fs } from "fs";
 import querystring from "query-string";
 import { isNodeEnvironment, wrap } from "../util/helpers";
+import Endpoint from "../endpoints/Endpoint";
 import type {
   Asset,
   AssetDescriptor,
@@ -11,7 +12,6 @@ import type {
   RawOptions,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
 
 export default class Assets extends Endpoint {
   name = "assets";

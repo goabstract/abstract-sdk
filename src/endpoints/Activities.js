@@ -1,5 +1,7 @@
 // @flow
 import querystring from "query-string";
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   Activity,
   ActivityDescriptor,
@@ -10,8 +12,6 @@ import type {
   ProjectDescriptor,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Activities extends Endpoint {
   name = "activities";

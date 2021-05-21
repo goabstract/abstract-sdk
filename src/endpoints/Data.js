@@ -1,11 +1,11 @@
 // @flow
+import Endpoint from "../endpoints/Endpoint";
+import { wrap } from "../util/helpers";
 import type {
   LayerDataset,
   LayerVersionDescriptor,
   RequestOptions
 } from "../types";
-import Endpoint from "../endpoints/Endpoint";
-import { wrap } from "../util/helpers";
 
 export default class Data extends Endpoint {
   name = "data";
