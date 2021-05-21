@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.2](https://github.com/goabstract/abstract-sdk/compare/v8.1.2-0...v8.1.2) (2021-05-21)
+
 ### [8.1.2-0](https://github.com/goabstract/abstract-sdk/compare/v8.1.1...v8.1.2-0) (2021-05-17)
 
 
