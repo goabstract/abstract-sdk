@@ -58,3 +58,26 @@ See [Transports](/docs/transports) for more information.
 _Default value: `https://app.goabstract.com`_
 
 This option can be used to specify a custom URL for the Abstract web application. This is used by the [API transport](/docs/transports) when generating URLs that link to specific parts of the web application.
+
+### `proxyAgent`
+
+_Default value: `undefined`_
+
+This option can be used to specify a custom proxy configuration which will be used for routing API requests. We recommend using in conjunction with the [https-proxy-agent](https://www.npmjs.com/package/https-proxy-agent) module for most circumstances, which would need to be installed separately. Configuration looks like:
+
+
+```javascript
+const HttpsProxyAgent = require("https-proxy-agent");
+const Abstract = require("abstract-sdk");
+
+const proxyAgent = new HttpsProxyAgent("http://127.0.0.1:8080");
+
+// alternatively pass one of the common env variables…
+// const proxyAgent = new HttpsProxyAgent(process.env.HTTPS_PROXY);
+
+const client = new Abstract.Client({
+  proxyAgent,
+  accessToken,
+  ...etc
+});
+```
