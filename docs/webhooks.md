@@ -11,10 +11,6 @@ Many powerful SDK use cases rely on this ability to execute logic in response to
 - Automatic icon generation
 - Static preview generation
 
-> **Webhooks are currently in beta.** Please note that payloads, event names, and other related functionality could change before launching publicly.
->
-> [**Request beta access now**](https://docs.google.com/forms/d/e/1FAIpQLSevRBz_upT8p2YrieDRrlIKyAUAOHQ5A1xZFn2AMLlrae2rOA/viewform)
-
 ## Creating a webhook
 
 Webhooks are specific to an organization and can be created via its integration settings. The following process outlines how to create a new webhook.
