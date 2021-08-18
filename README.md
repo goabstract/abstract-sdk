@@ -23,7 +23,7 @@ The following community resources are available to help you get started quickly 
 
 - [Documentation website](https://developer.abstract.com)
 - [Abstract help center](https://www.abstract.com/help/)
-- [Abstract support](https://www.abstract.com/help/contact/)
+- [Abstract support](https://help.abstract.com/hc/en-us/articles/360050382291-Contact-Support)
 - Still stuck? [File an issue!](https://github.com/goabstract/abstract-sdk/issues/new)
 
 ## Contributing

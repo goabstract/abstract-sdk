@@ -4,7 +4,7 @@ We're very grateful for outside contributions, as they both improve the robustne
 
 ## Code of conduct
 
-Please note that this project adheres to a [code of conduct](https://github.com/goabstract/abstract-sdk/blob/master/CODE_OF_CONDUCT.md).
+Please note that this project adheres to a [code of conduct](https://github.com/goabstract/abstract-sdk/blob/main/CODE_OF_CONDUCT.md).
 
 ## Submitting an issue
 
@@ -68,7 +68,7 @@ $ yarn test
 
 ## Documentation
 
-Both the documentation content and its static website code live inside this repository in the [`docs`](https://github.com/goabstract/abstract-sdk/tree/master/docs) and [`website`](https://github.com/goabstract/abstract-sdk/tree/master/website) folders, respectively. The documentation auto-deploys to [https://developer.abstract.com](https://developer.abstract.com) whenever new commits occur on the [`docs`](https://github.com/goabstract/abstract-sdk/tree/docs) branch. This means that **pull requests to update documentation should be made against the `docs` branch** instead of `master`.
+Both the documentation content and its static website code live inside this repository in the [`docs`](https://github.com/goabstract/abstract-sdk/tree/main/docs) and [`website`](https://github.com/goabstract/abstract-sdk/tree/main/website) folders, respectively. The documentation auto-deploys to [https://developer.abstract.com](https://developer.abstract.com) whenever new commits occur on the [`docs`](https://github.com/goabstract/abstract-sdk/tree/docs) branch. This means that **pull requests to update documentation should be made against the `docs` branch** instead of `main`.
 
 ### Installation
 
@@ -102,7 +102,7 @@ New package versions of `abstract-sdk` are automatically published to the public
 3. Lastly, update the documentation.
    ```sh
    $ git checkout -t origin/docs -b docs
-   $ git rebase master
+   $ git rebase main
    $ git push origin docs -f
    ```
 

@@ -393,18 +393,18 @@ type NotificationDescriptor = {
 type ObjectDescriptor = {
   sha: "latest" | string,
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 };
 
 type BranchCommitDescriptor = {
   sha: string | "latest",
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 };
 
 type BranchDescriptor = {
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 };
 
 type FileDescriptor = ObjectDescriptor & {
@@ -423,7 +423,7 @@ type LayerVersionDescriptor = ObjectDescriptor & {
 
 type LayerDescriptor = {
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main",
   fileId: string,
   layerId: string
 };
@@ -768,7 +768,7 @@ type Project = {
   assetAutoGeneration: AssetAutoGenerationOption
 };
 
-type AssetAutoGenerationOption = "all" | "master" | "off";
+type AssetAutoGenerationOption = "all" | "master" | "main" | "off";
 
 type NewProject = {
   name: string,

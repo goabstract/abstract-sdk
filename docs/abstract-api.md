@@ -60,9 +60,9 @@ abstract.activities.info({
 
 ## Assets
 
-An asset represents a resource exported from a design file. Assets are automatically updated and available for new commits.
+An asset represents a resource exported from a design file. Assets are automatically updated and available for new commits when [automatic asset generation](https://help.abstract.com/hc/en-us/articles/360050380071-Assets#enable-and-disable-asset-generation-in-project-settings) is enabled.
 
-> Note: Assets are only supported when using a Business or Enterprise plan. More information on Abstract plan types can be found [here](https://www.abstract.com/pricing/).
+> Note: Assets are only supported when using a [Business, Pro, or Enterprise plan](https://www.abstract.com/pricing/).
 
 ### The asset object
 
@@ -74,13 +74,13 @@ An asset represents a resource exported from a design file. Assets are automatic
 | `fileId`      | `string`            | File ID of this asset                                                                   |
 | `formatName`  | `string`            | Format of this file, e.g. "2x"                                                          |
 | `id`          | `string`            | UUID identifier of the asset                                                            |
-| `layerId`     | `string`            | UUID of the layer this asset belongs to                                                 |
-| `layerName`   | `string`            | Name of the layer this asset belongs to                                                 |
-| `namingScheme`| `string`            | Determines how the `formatName` is applied when constructing the filename for this asset. "1" means the `formatName` will be used as a prefix, "0" means it will be used as a suffix. |
-| `nestedLayerId` | `string`          | ID of the nested layer this asset belongs to                                            |
-| `projectId`   | `string`            | ID of the project this asset belongs to                                                 |
+| `layerId`     | `string`            | UUID of the layer to which this asset belongs                                           |
+| `layerName`   | `string`            | Name of the layer to which this asset belongs                                           |
+| `namingScheme`| `string`            | Determines how the `formatName` is applied when constructing the filename for this asset. "1" means the `formatName` will be used as a prefix. "0" means it will be used as a suffix. |
+| `nestedLayerId` | `string`          | ID of the nested layer to which this asset belongs                                      |
+| `projectId`   | `string`            | ID of the project to which this asset belongs to                                        |
 | `scale`       | `string`            | Scale of this asset in Sketch, e.g. "1.00"                                              |
-| `sha`         | `string`            | SHA of the commit containing the version of the file this asset belongs to              |
+| `sha`         | `string`            | SHA of the commit containing the version of the file to which this asset belongs        |
 | `url`         | `string`            | Direct URL to the asset file                                                            |
 
 ### Retrieve an asset
@@ -109,7 +109,7 @@ List the first ten assets for a given file
 ```js
 abstract.assets.file({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "latest"
 }, {
@@ -172,7 +172,7 @@ fs.writeFile("asset.png", Buffer.from(processedBuffer), (err) => {
 // Get all assets for a given file
 const assets = await abstract.assets.file({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "latest"
 });
@@ -187,22 +187,21 @@ await Promise.all(assets.map(asset => abstract.assets.raw({
 
 ## Branches
 
-A branch is where design work and commits happen. A branch acts as a personal workspace for contributors, we encourage branches
-to be created for logical chunks of work – for example designing a new feature.
+A branch is where design work and commits happen. A branch acts as a personal workspace for contributors. We encourage branches to be created for logical chunks of work, such designing a new feature.
 
 ### The branch object
 
 | Property               | Type     | Description                                                                                       |
 |------------------------|----------|---------------------------------------------------------------------------------------------------|
 | `createdAt`            | `string` | Timestamp that the branch was created                                                             |
-| `description`          | `string` | A summary of the branch – this field may contain markdown.                                        |
+| `description`          | `string` | A summary of the branch – this field may contain markdown                                         |
 | `divergedFromBranchId` | `string` | UUID identifier of the branch this branch diverged from                                           |
 | `head`                 | `string` | SHA that represents the latest commit on the branch                                               |
-| `id`                   | `string` | UUID identifier of the branch, or the string "master"                                             |
+| `id`                   | `string` | UUID identifier of the branch, or the string "main"                                               |
 | `mergeSha`             | `string` | SHA that represents the commit where this branch was merged                                       |
 | `mergedIntoBranchId`   | `string` | UUID identifier of the branch this branch was merged into                                         |
 | `name`                 | `string` | The name of the branch                                                                            |
-| `parent`               | `string` | UUID identifier of the branch that this branch was created from, or the string "master"           |
+| `parent`               | `string` | UUID identifier of the branch that this branch was created from, or the string "main"             |
 | `projectId`            | `string` | UUID of the project that this branch is contained within                                          |
 | `startedAtSha`         | `string` | SHA that represents the commit where this branch was created                                      |
 | `status`               | `string` | The current status of the branch. May be one of `active`, `wip`, `feedback`, `review`, `merged`, `archived`, `deleted`, `diverged` |
@@ -266,7 +265,7 @@ Load the info for a specific branch in a project
 ```js
 abstract.branches.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 });
 ```
 
@@ -281,7 +280,7 @@ A branch merge state is a description of whether a branch can be cleanly merged 
 | `state`                | `string` | The merge state of the branch relative to its parent branch. May be one of `CLEAN`, `NEEDS_UPDATE`, or `NEEDS_REMOTE_UPDATE` |
 | `parentId`             | `string` | UUID of the parent branch                                                                         |
 | `parentCommit`         | `string` | SHA that represents the latest commit on the parent branch                                        |
-| `branchId`             | `string` | UUID identifier of the branch, or the string "master"                                             |
+| `branchId`             | `string` | UUID identifier of the branch, or the string "main"                                               |
 | `branchCommit`         | `string` | SHA that represents the latest commit on the branch                                               |
 | `ahead`                | `number` | The number of commits that the branch is ahead of its parent                                      |
 | `behind`               | `number` | The number of commits that the branch is behind its parent                                        |
@@ -314,7 +313,7 @@ Update an existing branch
 ```js
 abstract.branches.update({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 }, {
   name: "New name",
   description: "New description",
@@ -331,10 +330,9 @@ A changeset is a group of changes that together form a single, indivisible modif
 
 | Property       | Type                | Description                                                                             |
 |----------------|---------------------|-----------------------------------------------------------------------------------------|
-| `branchId`     | `string`            | UUID of the branch that this changeset is part of, or the string "master"               |
+| `branchId`     | `string`            | UUID of the branch that this changeset is part of, or the string "main"                 |
 | `changes`      | `ChangesetChange[]` | List of changes that make up this changeset                                             |
-| `compareToSha` | `string`            
-| SHA of the commit introducing changes in this changeset                                 |
+| `compareToSha` | `string`            | SHA of the commit introducing changes in this changeset                                 |
 | `id`           | `string`            | UUID identifier of the changeset                                                        |
 | `projectId`    | `string`            | UUID of the project this changeset belongs to                                           |
 | `sha`          | `string`            | SHA of the base commit in this changeset that changes are against                       |
@@ -343,8 +341,8 @@ A changeset is a group of changes that together form a single, indivisible modif
 
 | Property       | Type                             | Description                                                |
 |----------------|----------------------------------|------------------------------------------------------------|
-| `type`         | `string`                         | Type of this change, can be one of `file`, `page`, `layer`, `symbol`, `artboard`, `colors`, `gradient`, `layer-style`, `text-style` |
-| `status`       | `string`                         | Status of this change, can be one of `added`, `deleted`, `edited`, `edited-indirectly`, `none` |
+| `type`         | `string`                         | Type of this change. Can be one of `file`, `page`, `layer`, `symbol`, `artboard`, `colors`, `gradient`, `layer-style`, `text-style` |
+| `status`       | `string`                         | Status of this change. Can be one of `added`, `deleted`, `edited`, `edited-indirectly`, `none` |
 | `hasPreview`   | `boolean`                        | Indicates if this change has a visual preview              |
 | `meta`         | `{ [key: string]: [any, any] }`  | Object containing additional information about this change |
 | `fileId`       | `string`                         | UUID of the file this change was made against              |
@@ -365,7 +363,7 @@ Load a changeset for a commit
 
 ```js
 abstract.changesets.commit({
-  branchId: "master",
+  branchId: "main",
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
   sha: "e2a0a301c4a530ec16024cbb339dfc135c841b10"
 });
@@ -389,17 +387,17 @@ abstract.changesets.branch({
 
 ## Collections
 
-A collection is a set of layers at the same or different commits on a branch, they can be created in the desktop or web app and are used to group work together to communicate a flow, ask for review, or other use cases.
+A collection is a set of layers at the same or different commits on a branch. Collections can be created in the desktop or web app and are used to help present work during design reviews or presentations.
 
 #### The collection object
 
 | Property      | Type                | Description                                                                             |
 |---------------|---------------------|-----------------------------------------------------------------------------------------|
-| `branchId`    | `string`            | UUID of the branch that this collection belongs to, or the string "master"              |
+| `branchId`    | `string`            | UUID of the branch that this collection belongs to, or the string "main"                |
 | `createdAt`   | `string`            | Timestamp that the collection was created                                               |
 | `description` | `string`            | A description of the collection                                                         |
 | `id`          | `string`            | UUID identifier of the collection                                                       |
-| `layers`      | `CollectionLayer[]` | An ordered array of collection layers. Note: These are not the same as `Layer` objects. |
+| `layers`      | `CollectionLayer[]` | An ordered array of collection layers. Note: These are not the same as `Layer` objects  |
 | `name`        | `string`            | The name of the collection                                                              |
 | `projectId`   | `string`            | UUID of the project this commit belongs to                                              |
 | `publishedAt` | `string`            | Timestamp that the collection was published                                             |
@@ -417,7 +415,7 @@ List all collections for a branch
 ```js
 abstract.collections.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 });
 ```
 
@@ -426,7 +424,7 @@ Search and sort specific collections
 ```js
 abstract.collections.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 }, {
   branchStatus: "active",
   layersPerCollection: 5,
@@ -434,7 +432,7 @@ abstract.collections.list({
   sortBy: "updatedAt"
 });
 ```
-s
+
 > Note: Collection searching and sorting is only available when using the [API transport](/docs/transports).
 
 ### Retrieve a collection
@@ -448,14 +446,14 @@ Load an individual collection
 ```js
 abstract.collections.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   collectionId: "413daa80-1456-11e8-b8b0-4d1fec7ae555"
 });
 ```
 
 ### Create a collection
 
-![CLI][cli-icon] ![API][api-icon]
+![API][api-icon]
 
 `collections.create(ProjectDescriptor, NewCollection, RequestOptions): Promise<Collection>`
 
@@ -473,7 +471,7 @@ abstract.collections.create({
 
 ### Update a collection
 
-![CLI][cli-icon] ![API][api-icon]
+![API][api-icon]
 
 `collections.update(CollectionDescriptor, UpdatedCollection, RequestOptions): Promise<Collection>`
 
@@ -506,8 +504,8 @@ A collection layer represents an underlying layer within a collection. Collectio
 | `isPinned`        | `boolean` | SHA of the commit introducing changes in this changeset                                               |
 | `useLatestCommit` | `boolean` | Determines if this collection layer should always point to the latest version of its underlying layer |
 | `id`              | `string`  | UUID identifier of this collection layer                                                              |
-| `order`           | `number`  | SHA of the commit that the underlying layer should point to                                           |
-| `sha`             | `string`  | SHA of the commit that the underlying layer should point to                                           |
+| `order`           | `number`  | Position to place the collection layer when sorting                                                   |
+| `sha`             | `string`  | SHA of the commit to which the underlying layer should point                                          |
 
 #### The NewCollectionLayer object
 
@@ -518,8 +516,8 @@ A collection layer represents an underlying layer within a collection. Collectio
 | `layerId`         | `string`  | UUID of the underlying layer that this collection layer represents                                    |
 | `isPinned`        | `boolean` | SHA of the commit introducing changes in this changeset                                               |
 | `useLatestCommit` | `boolean` | Determines if this collection layer should always point to the latest version of its underlying layer |
-| `order`           | `number`  | SHA of the commit that the underlying layer should point to                                           |
-| `sha`             | `string`  | SHA of the commit that the underlying layer should point to                                           |
+| `order`           | `number`  | Position to place the collection layer when sorting                                                   |
+| `sha`             | `string`  | SHA of the commit to which the underlying layer should point                                          |
 
 ### Add a single layer to a collection
 
@@ -623,8 +621,7 @@ abstract.collectionLayers.move({
 
 ## Comments
 
-A comment in Abstract can be left on a branch, commit, or layer. Comments on layers can also include an optional annotation that
-represents a bounding area on-top of the layer, this can be used to leave comments about specific areas.
+A comment can be left on a branch, commit, or layer. Comments on layers can also include an optional annotation that represents a bounding area on top of the layer, which can be used to leave comments about specific areas.
 
 ### The comment object
 
@@ -632,7 +629,7 @@ represents a bounding area on-top of the layer, this can be used to leave commen
 |----------------|--------------|-------------------------------------------------------------------------|
 | `annotation`   | `Annotation` | The optional bounding box for the comment on the layer                  |
 | `body`         | `string`     | The body of the comment                                                 |
-| `branchId`     | `string`     | UUID of the branch this comment is on, or the string "master"           |
+| `branchId`     | `string`     | UUID of the branch this comment is on, or the string "main"             |
 | `commitSha`    | `string`     | SHA of the commit this comment was left on                              |
 | `createdAt`    | `string`     | Timestamp of the comment creation time                                  |
 | `deletedAt`    | `string`     | Timestamp of the comment deletion time                                  |
@@ -666,7 +663,7 @@ or, list the first two comments for a specific layer...
 
 ```js
 abstract.comments.list({
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
@@ -700,18 +697,18 @@ Create a comment on a branch
 ```js
 abstract.comments.create({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 }, {
   body: "Hello from the Abstract SDK"
 });
 ```
 
-Or, perhaps create an annotation on a layer…
+Create an annotation on a layer
 
 ```js
 abstract.comments.create({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a", // or sha: "latest"
@@ -726,32 +723,31 @@ abstract.comments.create({
 });
 ```
 
-  > Note: It's important to ensure that the annotation bounding box is within the dimensions of the layer!
+  > Note: Ensure that the annotation bounding box is within the dimensions of the layer.
 
 
 ## Commits
 
-A commit represents a point in time – contributors can create commits in the desktop app to save their work at different stages. When loading data from the Abstract SDK you will almost always need to provide a commit `SHA`
-to identify which version of the object you would like.
+A commit represents a point in time. Contributors can create commits in the desktop app to save their work at different stages. When loading data from the Abstract SDK, you will almost always need to provide a commit `SHA` to identify which version of the object you would like.
 
 ### The commit object
 
 | Property                | Type       | Description                                                                             |
 |-------------------------|------------|-----------------------------------------------------------------------------------------|
 | `description`           | `string`   | The body of the commit comment                                                          |
-| `destinationBranchId`   | `string`   | For merge commits this points to the merged into branch                                 |
-| `destinationBranchName` | `string`   | For merge commits this is the name of the branch that was merged into                   |
-| `fileIds`               | `string[]` | For system commits like file upgrades this represents the file UUID's that were changed |
+| `destinationBranchId`   | `string`   | For merge commits, this is the merged to branch                                         |
+| `destinationBranchName` | `string`   | For merge commits, this is the name of the merged to branch                             |
+| `fileIds`               | `string[]` | For system commits, like file upgrades, this is the file UUIDs that were changed        |
 | `parents`               | `string[]` | SHA(s) of the parent commits                                                            |
 | `projectId`             | `string`   | UUID of the project this commit belongs to                                              |
-| `sha`                   | `string`   | SHA of the hashed content of the commit. This acts as the unique identifer.             |
-| `sourceBranchId`        | `string`   | For merge commits this points to the merged from branch                                 |
-| `sourceBranchName`      | `string`   | For merge commits this is the name of the branch that was merged from                   |
+| `sha`                   | `string`   | SHA of the hashed content of the commit. This acts as the unique identifer              |
+| `sourceBranchId`        | `string`   | For merge commits, this is the merged from branch                                       |
+| `sourceBranchName`      | `string`   | For merge commits, this is the name of the merged from branch                           |
 | `time`                  | `string`   | Timestamp of the commit                                                                 |
-| `title`                 | `string`   | The title of the commit                                                                 |
-| `type`                  | `string`   | The type of the commit, may be one of `NORMAL`, `PROJECT_CREATED`, `FILE_ADDED`, `FILE_RENAMED`, `FILE_DELETED`, `FILE_REPLACED`, `LIBRARY_ADDED`, `LIBRARY_REMOVED`, `RESTORE`, `UPDATE`, `MERGE`                |
-| `userId`                | `string`   | UUID of the user this commit was created by                                             |
-| `userName`              | `string`   | Display name of the user this commit was created by                                     |
+| `title`                 | `string`   | Title of the commit                                                                     |
+| `type`                  | `string`   | The type of the commit. May be one of `NORMAL`, `PROJECT_CREATED`, `FILE_ADDED`, `FILE_RENAMED`, `FILE_DELETED`, `FILE_REPLACED`, `LIBRARY_ADDED`, `LIBRARY_REMOVED`, `RESTORE`, `UPDATE`, `MERGE`                                                |
+| `userId`                | `string`   | UUID of the user who created this commit                                                |
+| `userName`              | `string`   | Display name of the user who created this commit                                        |
 
 ### List all commits
 
@@ -764,16 +760,16 @@ List the commits for a specific branch
 ```js
 abstract.commits.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 });
 ```
 
-or, get a list of commits for a layer – this query will only return commits where the referenced layer was changed…
+Get a list of commits for a layer. This query will only return commits where the referenced layer was changed
 
 ```js
 abstract.commits.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19"
 });
@@ -819,7 +815,7 @@ abstract.commits.info({
 | `libraryName` | `string`          | The name of the library file this layer is from |
 | `parentId`    | `string`          | UUID of the parent layer, if any                |
 | `properties`  | `LayerDataProperties` | Layer properties                            |
-| `symbolId`    | `string`          | UUID of symbol master, if any                   |
+| `symbolId`    | `string`          | UUID of symbol source, if any                   |
 | `type`        | `string`          | One of `artboard`, `layer`, `symbolMaster`, `symbolInstance`, `group`, `text`, `bitmap`, `shapeGroup`, `shapePath`, `rectangle`, `oval`, `polygon`, `triangle`, `star`, `page`, `slice`, `hotspot` |
 
 
@@ -830,18 +826,18 @@ abstract.commits.info({
 |--------------------------|------------------------------|---------------------------------------------------------------------------|
 | `name`                   | `string`                     | Name of the layer                                                         |
 | `isVisible`              | `boolean`                    | Is layer visible in the artboard                                          |
-| `isLocked`               | `boolean`                    | Determines whether layer is locked or not                                 |
+| `isLocked`               | `boolean`                    | Whether layer is locked or not                                            |
 | `width`                  | `number`                     | The width of layer in pixels                                              |
 | `height`                 | `number`                     | The height of layer in pixels                                             |
 | `x`                      | `number`                     | The relative horizontal position of the layer on the page, measured from the left  |
 | `y`                      | `number`                     | The relative vertical position of the layer on the page, measured from the top     |
 | `rotation`               | `number`                     | The rotation of the layer in degrees                                      |
 | `opacity`                | `number`                     | Opacity from 0 to 100                                                     |
-| `hasClippingMask`        | `boolean`                    | Ensures whether a layer has a clipping mask                               | 
-| `underClippingMask`      | `boolean`                    | Ensures whether a layer is under clipping mask or not                     |
+| `hasClippingMask`        | `boolean`                    | Whether a layer has a clipping mask or not                                | 
+| `underClippingMask`      | `boolean`                    | Whether a layer is under clipping mask or not                             |
 | `textStyleIndex`         | `LayerTextStyle[]`           | Styles of Text. Refer to [LayerTextStyle](#layertextstyle)                | 
 | `colorIndex`             | `LayerColor[]`               | Colors. Refer to [LayerColor](#layercolor)                                |
-| `blendMode`              | `LayerBlendMode`             | Refer to [LayerBlendMode](#layerblendmode)                                | 
+| `blendMode`              | `LayerBlendMode`             | Blend mode. Refer to [LayerBlendMode](#layerblendmode)                    | 
 | `styleName?`             | `string`                     | Name of layer styles applies to layer                                     |
 | `hasClickThrough?`       | `boolean`                    | Can be clicked when pressing cmd or selecting the "Click-through when selecting" |
 | `imageId?`               | `string`                     | An id to image when layer is a bitmap                                     |
@@ -862,17 +858,17 @@ abstract.commits.info({
 | Property                  | Type                        | Description                                     |
 |---------------------------|-----------------------------|-------------------------------------------------|
 | `styleName?`              | `string`                    | Style name for text                             |
-| `fixed?`                  | `boolean`                   | Is the text fixed or not                        |
-| `fontName?`               | `string`                    | PostScript Font Name                            |
-| `fontSize?`               | `number`                    | Font Size                                       |
-| `lineHeight?`             | `number`                    | Line Height of text                             |
-| `characterSpacing?`       | `number`                    | Spacing between Characters                      |
-| `paragraphSpacing?`       | `number`                    | Spacing between Paragraphs                      |
-| `horizontalAlignment?`    | `LayerHorizontalAlignment`  | Horizontal Alignment of a text                  |
-| `verticalAlignment?`      | `number`                    | Vertical Alignment of a text                    |
+| `fixed?`                  | `boolean`                   | Whether the text is fixed or not                |
+| `fontName?`               | `string`                    | PostScript font name                            |
+| `fontSize?`               | `number`                    | Font size                                       |
+| `lineHeight?`             | `number`                    | Line height of text                             |
+| `characterSpacing?`       | `number`                    | Spacing between characters                      |
+| `paragraphSpacing?`       | `number`                    | Spacing between paragraphs                      |
+| `horizontalAlignment?`    | `LayerHorizontalAlignment`  | Horizontal alignment of a text                  |
+| `verticalAlignment?`      | `number`                    | Vertical alignment of a text                    |
 | `color?`                  | `LayerColor`                | Refer to [LayerColor](#layercolor)              |
 | `listStyle?`              | `LayerListStyle`            | One of `""`, `disc` or `numbered`               |
-| `textTransform?`          | `LayerTextTransform`        | `0` for none, `1` is for uppercase and `2` is for lowercase |
+| `textTransform?`          | `LayerTextTransform`        | `0` for none, `1` for uppercase, and `2` for lowercase |
 | `textDecoration?`         | `LayerTextDecoration`       | Refer to [LayerTextDecoration](#layertextdecoration) |
 
 ### LayerTextDecoration
@@ -970,7 +966,7 @@ Can be either of these fill types:
 
 | Property              | Value             | Description                                             |
 |-----------------------|-------------------|---------------------------------------------------------|
-| `fillType`            | `number`          | value: `4`                                              |
+| `fillType`            | `number`          | Value: `4`                                              |
 | `blendMode`           | `LayerBlendMode`  | Refer to [LayerBlendMode](#layerblendmode)              |
 | `opacity`             | `number`          | `0` to `100` opacity level of filling pattern           |
 | `patternFillType`     | `number`          | Refer to [LayerFillPatternType](#layerfillpatterntype)  |
@@ -1037,8 +1033,8 @@ Can be either one of these border types:
 | Property             | Value                 | Description                                             |
 |----------------------|-----------------------|---------------------------------------------------------|
 | `gradientType`       | `number`              | Value: `0` for linear, `1`, for radial, `2` for angular |
-| `from`               | `[number, number]`    | Coords from where to start a gradient                   |
-| `to`                 | `[number, number]`    | Coords from where to end a gradient                     |
+| `from`               | `[number, number]`    | Coordinates from where to start a gradient              |
+| `to`                 | `[number, number]`    | Coordinates from where to end a gradient                |
 | `stops`              | `LayerGradientStop[]` | List of colors stops for the gradient                   |
 | `ellipseLength`      | `number`              | Length of a gradient ellipse                            |
 
@@ -1046,8 +1042,8 @@ Can be either one of these border types:
 
 | Property      | Value                | Description                                               |
 |---------------|----------------------|-----------------------------------------------------------|
-| `position`    | `number`             | At which position value the gradient want to be changed   |
-| `color`       | `LayerColor`         | What color will it get changed to                         |
+| `position`    | `number`             | Position value at which the gradient should be changed    |
+| `color`       | `LayerColor`         | Color to change to                                        |
 
 
 
@@ -1065,8 +1061,8 @@ Can be either one of these border types:
 | `color`           | `LayerColor`        | Coloring of a shadow                            |
 | `blurRadius`      | `number`            | Radius of blur                                  |
 | `spread`          | `number`            | Spread value of a shadow                        |
-| `x`               | `number`            | Horizontal coords of a shadow                   |
-| `y`               | `number`            | Vertical coords of a shadow                     |
+| `x`               | `number`            | Horizontal coordinates of a shadow              |
+| `y`               | `number`            | Vertical coordinates of a shadow                |
 
 ### LayerResizingConstraint
 
@@ -1115,7 +1111,7 @@ Can be either one of these border types:
 ```js
 abstract.data.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
@@ -1134,7 +1130,7 @@ A file represents a standard file – in Abstract a file is always loaded from a
 | `applicationDocumentVersion` | `number`  | The application (eg Sketch's) version of the file               |
 | `applicationVersion`         | `string`  | The version of the application the file was created with        |
 | `id`                         | `string`  | UUID identifier for the file                                    |
-| `isLibrary`                  | `boolean` | Is this file a library file or not                              |
+| `isLibrary`                  | `boolean` | Whether the file is a library file or not                       |
 | `lastChangedAtSha`           | `string`  | SHA that represents the commit where this file was last changed |
 | `name`                       | `string`  | The name of the file                                            |
 | `projectId`                  | `string`  | UUID of the project this file belongs to                        |
@@ -1153,7 +1149,7 @@ List the files for a branch at the latest commit
 ```js
 abstract.files.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   sha: "latest"
 });
 ```
@@ -1169,7 +1165,7 @@ Load the file info for the latest commit on a branch
 ```js
 abstract.files.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
   sha: "latest"
 });
@@ -1186,8 +1182,8 @@ Retrieve a Sketch file from Abstract based on its file ID and save it to disk. F
 ```js
 abstract.files.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  branchId: "main",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "latest"
 });
 ```
@@ -1198,8 +1194,8 @@ The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. Fo
 const fs = require("fs");
 const arrayBuffer = await abstract.files.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  branchId: "main",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "latest"
 }, {
   disableWrite: true
@@ -1216,8 +1212,8 @@ It's also possible to get insight into the underlying progress of the file expor
 ```js
 abstract.files.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7"
+  branchId: "main",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "latest"
 }, {
   onProgress: (receivedBytes: number, totalBytes: number) => {
@@ -1229,7 +1225,7 @@ abstract.files.raw({
 
 ## Layers
 
-A layer is a container for designs. In Sketch a layer usually represents an artboard however it can also be a non-contained layer floating on the page.
+A layer is a container for designs. In Sketch, a layer usually represents an artboard; however, it can also be a non-contained layer floating on the page.
 
 ### The layer object
 
@@ -1262,18 +1258,18 @@ List the layers for a file at a commit
 ```js
 abstract.layers.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
 });
 ```
 
-As a file can contain a lot of layers we recommend filtering by page and adding a limit…
+As a file can contain a lot of layers, we suggest filtering by page and adding a limit
 
 ```js
 abstract.layers.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
@@ -1283,12 +1279,12 @@ abstract.layers.list({
 });
 ```
 
-A file can also contain layers from external libraries. If you'd like to only see the layers in this file and not the external library elements they depend upon, use the `fromLibraries` option…
+A file can also contain layers from external libraries. If you'd like to only see the layers in this file and not the external library elements they depend upon, use the `fromLibraries` option
 
 ```js
 abstract.layers.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
@@ -1310,7 +1306,7 @@ Load the info for a layer in a file at the latest commit on a branch
 ```js
 abstract.layers.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "latest"
@@ -1377,7 +1373,7 @@ A notification is a user-facing message triggered by an underlying activity. Not
 | `id`               | `string` | UUID identifier of the notification                                                 |
 | `initiatingUser`   | `User`   | User that triggered this notification, if applicable                                |
 | `initiatingUserId` | `string` | UUID of the user that triggered this notification, if applicable                    |
-| `messageType`      | `string` | The type of this activity that triggered this notification, may be one of `BRANCH_ARCHIVED`, `BRANCH_CREATED`, `BRANCH_DELETED`, `BRANCH_DESCRIPTION_UPDATED`, `BRANCH_RENAMED`, `BRANCH_STATUS_UPDATED`, `BRANCH_UNARCHIVED`, `COLLECTION_PUBLISHED`, `COMMENT_CREATED`, `COMMIT`, `MERGE_COMMIT`, `PROJECT_ARCHIVED`, `PROJECT_CREATED`, `PROJECT_DELETED`, `PROJECT_DESCRIPTION_CHANGED`, `PROJECT_RENAMED`, `PROJECT_TRANSFERRED`, `PROJECT_UNARCHIVED`, `REVIEWER_REMOVED`, `REVIEW_COMPLETED`, `REVIEW_DISMISSED`, `REVIEW_REQUESTED`, `UPDATE_COMMIT` |
+| `messageType`      | `string` | The type of this activity that triggered this notification. May be one of `BRANCH_ARCHIVED`, `BRANCH_CREATED`, `BRANCH_DELETED`, `BRANCH_DESCRIPTION_UPDATED`, `BRANCH_RENAMED`, `BRANCH_STATUS_UPDATED`, `BRANCH_UNARCHIVED`, `COLLECTION_PUBLISHED`, `COMMENT_CREATED`, `COMMIT`, `MERGE_COMMIT`, `PROJECT_ARCHIVED`, `PROJECT_CREATED`, `PROJECT_DELETED`, `PROJECT_DESCRIPTION_CHANGED`, `PROJECT_RENAMED`, `PROJECT_TRANSFERRED`, `PROJECT_UNARCHIVED`, `REVIEWER_REMOVED`, `REVIEW_COMPLETED`, `REVIEW_DISMISSED`, `REVIEW_REQUESTED`, `UPDATE_COMMIT` |
 | `organization`     | `string` | Organization that triggered this notification, if applicable                        |
 | `organizationId`   | `string` | UUID of the organization that triggered this notification, if applicable            |
 | `project`          | `string` | Project that triggered this notification, if applicable                             |
@@ -1465,7 +1461,7 @@ abstract.organizations.info({
 
 ## Pages
 
-A page is a container for layers, often a file will have several pages to organize design work.
+A page is a container for layers. A file will often have several pages to organize design work.
 
 ### The page object
 
@@ -1473,11 +1469,11 @@ A page is a container for layers, often a file will have several pages to organi
 |-------------|----------|--------------------------------------------------------------|
 | `fileId`    | `string` | UUID of the file that this page is contained within          |
 | `id`        | `string` | UUID identifier for the page                                 |
-| `name`      | `string` | The name of the page                                         |
-| `order`     | `number` | The order of the page in the file                            |
+| `name`      | `string` | Name of the page                                             |
+| `order`     | `number` | Order of the page in the file                                |
 | `projectId` | `string` | UUID of the project this page belongs to                     |
 | `sha`       | `string` | SHA of the commit this page was loaded at                    |
-| `type`      | `string` | This field has the value "library" for virtual library pages |
+| `type`      | `string` | Has the value "library" for virtual library pages            |
 
 ### List all pages
 
@@ -1490,7 +1486,7 @@ List the pages for a file at a commit
 ```js
 abstract.pages.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
 });
@@ -1507,7 +1503,7 @@ Load the info for a page in a file at the latest commit on a branch
 ```js
 abstract.pages.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A"
 });
@@ -1516,8 +1512,7 @@ abstract.pages.info({
 
 ## Previews
 
-A preview is an image file that represents the rendered version of a layer. In Abstract all previews are currently
-only available in PNG format.
+A preview is an image file that represents the rendered version of a layer. Previews are available in PNG format.
 
 ### The preview object
 
@@ -1536,7 +1531,7 @@ Retrieve a preview image for a layer at a specific commit and save it to disk. F
 ```js
 const arrayBuffer = await abstract.previews.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
@@ -1548,7 +1543,7 @@ The resulting `ArrayBuffer` can be also be used with node `fs` APIs directly. Fo
 ```js
 const arrayBuffer = await abstract.previews.raw({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
@@ -1578,7 +1573,7 @@ fs.writeFile(`preview.png`, Buffer.from(processedBuffer), (err) => {
 ```js
 abstract.previews.url({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
@@ -1596,7 +1591,7 @@ Load the info for a layer preview
 ```js
 abstract.previews.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
   sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
@@ -1606,16 +1601,15 @@ abstract.previews.info({
 
 ## Projects
 
-A project is a container for files, it belongs to an organization. Teams use projects to logically separate their files
-for example for a project, a platform (e.g. Web / iOS), or by client.
+A project is a container for files, which belongs to an organization. Teams use projects to logically separate their files, such as for a project, a platform (e.g. Web / iOS), or by client.
 
 ### The project object
 
 | Property         | Type     | Description                                                                   |
 |------------------|----------|-------------------------------------------------------------------------------|
-| `about`          | `string` | A longer description of the project (May optionally include markdown tags)    |
+| `about`          | `string` | A longer description of the project (may optionally include markdown tags)    |
 | `archivedAt`     | `string` | Timestamp that the project was archived                                       |
-| `assetAutoGeneration` | `string` | Status of project asset generation. One of "all", "master", or "off".    |
+| `assetAutoGeneration` | `string` | Automatic asset generation setting. One of "all", "main", or "off".      |
 | `color`          | `string` | A hex value that represents a custom project color                            |
 | `createdAt`      | `string` | Timestamp that the project was created                                        |
 | `createdByUser`  | `User`   | The user that created the project                                             |
@@ -1628,20 +1622,20 @@ for example for a project, a platform (e.g. Web / iOS), or by client.
 | `repoCreatedAt`  | `string` | Timestamp that the backend storage was created                                |
 | `sizeInBytes`    | `number` | The size of the project on disk in bytes                                      |
 | `updatedAt`      | `string` | Timestamp that the project was last updated                                   |
-| `visibility`     | `string` | Either "organization" for a team project, or "specific" for a private project |
+| `visibility`     | `string` | "organization" for a team project, or "specific" for a private project        |
 
 #### NewProject
 
 | Property         | Type      | Description                                                                   |
 |------------------|-----------|-------------------------------------------------------------------------------|
-| `about`          | `string`  | A longer description of the project (May optionally include markdown tags)    |
-| `assetAutoGeneration` | `string` | Status of project asset generation. One of "all", "master", or "off".    |
+| `about`          | `string`  | A longer description of the project (may optionally include markdown tags)    |
+| `assetAutoGeneration` | `string` | Automatic asset generation setting. One of "all", "main", or "off".       |
 | `color`          | `string`  | A hex value that represents a custom project color                            |
 | `createdAt`      | `string`  | Timestamp that the project was created                                        |
 | `name`           | `string`  | The name of the project                                                       |
 | `organizationId` | `string`  | UUID of the organization this project belongs to                              |
 | `sectionId`      | `string`  | UUID of the section this project belongs to                                   |
-| `visibility`     | `string`  | Either "organization" for a team project, or "specific" for a private project |
+| `visibility`     | `string`  | "organization" for a team project, or "specific" for a private project        |
 
 ### List all projects
 
@@ -1655,7 +1649,7 @@ List all projects accessible through the current authentication
 abstract.projects.list();
 ```
 
-or, get a list of projects for a specific organization…
+Get a list of projects for a specific organization
 
 ```js
 abstract.projects.list({
@@ -1663,7 +1657,7 @@ abstract.projects.list({
 });
 ```
 
-or, get a list of active projects for a specific organization…
+Get a list of active projects for a specific organization
 
 ```js
 abstract.projects.list({
@@ -1671,7 +1665,7 @@ abstract.projects.list({
 }, { filter: "active" });
 ```
 
-or, get a list of active projects for a specific section within an organization…
+Get a list of active projects for a specific section within an organization
 
 ```js
 abstract.projects.list({
@@ -1784,11 +1778,11 @@ A review request represents a notification to review a given branch of work.
 | `createdAt`       | `string` | Timestamp indicating when this review was requested                           |
 | `id`              | `string` | UUID of this review request                                                   |
 | `projectId`       | `string` | ID of the project that the reviewed branch belongs to                         |
-| `requester`       | `User`  | User who initiated or created this review request                               |
-| `reviewer`        | `User` | User who was requested to review this work                                      |
-| `requesterID`     | `User` | ID of the user who initiated or created this review request                     |
-| `reviewerID`      | `User` | ID of the user who was requested to review this work                            |
-| `status`          | `string` | Status of this review, one of `APPROVED` or `REJECTED`                        |
+| `requester`       | `User`   | User who initiated this review request                                        |
+| `reviewer`        | `User`   | User who was requested to review this work                                    |
+| `requesterID`     | `User`   | ID of the user who initiated the review request                               |
+| `reviewerID`      | `User`   | ID of the user who was requested to review this work                          |
+| `status`          | `string` | Status of this review. One of `APPROVED` or `REJECTED`                        |
 | `statusChangedAt` | `string` | Timestamp indicating when this review was last updated                        |
 
 ### List all review requests
@@ -1802,7 +1796,7 @@ List all review requests for a given branch
 ```js
 abstract.reviewRequests.list({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master"
+  branchId: "main"
 });
 ```
 
@@ -1826,7 +1820,7 @@ abstract.reviewRequests.list({
 
 ## Sections
 
-A section is a group of projects that belong to a given organization. Sections are used to group similar or related projects together and can be created using the desktop application.
+A section is a group of projects that belong to a given organization. Sections are used to group similar or related projects together and can be created using the desktop or web app.
 
 ### The section object
 
@@ -1834,7 +1828,7 @@ A section is a group of projects that belong to a given organization. Sections a
 |------------------|----------|-------------------------------------------------------------------------------|
 | `id`             | `string` | UUID                                                                          |
 | `name`           | `string` | The name of the section                                                       |
-| `organizationId` | `string` | UUID of the organization this section belongs to                              |
+| `organizationId` | `string` | UUID of the organization the section belongs to                               |
 
 ### List all sections
 
@@ -1852,7 +1846,7 @@ abstract.sections.list({ organizationId: "d147fba5-c713-4fb9-ab16-e7e82ed9cbc9" 
 
 ## Shares
 
-A share is a shareable url to an object in Abstract. You can use the desktop or web app to create a share url.
+A share is a shareable url to an object in Abstract, which can be created via the desktop or web app.
 
 > Note: The format of a share url is `https://share.goabstract.com/<UUID>`.
 
@@ -1917,7 +1911,7 @@ abstract.shares.create({
 }, {
   kind: "layer",
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
+  branchId: "main",
   fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
   pageId: "7D2D2599-9B3F-49BC-9F86-9D9D532F143A",
   layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
@@ -1928,7 +1922,7 @@ abstract.shares.create({
 
 ## Stars
 
-A star represents an underlying project or section of projects, and it indicates that a user has favorites the underlying object for easier discovery.
+A star represents an underlying project or section of projects. It indicates that a user has favorited the underlying object for easier discovery.
 
 ### The star object
 
@@ -2027,7 +2021,7 @@ abstract.users.info({
 
 ## Webhooks
 
-Webhooks make it easy to efficiently subscribe to events across the Abstract platform. Webhooks live at the organization level, and  organization administrators can create new webhooks within an organization's settings in the web application.
+Webhooks make it easy to efficiently subscribe to events across the Abstract platform. Webhooks live at the organization level, and organization administrators can create new webhooks within an organization's settings in the web application.
 
 > Note: Additional information on webhooks can be found [here](/docs/webhooks).
 
@@ -2218,7 +2212,7 @@ app.post("/webhook", async (req, res) => {
 });
 ```
 
-> Note: This endpoint is intended to be used on a webhook server to verify that incoming delivery requests were sent by Abstract. More information on webhook security techniques can be found [here](/docs/webhooks-security).
+> Note: This endpoint is intended to be used on a webhook server to verify that Abstract sent incoming delivery requests. More information on webhook security techniques can be found [here](/docs/webhooks-security).
 
 ## Request options
 
@@ -2318,7 +2312,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 }
 ```
 
@@ -2327,7 +2321,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   sha: string
 }
 ```
@@ -2346,7 +2340,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   fileId: string,
   sha: string | "latest"
 }
@@ -2357,7 +2351,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   fileId: string,
   pageId: string,
   sha: string
@@ -2369,7 +2363,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   fileId: string,
   layerId: string
 }
@@ -2380,7 +2374,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   fileId: string,
   layerId: string,
   sha: string | "latest"
@@ -2392,7 +2386,7 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   collectionId: string
 }
 ```

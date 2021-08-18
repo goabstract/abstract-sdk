@@ -35,13 +35,13 @@ export type NotificationDescriptor = {|
 export type ObjectDescriptor = {
   sha: "latest" | string,
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 };
 
 export type BranchCommitDescriptor = {|
   sha: string | "latest",
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 |};
 
 export type CommitDescriptor = {|
@@ -51,7 +51,7 @@ export type CommitDescriptor = {|
 
 export type BranchDescriptor = {|
   projectId: string,
-  branchId: string | "master"
+  branchId: string | "master" | "main"
 |};
 
 export type FileDescriptor = {|
@@ -67,7 +67,7 @@ export type PageDescriptor = {|
 
 export type LayerDescriptor = {|
   projectId: string,
-  branchId: string | "master",
+  branchId: string | "master" | "main",
   fileId: string,
   layerId: string
 |};
@@ -474,7 +474,7 @@ export type Organization = {
   userId: string
 };
 
-export type AssetAutoGenerationOption = "all" | "master" | "off";
+export type AssetAutoGenerationOption = "all" | "master" | "main" | "off";
 
 export type Project = {
   id: string,
