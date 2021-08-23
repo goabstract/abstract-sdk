@@ -121,6 +121,8 @@ abstract.assets.file({
 
 ### List assets for a commit
 
+![API][api-icon]
+
 `assets.commit(BranchCommitDescriptor, RequestOptions): Promise<Asset[]>`
 
 List all assets generated for a commit
@@ -373,13 +375,27 @@ abstract.changesets.commit({
 
 ![CLI][cli-icon] ![API][api-icon]
 
-`changesets.commit(BranchDscriptor, RequestOptions): Promise<Changeset>`
+`changesets.commit(BranchDescriptor, RequestOptions): Promise<Changeset>`
 
 Load a changeset for a branch
 
 ```js
 abstract.changesets.branch({
   branchId: "c426d0a6-e039-43d7-b7b3-e685a25e4cfb",
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
+});
+```
+
+### Retrieve a changeset for a project
+
+![CLI][cli-icon]
+
+`changesets.commit(ProjectDescriptor, RequestOptions): Promise<Changeset>`
+
+Load a changeset for a project
+
+```js
+abstract.changesets.project({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78"
 });
 ```
@@ -446,7 +462,6 @@ Load an individual collection
 ```js
 abstract.collections.info({
   projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "main",
   collectionId: "413daa80-1456-11e8-b8b0-4d1fec7ae555"
 });
 ```
@@ -2386,7 +2401,6 @@ Reference for the parameters required to load resources with the Abstract SDK.
 ```js
 {
   projectId: string,
-  branchId: string | "master" | "main",
   collectionId: string
 }
 ```
