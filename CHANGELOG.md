@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.3](https://github.com/goabstract/abstract-sdk/compare/v8.1.1...v8.1.3) (2023-07-25)
+
+
+### Bug Fixes
+
+* Optional proxy agent param to fetch ([#338](https://github.com/goabstract/abstract-sdk/issues/338)) ([7ce38d2](https://github.com/goabstract/abstract-sdk/commit/7ce38d2243be9956175008ea1096b909b5acf98f))
+
 ### [8.1.2](https://github.com/goabstract/abstract-sdk/compare/v8.1.2-0...v8.1.2) (2021-05-21)
 
 ### [8.1.2-0](https://github.com/goabstract/abstract-sdk/compare/v8.1.1...v8.1.2-0) (2021-05-17)
