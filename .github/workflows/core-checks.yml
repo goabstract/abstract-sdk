@@ -1,0 +1,34 @@
+name: Core checks
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "!docs/**"
+      - "!website/**"
+  push:
+    paths:
+      - "!docs/**"
+      - "!website/**"
+
+jobs:
+  Run:
+    runs-on: ubuntu-latest
+
+    env:
+      DEBUG: "abstract:*"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: true
+
+      - run: yarn lint && yarn check-ts-types
+
+      - run: yarn flow
+
+      - run: yarn test
