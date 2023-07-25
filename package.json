@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.9.6",
-    "@elasticprojects/abstract-cli": "^12.2.0",
+    "@elasticprojects/abstract-cli": "13.4.3",
     "core-js": "^3.6.5",
     "cross-fetch": "^3.0.1",
     "debug": "^4.0.1",
@@ -93,6 +93,7 @@
     "testPathIgnorePatterns": [
       "<rootDir>/dist"
     ],
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
     "coverageThreshold": {
       "global": {
         "branches": 100,
