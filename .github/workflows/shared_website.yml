@@ -2,11 +2,12 @@ name: Web Site
 
 on:
   workflow_call:
-    publish:
-      description: Publish web site
-      required: false
-      type: boolean
-      default: false
+    inputs:
+      publish:
+        description: Publish web site
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   SkipConcurrentBuild:
