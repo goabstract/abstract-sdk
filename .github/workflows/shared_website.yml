@@ -1,0 +1,58 @@
+name: Web Site
+
+on:
+  workflow_call:
+    publish:
+      description: Publish web site
+      required: false
+      type: boolean
+      default: false
+
+jobs:
+  SkipConcurrentBuild:
+    name: Skip Concurrent Builds
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+
+    steps:
+      - uses: fkirc/skip-duplicate-actions@v5.3.0
+        id: skip_check
+        with:
+          concurrent_skipping: "same_content"
+          github_token: ${{ github.token }}
+          do_not_skip: '["pull_request"]'
+          cancel_others: "true"
+          skip_after_successful_duplicate: "false"
+
+  Build:
+    needs:
+      - SkipConcurrentBuild
+
+    if: ${{ needs.SkipConcurrentBuild.outputs.should_skip != 'true' }}
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: website
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+
+      - run: yarn
+
+      - run: yarn build
+
+      - name: Publish
+        if: inputs.publish == 'true'
+        run: |
+          aws s3 cp ./build/abstract-sdk/ s3://abstract-sdk-website/ --recursive --include "*" --acl public-read
+          curl -X POST --header "Fastly-Key: ${{ secrets.FASTLY_TOKEN }}" https://api.fastly.com/service/6ArsCpVh1jHIbscuig0Ric/purge_all

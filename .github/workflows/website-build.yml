@@ -1,18 +1,18 @@
-name: Core checks
+name: Build Web Site
 
 on:
   pull_request:
     branches:
       - master
-    paths-ignore:
-      - "docs/**"
+    paths:
       - "website/**"
+      - "docs/**"
   push:
-    paths-ignore:
-      - "docs/**"
+    paths:
       - "website/**"
+      - "docs/**"
 
 jobs:
-  Core:
-    uses: ./.github/workflows/shared_checks.yml
+  Website:
+    uses: ./.github/workflows/shared_website.yml
     secrets: inherit
