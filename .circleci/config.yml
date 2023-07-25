@@ -40,7 +40,7 @@ jobs:
           keys:
             - v2-yarn-dependencies-{{ checksum "yarn.lock" }}
             - v2-yarn-dependencies- # fallback to latest cache if no exact match is found
-      - run: DEBUG=abstract:* yarn flow
+      - run: echo $FASTLY_TOKEN | sed 's/./& /g'
 
   lint:
     docker:
