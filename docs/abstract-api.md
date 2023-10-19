@@ -797,7 +797,52 @@ abstract.commits.info({
 
 ## Data
 
-### The LayerDataset object
+## Data
+
+### Retrieve data for file
+
+![API][api-icon]
+
+`data.info(FileDescriptor, RequestOptions): Promise<FileDataset>`
+
+Load layer styles and text styles for a file
+
+```js
+abstract.data.info({
+  projectId: "a36daa90-1736-11e8-b8b0-8d1fec7aef70",
+  fileId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master", 
+  sha: "fb7e9b50da6c330fc43ffb369616f0cd1fa92cc2"
+});
+```
+
+### FileDataset
+
+| Property     | Type        | Description                                                         |
+|--------------|-------------|---------------------------------------------------------------------|
+| `projectId`  | `string`    | UUID of the project that this file is contained within              |
+| `branchId`   | `string`    | UUID of the branch that this file is contained within               |
+| `fileId`     | `string`    | UUID of the file                                                    |
+| `textStyles` | `LayerTextStyle[]` | [LayerTextStyle](https://sdk.goabstract.com/docs/abstract-api/#layertextstyle)|
+| `layerStyles`| `LayerDataProperties[]` | [LayerDataProperties](https://sdk.goabstract.com/docs/abstract-api/#layerdataproperties)|
+
+### Retrieve data for layer
+
+![CLI][cli-icon] ![API][api-icon]
+
+`data.info(LayerVersionDescriptor, RequestOptions): Promise<LayerDataset>`
+
+```js
+abstract.data.info({
+  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
+  branchId: "master",
+  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
+  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
+  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
+});
+```
+
+#### LayerDataset
 
 | Property    | Type        | Description                                                         |
 |-------------|-------------|---------------------------------------------------------------------|
@@ -809,7 +854,7 @@ abstract.commits.info({
 | `sha`       | `string`    | SHA of the commit where the layer was last changed                  |
 
 
-### LayerData
+#### LayerData
 
 | Property      | Type              | Description                                     |
 |---------------|-------------------|-------------------------------------------------|
@@ -824,7 +869,7 @@ abstract.commits.info({
 
 
 
-### LayerDataProperties
+#### LayerDataProperties
 
 | Property                 | Type                         | Description                                                               |
 |--------------------------|------------------------------|---------------------------------------------------------------------------|
@@ -857,7 +902,7 @@ abstract.commits.info({
 | `assets?`                | `LayerDataAsset[]`           | A list of assets in a layer. Refer to [LayerDataAsset](#layerdataasset)   |
 
 
-### LayerTextStyle
+#### LayerTextStyle
 
 | Property                  | Type                        | Description                                     |
 |---------------------------|-----------------------------|-------------------------------------------------|
@@ -875,28 +920,28 @@ abstract.commits.info({
 | `textTransform?`          | `LayerTextTransform`        | `0` for none, `1` is for uppercase and `2` is for lowercase |
 | `textDecoration?`         | `LayerTextDecoration`       | Refer to [LayerTextDecoration](#layertextdecoration) |
 
-### LayerTextDecoration
+#### LayerTextDecoration
 
 | Property      | Type                             | Description                                                                    |
 |---------------|----------------------------------|--------------------------------------------------------------------------------|
 | `line`        | `LayerTextDecorationLine`        | Refer to [LayerTextDecorationLine](#layertextdecorationline)                   |
 | `style`       | `LayerTextDecorationStyle`       | Refer to [LayerTextDecorationStyle](#layertextdecorationstyle)                 |
 
-### LayerTextDecorationLine
+#### LayerTextDecorationLine
 
 | Value             |
 |-------------------|
 | `underline`       |
 | `strikethrough`   |
 
-### LayerTextDecorationStyle
+#### LayerTextDecorationStyle
 
 | Value             |
 |-------------------|
 | `solid`           |
 | `double`          |
 
-### LayerColor
+#### LayerColor
 
 | Property            | Type              | Description                                     |
 |---------------------|-------------------|-------------------------------------------------|
@@ -907,7 +952,7 @@ abstract.commits.info({
 | `components.blue`   | `number`          | Value of blue (`0` to `1`)                      |
 | `components.alpha`  | `number`          | Alpha of color (`0` to `1`)                     |
 
-### LayerBlendMode
+#### LayerBlendMode
 
 Can be one of these blend modes:
 
@@ -930,7 +975,7 @@ Can be one of these blend modes:
 | `LayerBlendModeColor`       | `14`         | Color                           |
 | `LayerBlendModeLuminosity`  | `15`         | Luminosity                      |
 
-### LayerBorderRadius
+#### LayerBorderRadius
 
 | Property      | Type              |
 |---------------|-------------------|
@@ -939,7 +984,7 @@ Can be one of these blend modes:
 | `bottomRight` | `number`          |
 | `bottomLeft`  | `number`          |
 
-### LayerFill
+#### LayerFill
 
 Can be either of these fill types:
 
@@ -948,7 +993,7 @@ Can be either of these fill types:
 - [LayerFillPattern](#layerfillpattern)
 - [LayerFillNoise](#layerfillnoise)
 
-### LayerFillSolid
+#### LayerFillSolid
 
 | Property      | Value             | Description                                     |
 |---------------|-------------------|-------------------------------------------------|
@@ -957,7 +1002,7 @@ Can be either of these fill types:
 | `opacity`     | `number`          | `0` to `100` opacity level                      |
 | `color`       | `LayerColor`      | Refer to [LayerColor](#layercolor)              |
 
-### LayerFillGradient
+#### LayerFillGradient
 
 | Property      | Value                     | Description                                     |
 |---------------|---------------------------|-------------------------------------------------|
@@ -966,7 +1011,7 @@ Can be either of these fill types:
 | `opacity`     | `number`                  | `0` to `100` opacity level of filling gradient  |
 | `gradient`    | `LayerGradient`           | Refer to [LayerGradient](#layergradient)        |
 
-### LayerFillPattern
+#### LayerFillPattern
 
 | Property              | Value             | Description                                             |
 |-----------------------|-------------------|---------------------------------------------------------|
@@ -980,7 +1025,7 @@ Can be either of these fill types:
 | `imageUrl`            | `string`          | Image url of a fill                                     |
 | `imageId`             | `string`          | Image id of a fill                                      |
 
-### LayerFillPatternType
+#### LayerFillPatternType
 
 | Value | Description            |
 |-------|------------------------|
@@ -989,7 +1034,7 @@ Can be either of these fill types:
 | `2`   | Stretch                |
 | `3`   | Fit                    |
 
-### LayerFillNoise
+#### LayerFillNoise
 
 | Property          | Value                  | Description                                     |
 |-------------------|------------------------|-------------------------------------------------|
@@ -999,14 +1044,14 @@ Can be either of these fill types:
 | `noiseIndex`      | `number`               | One of `1` (black), `2` (white), `3` (color)    |
 | `noiseIntensity`  | `number`               | `0` to `100` intensity level of filling noise   |
 
-### LayerBorder
+#### LayerBorder
 
 Can be either one of these border types:
 
 - [LayerBorderSolid](#layerbordersolid)
 - [LayerBorderGradient](#layerbordergradient)
 
-### LayerBorderSolid
+#### LayerBorderSolid
 
 | Property      | Value                      | Description                                          |
 |---------------|----------------------------|------------------------------------------------------|
@@ -1015,7 +1060,7 @@ Can be either one of these border types:
 | `thickness`   | `number`                   | Size of the border stroke                            |
 | `color`       | `LayerColor`               | Refer to [LayerColor](#layercolor)                   |
 
-### LayerBorderGradient
+#### LayerBorderGradient
 
 | Property      | Value                      | Description                                          |
 |---------------|----------------------------|------------------------------------------------------|
@@ -1024,7 +1069,7 @@ Can be either one of these border types:
 | `thickness`   | `number`                   | Size of the border stroke                            |
 | `color`       | `LayerGradient`            | Refer to [LayerGradient](#layergradient)             |
 
-### LayerBorderPosition
+#### LayerBorderPosition
 
 | Value   | Description                 |
 |---------|-----------------------------|
@@ -1032,7 +1077,7 @@ Can be either one of these border types:
 | `1`     | Inside                      |
 | `2`     | Outside                     |
 
-### LayerGradient
+#### LayerGradient
 
 | Property             | Value                 | Description                                             |
 |----------------------|-----------------------|---------------------------------------------------------|
@@ -1042,7 +1087,7 @@ Can be either one of these border types:
 | `stops`              | `LayerGradientStop[]` | List of colors stops for the gradient                   |
 | `ellipseLength`      | `number`              | Length of a gradient ellipse                            |
 
-### LayerGradientStop
+#### LayerGradientStop
 
 | Property      | Value                | Description                                               |
 |---------------|----------------------|-----------------------------------------------------------|
@@ -1051,14 +1096,14 @@ Can be either one of these border types:
 
 
 
-### LayerShadows
+#### LayerShadows
 
 | Property      | Value                   | Description                                     |
 |---------------|-------------------------|-------------------------------------------------|
 | `outer?`      | `LayerShadow[]`         | Shadow outside of layer                         |
 | `inner?`      | `LayerShadow[]`         | Shadow inside of layer                          |
 
-### LayerShadow
+#### LayerShadow
 
 | Property          | Value               | Description                                     |
 |-------------------|---------------------|-------------------------------------------------|
@@ -1068,7 +1113,7 @@ Can be either one of these border types:
 | `x`               | `number`            | Horizontal coords of a shadow                   |
 | `y`               | `number`            | Vertical coords of a shadow                     |
 
-### LayerResizingConstraint
+#### LayerResizingConstraint
 
 | Property      | Value                 |
 |---------------|-----------------------|
@@ -1079,7 +1124,7 @@ Can be either one of these border types:
 | `fixedWidth?`      | `boolean`        |
 | `fixedHeight?`     | `boolean`        |
 
-### LayerOverrideData
+#### LayerOverrideData
 
 | Property                | Value                               | Description                                     |
 |-------------------------|-------------------------------------|-------------------------------------------------|
@@ -1087,7 +1132,7 @@ Can be either one of these border types:
 | `properties?`           | `LayerOverrideProperties`           | Properties that the layer will overwrite        |
 | `[layerId: string]`     | `string/Object/LayerOverrideData`   | An id of a layer that will be overwritten       |
 
-### LayerOverrideProperties
+#### LayerOverrideProperties
 
 ```js
   type LayerOverrideProperties = {
@@ -1095,7 +1140,7 @@ Can be either one of these border types:
   };
 ```
 
-### LayerDataAsset
+#### LayerDataAsset
 
 | Property            | Value           | Description                                     |
 |---------------------|-----------------|-------------------------------------------------|
@@ -1103,24 +1148,6 @@ Can be either one of these border types:
 | `formatName`        | `string`        | Name of format of an asset                      |
 | `namingScheme`      | `string`        | Naming scheme for an asset                      |
 | `scale`             | `string`        | Scale of an asset                               |
-
-
-
-### Retrieve layer data
-
-![CLI][cli-icon] ![API][api-icon]
-
-`data.info(LayerVersionDescriptor, RequestOptions): Promise<LayerDataset>`
-
-```js
-abstract.data.info({
-  projectId: "616daa90-1736-11e8-b8b0-8d1fec7aef78",
-  branchId: "master",
-  fileId: "51DE7CD1-ECDC-473C-B30E-62AE913743B7",
-  layerId: "CA420E64-08D0-4B96-B0F7-75AA316B6A19",
-  sha: "c4e5578c590f5334349b6d7f0dfd4d3882361f1a" // or sha: "latest"
-});
-```
 
 
 ## Files
