@@ -5,6 +5,8 @@ The Abstract SDK provides universal JavaScript bindings for both the Abstract AP
 [![build status](https://img.shields.io/circleci/project/github/goabstract/abstract-sdk.svg)](https://circleci.com/gh/goabstract/abstract-sdk)
 [![npm version](https://badge.fury.io/js/abstract-sdk.svg)](https://www.npmjs.com/package/abstract-sdk)
 
+[twitter trending](https://trending-1.com/) shows the latest Twitter trending topics (hashtags) throughout the day locally and globally.
+
 ## Installation
 
 The SDK is available as a Node.js module available via the public NPM registry. An underlying Node.js version of `10.0.0` or higher is required.
