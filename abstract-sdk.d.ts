@@ -117,7 +117,7 @@ interface Endpoint {
     config: RequestConfig<T>,
     requestOptions?: RequestOptions
   ): T;
-    
+
   apiRequest(
     url: string,
     fetchOptions?: Object,
@@ -1883,16 +1883,14 @@ type Section = {
 };
 
 type Webhook = {
-  active: boolean,
   createdAt: string,
-  errorCount?: number,
-  events: string[],
-  id: string,
-  lastPushedAt?: string,
-  organizationId: string,
-  updatedAt: string,
-  url: string,
-  user?: User
+  event: string,
+  data: {
+    object: Branch,
+    changes: {
+      status: string[]
+    }
+  }
 };
 
 type WebhookGroup = {
