@@ -1,6 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/dist/*
 <PROJECT_ROOT>/node_modules/.*/test/.*
+<PROJECT_ROOT>/website/node_modules/.*/test/.*
 
 [include]
 

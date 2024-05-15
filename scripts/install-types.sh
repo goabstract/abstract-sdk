@@ -4,6 +4,9 @@
 # internally within this package. This is intended to be run as a postinstall
 # NPM script, but it can be run at any time to refresh and update definitions.
 
+# fix for UNCAUGHT ERROR in github actions
+flow-typed search "jest@^26.x.x"
+
 types=(
   "jest@^26.x.x"
   "query-string@^6.x.x"

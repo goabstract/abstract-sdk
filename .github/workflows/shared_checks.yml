@@ -13,7 +13,7 @@ jobs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
 
     steps:
-      - uses: fkirc/skip-duplicate-actions@v5.3.0
+      - uses: fkirc/skip-duplicate-actions@v5.3.1
         id: skip_check
         with:
           concurrent_skipping: "same_content"
@@ -30,24 +30,24 @@ jobs:
 
     name: Lint and Test
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     env:
       DEBUG: "abstract:*"
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "yarn"
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: flow-typed
-          key: ${{ runner.os }}-flow-typed-v1-${{ hashFiles('yarn.lock', '.nvmrc') }}
+          key: ${{ runner.os }}-flow-typed-v2-${{ hashFiles('yarn.lock', '.nvmrc') }}
 
       - run: yarn
 
