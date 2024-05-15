@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.5](https://github.com/goabstract/abstract-sdk/compare/v8.1.4...v8.1.5) (2024-05-15)
+
+
+### Bug Fixes
+
+* export files with slashes in their names ([#368](https://github.com/goabstract/abstract-sdk/issues/368)) ([f9e157b](https://github.com/goabstract/abstract-sdk/commit/f9e157b5cad21d7f5293a991e83d86cf9ceaa936))
+
 ### [8.1.4](https://github.com/goabstract/abstract-sdk/compare/v8.1.3...v8.1.4) (2023-07-25)
 
 ### [8.1.3](https://github.com/goabstract/abstract-sdk/compare/v8.1.1...v8.1.3) (2023-07-25)
