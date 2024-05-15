@@ -129,7 +129,8 @@ export default class Files extends Endpoint {
 
             /* istanbul ignore if */
             if (isNodeEnvironment() && !disableWrite) {
-              const diskLocation = filename || `${file.name}.sketch`;
+              const diskLocation =
+                filename || `${file.name.replace(/\//g, "-")}.sketch`;
               fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
             }
 

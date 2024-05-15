@@ -103,7 +103,8 @@ export default class Assets extends Endpoint {
         /* istanbul ignore if */
         if (isNodeEnvironment() && !disableWrite) {
           const diskLocation =
-            filename || `${asset.layerName}.${asset.fileFormat}`;
+            filename ||
+            `${asset.layerName.replace(/\//g, "-")}.${asset.fileFormat}`;
           fs.writeFile(diskLocation, Buffer.from(arrayBuffer));
         }
 
