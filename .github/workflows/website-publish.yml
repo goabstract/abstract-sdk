@@ -14,4 +14,6 @@ jobs:
     needs:
       - Core
     uses: ./.github/workflows/shared_website.yml
+    with:
+      publish: true
     secrets: inherit
