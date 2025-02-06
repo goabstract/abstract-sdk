@@ -64,6 +64,4 @@ jobs:
 
       - name: Publish
         if: inputs.publish
-        run: |
-          aws s3 cp ./build/abstract-sdk/ s3://abstract-sdk-website/ --recursive --include "*" --acl public-read
-          curl -X POST --header "Fastly-Key: ${{ secrets.FASTLY_TOKEN }}" https://api.fastly.com/service/6ArsCpVh1jHIbscuig0Ric/purge_all
+        run: aws s3 cp ./build/abstract-sdk/ s3://abstract-sdk-website/ --recursive --include "*" --acl public-read
