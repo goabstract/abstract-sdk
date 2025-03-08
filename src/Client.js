@@ -13,6 +13,7 @@ import Files from "./endpoints/Files";
 import Layers from "./endpoints/Layers";
 import Memberships from "./endpoints/Memberships";
 import Notifications from "./endpoints/Notifications";
+import OAuth from "./endpoints/OAuth";
 import Organizations from "./endpoints/Organizations";
 import Pages from "./endpoints/Pages";
 import Previews from "./endpoints/Previews";
@@ -26,6 +27,7 @@ import Webhooks from "./endpoints/Webhooks";
 import type { CommandOptions, AnalyticsCallback } from "./types";
 
 export default class Client {
+  options: CommandOptions;
   activities: Activities;
   assets: Assets;
   branches: Branches;
@@ -40,6 +42,7 @@ export default class Client {
   layers: Layers;
   memberships: Memberships;
   notifications: Notifications;
+  oauth: OAuth;
   organizations: Organizations;
   pages: Pages;
   previews: Previews;
@@ -54,7 +57,7 @@ export default class Client {
   _analyticsCallback: ?AnalyticsCallback;
 
   constructor(options: $Shape<CommandOptions> = {}) {
-    options = {
+    this.options = {
       accessToken: process.env.ABSTRACT_TOKEN,
       apiUrl: "https://api.goabstract.com",
       objectUrl: "https://objects.goabstract.com",
@@ -65,31 +68,36 @@ export default class Client {
       ...options
     };
 
-    this._analyticsCallback = options.analyticsCallback;
-    this.activities = new Activities(this, options);
-    this.assets = new Assets(this, options);
-    this.branches = new Branches(this, options);
-    this.changesets = new Changesets(this, options);
-    this.collectionLayers = new CollectionLayers(this, options);
-    this.collections = new Collections(this, options);
-    this.comments = new Comments(this, options);
-    this.commits = new Commits(this, options);
-    this.data = new Data(this, options);
-    this.descriptors = new Descriptors(this, options);
-    this.files = new Files(this, options);
-    this.layers = new Layers(this, options);
-    this.memberships = new Memberships(this, options);
-    this.notifications = new Notifications(this, options);
-    this.organizations = new Organizations(this, options);
-    this.pages = new Pages(this, options);
-    this.previews = new Previews(this, options);
-    this.projects = new Projects(this, options);
-    this.reviewRequests = new ReviewRequests(this, options);
-    this.sections = new Sections(this, options);
-    this.shares = new Shares(this, options);
-    this.stars = new Stars(this, options);
-    this.users = new Users(this, options);
-    this.webhooks = new Webhooks(this, options);
+    this._analyticsCallback = this.options.analyticsCallback;
+    this.activities = new Activities(this);
+    this.assets = new Assets(this);
+    this.branches = new Branches(this);
+    this.changesets = new Changesets(this);
+    this.collectionLayers = new CollectionLayers(this);
+    this.collections = new Collections(this);
+    this.comments = new Comments(this);
+    this.commits = new Commits(this);
+    this.data = new Data(this);
+    this.descriptors = new Descriptors(this);
+    this.files = new Files(this);
+    this.layers = new Layers(this);
+    this.memberships = new Memberships(this);
+    this.notifications = new Notifications(this);
+    this.oauth = new OAuth(this);
+    this.organizations = new Organizations(this);
+    this.pages = new Pages(this);
+    this.previews = new Previews(this);
+    this.projects = new Projects(this);
+    this.reviewRequests = new ReviewRequests(this);
+    this.sections = new Sections(this);
+    this.shares = new Shares(this);
+    this.stars = new Stars(this);
+    this.users = new Users(this);
+    this.webhooks = new Webhooks(this);
+  }
+
+  setToken(accessToken: string) {
+    this.options.accessToken = accessToken;
   }
 
   unwrap(value: any) {
