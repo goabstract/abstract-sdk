@@ -17,7 +17,7 @@ const Client = require("../src/Client").default;
 
 describe("Client", () => {
   test("no transports specified", async () => {
-    expect.assertions(1);
+    expect.assertions(2);
 
     let error;
     try {
@@ -263,6 +263,11 @@ describe("Client", () => {
           false
         );
       });
+    });
+
+    describe("setToken", () => {
+      API_CLIENT.setToken("token");
+      expect(API_CLIENT.options).toMatchObject({ accessToken: "token" });
     });
   });
 

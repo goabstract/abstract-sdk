@@ -37,9 +37,9 @@ export default class Endpoint {
   client: Client;
   options: CommandOptions;
 
-  constructor(client: Client, options: CommandOptions) {
+  constructor(client: Client, options?: CommandOptions) {
     this.client = client;
-    this.options = options;
+    this.options = options ? options : this.client.options;
   }
 
   configureRequest<T>(requestName: string, config: RequestConfig<T>): T {
@@ -113,7 +113,15 @@ export default class Endpoint {
     const { customHostname, raw, onProgress } = apiOptions;
     const hostname = customHostname || (await this.options.apiUrl);
 
-    fetchOptions.body = fetchOptions.body && JSON.stringify(fetchOptions.body);
+    if (
+      !fetchOptions.headers ||
+      fetchOptions.headers["Content-Type"] !==
+        "application/x-www-form-urlencoded"
+    ) {
+      fetchOptions.body =
+        fetchOptions.body && JSON.stringify(fetchOptions.body);
+    }
+
     fetchOptions.headers = await this._getFetchHeaders(fetchOptions.headers);
     fetchOptions.agent = this.options.proxyAgent;
 

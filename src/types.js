@@ -160,9 +160,12 @@ export type CommandOptions = {
   accessToken?: AccessTokenOption,
   analyticsCallback: AnalyticsCallback,
   apiUrl: string | Promise<string>,
+  clientId?: string,
+  clientSecret?: string,
   objectUrl: string | Promise<string>,
   previewUrl: string | Promise<string>,
   shareId?: () => Promise<string | ShareDescriptor | ShareUrlDescriptor | void>,
+  redirectUri?: string,
   transportMode: ("api" | "cli")[],
   webUrl: string | Promise<string>,
   proxyAgent?: Agent
@@ -1680,4 +1683,26 @@ export type ReviewRequest = {
   reviewerId: string,
   status: ReviewStatus,
   statusChangedAt: string
+};
+
+export type OAuthAuthorizeInput = {
+  clientId: string,
+  redirectUri: string,
+  state: string
+};
+
+export type OAuthTokenInput = {
+  redirectUri: string,
+  clientSecret: string,
+  clientId: string,
+  authorizationCode: string
+};
+
+export type TokenResponseData = {
+  access_token: string,
+  client_id: string,
+  created_at: string,
+  id: string,
+  scope: string,
+  user_id: string
 };
